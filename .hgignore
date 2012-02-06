@@ -1,3 +1,4 @@
 syntax: glob
-photo\preview\
-common\config.php
+public_html\photo\preview\
+public_html\common\config.php
+logs\
