@@ -1,0 +1,48 @@
+#php_flag zend.ze1_compatibility_mode on
+DefaultLanguage ru
+AddCharset UTF-8 .php
+AddDefaultCharset utf-8
+php_flag display_errors off
+php_flag log_errors on
+php_value include_path ".:/home/leotsar/www/site2/public_html/appcode:/home/leotsar/www/site2/public_html/common"
+php_flag session.use_only_cookies on
+php_value error_reporting 32767
+ErrorDocument 404 /404/
+RewriteEngine On
+RewriteCond %{HTTP_HOST}   ^kogda-igra\.spb\.ru$ [NC]
+RewriteRule (.*)$ http://kogda-igra.ru/spb/$1 [R=permanent]
+RewriteCond %{HTTP_HOST}   ^kogda-igra\.msk\.ru$ [NC]
+RewriteRule (.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
+RewriteRule http://kogda-igra.msk.ru/?(.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
+RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.ru$ [NC]
+RewriteRule (.*)$ http://kogda-igra.ru/$1 [R=permanent]
+RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.spb\.ru$ [NC]
+RewriteRule (.*)$ http://kogda-igra.ru/spb/$1 [R=permanent]
+RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.msk\.ru$ [NC]
+RewriteRule (.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
+RewriteRule ^appcode(.*) http://kogda-igra.ru/
+RewriteRule ^ural/19(.*)/?$ /?region=5&year=19$1
+RewriteRule ^ural/20(.*)/?$ /?region=5&year=20$1
+RewriteRule ^ural/?$ /?region=5
+RewriteRule ^nw/19(.*)/?$ /?region=4&year=19$1
+RewriteRule ^nw/20(.*)/?$ /?region=4&year=20$1
+RewriteRule ^nw/?$ /?region=4
+RewriteRule ^msk/19(.*)/?$ /?region=3&year=19$1
+RewriteRule ^msk/20(.*)/?$ /?region=3&year=20$1
+RewriteRule ^msk/?$ /?region=3
+RewriteRule ^spb/19(.*)/?$ /?region=2&year=19$1
+RewriteRule ^spb/20(.*)/?$ /?region=2&year=20$1
+RewriteRule ^spb/?$ /?region=2
+RewriteRule ^19(.*)/?$ /?year=19$1
+RewriteRule ^20(.*)/?$ /?year=20$1
+RewriteRule ^find/(.+)/?$ /search/?search=$1 [L]
+RewriteRule ^reviews/([1234567890]+)/?$ /game/$1/ [R=permanent]
+RewriteRule ^game/([1234567890]*)/?$ /game/index.php?id=$1 [L]
+RewriteRule ^lenta/user/([1234567890]*)/?$ /lenta/user/index.php?id=$1 [L]
+RewriteRule ^photo/([1234567890]*)/?$ /photo/index.php?id=$1 [L]
+RewriteCond %{REQUEST_URI} !index.php
+RewriteRule ^user/(.*)/?$ user/index.php?id=$1 [last]
+RewriteRule ^edit/users/([1234567890]*)/?$ /edit/users/index.php?id=$1 [L]
+RewriteRule ^help-needed/email/([1234567890]*)/?$ /help-needed/email/index.php?id=$1 [L]
+RewriteRule ^api/game/([1234567890]+)/?$ /api/game/get-by-id.php?id=$1 [L]
+RewriteRule ^api/allrpg-info/([1234567890]+)/?$ /api/allrpg-info/find-by-id.php?id=$1 [L]

@@ -1,0 +1,3 @@
+syntax: glob
+photo\preview\
+common\config.php

@@ -1,0 +1,137 @@
+<?php
+require_once 'logic.php';
+
+abstract class Email
+{
+  function Email()
+  {
+  }
+  
+  function send ()
+  {
+    $recipient = $this -> get_recipient();
+    $sender = $this -> get_sender();
+    if ($recipient)
+    {
+			$bcc = "Bcc: $sender\r\n";
+    }
+    else
+    {
+			$bcc = '';
+			$recipient = $sender;
+    }
+    if ($recipient)
+    {
+      mail
+        ($recipient,
+         ' =?UTF-8?B?'. base64_encode($this -> get_subject()) ."?=",
+         $this -> get_message(),
+         "{$bcc}From: $sender\r\nReply-To: $sender\r\nContent-Type: text/plain; charset=utf-8");
+    }
+  }
+  
+  function get_sender ()
+  {
+    return "rpg@kogda-igra.ru";
+  }
+}
+
+class GameUpdatedEmail extends Email
+{
+  
+  function GameUpdatedEmail ($game_id, $updated)
+  {
+    $this -> game_data = get_game_by_id ($game_id);
+    $this -> updated = $updated;
+    $this -> intersections = get_intersections($game_id);
+  }
+  
+  function get_recipient()
+  {
+   if (!$this -> game_data['email'])
+   {
+    return '';
+   }
+   return '<' . $this -> game_data['email'] .'>';
+  }
+  
+  function get_subject()
+  {
+    return "Kogda-Igra.Ru: " . ($this -> updated ? "Обновлена" : "Добавлена") . " игра \"" . $this -> game_data['name'] .  "\"";
+  }
+  
+  function get_int_table()
+  {
+     foreach ($this->intersections as $game)
+     {
+        $masked = $game['show_flags'] && 1;
+        if (!$masked)
+        {
+          $uri = " http://kogda-igra.ru/game/{$game['id']}";
+          $mg = $game['mg'] ? "({$game['mg']})" : '';
+          $list .= "{$game['status_name']} - {$game['name']} $mg $uri \n";
+        }
+     }
+     return $list ? "Пересечения:\n" . $list . "\n" : '';
+  }
+  
+  function get_message()
+  {
+      $game = $this -> game_data;
+     if ($game['uri'])
+      {
+        $uri = "\nСайт: {$game['uri']}";
+      }
+      else
+      {
+        $uri = '';
+      }
+     if ($game['show_date_flag'])
+     {
+      $begin_date = strtotime ($game['begin']);
+      $days = $game['time']-1;
+      $end_date = getdate(strtotime ("+$days day", $begin_date));
+      $begin_date = getdate ($begin_date);
+      $date_text = "\nДаты игры: " . html_entity_decode(get_date_text($begin_date, $end_date, TRUE), ENT_COMPAT, "utf-8");
+     }
+     else
+     {
+      $date_text = '';
+     }
+     if ($game['hide_email'])
+     {
+      $hide_email = "(Email скрыт и на сайте не показан)";
+     }
+     else
+     {
+      $hide_email = '';
+     }
+    $players_count = $game['players_count'] > 0 ? $game['players_count'] : 'Неизвестно';
+    $update_text = $this -> updated ? "обновили" : "добавили";
+    $game_type_name = html_entity_decode($game['game_type_name'], ENT_COMPAT, "utf-8");
+    $polygon_name = html_entity_decode($game['polygon_name'], ENT_COMPAT, "utf-8");
+    $game_name = $this -> game_data['name'];
+    $int_text = $this -> get_int_table();
+
+    return "Редакторы kogda-igra.ru $update_text запись о вашей игре в календаре. Пожалуйста, проверьте эти сведения и напишите нам на rpg@kogda-igra.ru, если они ошибочны или неполны:
+    
+Профиль игры: http://kogda-igra.ru/game/{$game['id']}/
+
+Название игры: $game_name
+Статус: {$game['status_name']}
+Регион: {$game['sub_region_name']}$uri$date_text
+Тип игры: $game_type_name
+Полигон: $polygon_name
+Кол-во игроков: $players_count
+Мастерская группа: {$game['mg']}
+Email: {$game['email']}$hide_email
+
+$int_text
+Это письмо отправлено автоматически. Если письмо попало не туда, или вы больше не хотите получать таких писем, напишите rpg@kogda-igra.ru и мы разберемся.
+Ждем ваших комментариев в блоге: http://bit.ly/kogda-igra-email
+
+--
+C уважением, администрация kogda-igra.ru";
+  }
+}
+?>

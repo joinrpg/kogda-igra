@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /find/
+Disallow: 
+Sitemap: http://kogda-igra.ru/sitemap.txt
+Host: kogda-igra.ru
