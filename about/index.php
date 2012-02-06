@@ -69,6 +69,11 @@
 <li><a href="http://kogda-igra.ru/img/banners/kogra-igra-88x31.png">Баннер 88х31 неанимированный</a></li>
 <li><a href="http://kogda-igra.ru/img/kogda-igra.gif">Баннер 130x66</a></li>
 </ol>
+<h3>Open Source</h3>
+<p>
+<a href="https://bitbucket.org/leotsarev/kogda-igra.ru">Исходный код нашего сайта</a> — Open Source, согласно <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">лицензии Apache</a>. Если вы не знаете, что это значит, не парьтесь.<br>
+Если вдруг знаете, и хотите внести свой вклад, будем вам благодарны — присылайте свои pull request.<br>
+Если вам чего-то непонятно, пишите <?php echo show_user_link('leotsarev'); ?>.</p>
 <h3>Благодарности</h3>
 
 <p>Хостинг предоставлен МТГ «<a href="http://bastilia.ru">Бастилия</a>» и <a href="http://www.diphost.ru" title="Хороший хостинг"><img src="http://www.diphost.ru/b/na88x31_gray.gif" width="88" height="31" style="border: 0px solid" alt="Хороший хостинг" title="Хороший хостинг" /></a></p>
