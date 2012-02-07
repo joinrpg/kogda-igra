@@ -3,7 +3,7 @@ require_once 'logic.php';
 
 abstract class Email
 {
-  function Email()
+  function __construct()
   {
   }
   
@@ -36,10 +36,38 @@ abstract class Email
   }
 }
 
+class GameReqModerateEmail extends GameUpdatedEmail
+{
+	function __construct($game_id)
+	{
+		parent::__construct($game_id, 0);
+	}
+	
+	function get_recipient()
+	{
+		return NULL;
+	}
+	
+	function get_subject()
+	{
+		return "Kogda-Igra.Ru: требуется модерация {$this -> game_data['name']}";
+	}
+	
+	  function get_message()
+  {
+     $text = $this -> get_game_info_text();
+
+    return "Пользователь добавил запись об игре. Проверьте ее перед добавлением в календарь.
+$text
+--
+C уважением, администрация kogda-igra.ru";
+  }
+}
+
 class GameUpdatedEmail extends Email
 {
   
-  function GameUpdatedEmail ($game_id, $updated)
+  function __construct ($game_id, $updated)
   {
     $this -> game_data = get_game_by_id ($game_id);
     $this -> updated = $updated;
@@ -75,10 +103,10 @@ class GameUpdatedEmail extends Email
      return $list ? "Пересечения:\n" . $list . "\n" : '';
   }
   
-  function get_message()
+  function get_game_info_text()
   {
-      $game = $this -> game_data;
-     if ($game['uri'])
+		$game =$this -> game_data;
+		if ($game['uri'])
       {
         $uri = "\nСайт: {$game['uri']}";
       }
@@ -107,15 +135,13 @@ class GameUpdatedEmail extends Email
       $hide_email = '';
      }
     $players_count = $game['players_count'] > 0 ? $game['players_count'] : 'Неизвестно';
-    $update_text = $this -> updated ? "обновили" : "добавили";
+    
     $game_type_name = html_entity_decode($game['game_type_name'], ENT_COMPAT, "utf-8");
     $polygon_name = html_entity_decode($game['polygon_name'], ENT_COMPAT, "utf-8");
     $game_name = $this -> game_data['name'];
     $int_text = $this -> get_int_table();
-
-    return "Редакторы kogda-igra.ru $update_text запись о вашей игре в календаре. Пожалуйста, проверьте эти сведения и напишите нам на rpg@kogda-igra.ru, если они ошибочны или неполны:
     
-Профиль игры: http://kogda-igra.ru/game/{$game['id']}/
+    return "Профиль игры: http://kogda-igra.ru/game/{$game['id']}/
 
 Название игры: $game_name
 Статус: {$game['status_name']}
@@ -126,7 +152,16 @@ class GameUpdatedEmail extends Email
 Мастерская группа: {$game['mg']}
 Email: {$game['email']}$hide_email
 
-$int_text
+$int_text";
+  }
+  
+  function get_message()
+  {
+     $text = $this -> get_game_info_text();
+     $update_text = $this -> updated ? "обновили" : "добавили";
+
+    return "Редакторы kogda-igra.ru $update_text запись о вашей игре в календаре. Пожалуйста, проверьте эти сведения и напишите нам на rpg@kogda-igra.ru, если они ошибочны или неполны:
+$text
 Это письмо отправлено автоматически. Если письмо попало не туда, или вы больше не хотите получать таких писем, напишите rpg@kogda-igra.ru и мы разберемся.
 Ждем ваших комментариев в блоге: http://bit.ly/kogda-igra-email
 

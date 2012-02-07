@@ -270,9 +270,13 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		$old_deleted = intval($prev_data['deleted_flag']);
 		$old_status = intval($prev_data['status']);
 		$old_begin =getdate(strtotime ($prev_data['begin']));
-		if ($old_deleted != 0)
+		if ($old_deleted == 1)
 		{
 			internal_log_game (7, $id);
+		}
+		elseif ($old_deleted == -1)
+		{
+			internal_log_game (20, $id);
 		}
 		
 		
@@ -297,7 +301,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		
 		$sql -> Run ("INSERT INTO ki_games $list");
 		$id = $sql -> LastInsert ();
-		internal_log_game (1, $id);
+		internal_log_game ($user_add ? 1 : 19, $id, $user_add ? $_SERVER['REMOTE_ADDR'] : '');
 	}
 
 	internal_do_update_year_index ($sql);

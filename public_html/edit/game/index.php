@@ -154,7 +154,7 @@
 	function show_form ($data, $old_id)
 	{
 		$deleted = intval($data['deleted_flag']) == 1;
-		$req_moderation = intval($data['deleted_flag']) == -1;
+		$moderate_mode = intval($data['deleted_flag']) == -1;
 		echo '<form action="/edit/game/" method="post" id="edit">';
 		write_mg_datalist();
 		echo '<table>';
@@ -197,7 +197,7 @@
 		
 
 		echo "<td>";
-		if (($data['id'] == 0) || $req_moderation)
+		if (($data['id'] == 0) || $moderate_mode)
 		{
 			$button_name = 'Добавить';
 		}
@@ -215,7 +215,14 @@
 		submit ($button_name, 'save', $data['id'], '',  TRUE);
 		echo "</td></tr>\n";
 		echo '</table>';
-		echo "<input type=\"hidden\" name=\"old_id\" value=\"$old_id\">";
+		if ($old_id)
+		{
+			echo "<input type=\"hidden\" name=\"old_id\" value=\"$old_id\">";
+		}
+		if ($moderate_mode)
+		{
+				echo "<input type=\"hidden\" name=\"moderate_mode\" value=1>";
+		}
 		echo '</form>';
 		if (!$deleted && $data['id'] > 0)
 		{
@@ -234,7 +241,7 @@
       echo "<script type=\"text/javascript\">update_time_placeholder('begin', 'time');</script>";
 		}
 
-    if ($data['id'] > 0 && !req_moderation)
+    if ($data['id'] > 0 && !$moderate_mode)
     {
 			show_dates ($data['id'], $data);
 			show_review_list($data['id']);
@@ -540,8 +547,14 @@
 
 		if (get_post_field ('send_email') && !$user_add)
     {
-      $email = new GameUpdatedEmail ($id, $old);
+      $email = new GameUpdatedEmail ($id, $old &&!get_post_field('moderate_mode'));
       $email -> send();
+    }
+    
+    if ($user_add)
+    {
+			$email = new GameReqModerateEmail ($id);
+			$email -> send();
     }
 
 		if ($id === FALSE)
