@@ -20,6 +20,10 @@
 		{
 			$region = '/ural/';
 		}
+		elseif ($region == 7)
+		{
+			$region = '/south';
+		}
 		else
 		{
 			$region = '/';

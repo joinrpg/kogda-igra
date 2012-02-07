@@ -140,22 +140,6 @@ CREATE TABLE IF NOT EXISTS `ki_polygons` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ki_regions`
---
-
-CREATE TABLE IF NOT EXISTS `ki_regions` (
-  `region_id` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `region_name` varchar(100) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `region_code` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT '',
-  `region_experimental` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`region_id`),
-  UNIQUE KEY `region_name` (`region_name`,`region_code`),
-  KEY `region_experimental` (`region_experimental`)
-) ENGINE=MyISAM  DEFAULT CHARSET=cp1251 AUTO_INCREMENT=7 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `ki_review`
 --
 
@@ -190,21 +174,6 @@ CREATE TABLE IF NOT EXISTS `ki_status` (
   `good_status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`status_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=cp1251;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ki_sub_regions`
---
-
-CREATE TABLE IF NOT EXISTS `ki_sub_regions` (
-  `sub_region_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sub_region_name` varchar(100) NOT NULL DEFAULT '',
-  `sub_region_disp_name` varchar(20) NOT NULL DEFAULT '',
-  `region_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`sub_region_id`),
-  KEY `region_id` (`region_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 
 -- --------------------------------------------------------
 
