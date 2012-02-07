@@ -64,7 +64,9 @@
         <li><a href="/">Вся Россия</a></li>
         <li><a href="/msk/">Москва</a></li>
         <li><a href="/spb/">Санкт-Петербург</a></li>
-        <li><a href="/ural/">Урал</a> <sup>BETA</sup></li>
+        <li><a href="/ural/">Урал</a></li>
+        <li><a href="/sibir/">Сибирь</a> <sup>BETA</sup></li>
+        <li><a href="/south/">ЮФО</a><sup>BETA</sup></li>
         <li><a href="/edit/deleted-games/">Удаленные игры</a></li>
        </ul>
        </td>

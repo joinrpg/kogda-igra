@@ -24,6 +24,12 @@ RewriteRule ^appcode(.*) http://kogda-igra.ru/
 RewriteRule ^ural/19(.*)/?$ /?region=5&year=19$1
 RewriteRule ^ural/20(.*)/?$ /?region=5&year=20$1
 RewriteRule ^ural/?$ /?region=5
+RewriteRule ^south/19(.*)/?$ /?region=7&year=19$1
+RewriteRule ^south/20(.*)/?$ /?region=7&year=20$1
+RewriteRule ^south/?$ /?region=7
+RewriteRule ^sibir/19(.*)/?$ /?region=6&year=19$1
+RewriteRule ^sibir/20(.*)/?$ /?region=6&year=20$1
+RewriteRule ^sibir/?$ /?region=6
 RewriteRule ^nw/19(.*)/?$ /?region=4&year=19$1
 RewriteRule ^nw/20(.*)/?$ /?region=4&year=20$1
 RewriteRule ^nw/?$ /?region=4
