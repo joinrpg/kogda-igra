@@ -78,8 +78,7 @@
 	{
 		echo '<li><a href="/edit/polygons/">Полигоны</a></li>';
 	}
-	
-	?>
+	?>		<li><a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk">Инструкция для редакторов</a></li>
        </ul>
      
      </td>

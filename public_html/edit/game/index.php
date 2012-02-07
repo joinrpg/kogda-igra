@@ -163,6 +163,7 @@
 		echo '<form action="/edit/game/" method="post" id="edit">';
 		write_mg_datalist();
 		echo '<table>';
+		echo '<tr><td colspan=2><label><a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk"><strong>Справка</strong> для редакторов</a></label></td>';
 		show_required_tb ('Название игры', 'name', 100, $data['name'], 'text');
 
 		show_regions_dd ($data['sub_region_id']);
@@ -633,6 +634,7 @@
       $hdr = 'Добавление новой игры';
     }
     write_header("Kogra-igra.Ru — $hdr", true);
+    
     global $msg;
     if ($msg)
     {
