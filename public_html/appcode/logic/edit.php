@@ -207,7 +207,7 @@ function get_year_list_full()
 			");
 }
 
-function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_flags, $status, $comment, $sub_region, $hide_email = 0, $players_count = 0, $send_email = TRUE, $allrpg_info_id = 0)
+function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_flags, $status, $comment, $sub_region, $hide_email = 0, $players_count = 0, $send_email = TRUE, $allrpg_info_id = 0, $user_add = 0)
 {
 	$sql = connect();
 	
@@ -225,6 +225,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 	$hide_email = intval ($hide_email);
 	$players_count = intval ($players_count);
 	$allrpg_info_id = intval($allrpg_info_id) > 0 ?intval ($allrpg_info_id) : 'NULL' ;
+	$user_add = intval ($user_add);
 	
 	if ($players_count == 0)
 	{
@@ -233,8 +234,15 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 	
 	$user_id	= intval (get_user_id ());
 	
-	if ($user_id == 0)
+	if ($user_id == 0 && !$user_add)
 		return FALSE;
+		
+	if ($id && $user_add)
+	{
+		return FALSE;
+	}
+		
+	$deleted_flag = $user_add ? -1 : 0;
 	
 	$list = "SET 
 		`name` = $_name, 
@@ -247,7 +255,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		`status` = $status, 
 		`comment` = $_comment, 
 		`sub_region_id` = $sub_region, 
-		`deleted_flag` = 0,
+		`deleted_flag` = $deleted_flag,
 		`hide_email` = $hide_email,
 		`players_count` = $players_count,
 		`allrpg_info_id` = $allrpg_info_id
@@ -283,7 +291,6 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		}
 
 		$sql -> Run ("UPDATE ki_games $list WHERE `id` = $id LIMIT 1");
-		$send_update = 1;
 	}
 	else
 	{	
@@ -291,7 +298,6 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		$sql -> Run ("INSERT INTO ki_games $list");
 		$id = $sql -> LastInsert ();
 		internal_log_game (1, $id);
-		$send_update = 0;
 	}
 
 	internal_do_update_year_index ($sql);

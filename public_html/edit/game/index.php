@@ -13,15 +13,6 @@
 	require_once 'logic/review.php';
 	require_once 'logic/datalist.php';
 
-	if (!check_edit_priv())
-		return_to_main();
-
-	function message ($msg)
-	{
-		write_header ('Ролевые игры');
-		echo "<p>$msg</p>";
-		write_footer();
-	}
 
 	function show_email ($value, $hide_email)
 	{
@@ -30,8 +21,11 @@
 		echo "<td><input type=\"email\" name=\"email\" id=\"email\" list=\"emaillist\" autocomplete=off maxlength=\"100\" size=\"30\" value=\"$value\" />";
 		echo "<select id=\"allrpg_emails\" style=\"visibility:hidden\" onChange=\"set_email_field();\"></select>";
 		echo "<br/>";
-		$checked = $hide_email ? ' checked="checked" ' : '';
-		echo "<input type=\"checkbox\" name=\"hide_email\"$checked id=\"hide_email\" value=\"1\"/><label for=\"hide_email\">Спрятать</label>";
+		if (check_edit_priv())
+		{
+			$checked = $hide_email ? ' checked="checked" ' : '';
+			echo "<input type=\"checkbox\" name=\"hide_email\"$checked id=\"hide_email\" value=\"1\"/><label for=\"hide_email\">Спрятать</label>";
+		}
 		echo "</td></tr>\n";
 	}
 
@@ -159,11 +153,15 @@
 
 	function show_form ($data, $old_id)
 	{
-		$deleted = intval($data['deleted_flag']) != 0;
+		$deleted = intval($data['deleted_flag']) == 1;
+		$req_moderation = intval($data['deleted_flag']) == -1;
 		echo '<form action="/edit/game/" method="post" id="edit">';
 		write_mg_datalist();
 		echo '<table>';
-		echo '<tr><td colspan=2><label><a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk"><strong>Справка</strong> для редакторов</a></label></td>';
+		if (check_edit_priv())
+		{
+			echo '<tr><td colspan=2><label><a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk"><strong>Справка</strong> для редакторов</a></label></td>';
+		}
 		show_required_tb ('Название игры', 'name', 100, $data['name'], 'text');
 
 		show_regions_dd ($data['sub_region_id']);
@@ -186,15 +184,35 @@
 		show_tb_with_list ('Мастерская группа', 'mg', 100, $data['mg'], 'mgnames');
 		show_email ($data['email'], $data['hide_email']);
 		show_tb ('Кол-во игроков', 'players_count', 20, $data['players_count']);
-		show_allrpg_info_id ( $data['allrpg_info_id']);
-		show_dd ('Настройки', 'show_flags', $data['show_flags']);
-		show_dd ('Статус', 'status', $data['status']);
-		show_tb ('Комментарий', 'comment', 100, $data['comment']);
-		echo "<tr><td>";
-		echo "<input type=\"checkbox\" name=\"send_email\" id=\"send_email\" checked value=\"1\"/><label for=\"send_email\">Уведомить мастеров об изменениях.</label>";
-		echo "</td>\n";
+		if (check_edit_priv())
+		{
+			show_allrpg_info_id ( $data['allrpg_info_id']);
+			show_dd ('Настройки', 'show_flags', $data['show_flags']);
+			show_dd ('Статус', 'status', $data['status']);
+			show_tb ('Комментарий', 'comment', 100, $data['comment']);
+			echo "<tr><td>";
+			echo "<input type=\"checkbox\" name=\"send_email\" id=\"send_email\" checked value=\"1\"/><label for=\"send_email\">Уведомить мастеров об изменениях.</label>";
+			echo "</td>\n";
+		}
+		
+
 		echo "<td>";
-		submit ('Сохранить', 'save', $data['id'], $deleted ? ' Нажмите «Сохранить» для восстановления удаленной игры' : '',  TRUE);
+		if (($data['id'] == 0) || $req_moderation)
+		{
+			$button_name = 'Добавить';
+		}
+		else
+		{
+			if ($deleted)
+			{
+				$button_name = 'Восстановить';
+			}
+			else
+			{
+				$button_name = 'Сохранить';
+			}
+		}
+		submit ($button_name, 'save', $data['id'], '',  TRUE);
 		echo "</td></tr>\n";
 		echo '</table>';
 		echo "<input type=\"hidden\" name=\"old_id\" value=\"$old_id\">";
@@ -216,18 +234,13 @@
       echo "<script type=\"text/javascript\">update_time_placeholder('begin', 'time');</script>";
 		}
 
-    if ($data['id'] > 0)
+    if ($data['id'] > 0 && !req_moderation)
     {
-      show_dates ($data['id'], $data);
-      		show_review_list($data['id']);
-		show_photos($data['id']);
-
-		show_history ($data['id']);
+			show_dates ($data['id'], $data);
+			show_review_list($data['id']);
+			show_photos($data['id']);
+			show_history ($data['id']);
     }
-
-
-
-
 		write_footer();
 	}
 
@@ -470,39 +483,62 @@
 	function do_save ($id)
 	{
     $old = $id > 0;
-		$id = do_game_update(
-			$id,
-			get_post_field ('name'),
-			get_post_field ('uri'),
-			get_post_field ('type'),
-			get_post_field ('polygon'),
-			get_post_field ('mg'),
-			get_post_field ('email'),
-			get_post_field ('show_flags'),
-			get_post_field ('status'),
-			get_post_field ('comment'),
-			get_post_field ('sub_region'),
-			get_post_field ('hide_email'),
-			get_post_field ('players_count'),
-			get_post_field ('send_email'),
-			get_post_field ('allrpg_info_id')
-		);
+    $user_add = !check_edit_priv();
+    
+    if ($user_add)
+    {
+			$id = do_game_update(
+				$id,
+				get_post_field ('name'),
+				get_post_field ('uri'),
+				get_post_field ('type'),
+				get_post_field ('polygon'),
+				get_post_field ('mg'),
+				get_post_field ('email'),
+				0,
+				0,
+				'',
+				get_post_field ('sub_region'),
+				0,
+				get_post_field ('players_count'),
+				0,
+				0,
+				1
+			);
+    }
+    else
+    {
+			$id = do_game_update(
+				$id,
+				get_post_field ('name'),
+				get_post_field ('uri'),
+				get_post_field ('type'),
+				get_post_field ('polygon'),
+				get_post_field ('mg'),
+				get_post_field ('email'),
+				get_post_field ('show_flags'),
+				get_post_field ('status'),
+				get_post_field ('comment'),
+				get_post_field ('sub_region'),
+				get_post_field ('hide_email'),
+				get_post_field ('players_count'),
+				get_post_field ('send_email'),
+				get_post_field ('allrpg_info_id'),
+				0
+			);
+		}
 
 		$old_id = get_post_field('old_id');
 		if ($old_id > 0)
 		{
       delete_old_game($old_id);
 		}
-		if ($old)
-		{
-
-		}
-		else
+		if (!$old)
 		{
       do_movedate ($id, get_post_date_field('begin'), get_post_field('time'));
 		}
 
-		if (get_post_field ('send_email'))
+		if (get_post_field ('send_email') && !$user_add)
     {
       $email = new GameUpdatedEmail ($id, $old);
       $email -> send();
@@ -665,45 +701,69 @@
 
 	}
 
+function request_edit_priv()
+{
+	if (!check_edit_priv())
+	{
+		return_to_main();
+	}
+}
 
 // MAIN
+
 	$id = array_key_exists ('id', $_POST) ? intval($_POST['id']) : (array_key_exists ('id', $_GET) ? intval($_GET['id']) : 0) ;
+	$action = array_key_exists ('action', $_POST) ? $_POST['action'] : '';
 
-	$action = array_key_exists ('action', $_POST) ? $_POST['action'] : 0;
-	if ($action === 'delete')
+	switch ($action)
 	{
-		if (do_game_delete ($id) === FALSE)
-		{
-			return_to_main();
-		}
-		else
-		{
-			header("Location: /edit/game/?id=$id");
-			die();
-		}
+		case 'delete':
+			request_edit_priv();
+			if (do_game_delete ($id) === FALSE)
+			{
+				return_to_main();
+			}
+			else
+			{
+				header("Location: /edit/game/?id=$id");
+				die();
+			}
+			break;
+		case 'save':
+			if ($id)
+			{
+				request_edit_priv();
+			}
+			do_save($id);
+			break;
+		case 'add_review':
+			request_edit_priv();
+			do_addreview($id);
+			break;
+		case 'delete_review':
+			request_edit_priv();
+			do_deletereview($id);
+			break;
+		case 'save_date':
+			request_edit_priv();
+			do_changedate($id);
+			break;
+		case 'delete_date':
+			request_edit_priv();
+			action_deletedate($id);
+			break;
+		case 'up_date':
+			request_edit_priv();
+			action_change_date_order($id, -1);
+			break;
+		case 'down_date':
+			request_edit_priv();
+			action_change_date_order($id, +1);
+			break;
+		default:
+			if ($id)
+			{
+				request_edit_priv();
+			}
+			do_edit($id);
 	}
-	elseif ($action === 'save')
-		do_save ($id);
-	elseif ($action === 'add_review')
-    do_addreview($id);
-  elseif ($action === 'delete_review')
-    do_deletereview($id);
-  elseif ($action === 'save_date')
-    do_changedate($id);
-  elseif ($action === 'delete_date')
-   {
-     action_deletedate($id);
-   }
-  elseif ($action === 'up_date')
-  {
-    action_change_date_order($id, -1);
-  }
-  elseif ($action === 'down_date')
-  {
-    action_change_date_order($id, +1);
-  }
-
-	do_edit ($id);
-
-
 ?>

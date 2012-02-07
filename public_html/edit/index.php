@@ -15,6 +15,8 @@
 	require_once 'user_funcs.php';
 	require_once 'logic.php';
 	require_once 'forms.php';
+	require_once 'logic/gamelist.php';
+	require_once 'calendar.php';
 	
 
 	if (!check_edit_priv())
@@ -47,6 +49,15 @@
 	echo '<h4>Поиск</h4>';
 	show_search_form();
 	
+	
+	$list = get_games_for_moderate();
+	if (is_array($list))
+	{
+		echo '<h2>Модерация игр (пока не смотрите сюда)</h2>';
+		$calendar = new Calendar($list);
+		$calendar -> show_cancelled_games_checkbox = FALSE;
+		$calendar -> write_calendar();
+	}
 	?> 
 	<br />
 	<table class="control_panel">

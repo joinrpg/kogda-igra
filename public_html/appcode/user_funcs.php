@@ -100,8 +100,6 @@ function set_username($ljuser, $email = NULL)
 	$driver = connect();
 	$driver -> Run ("UPDATE users SET `lastvisit` = NOW() WHERE `user_id` = $user_id");
 	$_SESSION['user_id'] = $user_id;
-
-
 }
 
 function get_user_id()

@@ -98,4 +98,9 @@ function get_new_games_for_week()
     AND (NOW( ) - INTERVAL 7 DAY) < update_date AND (kgd.`begin` > NOW()) AND (show_flags = 0) AND (kg.deleted_flag = 0) AND (kgd.order = 0)", 
     "INNER JOIN `ki_updates` ki ON kg.id = ki.game_id", 'update_date DESC', 'LIMIT 5');
 }
+
+function get_games_for_moderate()
+{
+	return _get_games ('kg.deleted_flag = -1');
+}
 ?>
