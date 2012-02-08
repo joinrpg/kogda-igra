@@ -141,7 +141,12 @@ function show_select ($name, $selected, $select_id = FALSE)
 
 	function return_to_main()
 	{
-		header('Location: /');
+		redirect_to('/');
+	}
+	
+	function redirect_to($location)
+	{
+		header("Location: $location");
 		die();
 	}
 
