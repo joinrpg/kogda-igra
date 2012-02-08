@@ -36,7 +36,7 @@ function write_header ($title, $edit = FALSE)
   echo '</head><body>';
 	if (!array_key_exists("csrf_token", $_SESSION))
 	{
-		$_SESSION['csrf_token'] = md5(mt_rand);
+		$_SESSION['csrf_token'] = md5(mt_rand());
 	}
 	echo "<form><input type=\"hidden\" name=\"csrf_token\" id=\"csrf_token\" value=\"{$_SESSION['csrf_token']}\"></form>";
 }
