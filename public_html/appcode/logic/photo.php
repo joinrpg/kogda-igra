@@ -137,6 +137,10 @@ function get_photo_by_game_id($game_id)
   $sql = connect();
   $game_id = intval($game_id);
   $photos = _get_photo("kp.`game_id` = $game_id");
+  if (!is_array($photos))
+  {
+		return NULL;
+  }
   foreach ($photos as $photo)
   {
     $author = $photo['username'] ? $photo['username'] : $photo['photo_author'];
