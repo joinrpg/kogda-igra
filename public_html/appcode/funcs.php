@@ -150,7 +150,7 @@ function show_select ($name, $selected, $select_id = FALSE)
 		die();
 	}
 
-	function show_user_link ($username, $user_id)
+	function show_user_link ($username)
 	{
     return "<span style=\"white-space: nowrap\"><img src=\"/img/userinfo.gif\" /><a href='/user/$username'><b>$username</b></a></span>";
 
