@@ -301,7 +301,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		
 		$sql -> Run ("INSERT INTO ki_games $list");
 		$id = $sql -> LastInsert ();
-		internal_log_game ($user_add ? 19 : 1, $id, $user_add ? $_SERVER['REMOTE_ADDR'] : '');
+		internal_log_game ($user_add ? 19 : 1, $id);
 	}
 
 	internal_do_update_year_index ($sql);

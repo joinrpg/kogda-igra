@@ -241,11 +241,14 @@
       echo "<script type=\"text/javascript\">update_time_placeholder('begin', 'time');</script>";
 		}
 
-    if ($data['id'] > 0 && !$moderate_mode)
+    if ($data['id'] > 0)
     {
-			show_dates ($data['id'], $data);
-			show_review_list($data['id']);
-			show_photos($data['id']);
+			if (!$moderate_mode)
+			{
+				show_dates ($data['id'], $data);
+				show_review_list($data['id']);
+				show_photos($data['id']);
+			}
 			show_history ($data['id']);
     }
 		write_footer();

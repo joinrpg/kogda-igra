@@ -6,7 +6,22 @@ function write_update_line($game, $colspan)
 		$update_text = htmlspecialchars ($game['ki_update_type_name']);
 		$user = htmlspecialchars ($game['username']);
 		$date = formate_single_date($game['update_date']);
-		$user = show_user_link($user, $game['user_id']);
+		if ($game['user_id'])
+		{
+			$user = show_user_link($user, $game['user_id']);
+		}
+		else
+		{
+			$user = 'Аноним';
+		}
+		if ($game['ip_address'])
+		{
+			$ip = " ({$game['ip_address']})";
+		}
+		else
+		{
+			$ip = '';
+		}
 		if ($game['update_type_polygon_flag'] > 0)
 		{
       $update_text .= ' ('. $game['polygon_name'].')';
@@ -19,7 +34,7 @@ function write_update_line($game, $colspan)
 		{
       $update_text .= " (" . show_user_link ($game['updated_user_name'], $game['updated_user_id']).")";
 		}
-		echo "$date $user: $update_text {$game['msg']}";
+		echo "$date $user$ip: $update_text {$game['msg']}";
 		echo "</td></tr>";
 }
 

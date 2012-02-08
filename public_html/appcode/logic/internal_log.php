@@ -5,6 +5,7 @@ function internal_log_game ($update_type, $game_id, $msg = FALSE)
 {
 	$sql = connect();
 	$user_id = get_user_id();
+	$ip = $user_id ? 'NULL' : "'{$_SERVER['REMOTE_ADDR']}'";
 	$update_type  = intval ($update_type);
 	$game_id = intval ($game_id);
 	
@@ -36,6 +37,7 @@ function internal_log_game ($update_type, $game_id, $msg = FALSE)
 		user_id = $user_id,
 		update_date = NOW(), 
 		msg = $msg,
+		ip_address = $ip,
 		game_id = $game_id");
 }
 

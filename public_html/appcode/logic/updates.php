@@ -33,7 +33,7 @@ function _get_updates($where)
 		LEFT JOIN `ki_regions` kr ON ksr.region_id = kr.region_id
 		LEFT JOIN `ki_status` ks ON ks.status_id = kg.status
 		LEFT JOIN `users` updated_user ON updated_user.user_id = ku.updated_user_id
-		INNER JOIN users ON users.user_id = ku.user_id
+		LEFT JOIN users ON users.user_id = ku.user_id
 		WHERE $where
 		ORDER BY update_date DESC
 	");
