@@ -712,7 +712,7 @@
 		else
 		{
 			$id = 0;
-			show_form (null);
+			show_form (null, null);
 		}
 
 	}
