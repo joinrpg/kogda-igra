@@ -90,6 +90,7 @@ class GameUpdatedEmail extends Email
   
   function get_int_table()
   {
+		$list = '';
      foreach ($this->intersections as $game)
      {
         $masked = $game['show_flags'] && 1;
