@@ -72,16 +72,25 @@
       $email =  check_username() ? "<em>Скрытый:</em>$email" : '';
     }
 	}
-if ($game['deleted_flag'])
+	$deleted_flag = $game['deleted_flag'];
+if ($deleted_flag)
 {
-	echo '<p>Данная запись об игре удалена. Такой игры никогда не было и она оказалась здесь только по ошибке редакторов. Приносим свои извинения.</p>';
-	  if (check_edit_priv())
+	if (check_edit_priv())
   {
-    echo "<p><a href=\"/edit/game/index.php?id=$id\">Изменить</a></p>";
+		redirect_to("/edit/game/index.php?id=$id");
   }
+	if ($deleted_flag == 1)
+	{
+		echo '<p>Данная запись об игре удалена. Такой игры никогда не было и она оказалась здесь только по ошибке редакторов. Приносим свои извинения.</p>';
+	}
+	elseif ($deleted_flag == -1)
+	{
+		echo '<p>Игра находится на модерации.</p>';
+	}
+	  
   write_footer();
   die();
-}
+	}
   $date = new GameDate($game);
   $year = $date->year();
   
