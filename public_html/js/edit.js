@@ -163,11 +163,15 @@ function update_time_placeholder(time_prefix, time2_prefix)
 	placeholder.innerHTML = weekday[date.getDay()];
 
 	var length = document.getElementById(time2_prefix).value;
-	var end_date = date;
-	end_date.setDate(date.getDate() + parseInt(length) - 1);
+	
+	if (length.length > 0)
+	{
+		var end_date = date;
+		end_date.setDate(date.getDate() + parseInt(length) - 1);
 
-	var placeholder2 = document.getElementById(time2_prefix + '_placeholder');
-	placeholder2.innerHTML = weekday[date.getDay()];
+		var placeholder2 = document.getElementById(time2_prefix + '_placeholder');
+		placeholder2.innerHTML = weekday[date.getDay()];
+	}
   
   update_allrpg_info (date, end_date);
 }
