@@ -68,6 +68,10 @@ function update_allrpg_info(datestart, dateend)
 	{
 		var req = new XMLHttpRequest();
 		var dropdown = document.getElementById('allrpg_games');
+		if (!dropdown)
+		{
+			return;
+		}
 		var uri = 'http://inf.allrpg.info/kogdaigra.php?datestart=' + get_date_string(datestart) +'&datefinish='  + get_date_string(dateend);
 		req.open ('GET', uri, true);
 		req.onreadystatechange = function (aEvt) {
@@ -152,7 +156,14 @@ function updateAllrpgInfo()
 
 function get_date_string(date)
 {
-  return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+	if (date) 
+  {
+		return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+	}
+	else
+	{
+		return null;
+	}
 }
 
 function update_time_placeholder(time_prefix, time2_prefix)
