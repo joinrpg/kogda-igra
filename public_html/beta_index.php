@@ -31,14 +31,13 @@
 	$topmenu -> show ();
 
 ?>
-<p>
+<!--<p>
 			Календарь ролевых игр на&nbsp;<?php echo $year; ?>&nbsp;год (<strong><a href="/about/">О нас</a></strong>).
 			<br>Предназначен прежде всего для мастеров, но&nbsp;надеемся, что он&nbsp;будет полезен и&nbsp;игрокам.
 			<br> Если вы заметили неточность, или хотите внести ценное предложение, пишите: <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>.
 			<br>Информация по <a href="/about/#regions">другим регионам</a>.
 		</p>
-		
-<!--
+
   	<div class="add">
 			<a href="mailto:rpg@kogda-igra.ru">Присылайте</a> информацию по&nbsp;форме:
 			<ul>
@@ -88,6 +87,7 @@
   <div class="adblock">[<a href="/about/#adv" title="Реклама">?</a>] СПб, 3 сентября: в числе первых дойди до «<a href="http://worlds-end-pub.livejournal.com">Края Света</a>»!</div>
   <?php
   }
+  echo '<br style="clear:left">';
   write_new_games_box (get_new_games_for_week(), get_new_reviews(), get_new_photos());
 	$calendar = new Calendar(get_main_calendar($year, $region, $show_only_future));
 	$calendar -> check_border = TRUE;
