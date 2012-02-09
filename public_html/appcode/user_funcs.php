@@ -72,7 +72,7 @@ function try_login_user_by_email ($email, $lastvisit = TRUE)
 	
 	$user = get_user_by_email ($email);
 
-	if ($user != FALSE)
+	if (is_array($user))
 	{
 		$user_id = $user['user_id'];
 		return $user_id;
@@ -81,7 +81,7 @@ function try_login_user_by_email ($email, $lastvisit = TRUE)
 	{
 	  $lastvisit = $lastvisit ? "NOW()" : "NULL";
 	  $sql = connect();
-    	$sql -> Run ("INSERT INTO users SET `username` = '$email', `email` = `$email`, `lastvisit` = $lastvisit, `create_date` = NOW()");
+    $sql -> Run ("INSERT INTO users SET `username` = '$email', `email` = '$email', `lastvisit` = $lastvisit, `create_date` = NOW()");
 		return $sql -> LastInsert ();
 	}
 }
