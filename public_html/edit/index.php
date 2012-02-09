@@ -17,12 +17,11 @@
 	require_once 'forms.php';
 	require_once 'logic/gamelist.php';
 	require_once 'calendar.php';
+	require_once 'top_menu.php';
 	
 
 	if (!check_edit_priv())
 		return_to_main();
-		
-			
 	
 	
 	$problems_row = get_problems_summary();
@@ -42,48 +41,39 @@
 	$editor_stats = get_editors_statistics();
 
 	write_header('Панель управления');
-	echo '<h1>Панель управления</h1>';
-	echo '<p style="clear:both">';
-	$user = show_lj_user(get_username());
-	echo "Добро пожаловать, $user!\n</p>";
-	echo '<h4>Поиск</h4>';
-	show_search_form();
+
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Панель управления';
+	$topmenu -> show();
 	
 	
 	$list = get_games_for_moderate();
 	if (is_array($list))
 	{
-		echo '<h2>Модерация игр (пока не смотрите сюда)</h2>';
+		echo '<h2>Модерация игр</h2>';
 		$calendar = new Calendar($list);
 		$calendar -> show_cancelled_games_checkbox = FALSE;
 		$calendar -> write_calendar();
 	}
 	?> 
 	<br />
-	<table class="control_panel">
+	<table class="control_panel" style="clear:both">
 	<tr>
-    <th>Календари</th>
-    <th>Панель управления</th>
-    <th>Материалы</th>
-    <th>Лента изменений</th>
-    <th>Статистика</th>
-    <th>Экспорт</th>
+    <th rowspan=2>Панель управления</th>
+    <th rowspan=2>Материалы</th>
+    <th rowspan=2>Лента изменений</th>
+    <th rowspan=2>Экспорт</th>
+    <th colspan=2>Проблемные игры</th>
+  </tr>
+  <tr>
+		<th>Все</th>
+		<th>В будущем</th>
   </tr>
 	<tr>
-    <td>
-      <ul>
-        <li><a href="/">Вся Россия</a></li>
-        <li><a href="/msk/">Москва</a></li>
-        <li><a href="/spb/">Санкт-Петербург</a></li>
-        <li><a href="/ural/">Урал</a></li>
-        <li><a href="/sibir/">Сибирь</a> <sup>BETA</sup></li>
-        <li><a href="/south/">ЮФО</a><sup>BETA</sup></li>
-        <li><a href="/edit/deleted-games/">Удаленные игры</a></li>
-       </ul>
-       </td>
         <td>
       <ul>
-        <li><a href="/edit/game/">Добавить игру</a></li>
+				<li><a href="/stat/">Статистика</a></li>
+        <li><a href="/edit/deleted-games/">Удаленные игры</a></li>
         <?php
 	if (check_my_priv (EDIT_POLYGONS_PRIV))
 	{
@@ -111,11 +101,6 @@
       </ul>
      </td>
      <td>
-      <ul>
-        <li><a href="/stat/">Количество игр</a></li></li>
-      </ul>
-     </td>
-     <td>
       
       <form action="/data/export/excel/" method="get">
         <?php
@@ -124,18 +109,9 @@
         ?>
         <input type="submit" value="Экспортировать" >
       </form>
-      <p>Экспорт в формате .xls.</p>
+      <p>Экспорт в формате .xls</p>
      </td>
-   </tr>
-  </table>
-	<br />
-	<table class="control_panel">
-		<tr>
-    <th colspan="2">Проблемные игры</th>
-    </tr>
-  	<tr><th>Все</th><th>В будущем</th></tr>
-    <tr>	
-       <td>
+     <td>
            <ul>
               <?php show_count_link('/edit/problems/noinfo/', 'Нет информации', $noinfo);
         show_count_link('/edit/problems/passed/', 'Прошедшие игры в статусе «OK»', $passed);
@@ -159,15 +135,13 @@
         ?>
       </ul>
      </td>
-    </tr>
+   </tr>
   </table>
+	
   <br />
-	<table class="control_panel">
-		<tr>
-    <th>Статистика редакторов</th><th>Пользователи</th>
-    </tr>
-  	<tr><td>
-  	<table><th>Имя</th><th>Правки за 3 месяца</th><th>Новые игры за 3 месяца</th></tr>
+  	<table>
+  	<tr><th colspan=3>Статистика редакторов</th></tr>
+  	<tr><th>Имя</th><th>Правки за 3 месяца</th><th>Новые игры за 3 месяца</th></tr>
   	<?php foreach ($editor_stats as $editor_data)
   	{
       echo "<tr>
@@ -176,22 +150,7 @@
         <td>{$editor_data['new_count']}</td></tr>\n";
   	}
   	?>
-    </table></td>
-    <td>
-    <?php
-    if (check_my_priv (USERS_CONTROL_PRIV))
-	{
-		?>
-      <form action="/edit/users/by-name/" method="post" id="edituser">
-        <label>Имя пользователя</label>
-        <input type="text" name="username" width="20">
-        <input type="submit" value="Редактировать профиль">
-      </form>
-		<?php
-	}
-    ?>
-    </td>
-  </table>
+    </table>
 	<?php
   $users_report = get_user_privs_report();
   $user_admin = check_my_priv(USERS_CONTROL_PRIV);
@@ -214,6 +173,18 @@
         </tr>\n";
         }
   }
+  if (check_my_priv (USERS_CONTROL_PRIV))
+	{
+		echo '<tr><td colspan=2>';
+		?>
+      <form action="/edit/users/by-name/" method="post" id="edituser">
+        <label>Имя пользователя</label>
+        <input type="text" name="username" width="20">
+        <input type="submit" value="Редактировать профиль">
+      </form>
+		<?php
+		echo '</td></tr>';
+	}
   echo "</table>";
   
 	write_footer();
