@@ -164,7 +164,7 @@
   	foreach ($user_data as $username => $editor_data)
   	{
       echo "<tr>
-        <td>" . show_user_link($username, $editor_data['user_id']) ."</td>
+        <td>" . show_user_link($username) ."</td>
         <td><a href=\"/lenta/user/{$editor_data['user_id']}\">{$editor_data['update_count']}</a></td>
         <td>{$editor_data['new_count']}</td>
         <td>{$editor_data['privs']}</td></tr>\n";
