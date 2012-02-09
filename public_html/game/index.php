@@ -194,7 +194,7 @@ $old_dates = get_game_dates($id);
     echo "<br><a href=\"/edit/photo/?game_id=$id\">Добавить фотоотчет</a>";
   }
   show_intersections($id, $game['name']);
-	write_footer();
+	write_footer(TRUE);
 function show_photos_array($photo_array)
 {
   foreach ($photo_array as $auth_photo)
