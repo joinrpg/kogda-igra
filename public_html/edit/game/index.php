@@ -190,13 +190,10 @@
 			show_dd ('Настройки', 'show_flags', $data['show_flags']);
 			show_dd ('Статус', 'status', $data['status']);
 			show_tb ('Комментарий', 'comment', 100, $data['comment']);
-			echo "<tr><td>";
-			echo "<input type=\"checkbox\" name=\"send_email\" id=\"send_email\" checked value=\"1\"/><label for=\"send_email\">Уведомить мастеров об изменениях.</label>";
-			echo "</td>\n";
 		}
-		
+		echo '<tr><td colspan=2>';
 
-		echo "<td>";
+		
 		if (($data['id'] == 0) || $moderate_mode)
 		{
 			$button_name = 'Добавить';
@@ -213,6 +210,10 @@
 			}
 		}
 		submit ($button_name, 'save', $data['id'], '',  TRUE);
+		if (check_edit_priv())
+		{
+			echo "<input type=\"checkbox\" name=\"send_email\" id=\"send_email\" checked value=\"1\"/><label for=\"send_email\">Уведомить мастеров об изменениях.</label>";
+		}
 		echo "</td></tr>\n";
 		echo '</table>';
 		if ($old_id)
