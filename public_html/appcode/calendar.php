@@ -112,7 +112,7 @@ class Calendar
   ?>
       <tr id="show_cancel_block" style="display:none"><th colspan=<?php echo $colspan; ?>>
         <input type="checkbox" name="show_cancel" id="show_cancel" checked onclick="show_cancelled_games()">
-        <label for="show_cancel"><b>Показать отмененные игры</b></label>
+        <label for="show_cancel"><b>Показывать отмененные игры</b></label>
       </th></tr>
    <?php
    }
