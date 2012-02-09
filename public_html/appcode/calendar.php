@@ -93,23 +93,35 @@ class Calendar
   function _write_calendar_header ()
   {
     $colspan = 7;
+    if ($this -> show_status)
+    {
+			$colspan++;
+    }
+    if ($this -> export_mode)
+    {
+			$colspan++;
+    }
+    if ($this -> editor)
+    {
+			$colspan++;
+    }
+    echo '
+    <table id="calendar" cellpadding="2" cellspacing="0">';
     if ($this -> show_cancelled_games_checkbox)
     {
   ?>
-      <div id="show_cancel_block" style="display:none">
+      <tr id="show_cancel_block" style="display:none"><th colspan=<?php echo $colspan; ?>>
         <input type="checkbox" name="show_cancel" id="show_cancel" checked onclick="show_cancelled_games()">
         <label for="show_cancel"><b>Показать отмененные игры</b></label>
-      </div>
+      </th></tr>
    <?php
    }
    ?>
-      <table id="calendar" cellpadding="2" cellspacing="0">
         <tr>
    <?php
     if ($this -> show_status)
     {
       echo "<th class=\"status-column\">Статус</th>";
-      $colspan ++;
     }
    ?>
 
@@ -123,7 +135,6 @@ class Calendar
    if ($this -> export_mode)
    {
       echo '<th class="email-column">Email</th>';
-      $colspan++;
    }
   ?>
           <th class="mg-column">Мастерская группа</th>

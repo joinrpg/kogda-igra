@@ -5,6 +5,12 @@
   margin-top: 0;
   margin-bottom: 0.5em;
 }
+div.top_menu 
+{
+	border: 1px solid;
+	padding:0.5em;
+	margin: 0.5em;
+}
 body
 {
 	background-color: #FFFFFF;
@@ -27,7 +33,7 @@ table, td, th
   border-collapse: collapse;
 }
 
-table.widget_table, table.photo_table
+table.photo_table
 {
 	border: 1px solid;
 }
@@ -108,7 +114,7 @@ a:visited
 	border-width: 1px;
 	border-style: solid;
 	padding: 0.5em;
-	margin-bottom: 1em;
+	margin: 0.5em;
 }
 
 .adblock
@@ -190,6 +196,6 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 
 .widget_table
 {
-  float: right;
-  margin: 2em;
+  margin: 0em;
+  border: none;
 }

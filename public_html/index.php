@@ -6,53 +6,7 @@
 	require_once 'logic.php';
 	require_once 'calendar.php';
 
-	function write_years_list2 ($region, $current_year, $show_only_future = false)
-	{
-		if ($region == 2)
-		{
-			$region = '/spb/';
-		}
-		elseif ($region == 3)
-		{
-			$region = '/msk/';
-		}
-		elseif ($region == 5)
-		{
-			$region = '/ural/';
-		}
-		elseif ($region == 7)
-		{
-			$region = '/south';
-		}
-		else
-		{
-			$region = '/';
-		}
-
-		echo '<p><strong>Календарь за:</strong>
-		<a href="/archive/">Ранее</a>';
-		$sep = ' :: ';
-		$years_list = get_year_list ($region);
-		foreach ($years_list as $year_val)
-		{
-		  $year = $year_val['year'];
-		  if ($year > $current_year-2)
-		  {
-				if ($year == $current_year && !$show_only_future)
-				{
-				$year_text = "<strong>$year</strong>";
-				}
-				else
-				{
-				$year_text = "<a href=\"$region$year/\">$year</a>";
-				}
-				echo "$sep$year_text";
-				//$sep = " :: ";
-			}
-		}
-		echo '</p>';
-	}
-
+	
 $year = array_key_exists('year', $_GET) ? intval($_GET['year']) : 0;
 if ($year !=0 && !validate_year($year))
 {
@@ -110,10 +64,10 @@ $region_name = $region_result['name'];
 			<br>Информация по <a href="/about/#regions">другим регионам</a>.
 		</p>
 
-
+<div style="float:left" class="top_menu">
 <?php
-	show_greeting($region, $year);
-	write_years_list2 ($region, $year, $show_only_future);
+	show_top_menu ($region, $year, $show_only_future);
+	echo '</div>';
 	if (check_username())
 	{
 		?>
@@ -127,7 +81,7 @@ $region_name = $region_result['name'];
 		<?php
 	}
 
-  show_search_form();
+  
   if (false) {
   ?>
   <br />

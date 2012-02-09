@@ -19,7 +19,7 @@
 			echo 'Напомнить в Google Calendar</a></td></tr>';
 		}
 		echo '<tr><td><div id="vk_like"></div><script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script></td></tr>';
-		echo "<tr><td><iframe src=\"http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fkogda-igra.ru%2Fgame%2F{$id}&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=40\" scrolling=\"no\" frameborder=\"0\" style=\"border:none; overflow:hidden; width:450px; height:65px;\" allowTransparency=\"true\"></iframe></td></tr>";
+		/*echo "<tr><td><iframe src=\"http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fkogda-igra.ru%2Fgame%2F{$id}&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=40\" scrolling=\"no\" frameborder=\"0\" style=\"border:none; overflow:hidden; width:450px; height:65px;\" allowTransparency=\"true\"></iframe></td></tr>";*/
 		echo "</table>";
 	}
 
@@ -73,41 +73,43 @@
     }
 	}
 	$deleted_flag = $game['deleted_flag'];
-if ($deleted_flag)
-{
-	if (check_edit_priv())
-  {
-		redirect_to("/edit/game/index.php?id=$id");
-  }
-	if ($deleted_flag == 1)
+	if ($deleted_flag)
 	{
-		echo '<p>Данная запись об игре удалена. Такой игры никогда не было и она оказалась здесь только по ошибке редакторов. Приносим свои извинения.</p>';
-	}
-	elseif ($deleted_flag == -1)
-	{
-		echo '<p>Игра находится на модерации.</p>';
-	}
-	  
-  write_footer();
-  die();
+		if (check_edit_priv())
+		{
+			redirect_to("/edit/game/index.php?id=$id");
+		}
+		if ($deleted_flag == 1)
+		{
+			echo '<p>Данная запись об игре удалена. Такой игры никогда не было и она оказалась здесь только по ошибке редакторов. Приносим свои извинения.</p>';
+		}
+		elseif ($deleted_flag == -1)
+		{
+			echo '<p>Игра находится на модерации.</p>';
+		}
+			
+		write_footer();
+		die();
 	}
   $date = new GameDate($game);
   $year = $date->year();
   
-    write_widget_table ($date, $id, $game);
     
-  echo "<h2>{$game['name']}</h2>";
-  echo '<p><a href="/">Вернуться на главную</a></p>';
+echo '<div style="float:right" class="top_menu">';
+  show_top_menu(-1, $year, TRUE);
+  echo '</div>';
+  echo "<h2>{$game['name']}";
   if (check_edit_priv())
   {
-    echo "<p><a href=\"/edit/game/index.php?id=$id\">Изменить</a></p>";
+    echo " (<a href=\"/edit/game/index.php?id=$id\">Изменить</a>)";
   }
-  
+  echo "</h2>";
+  write_widget_table ($date, $id, $game);
 
 
 	echo '<p>';
 	echo "<b>Статус</b>: {$game['status_name']}<br>";
-	echo '<b>Дата</b>: ' .  ($date -> show_date_string(true)) . " (<a href=\"/$year/\">весь год</a>)<br>";
+	echo '<b>Дата</b>: ' .  ($date -> show_date_string(true)) . "<br>";
 	echo "<b>Тип игры</b>: $game_type_name<br>";
   echo "<b>Регион</b>: {$game['sub_region_name']}<br>";
   echo "<b>Полигон</b>: $polygon_name ";

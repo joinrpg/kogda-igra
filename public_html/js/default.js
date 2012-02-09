@@ -51,7 +51,7 @@ function init()
   var show_cancel_block = document.getElementById('show_cancel_block');
   if (show_cancel_block)
   {
-    show_cancel_block.style.display = 'block';
+    show_cancel_block.style.display = 'table-row';
     show_cancelled_games();
   }
 }

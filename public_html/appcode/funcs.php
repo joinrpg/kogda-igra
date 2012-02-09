@@ -225,6 +225,60 @@ function show_select ($name, $selected, $select_id = FALSE)
 		show_region_link('/ural/', 'Урал', $region == 5, $year, ' :: ');
 		echo '</p>';
 	}
+	
+	function write_years_list2 ($region, $current_year, $show_only_future = false)
+	{
+		if ($region == 2)
+		{
+			$region = '/spb/';
+		}
+		elseif ($region == 3)
+		{
+			$region = '/msk/';
+		}
+		elseif ($region == 5)
+		{
+			$region = '/ural/';
+		}
+		elseif ($region == 7)
+		{
+			$region = '/south';
+		}
+		else
+		{
+			$region = '/';
+		}
+
+		echo '<p><strong>Календарь за:</strong>
+		<a href="/archive/">Ранее</a>';
+		$sep = ' :: ';
+		$years_list = get_year_list ($region);
+		foreach ($years_list as $year_val)
+		{
+		  $year = $year_val['year'];
+		  if ($year > $current_year-2)
+		  {
+				if ($year == $current_year && !$show_only_future)
+				{
+				$year_text = "<strong>$year</strong>";
+				}
+				else
+				{
+				$year_text = "<a href=\"$region$year/\">$year</a>";
+				}
+				echo "$sep$year_text";
+			}
+		}
+		echo '</p>';
+	}
+
+	
+	function show_top_menu($region = -1, $year = 0, $show_only_future = FALSE)
+	{
+		show_greeting($region, $year);
+		write_years_list2 ($region, $year, $show_only_future);
+		show_search_form();
+	}
 
 	function get_field_from_post ($sql, $name)
 	{
