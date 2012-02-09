@@ -16,8 +16,7 @@ function get_user_by_id ($user_id)
   $users = $sql -> GetAll('users', '*', "`user_id` = '$user_id'");
   if ( count ($users) != 1)
     return null;
-  $user = $users[0];
-  return $user;
+  return $users[0];
 }
 
 function get_user()
@@ -28,7 +27,8 @@ function get_user()
 	$user_id = get_user_id();
 	if ($user_id)
 	{
-		return get_user_by_id($user_id);
+		$user = get_user_by_id($user_id);
+		return $user;
   }
   else
   	return null;
@@ -88,18 +88,21 @@ function try_login_user_by_email ($email, $lastvisit = TRUE)
 
 function set_username($ljuser, $email = NULL)
 {
-	setcookie('ljuser-name', $ljuser, time() + 60 * 60 * 24 * 30, '/', '', FALSE, TRUE);
 	if ($ljuser)
 	{
 		$user_id = get_user_id_from_name ($ljuser);
+		setcookie('ljuser-name', $ljuser, time() + 60 * 60 * 24 * 30, '/', '', FALSE, TRUE);
 	}
-	else if ($email)
+	elseif ($email)
 	{
 		$user_id = try_login_user_by_email($email);
 	}
-	$driver = connect();
-	$driver -> Run ("UPDATE users SET `lastvisit` = NOW() WHERE `user_id` = $user_id");
-	$_SESSION['user_id'] = $user_id;
+	if ($user_id)
+	{
+		$driver = connect();
+		$driver -> Run ("UPDATE users SET `lastvisit` = NOW() WHERE `user_id` = $user_id");
+		$_SESSION['user_id'] = $user_id;
+	}
 }
 
 function get_user_id()
