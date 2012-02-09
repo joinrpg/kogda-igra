@@ -105,6 +105,16 @@ function set_username($ljuser, $email = NULL)
 	}
 }
 
+function set_email($user_id, $email)
+{
+	$driver = connect();
+	
+	$user_id = intval ($user_id);
+	$email = $driver -> QuoteAndClean ($email);
+	
+	$driver -> Run ("UPDATE users SET `email` = $email WHERE `user_id` = $user_id AND (`email` IS NULL OR `email` = '')");
+}
+
 function get_user_id()
 {
 	return array_key_exists('user_id', $_SESSION) ? $_SESSION['user_id'] : 0;

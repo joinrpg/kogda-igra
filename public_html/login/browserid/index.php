@@ -18,8 +18,16 @@ if ($_GET && $_SESSION['csrf_token'])
 				$result = json_decode($result_str, true);
 				if ($result['status'] == 'okay')
 				{
-					set_username (NULL, $result['email']);
-					echo $result['email'];
+					$user_id = get_user_id();
+					$email = $result['email'];
+					if ($user_id)
+					{
+						set_email ($user_id, $email);
+					}
+					else
+					{
+						set_username (NULL, $email);
+					}
 				}
 			}
 		}
