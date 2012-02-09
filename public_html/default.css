@@ -274,7 +274,6 @@ table.logo_text
 .urgent_message
 {
 	border: solid 1px;
-	font-size: normal;
 	font-weight: bold;
 	background-color: LightSalmon;
 }
