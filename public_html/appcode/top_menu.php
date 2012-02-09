@@ -111,6 +111,11 @@
 				echo ' или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a><br>
 				<a href="/about/">Ответы на другие вопросы</a>';
 			}
+			$user = get_user();
+			if ($user && !$user['email'])
+			{
+				echo '<div class="urgent_message">В вашем профиле не указан адрес email. <input type="button" onclick="try_login()" value="Указать"></div>';
+			}
 			echo '</div>';
 		}
 
