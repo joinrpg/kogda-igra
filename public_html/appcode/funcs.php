@@ -236,6 +236,8 @@ function show_select ($name, $selected, $select_id = FALSE)
 				return '/msk/';
 			case 5:
 				return'/ural/';
+			case 6:
+				return '/sibir/';
 			case 7:
 				return '/south';
 			default:
