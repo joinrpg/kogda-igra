@@ -97,15 +97,18 @@
 				echo ' <form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>';
 				echo '<br>';
 			}
-			show_menu_link ('/edit/game', 'Добавить&nbsp;игру', '');
+			
 			
 			if (check_edit_priv())
 			{
+				show_menu_link ('/edit/game', 'Добавить&nbsp;игру', '');
 				show_menu_link ('/edit/', 'Панель&nbsp;управления', ' :: ');
 			}
 			else
 			{
-				echo '(самостоятельно) <br> или напишите нам на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
+				echo 'Нет нужной игры? ';
+				show_menu_link ('/edit/game', 'Добавьте самостоятельно', '');
+				echo ' или напишите нам на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
 			}
 			echo '</div>';
 		}
