@@ -39,6 +39,21 @@
 	$old_games_count = intval($problems_row['old_games_count']);
 	
 	$editor_stats = get_editors_statistics();
+	$users_report = get_user_privs_report();
+	
+	$user_data = array();
+	foreach ($editor_stats as $editor_row)
+	{
+		$user_data[$editor_row['username']] = $editor_row;
+	}
+	
+	foreach ($users_report as $user_row)
+	{
+		if (array_key_exists('privs', $user_row))
+    {
+       $user_data[$user_row['username']]['privs'] = $user_row['privs'];
+    }
+	}
 
 	write_header('Панель управления');
 
@@ -105,11 +120,12 @@
       <form action="/data/export/excel/" method="get">
         <?php
           show_dropdown_with_data ('region', get_array('region_display'));
+          echo '<br>';
           show_dropdown ('year');
         ?>
-        <input type="submit" value="Экспортировать" >
+        <br>
+        <input type="submit" value="Экспорт в XLS" >
       </form>
-      <p>Экспорт в формате .xls</p>
      </td>
      <td>
            <ul>
@@ -140,42 +156,22 @@
 	
   <br />
   	<table>
-  	<tr><th colspan=3>Статистика редакторов</th></tr>
-  	<tr><th>Имя</th><th>Правки за 3 месяца</th><th>Новые игры за 3 месяца</th></tr>
-  	<?php foreach ($editor_stats as $editor_data)
+  	<tr><th colspan=4>Пользователи</th></tr>
+  	<tr><th>Имя</th><th>Правки за 3 месяца</th><th>Новые игры за 3 месяца</th><th>Права</th></tr>
+  	<?php 
+  	
+  	
+  	foreach ($user_data as $username => $editor_data)
   	{
       echo "<tr>
-        <td>" . show_user_link($editor_data['username'], $editor_data['user_id']) ."</td>
+        <td>" . show_user_link($username, $editor_data['user_id']) ."</td>
         <td><a href=\"/lenta/user/{$editor_data['user_id']}\">{$editor_data['update_count']}</a></td>
-        <td>{$editor_data['new_count']}</td></tr>\n";
+        <td>{$editor_data['new_count']}</td>
+        <td>{$editor_data['privs']}</td></tr>\n";
   	}
-  	?>
-    </table>
-	<?php
-  $users_report = get_user_privs_report();
-  $user_admin = check_my_priv(USERS_CONTROL_PRIV);
-  ?>
-  <br>
-    <table class="control_panel">
-      <tr>
-        <th>Имя</th><th>Права</th>
-      </tr>
-  <?php
-  foreach ($users_report as $user_row)
-  {
-    if (array_key_exists('privs', $user_row))
-    {
-       $username = show_user_link($user_row['username'], $user_row['user_id']);
-       
-    echo "<tr>
-        <td>" .$username ."</td>
-        <td>{$user_row['privs']}</td>
-        </tr>\n";
-        }
-  }
-  if (check_my_priv (USERS_CONTROL_PRIV))
+  	if (check_my_priv (USERS_CONTROL_PRIV))
 	{
-		echo '<tr><td colspan=2>';
+		echo '<tr><td colspan=4>';
 		?>
       <form action="/edit/users/by-name/" method="post" id="edituser">
         <label>Имя пользователя</label>
@@ -185,8 +181,8 @@
 		<?php
 		echo '</td></tr>';
 	}
-  echo "</table>";
-  
+	echo '</table>';
+	 
 	write_footer();
 
 ?>
