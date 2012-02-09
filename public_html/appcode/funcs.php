@@ -226,28 +226,26 @@ function show_select ($name, $selected, $select_id = FALSE)
 		echo '</p>';
 	}
 	
+	function get_region_uri ($region)
+	{
+		switch ($region)
+		{
+			case 2:
+				return '/spb/';
+			case 3:
+				return '/msk/';
+			case 5:
+				return'/ural/';
+			case 7:
+				return '/south';
+			default:
+				return '/';
+		}
+	}
+	
 	function write_years_list2 ($region, $current_year, $show_only_future = false)
 	{
-		if ($region == 2)
-		{
-			$region = '/spb/';
-		}
-		elseif ($region == 3)
-		{
-			$region = '/msk/';
-		}
-		elseif ($region == 5)
-		{
-			$region = '/ural/';
-		}
-		elseif ($region == 7)
-		{
-			$region = '/south';
-		}
-		else
-		{
-			$region = '/';
-		}
+		$region = get_region_uri($region);
 
 		echo '<p><strong>Календарь за:</strong>
 		<a href="/archive/">Ранее</a>';
