@@ -108,7 +108,8 @@
 			{
 				echo 'Нет нужной игры? ';
 				show_menu_link ('/edit/game', 'Добавьте самостоятельно', '');
-				echo ' или напишите нам на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
+				echo ' или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a><br>
+				<a href="/about/">Ответы на другие вопросы</a>';
 			}
 			echo '</div>';
 		}
