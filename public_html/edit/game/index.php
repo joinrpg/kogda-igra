@@ -12,6 +12,7 @@
 	require_once 'email.php';
 	require_once 'logic/review.php';
 	require_once 'logic/datalist.php';
+	require_once 'top_menu.php';
 
 
 	function show_email ($value, $hide_email)
@@ -697,15 +698,20 @@
 
 		write_js_table($region_table, 'tbl_subregions');
 		write_js_table($polygons_table, 'tbl_polygons');
-		if (isset($data))
+		
+		$hdr = isset($data) ? "<a href=\"/game/$id\">$hdr</a>" : $hdr;
+		
+		if (check_edit_priv())
 		{
-      echo "<h1><a href=\"/game/$id\">$hdr</a></h1>";
-    }
-    else
-    {
-      echo "<h1>$hdr</h1>";
-    }
-		show_greeting();
+			$topmenu = new TopMenu();
+			$topmenu -> pagename = $hdr;
+			$topmenu -> show();
+		}
+		else
+		{
+			echo "<h1>$hdr</h1>";
+			show_greeting();
+		}
 		if (isset($data))
 		{
 			show_form ($data, $old_id);

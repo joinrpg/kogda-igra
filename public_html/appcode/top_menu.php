@@ -11,7 +11,7 @@
 	
 	function show_search_form2($string = '')
 	{
-    echo '<form action="/search.php" method="post" id="search_form" style="display:inline;">';
+    echo '<form action="/search.php" method="post" id="search_form" style="display:inline;padding-bottom:1em">';
     echo "<input type=\"search\" size=\"60\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
     echo '<input type="submit" value="Искать" />';
     echo '</form>';
@@ -82,8 +82,9 @@
 			echo '</tr></table></td>';
 
 			echo '</tr></table>';
-			show_search_form2 ();
 			$this -> show_menu ();
+			show_search_form2 ();
+			
 		}
 
 		function show_menu()
