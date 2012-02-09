@@ -34,17 +34,5 @@ if ($_GET && $_SESSION['csrf_token'])
 	}
 	die();
 }
-
-write_header("BrowserID");
-if (!array_key_exists("csrf_token", $_SESSION))
-{
-	$_SESSION['csrf_token'] = md5(mt_rand);
-}
-?>
-<a href="#" onclick="try_login()"><img src="https://browserid.org/i/sign_in_grey.png" alt="sign in button - grey"></a>
-<form>
-	<input type="hidden" name="csrf_token" id="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-</form>
-<?php
-write_footer();
+return_to_main();
 ?>
