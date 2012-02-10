@@ -105,20 +105,8 @@ class Calendar
     {
 			$colspan++;
     }
-    echo '
-    <table id="calendar" cellpadding="2" cellspacing="0">';
-    if ($this -> show_cancelled_games_checkbox)
-    {
-  ?>
-      <tr id="show_cancel_block" style="display:none"><th colspan=<?php echo $colspan; ?>>
-        <input type="checkbox" name="show_cancel" id="show_cancel" checked onclick="show_cancelled_games()">
-        <label for="show_cancel"><b>Показывать отмененные игры</b></label>
-      </th></tr>
-   <?php
-   }
-   ?>
-        <tr>
-   <?php
+    echo '<table id="calendar" cellpadding="2" cellspacing="0"><tr>';
+
     if ($this -> show_status)
     {
       echo "<th class=\"status-column\">Статус</th>";
