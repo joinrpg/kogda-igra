@@ -254,6 +254,7 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 	border: solid 2px;
 	margin: 1em;
 	padding: 1em;
+	max-width:40%
 }
 
 table.logo_text tr td
