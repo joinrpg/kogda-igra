@@ -6,9 +6,9 @@ function write_update_line($game, $colspan)
 		$update_text = htmlspecialchars ($game['ki_update_type_name']);
 		$user = htmlspecialchars ($game['username']);
 		$date = formate_single_date($game['update_date']);
-		if ($game['user_id'])
+		if ($user)
 		{
-			$user = show_user_link($user, $game['user_id']);
+			$user = show_user_link($user);
 		}
 		else
 		{
@@ -30,9 +30,9 @@ function write_update_line($game, $colspan)
 		{
       $update_text .= ' (<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>)';
 		}
-		if ($game['updated_user_id'] > 0)
+		if ($game['updated_user_name'])
 		{
-      $update_text .= " (" . show_user_link ($game['updated_user_name'], $game['updated_user_id']).")";
+      $update_text .= " (" . show_user_link ($game['updated_user_name']).")";
 		}
 		echo "$date $user$ip: $update_text {$game['msg']}";
 		echo "</td></tr>";

@@ -41,6 +41,24 @@ function internal_log_game ($update_type, $game_id, $msg = FALSE)
 		game_id = $game_id");
 }
 
+function internal_log_review ($update_type, $review_id, $game_id, $msg = FALSE)
+{
+		$sql = connect();
+	$user_id = get_user_id();
+	$update_type  = intval ($update_type);
+	$review_id = intval ($review_id);
+	$game_id = intval ($game_id);
+	$msg = $sql -> QuoteAndClean($msg);
+	$sql -> Run ("
+		INSERT INTO ki_updates 
+		SET ki_update_type_id = $update_type,
+		user_id = $user_id,
+		update_date = NOW(), 
+		msg = $msg,
+		review_id = $review_id,
+		game_id = $game_id");
+}
+
 function internal_log_photo ($update_type, $photo_id, $game_id, $msg = FALSE)
 {
 	$sql = connect();

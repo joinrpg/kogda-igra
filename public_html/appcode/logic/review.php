@@ -33,10 +33,12 @@ function do_add_game_review($game_id, $author, $topic_id, $uri, $author_lj = NUL
     (game_id, author_name, topic_id, show_review_flag, review_uri, author_id) 
     VALUES ($game_id, $author, $topic_id, 1, $uri, $author_lj)";
     
-  internal_log_game (13, $game_id, "Рецензия от $author_name");
+  
   
   $sql -> Run ($query);
   $review_id = $sql -> LastInsert ();
+  internal_log_review (13,  $review_id, $game_id);
+  
   
   $sql -> Run(
        "UPDATE `ki_games`
@@ -66,13 +68,13 @@ function do_delete_game_review ($review_id)
     $author_name = $prev_data['author_name'];
   }
   
-  $row = $sql -> GetRow("SELECT COUNT(*) AS review_count FROM `ki_review` WHERE game_id = $game_id AND show_review_flag = 1");
-  $review_count = $row['review_count'] - 1;
-  
-  $query = "DELETE FROM `ki_review` WHERE review_id = $review_id";
-  internal_log_game (14, $game_id, "Рецензия от $author_name");
+  $query = "UPDATE `ki_review` SET show_review_flag = 0 WHERE review_id = $review_id";
+  internal_log_review (14, $review_id, $game_id);
   
   $sql -> Run ($query);
+  
+  $row = $sql -> GetRow("SELECT COUNT(*) AS review_count FROM `ki_review` WHERE game_id = $game_id AND show_review_flag = 1");
+  $review_count = $row['review_count'];
   
   $sql -> Run(
        "UPDATE `ki_games`
