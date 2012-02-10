@@ -167,7 +167,7 @@
 		
 		function year_link ($year, $text)
 		{
-			if ($year == $this -> year)
+			if ($year == $this -> year && $this->calendar_mode)
 			{
 				passive_button ($text); 
 			}
