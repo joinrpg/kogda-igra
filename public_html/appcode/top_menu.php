@@ -12,7 +12,7 @@
 	function show_search_form2($string = '')
 	{
     echo '<form action="/search.php" method="post" id="search_form" style="display:inline;padding-bottom:1em">';
-    echo "<input type=\"search\" size=\"60\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
+    echo "<input type=\"search\" size=\"40\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
     echo '<input type="submit" value="Искать" />';
     echo '</form>';
 	}
@@ -29,7 +29,8 @@
 		
 		function get_page_name()
 		{
-			return (($this -> calendar_mode) ? "{$this -> region_name} {$this -> year}" : '') . $this -> pagename;
+			return (($this -> calendar_mode) ? "{$this -> region_name}&nbsp;{$this -> year}" : '') . $this -> pagename;
+			
 		}
 		
 		function show_region_link($text, $region, $beta)
@@ -59,7 +60,7 @@
 			
 			echo '<td><table class=logo_text><tr>';
 			echo '<td><a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
-			echo " Когда-Игра :: " . $this -> get_page_name();
+			echo " Когда-Игра: " . $this -> get_page_name();
 			echo '</td>';
 			echo '</tr></table></td>';
 
