@@ -1,5 +1,6 @@
 <?php
 require_once 'funcs.php';
+require_once 'review.php';
 function write_update_line($game, $colspan)
 {
     echo "<tr><td colspan=\"$colspan\">";
@@ -24,20 +25,23 @@ function write_update_line($game, $colspan)
 		}
 		if ($game['update_type_polygon_flag'] > 0)
 		{
-      $update_text .= ' ('. $game['polygon_name'].')';
+      $update_text .= ' '. $game['polygon_name'].'';
 		}
 		if ($game['update_type_photo_flag'] > 0 || $game['update_type_game_flag'] > 0 || $game['update_type_review_flag'] > 0)
 		{
-      $update_text .= ' (<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>)';
+      $update_text .= ' «<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>»';
 		}
 		if ($game['updated_user_name'])
 		{
-      $update_text .= " (" . show_user_link ($game['updated_user_name']).")";
+      $update_text .= " " . show_user_link ($game['updated_user_name']);
 		}
 		if ($game['update_type_review_flag'])
 		{
 			$review_uri = ReviewBase :: get_review_uri($game);
-			$update_text .= " [<a href=\"$review_uri\">Текст рецензии</a>]";
+			if ($review_uri)
+			{
+				$update_text .= " [<a href=\"$review_uri\">Текст рецензии</a>]";
+			}
 		}
 		echo "$date $user$ip: $update_text {$game['msg']}";
 		echo "</td></tr>";

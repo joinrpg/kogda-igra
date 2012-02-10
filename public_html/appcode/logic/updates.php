@@ -59,13 +59,13 @@ function get_last_update_date_for_game($game_id)
 
 function get_updates_by_user_id($user_id)
 {
-	$game_id = intval ($user_id);
+	$user_id = intval ($user_id);
 	return _get_updates("(NOW() - INTERVAL 3 MONTH) < update_date AND ku.user_id = $user_id");
 }
 
 function get_updates_except_user_id($user_id)
 {
-	$game_id = intval ($user_id);
+	$user_id = intval ($user_id);
 	return _get_updates("(NOW() - INTERVAL 3 MONTH) < update_date AND ku.user_id <> $user_id");
 }
 
