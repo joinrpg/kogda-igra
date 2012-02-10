@@ -18,7 +18,8 @@
 	require_once 'logic/gamelist.php';
 	require_once 'calendar.php';
 	require_once 'top_menu.php';
-	
+	require_once 'logic/updates.php';
+	require_once 'show_updates.php';
 
 	if (!check_edit_priv())
 		return_to_main();
@@ -182,7 +183,6 @@
 		echo '</td></tr>';
 	}
 	echo '</table>';
-	 
 	write_footer();
 
 ?>

@@ -1,8 +1,8 @@
-#calendar
+table#calendar
 {
   margin-left: 0;
   margin-right: 0.5em;
-  margin-top: 0;
+  margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
 div.top_menu 
@@ -267,6 +267,11 @@ table.logo_text tr td
 	border: none !important;
 }
 
+table.logo_text tr td img
+{
+	float:left;
+}
+
 table.logo_text
 {
 	border:none !important;
@@ -277,4 +282,12 @@ table.logo_text
 	border: solid 1px;
 	font-weight: bold;
 	background-color: LightSalmon;
+}
+
+.adv_box
+{
+	border: solid 1px;
+	padding: 0.5em;
+	margin-bottom: 0.5em;
+	float:left;
 }

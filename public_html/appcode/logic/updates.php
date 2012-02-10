@@ -16,18 +16,27 @@ function get_photo_updates()
 	return _get_updates("(NOW() - INTERVAL 3 MONTH) < update_date AND update_type_photo_flag = 1");
 }
 
-function _get_updates($where)
+function get_adv_updates_for_week()
+{
+		return _get_updates("(NOW() - INTERVAL 2 WEEK) < update_date AND advertise_update_flag = 1 AND COALESCE(kg.deleted_flag,0) = 0 AND COALESCE(krev.show_review_flag, 1) = 1 
+			AND (ki_game_date.begin IS NULL OR ki_game_date.begin > NOW())
+				", 3);
+}
+
+function _get_updates($where, $limit = 0)
 {
   $sql = connect();
   $sql -> Run("SET SQL_BIG_SELECTS=1");
+  $limit = ($limit) ? "LIMIT $limit" : "";
   return $sql -> Query("
-		SELECT ku.*, kut.ki_update_type_name, kut.update_type_polygon_flag, kut.update_type_game_flag, kut.update_type_photo_flag, kut.update_type_review_flag,
-		kg.*, kp.polygon_name, kgt.game_type_name, ksr.sub_region_disp_name, ksr.sub_region_name, kgt.show_all_regions, users.username, ks.status_name, ks.status_style, updated_user.username AS updated_user_name, krev.review_uri, krev.topic_id
+		SELECT ku.*, kut.ki_update_type_name, kut.update_type_polygon_flag, kut.update_type_game_flag, kut.update_type_photo_flag, kut.update_type_review_flag, kut.update_type_user_text,
+		kg.*, kp.polygon_name, kgt.game_type_name, ksr.sub_region_disp_name, ksr.sub_region_name, kgt.show_all_regions, users.username, ks.status_name, ks.status_style, updated_user.username AS updated_user_name, krev.review_uri, krev.topic_id, krev.show_review_flag
 		FROM ki_updates ku
 		
 		INNER JOIN ki_update_types kut ON ku.ki_update_type_id = kut.ki_update_type_id
 		LEFT JOIN ki_photo kph ON kph.photo_id = ku.photo_id
 		LEFT JOIN ki_games kg ON kg.id = ku.game_id OR kph.game_id = kg.id
+		LEFT JOIN ki_game_date ON ki_game_date.game_Id = kg.id AND ki_game_date.order = 0 
 		LEFT JOIN ki_polygons kp ON kg.polygon = kp.polygon_id OR ku.polygon_id = kp.polygon_id
 		LEFT JOIN ki_sub_regions ksr ON kg.sub_region_id = ksr.sub_region_id
 		LEFT JOIN ki_game_types kgt ON kg.type = kgt.game_type_id
@@ -38,7 +47,8 @@ function _get_updates($where)
 		LEFT JOIN users ON users.user_id = ku.user_id
 		
 		WHERE $where
-		ORDER BY update_date DESC
+		ORDER BY update_date DESC 
+		$limit
 	");
 }
 

@@ -1,4 +1,6 @@
 <?php
+require_once 'logic/updates.php';
+
 	function active_button ($uri, $text, $add = '')
 	{
 		echo "<td class='active'><a href=\"$uri\">$text</a>$add</td>";
@@ -82,9 +84,21 @@
 			$this -> write_years_list ();
 			echo '</tr></table></td>';
 
-			echo '</tr></table>';
-			$this -> show_menu ();
+			echo '</tr>';
+			echo '<tr><td colspan=2>';
 			show_search_form2 ();
+			echo '</td>';
+			
+			echo '<td><table><tr>';
+			active_button('/about/', 'О нас');
+			active_button('/reviews/', 'Рецензии');
+			active_button('/photo/', 'Фото');
+			echo '</tr></table></td>';
+			
+			echo '</table>';
+			
+			$this -> show_menu ();
+			$this -> write_adv_box();
 			
 		}
 
@@ -110,8 +124,7 @@
 			{
 				echo 'Нет нужной игры? ';
 				show_menu_link ('/edit/game', 'Добавьте самостоятельно', '');
-				echo ' или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a><br>
-				<a href="/about/">Ответы на другие вопросы</a>';
+				echo ' или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
 			}
 			$user = get_user();
 			if ($user && !$user['email'])
@@ -120,6 +133,31 @@
 			}
 			echo '</div>';
 		}
+		
+		function write_adv_box()
+	{
+	
+    $adv = get_adv_updates_for_week();
+    if (!is_array($adv))
+    {
+			return;
+    }
+    echo '<div class="adv_box"><b>Обновления:</b>';
+
+    foreach ($adv as $game)
+    {
+      echo "<br>";
+			$update_text = htmlspecialchars ($game['update_type_user_text']);
+			
+			$update_text = str_replace('%game%', '«<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>»', $update_text);
+			$update_text = str_replace('%review_link%', '<a href="' . ReviewBase :: get_review_uri($game) .'">Рецензия</a>', $update_text);
+			$update_text = str_replace('%photo%',  'Фотоотчет', $update_text);
+			$update_text = str_replace('%updated_user%', show_user_link ($game['updated_user_name']), $update_text);
+			
+			echo "$update_text {$game['msg']}";
+    }
+    echo '</div>';
+   }
 
 	function write_years_list()
 		{
