@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params (60*60*24*7);
+session_set_cookie_params (60*60*24*30);
 session_start();
 require_once 'common.php';
 require_once 'mysql.php';
