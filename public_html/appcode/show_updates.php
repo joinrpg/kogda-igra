@@ -34,6 +34,11 @@ function write_update_line($game, $colspan)
 		{
       $update_text .= " (" . show_user_link ($game['updated_user_name']).")";
 		}
+		if ($game['update_type_review_flag'])
+		{
+			$review_uri = ReviewBase :: get_review_uri($game);
+			$update_text .= " [<a href=\"$review_uri\">Текст рецензии</a>]";
+		}
 		echo "$date $user$ip: $update_text {$game['msg']}";
 		echo "</td></tr>";
 }

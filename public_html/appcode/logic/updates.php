@@ -21,8 +21,8 @@ function _get_updates($where)
   $sql = connect();
   $sql -> Run("SET SQL_BIG_SELECTS=1");
   return $sql -> Query("
-		SELECT ku.*, kut.ki_update_type_name, kut.update_type_polygon_flag, kut.update_type_game_flag, kut.update_type_photo_flag,
-		kg.*, kp.polygon_name, kgt.game_type_name, ksr.sub_region_disp_name, ksr.sub_region_name, kgt.show_all_regions, users.username, ks.status_name, ks.status_style, updated_user.username AS updated_user_name
+		SELECT ku.*, kut.ki_update_type_name, kut.update_type_polygon_flag, kut.update_type_game_flag, kut.update_type_photo_flag, kut.update_type_review_flag,
+		kg.*, kp.polygon_name, kgt.game_type_name, ksr.sub_region_disp_name, ksr.sub_region_name, kgt.show_all_regions, users.username, ks.status_name, ks.status_style, updated_user.username AS updated_user_name, krev.review_uri, krev.topic_id
 		FROM ki_updates ku
 		
 		INNER JOIN ki_update_types kut ON ku.ki_update_type_id = kut.ki_update_type_id
