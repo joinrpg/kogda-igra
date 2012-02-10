@@ -25,8 +25,7 @@ function do_add_game_review($game_id, $author, $topic_id, $uri, $author_lj = NUL
     $author_name = $author;
     $author = $sql -> QuoteAndClean ($author);
   }
-  $row = $sql -> GetRow("SELECT COUNT(*) AS review_count FROM `ki_review` WHERE game_id = $game_id AND show_review_flag = 1");
-  $review_count = $row['review_count'] + 1;
+  
   
   $query = "INSERT 
     INTO `ki_review` 
@@ -39,49 +38,54 @@ function do_add_game_review($game_id, $author, $topic_id, $uri, $author_lj = NUL
   $review_id = $sql -> LastInsert ();
   internal_log_review (13,  $review_id, $game_id);
   
+  do_update_game_review_counter ($game_id);
+
+  $sql -> Run ("COMMIT");
+}
+
+function do_update_game_review_counter ($game_id)
+{
+	$sql = connect();
+	$row = $sql -> GetRow("SELECT COUNT(*) AS review_count FROM `ki_review` WHERE game_id = $game_id AND show_review_flag = 1");
+  $review_count = $row['review_count'];
   
-  $sql -> Run(
+    $sql -> Run(
        "UPDATE `ki_games`
         SET review_count = $review_count
         WHERE id = $game_id");
-  $sql -> Run ("COMMIT");
 }
 
 function do_delete_game_review ($review_id)
 {
-  $sql = connect();
+  _do_delete_restore($review_id, 0, 14);
+}
+
+function do_restore_game_review ($review_id)
+{
+  _do_delete_restore($review_id, 1, 21);
+}
+
+
+function _do_delete_restore ($review_id, $show_review_flag, $update_type)
+{
+	  $sql = connect();
   $review_id = intval($review_id);
   
   $sql -> Run ("START TRANSACTION");
   
-  $prev_data = $sql -> GetRow("SELECT game_id, author_id FROM `ki_review` WHERE review_id = $review_id");
+  $prev_data = $sql -> GetRow("SELECT game_id FROM `ki_review` WHERE review_id = $review_id");
   
   $game_id = intval($prev_data['game_id']);
-  $author_id = intval ($prev_data['author_id']);
-  if ($author_id > 0)
-  {
-    $author = get_user_by_id($author_id);
-    $author_name = $author['username'];
-  }
-  else
-  {
-    $author_name = $prev_data['author_name'];
-  }
   
-  $query = "UPDATE `ki_review` SET show_review_flag = 0 WHERE review_id = $review_id";
-  internal_log_review (14, $review_id, $game_id);
-  
+  $query = "UPDATE `ki_review` SET show_review_flag = $show_review_flag WHERE review_id = $review_id";
+  internal_log_review ($update_type, $review_id, $game_id);
   $sql -> Run ($query);
   
-  $row = $sql -> GetRow("SELECT COUNT(*) AS review_count FROM `ki_review` WHERE game_id = $game_id AND show_review_flag = 1");
-  $review_count = $row['review_count'];
-  
-  $sql -> Run(
-       "UPDATE `ki_games`
-        SET review_count = $review_count
-        WHERE id = $game_id");
+  do_update_game_review_counter ($game_id);
   $sql -> Run ("COMMIT");
 }
+
+
 
 function get_game_by_review_id ($review_id)
 {
@@ -115,17 +119,24 @@ function _get_reviews($where)
     FROM `ki_review`  kr
     LEFT JOIN `users` ON kr.author_id = `users`.`user_id`
     LEFT JOIN `ki_games` kg ON kg.id = kr.game_id
-    WHERE ($where) AND show_review_flag = 1");
+    WHERE ($where)");
 }
 
 function get_reviews_for_user ($author_id)
 {
-  return _get_reviews("kr.author_id = $author_id");
+  return _get_reviews("kr.author_id = $author_id AND show_review_flag = 1");
 }
+
+function get_reviews_for_game_edit ($game_id)
+{
+	$game_id = intval($game_id);
+	return _get_reviews ("game_id = $game_id");
+}
+
 function get_reviews_for_game ($game_id)
 {
   
   $game_id = intval($game_id);
-  return _get_reviews ("game_id = $game_id");
+  return _get_reviews ("game_id = $game_id AND show_review_flag = 1");
 }
 ?>

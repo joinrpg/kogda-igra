@@ -472,8 +472,7 @@
 
 	function show_review_list($id)
 	{
-    $review = new Review ($id);
-    $review -> show_edit = TRUE;
+    $review = new ReviewEdit ($id);
     $review -> show();
 	}
 
@@ -491,6 +490,14 @@
     header("Location: /edit/game/?id=$id");
 		die();
 	}
+	
+		function do_restorereview($id)
+	{
+    do_restore_game_review (get_post_field('review_id'));
+    header("Location: /edit/game/?id=$id");
+		die();
+	}
+
 
 	function do_save ($id)
 	{
@@ -765,6 +772,10 @@ function request_edit_priv()
 		case 'delete_review':
 			request_edit_priv();
 			do_deletereview($id);
+			break;
+		case 'restore_review':
+			request_edit_priv();
+			do_restorereview($id);
 			break;
 		case 'save_date':
 			request_edit_priv();

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 188.130.180.22
--- Generation Time: Feb 08, 2012 at 03:57 PM
+-- Generation Time: Feb 10, 2012 at 05:33 PM
 -- Server version: 5.5.1
 -- PHP Version: 5.2.17
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `ki_update_types` (
   `update_type_photo_flag` tinyint(4) NOT NULL DEFAULT '0',
   `update_type_review_flag` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ki_update_type_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `ki_update_types`
@@ -58,4 +58,5 @@ INSERT INTO `ki_update_types` (`ki_update_type_id`, `ki_update_type_name`, `upda
 (17, 'Удален фотоотчет', 0, 1, 1, 0),
 (18, 'Автор ассоциирован с ЖЖ', 0, 0, 0, 0),
 (19, 'Игра добавлена пользователем', 0, 1, 0, 0),
-(20, 'Игра проверена редактором', 0, 1, 0, 0);
+(20, 'Игра проверена редактором', 0, 1, 0, 0),
+(21, 'Рецензия восстановлена', 0, 1, 0, 1);
