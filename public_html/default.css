@@ -291,3 +291,6 @@ table.logo_text
 	margin-bottom: 0.5em;
 	float:left;
 }
+.edit_table
+{
+	clear:left;
