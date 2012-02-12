@@ -270,6 +270,7 @@ table.logo_text tr td
 table.logo_text tr td img
 {
 	float:left;
+	margin-right: 4px;
 }
 
 table.logo_text
