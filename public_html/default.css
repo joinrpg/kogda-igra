@@ -287,8 +287,7 @@ table.logo_text
 
 .adv_box
 {
-	border: solid 1px;
-	padding: 0.5em;
+	border: none;
 	margin-bottom: 0.5em;
 	float:left;
 }

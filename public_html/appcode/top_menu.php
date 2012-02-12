@@ -142,19 +142,23 @@ require_once 'logic/updates.php';
     {
 			return;
     }
-    echo '<div class="adv_box"><b>Обновления:</b>';
-
+    echo '<div class="adv_box"><b>Обновления:</b> ';
+		$sep ='';
     foreach ($adv as $game)
     {
-      echo "<br>";
+			echo $sep;
+			$sep = ', ';
 			$update_text = htmlspecialchars ($game['update_type_user_text']);
 			
 			$update_text = str_replace('%game%', '«<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>»', $update_text);
 			$update_text = str_replace('%review_link%', '<a href="' . ReviewBase :: get_review_uri($game) .'">Рецензия</a>', $update_text);
 			$update_text = str_replace('%photo%',  'Фотоотчет', $update_text);
 			$update_text = str_replace('%updated_user%', show_user_link ($game['updated_user_name']), $update_text);
-			
-			echo "$update_text {$game['msg']}";
+			if ($game['msg'])
+			{
+				$update_text .= "{$game['msg']}";
+			}
+			echo "$update_text";
     }
     echo '</div>';
    }
