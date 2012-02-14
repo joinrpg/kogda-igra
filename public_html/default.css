@@ -212,7 +212,7 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 .logo_text 
 {
 	font-size:24px;
-	font-weight: bold;
+	
 	text-align:left;
 	vertical-align:	middle;
 	padding: 0;

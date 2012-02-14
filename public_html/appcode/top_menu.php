@@ -13,7 +13,7 @@ require_once 'logic/updates.php';
 	
 	function show_search_form2($string = '')
 	{
-    echo '<form action="/search.php" method="post" id="search_form" style="display:block;padding-bottom:1em">';
+    echo '<form action="/search.php" method="post" id="search_form" style="clear:left; padding: 2px">';
     echo "<input type=\"search\" size=\"40\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
     echo '<input type="submit" value="Искать" />';
     echo '</form>';
