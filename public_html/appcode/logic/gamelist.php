@@ -79,7 +79,7 @@ function get_main_calendar($year, $region = 0, $show_only_future = false)
 	$future_query = $show_only_future ? '(MONTH(kgd.`begin`) >= MONTH(NOW()))' : '(1=1)';
 	
 	return _get_games("YEAR(kgd.`begin`) = $year
-			AND ($region_query OR kgt.show_all_regions <> 0)
+			AND ($region_query)
 			AND kg.deleted_flag = 0
 			AND $future_query	", '', "kgd.begin, kgd.time");
 }
