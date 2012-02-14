@@ -104,6 +104,10 @@ echo '<div style="float:right" class="top_menu">';
     echo " (<a href=\"/edit/game/index.php?id=$id\">Изменить</a>)";
   }
   echo "</h2>";
+  if ($game['comment'])
+  {
+		echo "<p class='game_comment_header'>({$game['comment']})</p>";
+	}
   write_widget_table ($date, $id, $game);
 
 

@@ -233,11 +233,6 @@ class Calendar
         {
           $uri = Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png').'&nbsp;';
         }
-        $game_comment = trim($game['comment']);
-      if ($game_comment)
-      {
-        $game_comment = "<br/><span class=\"game_comment\">({$game['comment']})</span>";
-      }
       }
       else
       {

@@ -150,9 +150,8 @@ a:visited
         background-color: #FFFF00;
         font-size: x-small;
 }
-.game_comment
+.game_comment_header
 {
-   font-size: x-small;
    font-style: italic;
 }
 .month_header td
