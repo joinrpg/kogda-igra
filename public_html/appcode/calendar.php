@@ -209,7 +209,7 @@ class Calendar
 
       $show_date = $date -> show_date_string(!$this -> check_border);
 
-      $style = $game['show_all_regions'] != 0 ? ' style="background-color: #FFFACD; font-style: italic;" ' : '';
+      $style = '';
       if ($masked)
       {
         $style = ' style="background-color: #C0C0C0"';
