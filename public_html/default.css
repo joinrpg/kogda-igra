@@ -9,6 +9,7 @@ table#calendar
 table#calendar tr:nth-child(even) {
 	background: #FFFFF0;
 }
+
 div.top_menu 
 {
 	border: 1px solid;
@@ -297,3 +298,4 @@ table.logo_text
 .edit_table
 {
 	clear:left;
+}
