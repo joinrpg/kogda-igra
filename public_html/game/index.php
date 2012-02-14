@@ -104,7 +104,8 @@ echo '<div style="float:right" class="top_menu">';
     echo " (<a href=\"/edit/game/index.php?id=$id\">Изменить</a>)";
   }
   echo "</h2>";
-  if ($game['comment'])
+  $comment = trim($game['comment']);
+  if ($comment)
   {
 		echo "<p class='game_comment_header'>({$game['comment']})</p>";
 	}
@@ -126,11 +127,6 @@ echo '<div style="float:right" class="top_menu">';
   echo "<b>Сайт</b>: $uri<br>";
   
   echo "<b>Кол-во игроков</b>: $players_count";
-  $comment = trim($game['comment']);
-  if ($comment)
-  {
-		echo "<br><b>Комментарий</b>: $comment";
-	}
   echo "<br><b>Мастерская группа</b>: ";
   echo make_search_string($game['mg']);
   echo "\n<br>";
