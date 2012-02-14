@@ -5,6 +5,10 @@ table#calendar
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
+
+table#calendar tr:nth-child(even) {
+	background: #FFFFF0;
+}
 div.top_menu 
 {
 	border: 1px solid;
