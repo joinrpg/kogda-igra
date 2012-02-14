@@ -706,7 +706,7 @@
 		write_js_table($region_table, 'tbl_subregions');
 		write_js_table($polygons_table, 'tbl_polygons');
 		
-		$hdr = isset($data) ? "<a href=\"/game/$id\">$hdr</a>" : $hdr;
+		$hdr = $id ? "<a href=\"/game/$id\">$hdr</a>" : $hdr;
 		
 		if (check_edit_priv())
 		{
