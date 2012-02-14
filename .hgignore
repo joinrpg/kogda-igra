@@ -2,3 +2,4 @@ syntax: glob
 public_html\photo\preview\
 public_html\common\config.php
 logs\
+mailru*.html
