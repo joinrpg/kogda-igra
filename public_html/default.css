@@ -200,58 +200,6 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
   border: none;
 }
 
-.top_line_menu
-{
-	border:none;
-	text-align:center;
-	width: 99%;
-}
-
-.top_line_menu tr
-{
-	margin: 0;
-	padding: 0;
-}
-
-.top_line_menu tr td
-{
-	margin: 0;
-	padding: 0;
-	border:none;
-}
-
-.top_line_menu tr td table
-{
-	margin: 0;
-	padding:0;
-	width: 100%;
-	text-align:center;
-	border-collapse:collapse;
-	border: solid 1px;
-	table-layout:fixed;
-}
-
-.top_line_menu tr td table tr
-{
-}
-
-.top_line_menu tr td table tr td
-{
-	border: solid 1px;
-	text-align: center;
-	height: 3em;
-}
-
-.active
-{
-	background-color: lightgray;
-}
-
-.passive
-{
-	font-weight:bold;
-}
-
 .user_menu
 {
 	float:right;
@@ -261,25 +209,25 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 	max-width:40%
 }
 
-table.logo_text tr td
+.logo_text 
 {
 	font-size:24px;
 	font-weight: bold;
-	text-align:left !important;
-	vertical-align:	middle  !important;
+	text-align:left;
+	vertical-align:	middle;
 	padding: 0;
-	border: none !important;
 }
 
-table.logo_text tr td img
+.logo img
 {
 	float:left;
 	margin-right: 4px;
 }
 
-table.logo_text
+.logo
 {
-	border:none !important;
+	float: left;
+	margin: 0.5em;
 }
 
 .urgent_message
@@ -287,15 +235,55 @@ table.logo_text
 	border: solid 1px;
 	font-weight: bold;
 	background-color: LightSalmon;
+	float:right;
+	padding: 1em;
+	margin: 0.5em;
 }
 
 .adv_box
 {
 	border: none;
 	margin-bottom: 0.5em;
-	float:left;
+	clear:left;
 }
 .edit_table
 {
 	clear:left;
+}
+
+
+
+.menu_box
+{
+	text-align: right;
+	padding: 0.5em;
+}
+
+.menu_strip
+{
+	margin: 0.5em;
+	display:inline-block;
+	white-space: nowrap;
+}
+
+.active, .passive
+{
+	min-width: 3em;
+	border: solid 1px;
+	display:inline-block;
+	line-height: 2em;
+	padding: 5px;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.active
+{
+	background-color: lightgray;
+
+}
+
+.passive
+{
+	font-weight:bold;
 }

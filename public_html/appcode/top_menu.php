@@ -3,17 +3,17 @@ require_once 'logic/updates.php';
 
 	function active_button ($uri, $text, $add = '')
 	{
-		echo "<td class='active'><a href=\"$uri\">$text</a>$add</td>";
+		echo "<div class='active'><a href=\"$uri\">$text</a>$add</div>";
 	}
 	
 	function passive_button ($text)
 	{
-		echo "<td class='passive'>$text</td>";
+		echo "<div class='passive'>$text</div>";
 	}
 	
 	function show_search_form2($string = '')
 	{
-    echo '<form action="/search.php" method="post" id="search_form" style="display:inline;padding-bottom:1em">';
+    echo '<form action="/search.php" method="post" id="search_form" style="display:block;padding-bottom:1em">';
     echo "<input type=\"search\" size=\"40\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
     echo '<input type="submit" value="Искать" />';
     echo '</form>';
@@ -50,23 +50,9 @@ require_once 'logic/updates.php';
 
 		}
 		
-		function show () 
+		function show_region_strip()
 		{
-			$this -> calendar_mode = !!$this -> year;
 			
-			if (!$this -> calendar_mode)
-			{
-				$this -> year = CURRENT_YEAR;
-			}
-			echo '<table class="top_line_menu"><tr>';
-			
-			echo '<td><table class=logo_text><tr>';
-			echo '<td><a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
-			echo " Когда-Игра: " . $this -> get_page_name();
-			echo '</td>';
-			echo '</tr></table></td>';
-
-			echo '<td><table><tr>';
 			$this -> show_region_link ('Россия', 0);
 			$this -> show_region_link ('Петербург', 2);
 			$this -> show_region_link ('Москва', 3);
@@ -78,60 +64,76 @@ require_once 'logic/updates.php';
 				$this -> show_region_link ('ЮФО', 7, true);
 			}
 			
-			echo '</tr></table></td>';
+		}
+		
+		function show () 
+		{
+			$this -> calendar_mode = !!$this -> year;
 			
-			echo '<td><table><tr>';
-			$this -> write_years_list ();
-			echo '</tr></table></td>';
-
-			echo '</tr>';
-			echo '<tr><td colspan=2>';
+			if (!$this -> calendar_mode)
+			{
+				$this -> year = CURRENT_YEAR;
+			}
+			echo '<div class=logo>';
+			echo '<a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
+			echo " <span class=logo_text>Когда-Игра: " . $this -> get_page_name() . '</span>';
 			show_search_form2 ();
-			echo '</td>';
-			
-			echo '<td><table><tr>';
+			echo '</div>';
+
+			echo '<div class=menu_box>';
+			echo '<div class=menu_strip>';
+			$this -> show_region_strip();
+			echo '</div> ';
+
+			echo '<div class=menu_strip>';
+			$this -> write_years_list ();
+			echo '</div> ';
+
+
+			echo '<div class=menu_strip>';
 			active_button('/about/', 'О нас');
 			active_button('/reviews/', 'Рецензии');
 			active_button('/photo/', 'Фото');
-			echo '</tr></table></td>';
+			echo '</div> ';
 			
-			echo '</table>';
+			$username = get_username();
+			if ($username)
+			{
+				echo '<div class=menu_strip>';
+
+					passive_button(show_user_link($username) . '<form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>');
+					active_button ('/edit/game', 'Добавить&nbsp;игру');
+				
+				if (check_edit_priv())
+				{
+					active_button ('/edit/', 'Панель&nbsp;управления');
+				}
+				echo '</div>';
+			}
+			$this -> show_messages ();
+			echo '</div>';
 			
-			$this -> show_menu ();
+
+			
+			
 			$this -> write_adv_box();
+			
+			if (!$username)
+			{
+				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
+			}
+			
 			
 		}
 
-		function show_menu()
+		function show_messages()
 		{
-			$username = get_username();
 
-			echo '<div class=user_menu>';
-			if ($username)
-			{
-				echo show_user_link($username);
-				echo ' <form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>';
-				echo '<br>';
-			}
-			
-			
-			if (check_edit_priv())
-			{
-				show_menu_link ('/edit/game', 'Добавить&nbsp;игру', '');
-				show_menu_link ('/edit/', 'Панель&nbsp;управления', ' :: ');
-			}
-			else
-			{
-				echo 'Нет нужной игры? ';
-				show_menu_link ('/edit/game', 'Добавьте самостоятельно', '');
-				echo ' или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
-			}
 			$user = get_user();
 			if ($user && !$user['email'])
 			{
 				echo '<div class="urgent_message">В вашем профиле не указан адрес email. <input type="button" onclick="try_login()" value="Указать"></div>';
 			}
-			echo '</div>';
 		}
 		
 		function write_adv_box()
