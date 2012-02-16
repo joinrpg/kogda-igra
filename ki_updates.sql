@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 188.130.180.22
--- Generation Time: Feb 10, 2012 at 04:24 PM
+-- Generation Time: Feb 16, 2012 at 02:12 PM
 -- Server version: 5.5.1
 -- PHP Version: 5.2.17
 
@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS `ki_updates` (
   `msg` varchar(300) NOT NULL,
   `ip_address` varchar(45) DEFAULT NULL,
   `review_id` int(11) DEFAULT NULL,
+  `add_uri_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`ki_update_id`),
   KEY `update_date` (`update_date`,`game_id`),
   KEY `photo_id` (`photo_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5956 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5988 ;

@@ -1,5 +1,7 @@
 <?php
 require_once 'logic/updates.php';
+require_once 'logic/gamelist.php';
+require_once 'review.php';
 
 	function active_button ($uri, $text, $add = '')
 	{
@@ -36,7 +38,7 @@ require_once 'logic/updates.php';
 			
 		}
 		
-		function show_region_link($text, $region, $beta)
+		function show_region_link($text, $region, $beta = false)
 		{
 			if (($this -> calendar_mode)  && ($region == $this -> region))
 			{

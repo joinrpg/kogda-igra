@@ -110,6 +110,11 @@ class Sql
 		return mysql_insert_id($this->handle);
 	}
 	
+	function GetAffectedCount()
+	{
+		return mysql_affected_rows($this -> handle);
+	}
+	
 	function GetRow ($query)
 	{
 		$result = $this -> Query ($query);

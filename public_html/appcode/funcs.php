@@ -2,6 +2,7 @@
 
 require_once 'user_funcs.php';
 require_once 'sqlbase.php';
+require_once 'top_menu.php';
 
 define ('CURRENT_YEAR', 2012);
 
@@ -402,6 +403,16 @@ function show_select ($name, $selected, $select_id = FALSE)
  		<?php
  	}
 
+	}
+	
+	function show_message($hdr, $message)
+	{
+		write_header($hdr);
+		$topmenu = new TopMenu();
+		$topmenu -> pagename = $hdr;
+		$topmenu -> show();
+		echo $message;
+		write_footer();
 	}
 
 

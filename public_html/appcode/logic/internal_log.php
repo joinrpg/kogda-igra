@@ -59,6 +59,23 @@ function internal_log_review ($update_type, $review_id, $game_id, $msg = FALSE)
 		game_id = $game_id");
 }
 
+function internal_log_add_uri ($add_uri_id)
+{
+	$sql = connect();
+	
+	$user_id = get_user_id();
+	$ip = $user_id ? 'NULL' : "'{$_SERVER['REMOTE_ADDR']}'";
+	$add_uri_id = intval ($add_uri_id);
+	$update_type = 19;
+	$sql -> Run ("
+		INSERT INTO ki_updates 
+		SET ki_update_type_id = $update_type,
+		user_id = $user_id,
+		update_date = NOW(), 
+		ip_address = $ip,
+		add_uri_id = $add_uri_id");
+}
+
 function internal_log_photo ($update_type, $photo_id, $game_id, $msg = FALSE)
 {
 	$sql = connect();

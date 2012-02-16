@@ -14,6 +14,21 @@ function mark_as_passed($id)
   $sql -> Run ("COMMIT");
 }
 
+function add_uri ($uri)
+{
+	$sql = connect();
+	$uri = $sql -> QuoteAndClean ($uri);
+	
+	$sql -> begin();
+	$sql -> Run ("INSERT INTO ki_add_uri (uri) VALUES ($uri)");
+	if ($sql -> GetAffectedCount())
+	{
+		internal_log_add_uri($sql -> LastInsert ());
+	}
+	
+	$sql -> commit();
+}
+
 function clear_comment($id)
 {
   $sql = connect();
