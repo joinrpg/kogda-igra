@@ -15,11 +15,12 @@ function write_header ($title, $edit = FALSE)
   <head>
     <title><?php echo $title; ?></title>
 
-    <link media="all" rel="stylesheet" href="/default.css" type="text/css" />
+    <link media="all" rel="stylesheet" href="/default.css" type="text/css">
 
-    <meta name="keywords" content="Календарь, ролевые игры" />
-    <meta name="description" content="Календарь полевых ролевых игр" />
-<meta name="verify-v1" content="kgJUNdPugrqlSlUu5/n8UOibKHmPBQKUJJQvua61RYQ=" />
+    <meta name="keywords" content="Календарь, ролевые игры">
+    <meta name="description" content="Календарь полевых ролевых игр">
+<meta name="verify-v1" content="kgJUNdPugrqlSlUu5/n8UOibKHmPBQKUJJQvua61RYQ=">
+<meta charset=utf-8>
 <link rel="search" type="application/opensearchdescription+xml" title="Когда-Игра!" href="http://kogda-igra.ru/opensearch.xml">
 
     <script src="/js/default.js" type="text/javascript"></script>
