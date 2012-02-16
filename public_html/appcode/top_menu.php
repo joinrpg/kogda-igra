@@ -144,7 +144,7 @@ require_once 'logic/updates.php';
     {
 			return;
     }
-    echo '<div class="adv_box"><b>Обновления:</b> ';
+    echo '<div class="adv_box"><b>Новое:</b> ';
 		$sep ='';
     foreach ($adv as $game)
     {
@@ -162,7 +162,7 @@ require_once 'logic/updates.php';
 			}
 			echo "$update_text";
     }
-    echo '</div>';
+    echo '.</div>';
    }
 
 	function write_years_list()
