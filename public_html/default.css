@@ -249,6 +249,7 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 .edit_table
 {
 	clear:left;
+	margin-top: 1em;
 }
 
 

@@ -707,18 +707,11 @@
 		write_js_table($polygons_table, 'tbl_polygons');
 		
 		$hdr = $id ? "<a href=\"/game/$id\">$hdr</a>" : $hdr;
+
+		$topmenu = new TopMenu();
+		$topmenu -> pagename = $hdr;
+		$topmenu -> show();
 		
-		if (check_edit_priv())
-		{
-			$topmenu = new TopMenu();
-			$topmenu -> pagename = $hdr;
-			$topmenu -> show();
-		}
-		else
-		{
-			echo "<h1>$hdr</h1>";
-			show_greeting();
-		}
 		if (isset($data))
 		{
 			show_form ($data, $old_id);
