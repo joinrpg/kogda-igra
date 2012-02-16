@@ -91,22 +91,6 @@ CREATE TABLE IF NOT EXISTS `ki_game_date` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ki_game_types`
---
-
-CREATE TABLE IF NOT EXISTS `ki_game_types` (
-  `game_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `game_type_name` varchar(50) NOT NULL DEFAULT '',
-  `show_all_regions` tinyint(4) NOT NULL DEFAULT '0',
-  `game_type_style` varchar(50) NOT NULL DEFAULT '',
-  `game_type_real_game` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`game_type_id`),
-  KEY `show_all_regions` (`show_all_regions`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `ki_photo`
 --
 

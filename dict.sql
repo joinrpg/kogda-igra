@@ -20,23 +20,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 --
--- Dumping data for table `ki_game_types`
---
-
-INSERT INTO `ki_game_types` (`game_type_id`, `game_type_name`, `show_all_regions`, `game_type_style`, `game_type_real_game`) VALUES
-(1, 'Полевая', 0, '', 1),
-(2, 'Городская', 0, '', 1),
-(3, 'На&nbsp;турбазе', 0, '', 1),
-(4, 'Павильонная', 0, '', 0),
-(5, 'Конвент', 1, '', 0),
-(6, 'Бал', 0, '', 0),
-(7, 'Маневры', 0, '', 0),
-(8, 'Городская + Полевая', 0, '', 1),
-(9, 'Городская + На турбазе', 0, '', 1),
-(10, 'Турнир', 0, '', 0),
-(11, 'Подземная', 0, '', 1);
-
---
 -- Dumping data for table `ki_status`
 --
 
