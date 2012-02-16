@@ -27,6 +27,7 @@ require_once 'logic/updates.php';
 			$this -> pagename = '';
 			$this -> year = 0;
 			$this -> region = 0;
+			$this -> show_add_adv = TRUE;
 		}
 		
 		function get_page_name()
@@ -118,7 +119,7 @@ require_once 'logic/updates.php';
 			
 			$this -> write_adv_box();
 			
-			if (!$username)
+			if (!$username && $this -> show_add_adv)
 			{
 				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
 			}

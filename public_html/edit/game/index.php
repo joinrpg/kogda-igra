@@ -710,6 +710,7 @@
 
 		$topmenu = new TopMenu();
 		$topmenu -> pagename = $hdr;
+		$topmenu -> show_add_adv = false;
 		$topmenu -> show();
 		
 		if (isset($data))
