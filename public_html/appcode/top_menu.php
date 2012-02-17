@@ -49,7 +49,8 @@ require_once 'review.php';
 		
 		function get_page_name()
 		{
-			return 'Когда-Игра: ' .(($this -> calendar_mode) ? "{$this -> region_name}&nbsp;{$this -> year}" : '') . $this -> pagename;
+			$hdr = $_SERVER['REQUEST_URI'] == '/' ? 'Когда-Игра: ' : '<a href="/">Когда-Игра</a>: ';
+			return  $hdr .(($this -> calendar_mode) ? "{$this -> region_name}&nbsp;{$this -> year}" : '') . $this -> pagename;
 			
 		}
 		
