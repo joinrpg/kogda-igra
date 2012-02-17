@@ -118,7 +118,7 @@ class Calendar
           <th class="date-column">Сроки</th>
           <th class="type-column">Тип игры</th>
           <th class="polygon-column">Полигон</th>
-                          <th class="players-column"># игроков</th>
+                          <th class="players-column" title="Количество игроков">Иг-ов</th>
   <?php
    if ($this -> export_mode)
    {
