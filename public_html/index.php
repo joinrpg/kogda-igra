@@ -29,20 +29,6 @@
 	$topmenu -> region_name = $region_name;
 	$topmenu -> region = $region;
 	$topmenu -> show ();
-	
-	if (check_username() && false)
-	{
-		?>
-		<div class="masked">
-      <p>
-        Время, место, название и сам факт проведения выделенных серым цветом игр может быть секретом. <strong>Не&nbsp;разглашайте</strong>
-        информацию без разрешения мастеров. Доступ к календарю не&nbsp;является приглашением на&nbsp;игру.
-      </p>
-		</div>
-
-		<?php
-	}
-
   
   if (false) {
   ?>
@@ -50,7 +36,7 @@
   <div class="adblock">[<a href="/about/#adv" title="Реклама">?</a>] СПб, 3 сентября: в числе первых дойди до «<a href="http://worlds-end-pub.livejournal.com">Края Света</a>»!</div>
   <?php
   }
-	$calendar = new Calendar(get_main_calendar($year, $region, $show_only_future));
+	$calendar = new Calendar(get_main_calendar($year, $region, FALSE));
 	$calendar -> check_border = TRUE;
 	$calendar -> show_reviews = TRUE;
 	$calendar -> write_calendar();
