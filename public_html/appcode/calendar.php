@@ -239,7 +239,7 @@ class Calendar
          $game_name = Calendar::format_game_name ($game['name'], '');
       }
 
-      echo "<td class=\"game_name\">$uri$game_name$game_comment</td>";
+      echo "<td class=\"game_name\">$uri$game_name</td>";
       echo "<td title=\"$sub_region_name\" class=\"game_region\">$sub_region_disp_name</td>";
       echo "<td title=\"{$date->dow}\" class=\"game_date\">$show_date</td>";
       echo "<td class=\"game_type\">$type</td>";
