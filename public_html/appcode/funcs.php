@@ -45,11 +45,6 @@ function write_header ($title, $edit = FALSE)
 
 function write_footer($show_analytics = FALSE, $uri = '')
 {
-	?>
-	<address>
-     <a href="/about/">Команда kogda-igra.ru.</a>
-  </address>
-  <?php
   if ($show_analytics)
   {
   ?>
