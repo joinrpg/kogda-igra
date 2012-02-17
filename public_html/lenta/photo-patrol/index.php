@@ -10,11 +10,14 @@
 
   $header = "Лента изменений :: Фотоотчеты — Патруль";
 	write_header($header);
-	echo "<h1>$header</h1>
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = $header;
+	$topmenu -> show();
+	
+	echo "
     <p>В этот список включаются все изменения по фотоотчетам, кроме тех, которые совершили вы.</p>
 	";
 	
-	show_greeting();
 	$updates = get_photo_updates_except_user_id (get_user_id());
 	echo '<table>';
 	foreach ($updates as $item)

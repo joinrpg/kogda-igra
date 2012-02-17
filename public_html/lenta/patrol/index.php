@@ -8,13 +8,12 @@
 		return_to_main();
 	}
 
-  $header = "Лента изменений :: Патруль";
-	write_header($header);
-	echo "<h1>$header</h1>
-    <p>В этот список включаются все изменения, кроме тех, которые совершили вы.</p>
-	";
+  write_header( "Лента изменений :: Патруль");
+		$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Лента изменений :: Патруль';
+	$topmenu -> show();
+  echo "<p>В этот список включаются все изменения, кроме тех, которые совершили вы.</p>	";
 	
-	show_greeting();
 	$updates = get_updates_except_user_id (get_user_id());
 	echo '<table>';
 	foreach ($updates as $item)

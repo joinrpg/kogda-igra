@@ -9,8 +9,10 @@
 	}
 
 	write_header('Лента изменений :: Полигоны');
-	echo '<h1>Лента изменений :: Полигоны</h1>';
-	show_greeting();
+		$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Лента изменений :: Полигоны';
+	$topmenu -> show();
+	
 	$updates = get_polygon_updates_24hr ();
 	echo '<table>';
 	foreach ($updates as $item)

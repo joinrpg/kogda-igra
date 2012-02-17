@@ -15,10 +15,11 @@
 	}
 	
   $editor = get_user_by_id($id);
-  $header = "Лента изменений :: Редактор {$editor['username']}";
+  $header = "Лента изменений {$editor['username']}";
 	write_header($header);
-	echo "<h1>$header</h1>";
-	show_greeting();
+		$topmenu = new TopMenu();
+	$topmenu -> pagename = $header;
+	$topmenu -> show();
 	$updates = get_updates_by_user_id ($id);
 	echo '<table>';
 	foreach ($updates as $item)

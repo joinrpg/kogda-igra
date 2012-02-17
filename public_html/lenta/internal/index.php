@@ -9,8 +9,10 @@
 	}
 
 	write_header('Лента изменений :: Внутреняя');
-	echo '<h1>Лента изменений :: Внутреняя</h1>';
-	show_greeting();
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Лента изменений :: Внутреняя';
+	$topmenu -> show();
+	
 	$updates = get_updates_24hr ();
 	echo '<table>';
 	foreach ($updates as $item)

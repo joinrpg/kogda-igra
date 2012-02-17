@@ -10,11 +10,15 @@
 
   $header = "Лента изменений :: Фотоотчеты";
 	write_header($header);
-	echo "<h1>$header</h1>
+	
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = $header;
+	$topmenu -> show();
+	
+	echo "
     <p>В этот список включаются все изменения по фотоотчетам.</p>
 	";
-	
-	show_greeting();
+
 	$updates = get_photo_updates();
 	echo '<table>';
 	foreach ($updates as $item)
