@@ -103,4 +103,11 @@ function get_games_for_moderate()
 {
 	return _get_games ('kg.deleted_flag = -1');
 }
+
+function get_add_uri_list()
+{
+	$sql = connect();
+	return $sql -> Query ('SELECT * FROM ki_add_uri WHERE resolved = 0');
+}
+
 ?>

@@ -71,6 +71,26 @@
 		$calendar -> show_cancelled_games_checkbox = FALSE;
 		$calendar -> write_calendar();
 	}
+	
+	$uri_list = get_add_uri_list();
+	if (is_array($uri_list))
+	{
+		echo '<h2>Ссылки на анонсы</h2>
+			<table>';
+		foreach ($uri_list as $uri)
+		{
+			$link = htmlspecialchars($uri['uri']);
+			$id = $uri['add_uri_id'];
+			$allrpg_info_id = $uri['allrpg_info_id'];
+			if ($allrpg_info_id &&!$link)
+			{
+				$link = "http://inf.allrpg.info/events/$allrpg_info_id/";
+			}
+			echo "<tr><td><a href=\"/edit/game/?add_uri_id=$id\">$link</a></td></tr>";
+		}
+		echo '</table>';
+		
+	}
 	?> 
 	<br />
 	<table class="control_panel" style="clear:both">
