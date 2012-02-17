@@ -25,7 +25,11 @@
 	$topmenu = new TopMenu();
 	$topmenu -> pagename = $username;
 	$topmenu -> show();
-
+	
+	$gravatar_email = $email ? $email : 'nobody@kogda-igra.ru';
+	$gravatar_email = md5( strtolower( trim( $gravatar_email ) ) );
+	
+	echo "<img src=\"http://www.gravatar.com/avatar/$gravatar_email.jpg?d=mm\">";
 
   $date = $userdata['lastvisit'] ? formate_single_date ($userdata['lastvisit']) : 'Никогда';
   $editor_stat = get_editor_stat_by_id ($id);
