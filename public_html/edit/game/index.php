@@ -239,6 +239,13 @@
 			submit ('Удалить игру', 'delete', $data['id'], '', FALSE, 2);
 			echo '</table></form>';
 		}
+		
+		if ($add_uri_id)
+		{
+			echo '<form method="post" id="resolve_no_add"><table>';
+			submit ('Не добавлять', 'resolve_no_add', $add_uri_id, '', FALSE, 2);
+			echo '</table></form>';
+		}
 		$subregion = intval($data['sub_region_id']);
 		echo "<script type=\"text/javascript\">update_subregion($subregion);</script>";
 		if ($data['id'] > 0)
@@ -704,6 +711,10 @@
 			if ($add_uri_id)
 			{
 				$add = get_added_uri($add_uri_id);
+				if ($add['resolved'])
+				{
+					redirect_to('/edit/already');
+				}
 				$data = array();
 				$data['uri'] = $add['uri'];
 				$data['allrpg_info_id'] = $add['allrpg_info_id'];
@@ -764,6 +775,15 @@ function request_edit_priv()
 	}
 }
 
+function action_resolve_no_add($id)
+{
+			if ($id)
+		{
+			resolve_add_uri($id);
+		}
+	redirect_to('/edit/');
+}
+
 // MAIN
 
 	$id = array_key_exists ('id', $_POST) ? intval($_POST['id']) : (array_key_exists ('id', $_GET) ? intval($_GET['id']) : 0) ;
@@ -818,6 +838,9 @@ function request_edit_priv()
 			request_edit_priv();
 			action_change_date_order($id, +1);
 			break;
+		case 'resolve_no_add':
+			request_edit_priv();
+			action_resolve_no_add($id);
 		default:
 			if ($id)
 			{
