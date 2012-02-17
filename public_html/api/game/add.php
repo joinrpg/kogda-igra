@@ -7,7 +7,12 @@
 	$automated = get_post_field ('automated');
 	if ($uri)
 	{
-		add_uri ($uri);
+		$id = add_uri ($uri);
+		if ($id)
+		{
+			$email = new AddedURIEmal ($id);
+			$email -> send();
+		}
 		
 		if ($automated)
 		{

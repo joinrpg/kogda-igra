@@ -22,6 +22,11 @@ function _add_uri ($uri)
 	if (!$sql -> GetRow ("SELECT * FROM ki_add_uri WHERE uri LIKE $uri LIMIT 1"))
 	{
 		$sql -> Run ("INSERT INTO ki_add_uri (uri) VALUES ($uri)"); 
+		return $sql -> LastInsert ();
+	}
+	else
+	{
+		return 0;
 	}
 }
 
@@ -40,17 +45,23 @@ function add_uri ($uri)
 		if (!$sql -> GetRow ("SELECT * FROM ki_games WHERE allrpg_info_id = $allrpg_info_id LIMIT 1"))
 		{
 			$sql -> Run ("INSERT INTO ki_add_uri (allrpg_info_id) VALUES ($allrpg_info_id)"); 
+			$id = $sql -> LastInsert ();
+		}
+		else
+		{
+			$id = 0;
 		}
 	}
 	else
 	{
-		_add_uri ($uri);
+		$id = _add_uri ($uri);
 	}
-
-	internal_log_add_uri($sql -> LastInsert ());
-	
-	
+	if ($id)
+	{
+		internal_log_add_uri($id);
+	}
 	$sql -> commit();
+	return $id;
 }
 
 function resolve_add_uri ($id)

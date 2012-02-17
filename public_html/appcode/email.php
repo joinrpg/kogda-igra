@@ -36,6 +36,32 @@ abstract class Email
   }
 }
 
+class AddedURIEmal extends Email
+{
+	function __construct($add_uri_id)
+  {
+		$this -> add_uri_id = $add_uri_id;
+  }
+  
+  function get_subject()
+  {
+		return "Kogda-Igra: требуется модерация ссылки";
+  }
+  
+	function get_message()
+  {
+     return "Пользователь добавил ссылку на анонс игры.
+		http://kogda-igra.ru/edit/game?add_uri_id={$this->add_uri_id}
+--
+C уважением, администрация kogda-igra.ru";
+  }
+  
+  function get_recipient()
+  {
+		return NULL;
+  }
+}
+
 class GameReqModerateEmail extends GameUpdatedEmail
 {
 	function __construct($game_id)
