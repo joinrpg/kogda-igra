@@ -27,7 +27,7 @@ function write_update_line($game, $colspan)
 		{
       $update_text .= ' '. $game['polygon_name'].'';
 		}
-		if ($game['update_type_photo_flag'] > 0 || $game['update_type_game_flag'] > 0 || $game['update_type_review_flag'] > 0)
+		if ($game['id'])
 		{
       $update_text .= ' «<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>»';
 		}
@@ -42,6 +42,11 @@ function write_update_line($game, $colspan)
 			{
 				$update_text .= " [<a href=\"$review_uri\">Текст рецензии</a>]";
 			}
+		}
+		$uri = $game['uri'];
+		if ($uri)
+		{
+			$update_text .= " <a href=\"$uri \">$uri </a>";
 		}
 		echo "$date $user$ip: $update_text {$game['msg']}";
 		echo "</td></tr>";

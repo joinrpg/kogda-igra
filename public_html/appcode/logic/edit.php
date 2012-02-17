@@ -14,19 +14,59 @@ function mark_as_passed($id)
   $sql -> Run ("COMMIT");
 }
 
-function add_uri ($uri)
+function _add_uri ($uri)
 {
 	$sql = connect();
 	$uri = $sql -> QuoteAndClean ($uri);
 	
-	$sql -> begin();
-	$sql -> Run ("INSERT INTO ki_add_uri (uri) VALUES ($uri)");
-	if ($sql -> GetAffectedCount())
+	if (!$sql -> GetRow ("SELECT * FROM ki_add_uri WHERE uri LIKE $uri LIMIT 1"))
 	{
-		internal_log_add_uri($sql -> LastInsert ());
+		$sql -> Run ("INSERT INTO ki_add_uri (uri) VALUES ($uri)"); 
 	}
+}
+
+function add_uri ($uri)
+{
+	$sql = connect();
+	$sql -> begin();
+	
+	$try_uri = str_replace('http:', '', $uri);
+	$try_uri = str_replace ('/', '', $try_uri);
+	$try_uri = str_replace ('inf.allrpg.infoevents', '', $try_uri);
+	$allrpg_info_id = intval ($try_uri);
+	
+	if ($allrpg_info_id)
+	{
+		if (!$sql -> GetRow ("SELECT * FROM ki_games WHERE allrpg_info_id = $allrpg_info_id LIMIT 1"))
+		{
+			$sql -> Run ("INSERT INTO ki_add_uri (allrpg_info_id) VALUES ($allrpg_info_id)"); 
+		}
+	}
+	else
+	{
+		_add_uri ($uri);
+	}
+
+	internal_log_add_uri($sql -> LastInsert ());
+	
 	
 	$sql -> commit();
+}
+
+function resolve_add_uri ($id)
+{
+	$sql = connect();
+	$id = intval ($id);
+	
+	return $sql-> Run ("UPDATE ki_add_uri SET resolved = 1 WHERE add_uri_id = $id");
+}
+
+function get_added_uri ($id)
+{
+	$sql = connect();
+	$id = intval($id);
+	
+   return $sql -> GetRow ("SELECT * FROM ki_add_uri WHERE add_uri_id = $id");
 }
 
 function clear_comment($id)

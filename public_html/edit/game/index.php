@@ -152,17 +152,20 @@
 
 
 
-	function show_form ($data, $old_id)
+	function show_form ($data, $old_id, $add_uri_id)
 	{
 		$deleted = intval($data['deleted_flag']) == 1;
 		$moderate_mode = intval($data['deleted_flag']) == -1;
 		echo '<form action="/edit/game/" method="post" id="edit">';
 		write_mg_datalist();
 		echo '<table class="edit_table">';
-		if (check_edit_priv())
-		{
-			echo '<tr><td colspan=2><label><a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk"><strong>Справка</strong> для редакторов</a></label></td>';
-		}
+		
+		$msg = check_edit_priv() 
+			? '<a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk"><b>Справка</b> для редакторов</a>'
+			: 'Или <b>заполните</b> форму ниже:';
+		
+		echo "<tr><td colspan=2><label>$msg</label></td>";
+		
 		show_required_tb ('Название игры', 'name', 100, $data['name'], 'text');
 
 		show_regions_dd ($data['sub_region_id']);
@@ -220,6 +223,10 @@
 		if ($old_id)
 		{
 			echo "<input type=\"hidden\" name=\"old_id\" value=\"$old_id\">";
+		}
+		if ($add_uri_id)
+		{
+			echo "<input type=\"hidden\" name=\"add_uri_id\" value=\"$add_uri_id\">";
 		}
 		if ($moderate_mode)
 		{
@@ -548,9 +555,14 @@
 		}
 
 		$old_id = get_post_field('old_id');
+		$add_uri_id = get_post_field('add_uri_id');
 		if ($old_id > 0)
 		{
       delete_old_game($old_id);
+		}
+		if ($add_uri_id)
+		{
+			resolve_add_uri($add_uri_id);
 		}
 		if (!$old)
 		{
@@ -680,13 +692,25 @@
 		{
 			$data = get_game_for_edit($id);
       $old_id = NULL;
+      $add_uri_id = NULL;
 		} else
 		{
       $old_id = array_key_exists ('old_id', $_GET) ? intval($_GET['old_id']) : 0;
-      $data = parse_old_game($old_id);
+      $add_uri_id = array_key_exists ('add_uri_id', $_GET) ? intval($_GET['add_uri_id']) : 0;
+      if ($old_id)
+      {
+				$data = parse_old_game($old_id);
+			}
+			if ($add_uri_id)
+			{
+				$add = get_added_uri($add_uri_id);
+				$data = array();
+				$data['uri'] = $add['uri'];
+				$data['allrpg_info_id'] = $add['allrpg_info_id'];
+			}
 		}
 
-		if (isset($data))
+		if (isset($data) && array_key_exists('name', $data))
 		{
       $hdr = $data['name'];
 		}
@@ -715,12 +739,19 @@
 		
 		if (isset($data))
 		{
-			show_form ($data, $old_id);
+			show_form ($data, $old_id, $add_uri_id);
 		}
 		else
 		{
+					echo "<table>
+				<tr><th>Добавьте ссылку</th></tr>
+				<tr><td>Вы можете просто добавить ссылку на анонс, и наши редакторы разберутся с остальным:</td><tr>
+				<tr><td><form method=post action=\"/api/game/add.php\"><input type=uri name=uri size=100 maxlength=100 required><input type=submit value=\"Добавить\"></form></td><tr>
+				</table>";
 			$id = 0;
-			show_form (null, null);
+			show_form (null, null, null);
+			
+
 		}
 
 	}

@@ -20,6 +20,6 @@
 	}
 	else
 	{
-		echo '<form method=post><input type=uri name=uri><input type=submit></form>';
+		redirect_to('/edit/game');
 	}
 ?>
