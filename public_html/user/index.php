@@ -19,15 +19,17 @@
 	}
 
   $id = $userdata['user_id'];
+  $email = $userdata['email'];
 
 	write_header('Kogda-igra.Ru :: Пользователи :: '. $username);
-	show_greeting();
-  echo "<h2>Профиль $username</h2>";
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = $username;
+	$topmenu -> show();
+
 
   $date = $userdata['lastvisit'] ? formate_single_date ($userdata['lastvisit']) : 'Никогда';
   $editor_stat = get_editor_stat_by_id ($id);
 	echo '<p>';
-	echo "<b>Пользователь</b>: {$username}<br>";
 	$privs = get_privs_desc_for_user($id);
 	if ($privs)
 	{
@@ -36,7 +38,7 @@
 	echo "<b>ЖЖ</b>: " . show_lj_user($username) . " <br>";
 
 	echo "<b>Был в последний раз</b>: $date <br>";
-	$email = $userdata['email'];
+
 	if ($email)
 	{
     echo "<b>Email</b>: {$email} <br>";

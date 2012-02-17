@@ -6,6 +6,7 @@
 	require_once 'calendar.php';
 	require_once 'view.php';
 	require_once 'review.php';
+	require_once 'top_menu.php';
 	
 	function write_widget_table ($date, $id, $game)
 	{
@@ -72,6 +73,11 @@
       $email =  check_username() ? "<em>Скрытый:</em>$email" : '';
     }
 	}
+	
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = $game['name'] . (check_edit_priv() ? " (<a href=\"/edit/game/index.php?id=$id\">Изменить</a>)" : '');
+	$topmenu -> show();
+  
 	$deleted_flag = $game['deleted_flag'];
 	if ($deleted_flag)
 	{
@@ -93,17 +99,6 @@
 	}
   $date = new GameDate($game);
   $year = $date->year();
-  
-    
-echo '<div style="float:right" class="top_menu">';
-  show_top_menu(-1, $year, TRUE);
-  echo '</div>';
-  echo "<h2>{$game['name']}";
-  if (check_edit_priv())
-  {
-    echo " (<a href=\"/edit/game/index.php?id=$id\">Изменить</a>)";
-  }
-  echo "</h2>";
   $comment = trim($game['comment']);
   if ($comment)
   {

@@ -165,67 +165,25 @@ function show_select ($name, $selected, $select_id = FALSE)
 		return "<span style=\"white-space: nowrap\"><img src=\"/img/userinfo.gif\" /><a href='$link/profile' onClick='javascript:urchinTracker(\"/outgoing/$link/profile\");'><b>$username</b></a></span>";
 	}
 
-	function show_menu_link($linkpath, $text, $sep)
+	function show_top_menu_if_needed()
 	{
-		if ($_SERVER['REQUEST_URI'] == $linkpath)
+		static $shown;
+		if (!$shown)
 		{
-			echo "$sep<strong>$text</strong>";
+			$shown = true;
+			$topmenu = new TopMenu();
+			$topmenu -> show();
 		}
-		else
-		{
-			echo "$sep<a href=\"$linkpath\">$text</a> ";
-		}
-	}
-
-	function show_region_link($uri, $text, $cur_region, $year, $sep = '', $add = '')
-	{
-		if ($year == 0 || $year == CURRENT_YEAR)
-		{
-			$year = '';
-		}
-		else
-		{
-			$year .= '/';
-		}
-		if ($cur_region)
-		{
-			echo "$sep<strong>$text</strong>$add";
-		}
-		else
-		{
-			echo "$sep<a href=\"$uri$year\">$text</a>$add ";
-		}
-
 	}
 
 	function show_menu()
 	{
-    		$username = get_username();
-
-		if ($username != '')
-		{
-		echo '<p>';
-			$user = show_user_link($username);
-			echo "Добро пожаловать, $user! (<a href=\"/logout/\">Выйти</a>)\n";
-			if (check_edit_priv())
-			{
-				show_menu_link ('/edit/game/', 'Добавить&nbsp;игру', '<br />');
-				show_menu_link ('/edit/', 'Панель&nbsp;управления', ' :: ');
-				show_menu_link ('/lenta/internal/', 'Лента&nbsp;изменений', ' :: ');
-			}
-			echo '</p>';
-		}
+    show_top_menu_if_needed();
 	}
 
 	function show_greeting($region = -1, $year = 0)
 	{
-    show_menu();
-		echo '<p>';
-		show_region_link('/', 'Россия', $region == 0, $year, '');
-		show_region_link('/spb/', 'Санкт-Петербург', $region == 2, $year, ' :: ');
-		show_region_link('/msk/', 'Москва', $region == 3, $year, ' :: ');
-		show_region_link('/ural/', 'Урал', $region == 5, $year, ' :: ');
-		echo '</p>';
+    show_top_menu_if_needed();
 	}
 	
 	function get_region_uri ($region)
@@ -246,40 +204,11 @@ function show_select ($name, $selected, $select_id = FALSE)
 				return '/';
 		}
 	}
-	
-	function write_years_list2 ($region, $current_year, $show_only_future = false)
-	{
-		$region = get_region_uri($region);
-
-		echo '<p><strong>Календарь за:</strong>
-		<a href="/archive/">Ранее</a>';
-		$sep = ' :: ';
-		$years_list = get_year_list ($region);
-		foreach ($years_list as $year_val)
-		{
-		  $year = $year_val['year'];
-		  if ($year > $current_year-2)
-		  {
-				if ($year == $current_year && !$show_only_future)
-				{
-				$year_text = "<strong>$year</strong>";
-				}
-				else
-				{
-				$year_text = "<a href=\"$region$year/\">$year</a>";
-				}
-				echo "$sep$year_text";
-			}
-		}
-		echo '</p>';
-	}
 
 	
 	function show_top_menu($region = -1, $year = 0, $show_only_future = FALSE)
 	{
-		show_greeting($region, $year);
-		write_years_list2 ($region, $year, $show_only_future);
-		show_search_form();
+		show_top_menu_if_needed();
 	}
 
 	function get_field_from_post ($sql, $name)

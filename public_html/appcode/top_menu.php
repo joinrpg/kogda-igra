@@ -13,14 +13,6 @@ require_once 'review.php';
 		echo "<div class='passive'>$text</div>";
 	}
 	
-	function show_search_form2($string = '')
-	{
-    echo '<form action="/search.php" method="post" id="search_form" style="clear:left; padding: 2px">';
-    echo "<input type=\"search\" size=\"40\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
-    echo '<input type="submit" value="Искать" />';
-    echo '</form>';
-	}
-	
 
 	class TopMenu
 	{
@@ -30,7 +22,16 @@ require_once 'review.php';
 			$this -> year = 0;
 			$this -> region = 0;
 			$this -> show_add_adv = TRUE;
+			$this -> search = '';
 		}
+		
+	function show_search_form()
+	{
+    echo '<form action="/search.php" method="post" id="search_form" style="clear:left; padding: 2px">';
+    echo "<input type=\"search\" size=\"40\" maxlength=\"100\" value=\"{$this->search}\" name=\"search\"/>";
+    echo '<input type="submit" value="Искать" />';
+    echo '</form>';
+	}
 		
 		function get_page_name()
 		{
@@ -80,7 +81,7 @@ require_once 'review.php';
 			echo '<div class=logo>';
 			echo '<a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
 			echo " <span class=logo_text>Когда-Игра: " . $this -> get_page_name() . '</span>';
-			show_search_form2 ();
+			$this -> show_search_form ();
 			echo '</div>';
 
 			echo '<div class=menu_box>';
