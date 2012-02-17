@@ -186,9 +186,19 @@
   	{
       echo "<tr>
         <td>" . show_user_link($username) ."</td>
-        <td><a href=\"/lenta/user/{$editor_data['user_id']}\">{$editor_data['update_count']}</a></td>
-        <td>{$editor_data['new_count']}</td>
-        <td>{$editor_data['privs']}</td></tr>\n";
+        <td>";
+        if (array_key_exists('update_count', $editor_data))
+        {
+					echo "<a href=\"/lenta/user/{$editor_data['user_id']}\">{$editor_data['update_count']}</a>";
+        }
+        else
+        {
+					echo '&nbsp;';
+        }
+        echo "</td>
+        <td>". (array_key_exists('new_count', $editor_data) ? $editor_data['new_count'] : '&nbsp;') . "</td>
+        <td>". (array_key_exists('privs', $editor_data) ? $editor_data['privs'] : '&nbsp;') . "</td>
+        </tr>\n";
   	}
   	if (check_my_priv (USERS_CONTROL_PRIV))
 	{
