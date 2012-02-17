@@ -45,7 +45,6 @@ function write_update_line($game, $colspan)
 		}
 		$uri = $game['uri'];
 		$allrpg_info_id = $game['allrpg_info_id'];
-		$allrpg_info_id = $game['allrpg_info_id'];
 		if ($allrpg_info_id &&!$uri)
 		{
 			$uri = "http://inf.allrpg.info/events/$allrpg_info_id/";
