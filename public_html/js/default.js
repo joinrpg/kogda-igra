@@ -54,6 +54,13 @@ function init()
     show_cancel_block.style.display = 'table-row';
     show_cancelled_games();
   }
+  
+  if(typeof String.prototype.trim !== 'function') {
+  String.prototype.trim = function() {
+    return this.replace(/^\s+|\s+$/g, ''); 
+  }
+}
+
 }
 		function got_assertion(assertion)
 		{

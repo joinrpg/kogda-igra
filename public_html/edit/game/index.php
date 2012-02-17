@@ -19,7 +19,7 @@
 	{
 		$value = htmlspecialchars ($value);
 		echo "<tr><td><label><strong>E-mail</strong></label></td>";
-		echo "<td><input type=\"email\" name=\"email\" id=\"email\" list=\"emaillist\" autocomplete=off maxlength=\"100\" size=\"30\" value=\"$value\" />";
+		echo "<td><input type=\"email\" name=\"email\" id=\"email\" list=\"emaillist\" autocomplete=off maxlength=\"100\" size=\"30\" value=\"$value\" onchange=\"this.value=this.value.trim()\"/>";
 		echo "<select id=\"allrpg_emails\" style=\"visibility:hidden\" onChange=\"set_email_field();\"></select>";
 		echo "<br/>";
 		if (check_edit_priv())
