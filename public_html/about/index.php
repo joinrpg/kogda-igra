@@ -1,12 +1,14 @@
 <?php
 	require_once 'funcs.php';
+	require_once 'top_menu.php';
 
   write_header("Когда-Игра :: О нас");
+  $topmenu = new TopMenu();
+  $topmenu -> pagename = 'О нас';
+  $topmenu -> show();
 ?>
 
 <div style="margin:1em">
-<h1>О нас</h1>
-<p><a href="/">Назад к календарю</a></p>
 <h3>Контакты</h3>
 <p>По всем вопросам пишите на почту: <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a> <br>
 По вопросам размещения фотоотчетов пишите фотомодераторам <a href="mailto:photo@kogda-igra.ru">photo@kogda-igra.ru</a> <br>
