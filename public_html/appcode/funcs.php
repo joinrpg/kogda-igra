@@ -10,6 +10,12 @@ date_default_timezone_set ("Europe/Moscow");
 
 function write_header ($title, $edit = FALSE)
 {
+	static $already_written;
+	if ($already_written)
+	{
+		return;
+	}
+	$already_written = TRUE;
 	?>
 <!DOCTYPE html>
 <html lang="ru">

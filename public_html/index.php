@@ -21,8 +21,6 @@
 	{
 		return_to_main();
 	}
-
-	write_header ("Ролевые игры $year $region_name");
 	
 	$topmenu = new TopMenu();
 	$topmenu -> year = $year;

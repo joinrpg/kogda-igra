@@ -35,6 +35,7 @@ require_once 'review.php';
 			$this -> region = 0;
 			$this -> show_add_adv = TRUE;
 			$this -> search = '';
+			$this -> edit = FALSE;
 		}
 		
 	function show_search_form()
@@ -47,7 +48,7 @@ require_once 'review.php';
 		
 		function get_page_name()
 		{
-			return (($this -> calendar_mode) ? "{$this -> region_name}&nbsp;{$this -> year}" : '') . $this -> pagename;
+			return 'Когда-Игра: ' .(($this -> calendar_mode) ? "{$this -> region_name}&nbsp;{$this -> year}" : '') . $this -> pagename;
 			
 		}
 		
@@ -84,15 +85,18 @@ require_once 'review.php';
 		
 		function show () 
 		{
+			
 			$this -> calendar_mode = !!$this -> year;
 			
 			if (!$this -> calendar_mode)
 			{
 				$this -> year = CURRENT_YEAR;
 			}
+			
+			write_header ($this -> get_page_name(), $this -> edit);
 			echo '<div class=logo>';
 			echo '<a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
-			echo " <span class=logo_text>Когда-Игра: " . $this -> get_page_name() . '</span>';
+			echo " <span class=logo_text>" . $this -> get_page_name() . '</span>';
 			$this -> show_search_form ();
 			echo '</div>';
 
