@@ -76,6 +76,8 @@
 	
 	$topmenu = new TopMenu();
 	$topmenu -> pagename = $game['name'] . (check_edit_priv() ? " (<a href=\"/edit/game/index.php?id=$id\">Изменить</a>)" : '');
+	$topmenu -> show_new_adv = FALSE;
+	$topmenu -> show_add_adv = FALSE;
 	$topmenu -> show();
   
 	$deleted_flag = $game['deleted_flag'];

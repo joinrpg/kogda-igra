@@ -36,6 +36,7 @@ require_once 'review.php';
 			$this -> show_add_adv = TRUE;
 			$this -> search = '';
 			$this -> edit = FALSE;
+			$this -> show_new_adv = TRUE;
 		}
 		
 	function show_search_form()
@@ -134,9 +135,10 @@ require_once 'review.php';
 			echo '</div>';
 			
 
-			
-			
-			$this -> write_adv_box();
+			if ($this -> show_new_adv)
+			{
+				$this -> write_adv_box();
+			}
 			
 			if (!$username && $this -> show_add_adv)
 			{
