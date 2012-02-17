@@ -16,6 +16,18 @@ require_once 'review.php';
 
 	class TopMenu
 	{
+		function button ($uri, $text, $add = '')
+		{
+			if ($uri == $_SERVER['REQUEST_URI'])
+			{
+				passive_button ($text);
+			}
+			else
+			{
+				active_button ($uri, $text, $add);
+			}
+		}
+		
 		function __construct()
 		{
 			$this -> pagename = '';
@@ -95,9 +107,9 @@ require_once 'review.php';
 
 
 			echo '<div class=menu_strip>';
-			active_button('/about/', 'О нас');
-			active_button('/reviews/', 'Рецензии');
-			active_button('/photo/', 'Фото');
+			$this -> button('/about/', 'О нас');
+			$this -> button('/reviews/', 'Рецензии');
+			$this -> button('/photo/', 'Фото');
 			echo '</div> ';
 			
 			$username = get_username();
@@ -106,11 +118,11 @@ require_once 'review.php';
 				echo '<div class=menu_strip>';
 
 					passive_button(show_user_link($username) . '<form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>');
-					active_button ('/edit/game', 'Добавить&nbsp;игру');
+					$this -> button ('/edit/game/', 'Добавить&nbsp;игру');
 				
 				if (check_edit_priv())
 				{
-					active_button ('/edit/', 'Панель&nbsp;управления');
+					$this -> button ('/edit/', 'Панель&nbsp;управления');
 				}
 				echo '</div>';
 			}
