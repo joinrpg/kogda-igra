@@ -2,8 +2,8 @@
 -- version 2.11.6-rc1
 -- http://www.phpmyadmin.net
 --
--- Host: 188.130.180.22
--- Generation Time: Feb 07, 2012 at 07:33 PM
+-- Host: mysql.leotsar.cz8.ru
+-- Generation Time: Feb 20, 2012 at 09:02 PM
 -- Server version: 5.5.1
 -- PHP Version: 5.2.17
 
@@ -81,5 +81,5 @@ INSERT INTO `ki_sub_regions` (`sub_region_id`, `sub_region_name`, `sub_region_di
 (41, 'Астраханская область', 'Астрх', 7),
 (42, 'Волгоградская область', 'Влгр', 7),
 (43, 'Калмыкий', 'Клмк', 7),
-(44, 'Ростовская область', 'Рств', 0),
+(44, 'Ростовская область', 'Рств', 7),
 (45, 'Краснодарский край', 'Крас', 7);
