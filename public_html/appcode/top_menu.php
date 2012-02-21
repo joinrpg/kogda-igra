@@ -28,6 +28,18 @@ require_once 'review.php';
 			}
 		}
 		
+		function real_button ($uri, $text)
+		{
+		if ($uri == $_SERVER['REQUEST_URI'])
+			{
+				passive_button ($text);
+			}
+			else
+			{
+				echo "<div class='active'><form action=\"$uri\" method=get style=\"display:inline\"><input type=submit value=\"$text\"></form></div>";
+			}
+		}
+		
 		function __construct()
 		{
 			$this -> pagename = '';
@@ -119,19 +131,21 @@ require_once 'review.php';
 			echo '</div> ';
 			
 			$username = get_username();
+			echo '<div class=menu_strip>';
 			if ($username)
 			{
-				echo '<div class=menu_strip>';
+				
 
 					passive_button(show_user_link($username) . '<form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>');
-					$this -> button ('/edit/game/', 'Добавить&nbsp;игру');
-				
-				if (check_edit_priv())
-				{
-					$this -> button ('/edit/', 'Панель&nbsp;управления');
-				}
-				echo '</div>';
+
+
 			}
+			$this -> real_button ('/edit/game/', 'Добавить&nbsp;игру...');
+			if (check_edit_priv())
+			{
+				$this -> button ('/edit/', 'Панель&nbsp;управления');
+			}
+			echo '</div>';
 			$this -> show_messages ();
 			echo '</div>';
 			
