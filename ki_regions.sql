@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 2.11.6-rc1
 -- http://www.phpmyadmin.net
 --
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `ki_regions` (
   PRIMARY KEY (`region_id`),
   UNIQUE KEY `region_name` (`region_name`,`region_code`),
   KEY `region_experimental` (`region_experimental`)
-) ENGINE=MyISAM  DEFAULT CHARSET=cp1251;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `ki_regions`
@@ -45,4 +45,4 @@ INSERT INTO `ki_regions` (`region_id`, `region_name`, `region_code`, `region_exp
 (3, 'Москва и Центральный регион', 'msk', 0),
 (5, 'Урал', 'ural', 0),
 (6, 'Сибирь', 'sibir', 0),
-(7, 'Южный федеральный округ', 'south', 0);
+(7, 'Юг России', 'south', 0);

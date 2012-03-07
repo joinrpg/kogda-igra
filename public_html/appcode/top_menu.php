@@ -92,7 +92,7 @@ require_once 'review.php';
 			if (check_edit_priv())
 			{
 				$this -> show_region_link ('Сибирь', 6, true);
-				$this -> show_region_link ('ЮФО', 7, true);
+				$this -> show_region_link ('Юг', 7, true);
 			}
 			
 		}
