@@ -45,7 +45,8 @@ function get_sql_array ($table, $id, $name, $order = FALSE)
 		static $driver;
 		if (!isset($driver))
 		{
-			$driver = new Sql ('mysql.1.leotsar.cz8.ru', 'dbu_leotsar_1', '3iNYxdDViuj', 'db_leotsar_1');
+			require 'config.php';
+			$driver = new Sql ($sql_server, $sql_user, $sql_pass, $sql_db);
 			$driver->Run ('SET NAMES utf8');
 			$driver->Run ('SET CHARACTER SET utf8');
 		}
