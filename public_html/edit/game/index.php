@@ -89,9 +89,11 @@
 		echo "<option value=\"$value\"$selected>$option_name</option>";
 	}
 
-	function show_date_control_internals ($name, $value, $len)
+	function show_date_control_internals ($name, $date_value, $len)
 	{
-    $value = getdate (strtotime($value));
+		$now = getdate();
+		$selected_year = $date_value ? intval($value['year']) : $now['year'];
+    $value = getdate (strtotime($date_value));
     global $year_list;
      echo "<input type=\"text\" name=\"{$name}_day\" id=\"{$name}_day\" maxlength=\"2\" size=\"2\" value=\"{$value['mday']}\" onChange=\"update_time_placeholder('$name', '$len');\" /> ";
 		  echo "<select name=\"{$name}_month\" id=\"{$name}_month\" size=\"1\" onChange=\"update_time_placeholder('$name', '$len');\">";
@@ -101,10 +103,11 @@
       }
       echo "</select> ";
       echo "<select name=\"{$name}_year\" id=\"{$name}_year\" size=\"1\" onChange=\"update_time_placeholder('$name', '$len');\">";
+
       foreach ($year_list as $year)
       {
         $year = intval($year['year']);
-        write_option($year, $year == intval($value['year']), $year);
+        write_option($year, $year == $selected_year, $year);
       }
       echo "</select>";
 	}
@@ -167,8 +170,9 @@
 		echo "<tr><td colspan=2><label>$msg</label></td>";
 		
 		show_required_tb ('Название игры', 'name', 100, $data['name'], 'text');
-
-		show_regions_dd ($data['sub_region_id']);
+		$sub_region_id = $data['sub_region_id'];
+		$sub_region_id = 
+		show_regions_dd ($sub_region_id ? $sub_region_id  : 4 );
 		show_uri_tb ('Сайт игры', 'uri', 100, $data['uri']);
 		if ($data['id'] == 0)
 		{
