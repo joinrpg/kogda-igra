@@ -10,18 +10,17 @@
 	
 	function write_widget_table ($date, $id, $game)
 	{
-		echo "<table class=\"widget_table\">";
+		echo "<table class=\"widget_table\"><tr>";
+		echo '<td><div id="vk_like"></div><script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script></td>';
 		 if (!$date -> is_passed())
 		 {
 			$machine_date = $date -> get_machine_date();
 			$details = "http://kogda-igra.ru/game/$id";
-			echo "<tr><td><a
-			href=\"http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&sprop=website:kogda-igra.ru&details=$details\">";
-			echo 'Напомнить в Google Calendar</a></td></tr>';
+			echo "<td><a 	href=\"http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&sprop=website:kogda-igra.ru&details=$details\">";
+			echo 'Напомнить в Google Calendar</a></td>';
 		}
-		echo '<tr><td><div id="vk_like"></div><script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script></td></tr>';
-		/*echo "<tr><td><iframe src=\"http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fkogda-igra.ru%2Fgame%2F{$id}&amp;layout=standard&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=40\" scrolling=\"no\" frameborder=\"0\" style=\"border:none; overflow:hidden; width:450px; height:65px;\" allowTransparency=\"true\"></iframe></td></tr>";*/
-		echo "</table>";
+		
+		echo "</tr></table>";
 	}
 
 
@@ -106,7 +105,7 @@
   {
 		echo "<p class='game_comment_header'>({$game['comment']})</p>";
 	}
-  write_widget_table ($date, $id, $game);
+
 
 
 	echo '<p>';
@@ -128,22 +127,23 @@
   echo make_search_string($game['mg']);
   echo "\n<br>";
 
-
-  echo "<b>Email</b>: $email";
+ 
   if ($email)
   {
+		 echo "<b>Email</b>: $email";
     echo " (<a href=\"/find/{$game['email']}\">искать</a>)";
   }
-  echo "<br><br>";
   
   $allrpg_info_id = $game['allrpg_info_id'];
   if ($allrpg_info_id)
   {
     $subobj_str = ($date -> is_passed()) ? 'past' : 'future';
-    echo "<h3>allrpg.info</h3>";
-    echo "<a href=\"http://inf.allrpg.info/events/$allrpg_info_id/\">Посмотреть профиль события</a>";
-    echo "<br><a href=\"http://calendar.allrpg.info/portfolio/subobj=$subobj_str&act=add&game=$allrpg_info_id\">Добавить в портфолио</a>";
+    echo "<br><b>allrpg.info</b>:
+    <a href=\"http://inf.allrpg.info/events/$allrpg_info_id/\">Профиль</a> :: 
+    <a href=\"http://calendar.allrpg.info/portfolio/subobj=$subobj_str&act=add&game=$allrpg_info_id\">Добавить в портфолио</a>";
   }
+  
+    write_widget_table ($date, $id, $game);
   
 $old_dates = get_game_dates($id);
 
@@ -168,7 +168,7 @@ $old_dates = get_game_dates($id);
 
   $photos = get_photo_by_game_id($id);
 
-		if (is_array($photos) || check_my_priv(PHOTO_PRIV) || check_my_priv(PHOTO_SELF_PRIV))
+		if (is_array($photos))
 		{
 			echo "<h3>Фотоотчеты об игре «{$game['name']}»</h3>";
 		}

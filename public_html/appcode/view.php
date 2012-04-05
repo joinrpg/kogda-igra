@@ -8,7 +8,7 @@
     if (is_array($result))
     {
     	echo '<hr>';
-  		echo "<h3>Пересечения с игрой «{$name}»</h3>";
+  		echo "<h3>Пересечения:</h3>";
        $calendar = new Calendar($result);
       $calendar -> show_reviews = TRUE;
       $calendar ->show_cancelled_games_checkbox = FALSE;
