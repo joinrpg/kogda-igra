@@ -84,7 +84,7 @@ require_once 'review.php';
 			{
 				$year_text = ($this -> year == CURRENT_YEAR) ? '' : "{$this -> year}/";
 				$uri = get_region_uri($region);
-				active_button ("$uri$year_text", $text, $beta ? '<sup>Бета</sup>' : '');
+				active_button ("$uri$year_text", $text, $beta ? '<sup>бета</sup>' : '');
 			}
 
 		}
@@ -144,7 +144,7 @@ require_once 'review.php';
 			{
 				
 
-					passive_button(show_user_link($username) . '<form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>');
+					passive_button(show_user_link($username) . ' <form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>');
 
 
 			}
