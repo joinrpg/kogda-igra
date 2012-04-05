@@ -59,11 +59,19 @@ require_once 'review.php';
     echo '</form>';
 	}
 		
+		function get_page_header()
+		{
+			return  ($_SERVER['REQUEST_URI'] == '/' ? 'Когда-Игра: ' : '<a href="/">Когда-Игра</a>: ') . $this -> get_page_name();
+		}
+		
 		function get_page_name()
 		{
-			$hdr = $_SERVER['REQUEST_URI'] == '/' ? 'Когда-Игра: ' : '<a href="/">Когда-Игра</a>: ';
-			return  $hdr .(($this -> calendar_mode) ? "{$this -> region_name}&nbsp;{$this -> year}" : '') . $this -> pagename;
-			
+			return (($this -> calendar_mode) ? "{$this -> region_name}&nbsp;{$this -> year}" : '') . $this -> pagename;
+		}
+		
+		function get_page_title()
+		{
+			return  'Когда-Игра: ' . $this -> get_page_name();
 		}
 		
 		function show_region_link($text, $region, $beta = false)
@@ -107,10 +115,10 @@ require_once 'review.php';
 				$this -> year = CURRENT_YEAR;
 			}
 			
-			write_header ($this -> get_page_name(), $this -> edit);
+			write_header ($this -> get_page_title(), $this -> edit);
 			echo '<div class=logo>';
 			echo '<a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
-			echo " <span class=logo_text>" . $this -> get_page_name() . '</span>';
+			echo " <span class=logo_text>" . $this -> get_page_header() . '</span>';
 			$this -> show_search_form ();
 			echo '</div>';
 
