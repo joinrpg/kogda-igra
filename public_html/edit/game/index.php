@@ -148,7 +148,7 @@
 	{
 		$value = htmlspecialchars ($value);
 		echo "<tr><td><label><strong>$label</strong></label></td>";
-		echo "<td><input type=\"text\" name=\"$name\" id =\"$name\" maxlength=\"10\" size=\"10\" required value=\"$value\" onChange=\"update_time_placeholder('begin', 'time');\" />";
+		echo "<td><input type=\"text\" name=\"$name\" id =\"$name\" maxlength=\"10\" size=\"10\" required value=\"$value\" onChange=\"length_change('begin', 'time');\" />";
 		echo " <span id=\"{$name}_placeholder\"></div>";
 		echo "</td></tr>\n";
 	}

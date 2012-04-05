@@ -166,7 +166,13 @@ function get_date_string(date)
 	}
 }
 
-function update_time_placeholder(time_prefix, time2_prefix)
+function length_change (time_prefix, time2_prefix)
+{
+	window.kogda_igra_default_value = false;
+	update_time_placeholder (time_prefix, time2_prefix);
+}
+
+function update_time_placeholder (time_prefix, time2_prefix)
 {
   var date = get_time_value (time_prefix);
 
@@ -175,10 +181,11 @@ function update_time_placeholder(time_prefix, time2_prefix)
 
 	var length = document.getElementById(time2_prefix).value;
 	
-	if (length.length > 0)
+	if (length.length > 0 && !window.kogda_igra_default_value)
 	{
 		var end_date = date;
 		end_date.setDate(date.getDate() + parseInt(length) - 1);
+		
 	}
 	else
 	{
@@ -190,12 +197,13 @@ function update_time_placeholder(time_prefix, time2_prefix)
 			length++;
 		}
 		document.getElementById(time2_prefix).value = length;
+		window.kogda_igra_default_value = true;
 	}
-	
 		var placeholder2 = document.getElementById(time2_prefix + '_placeholder');
 		placeholder2.innerHTML = weekday[date.getDay()];
   
   update_allrpg_info (date, end_date);
+
 }
 
 function update_region_name(sender)
