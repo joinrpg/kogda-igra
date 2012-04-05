@@ -179,10 +179,21 @@ function update_time_placeholder(time_prefix, time2_prefix)
 	{
 		var end_date = date;
 		end_date.setDate(date.getDate() + parseInt(length) - 1);
-
+	}
+	else
+	{
+		var end_date = date;
+		length = 1;
+		while (end_date.getDay() !=0)
+		{
+			end_date.setDate(end_date.getDate()+1);
+			length++;
+		}
+		document.getElementById(time2_prefix).value = length;
+	}
+	
 		var placeholder2 = document.getElementById(time2_prefix + '_placeholder');
 		placeholder2.innerHTML = weekday[date.getDay()];
-	}
   
   update_allrpg_info (date, end_date);
 }
