@@ -361,6 +361,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		}
 
 		$sql -> Run ("UPDATE ki_games $list WHERE `id` = $id LIMIT 1");
+		$sql -> Run ("DELETE FROM ki_add_uri WHERE `allrpg_info_id` = $allrpg_info_id");
 	}
 	else
 	{	
@@ -368,6 +369,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		$sql -> Run ("INSERT INTO ki_games $list");
 		$id = $sql -> LastInsert ();
 		internal_log_game ($user_add ? 19 : 1, $id);
+		$sql -> Run ("DELETE FROM ki_add_uri WHERE `allrpg_info_id` = $allrpg_info_id");
 	}
 
 	internal_do_update_year_index ($sql);
