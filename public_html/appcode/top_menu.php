@@ -2,44 +2,10 @@
 require_once 'logic/updates.php';
 require_once 'logic/gamelist.php';
 require_once 'review.php';
-
-	function active_button ($uri, $text, $add = '')
-	{
-		echo "<div class='active'><a href=\"$uri\">$text</a>$add</div>";
-	}
-	
-	function passive_button ($text)
-	{
-		echo "<div class='passive'>$text</div>";
-	}
-	
+require_once 'uifuncs.php';
 
 	class TopMenu
 	{
-		function button ($uri, $text, $add = '')
-		{
-			if ($uri == $_SERVER['REQUEST_URI'])
-			{
-				passive_button ($text);
-			}
-			else
-			{
-				active_button ($uri, $text, $add);
-			}
-		}
-		
-		function real_button ($uri, $text)
-		{
-		if ($uri == $_SERVER['REQUEST_URI'])
-			{
-				passive_button ($text);
-			}
-			else
-			{
-				echo "<div class='active'><form action=\"$uri\" method=get style=\"display:inline\"><input type=submit value=\"$text\"></form></div>";
-			}
-		}
-		
 		function __construct()
 		{
 			$this -> pagename = '';
@@ -51,17 +17,28 @@ require_once 'review.php';
 			$this -> show_new_adv = TRUE;
 		}
 		
-	function show_search_form()
-	{
-    echo '<form action="/search.php" method="post" id="search_form" style="clear:left; padding: 2px">';
-    echo "<input type=\"search\" size=\"40\" maxlength=\"100\" value=\"{$this->search}\" name=\"search\"/>";
-    echo '<input type="submit" value="Искать" />';
-    echo '</form>';
-	}
+		function show_search_form()
+		{
+			echo '<form action="/search.php" method="post" id="search_form" style="clear:left; padding: 2px">';
+			echo "<input type=\"search\" size=\"40\" maxlength=\"100\" value=\"{$this->search}\" name=\"search\"/>";
+			echo '<input type="submit" value="Искать" />';
+			echo '</form>';
+		}
+		
+		function get_site_title()
+		{
+			return 'Когда-Игра';
+		}
 		
 		function get_page_header()
 		{
-			return  ($_SERVER['REQUEST_URI'] == '/' ? 'Когда-Игра: ' : '<a href="/">Когда-Игра</a>: ') . $this -> get_page_name();
+			return  $this->get_site_header(). ': ' . $this -> get_page_name();
+		}
+		
+		function get_site_header()
+		{
+			$header = $this -> get_site_title();
+			return ($_SERVER['REQUEST_URI'] == '/' ? $header : "<a href=\"/\">$header</a>");
 		}
 		
 		function get_page_name()
@@ -71,7 +48,7 @@ require_once 'review.php';
 		
 		function get_page_title()
 		{
-			return  'Когда-Игра: ' . $this -> get_page_name();
+			return  $this->get_site_title() . ': ' . $this -> get_page_name();
 		}
 		
 		function show_region_link($text, $region, $beta = false)
@@ -133,9 +110,9 @@ require_once 'review.php';
 
 
 			echo '<div class=menu_strip>';
-			$this -> button('/about/', 'О нас');
-			$this -> button('/reviews/', 'Рецензии');
-			$this -> button('/photo/', 'Фото');
+			show_button('/about/', 'О нас');
+			show_button('/reviews/', 'Рецензии');
+			show_button('/photo/', 'Фото');
 			echo '</div> ';
 			
 			$username = get_username();
@@ -148,10 +125,10 @@ require_once 'review.php';
 
 
 			}
-			$this -> real_button ('/edit/game/', 'Добавить&nbsp;игру...');
+			real_button ('/edit/game/', 'Добавить&nbsp;игру...');
 			if (check_edit_priv())
 			{
-				$this -> button ('/edit/', 'Панель&nbsp;управления');
+				show_button ('/edit/', 'Панель&nbsp;управления');
 			}
 			echo '</div>';
 			$this -> show_messages ();

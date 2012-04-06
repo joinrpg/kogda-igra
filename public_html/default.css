@@ -288,3 +288,8 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 {
 	font-weight:bold;
 }
+
+h1 
+{
+	margin: 0;
+}

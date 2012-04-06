@@ -4,7 +4,7 @@
 	require_once 'logic.php';
 	require_once 'calendar.php';
 	require_once 'review.php';
-	require_once 'view.php';
+	require_once 'uifuncs.php';
 	require_once 'forms.php';
 	require_once 'logic/edit.php';
 	require_once 'logic/photo.php';

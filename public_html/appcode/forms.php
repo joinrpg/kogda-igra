@@ -65,5 +65,6 @@ function show_hidden($name, $value)
 		}
 		echo "</select>";
 	}
-	
+
+
 ?>

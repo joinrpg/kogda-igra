@@ -1,5 +1,6 @@
 <?php
 require_once 'review.php';
+require_once 'uifuncs.php';
   function append_zero($text)
   {
   		return (strlen($text) == 1) ? "0$text" : $text;
@@ -159,7 +160,33 @@ class Calendar
     $name = htmlspecialchars($name);
     return $uri ? "<a href=\"$uri\" rel=\"nofollow\">$name</a>" : $name;
   }
-
+  
+  function write_game_name ($game)
+  {
+		
+		if (!$this -> export_mode)
+		{
+			$uri = trim($game['uri']);
+			if ($uri)
+			{
+				echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
+			}
+			echo Calendar::format_game_name ($game['name'], "/game/{$game['id']}");
+		}
+		else
+		{
+			 echo Calendar::format_game_name ($game['name'], '');
+		}
+  }
+  
+  function show_border_if_needed($game, $date)
+  {
+		if ($this -> check_border)
+    {
+      $this -> check_date_border ($date -> begin_date, $this -> colspan);
+    }
+  }
+  
   function _write_calendar_entry ($game)
   {
       $masked = $game['show_flags'] && 1;
@@ -201,10 +228,7 @@ class Calendar
 
       $players_count = $game['players_count'] > 0 ? $game['players_count'] : '&nbsp;';
 
-      if ($this -> check_border)
-      {
-        $this -> check_date_border ($date -> begin_date, $this -> colspan);
-      }
+      $this -> show_border_if_needed ($game, $date);
 
 
       $show_date = $date -> show_date_string(!$this -> check_border);
@@ -221,25 +245,9 @@ class Calendar
         echo "<td class=\"$status_style\" id=\"$id\">$status_name</td>";
       }
 
-
-
-
-
-      if (!$this -> export_mode)
-      {
-        $game_name = Calendar::format_game_name ($game['name'], "/game/$id");
-        $uri = trim($game['uri']);
-        if ($uri)
-        {
-          $uri = Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png').'&nbsp;';
-        }
-      }
-      else
-      {
-         $game_name = Calendar::format_game_name ($game['name'], '');
-      }
-
-      echo "<td class=\"game_name\">$uri$game_name</td>";
+      echo "<td class=\"game_name\">";
+      $this -> write_game_name ($game);
+      echo "</td>";
       echo "<td title=\"$sub_region_name\" class=\"game_region\">$sub_region_disp_name</td>";
       echo "<td title=\"{$date->dow}\" class=\"game_date\">$show_date</td>";
       echo "<td class=\"game_type\">$type</td>";
@@ -283,8 +291,7 @@ class Calendar
         {
           echo "<input type=\"checkbox\" name=\"mark[]\" value=\"$id\" /><br />";
         }
-
-        echo "<a href=\"/edit/game/?id=$id\">Изм.</a>";
+				echo "<form action=\"/edit/game/?id=$id/\" method=post id=ledit_form style=\"display:inline\"><input type=submit value=\"Изменить\"></form>";
 
         echo "</td>\n";
       }
@@ -335,7 +342,12 @@ class Calendar
     return "<br><a href=\"/game/{$game['id']}/\">" .  Calendar::format_by_count($review_count, 'рецензия', 'рецензии', 'рецензий') . '</a>';
 
   }
-
+  
+  function write_border ($border_text)
+  {
+		echo "<tr class=\"month_header\"><td colspan=\"{$this -> colspan}\">$border_text</td></tr>";
+  }
+  
   function check_date_border($date)
 {
 
@@ -363,11 +375,11 @@ class Calendar
     {
       $month_name = "Игры с рецензиями";
     }
-		echo "<tr class=\"month_header\"><td colspan=\"$colspan\">$month_name</td></tr>";
+		$this -> write_border ($month_name);
 	}
 	elseif ($this -> prev_date['mon'] != $date['mon'] AND ($month >= $this-> current_month OR !$this->show_only_future))
 	{
-		echo "<tr class=\"month_header\"><td colspan=\"$colspan\"><br />$month_name</td></tr>";
+		$this -> write_border ("<br>$month_name");
 	}
 	$this -> prev_date = $date;
 }

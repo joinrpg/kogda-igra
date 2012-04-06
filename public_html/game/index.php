@@ -4,23 +4,94 @@
 	require_once 'logic/gamebase.php';
 	require_once 'logic/photo.php';
 	require_once 'calendar.php';
-	require_once 'view.php';
+	require_once 'logic/gameinfo.php';
 	require_once 'review.php';
 	require_once 'top_menu.php';
+	require_once 'uifuncs.php';
+	
+	
+	class GameProfileMenu extends TopMenu
+	{
+		function __construct($game)
+		{
+
+			
+			parent::__construct();
+			$this -> game = $game;
+			$this -> show_new_adv = FALSE;
+			$this -> show_add_adv = FALSE;
+		}
+		
+		function get_page_title()
+		{
+			return $this->get_site_title() . ': ' . $this -> game['name'];
+		}
+		
+		function get_page_header()
+		{
+			return $this ->get_site_header() . ': профиль игры';
+		}
+	}
+	
+	class GameProfileCalendar extends Calendar
+	{
+		function __construct ($game)
+		{
+						$intersections = get_intersections($game['game_id']);
+			
+			parent::__construct(array_merge(array($game), $intersections));
+			$this -> show_reviews = FALSE;
+      $this ->show_cancelled_games_checkbox = FALSE;
+      $this -> count = 0;
+		}
+		
+		function write_game_name ($game)
+		{
+			if ($this -> count > 1)
+			{
+				parent :: write_game_name ($game);
+				return;
+			}
+			$uri = trim($game['uri']);
+			if ($uri)
+			{
+				echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
+			}
+			echo Calendar::format_game_name ($game['name'], "");
+		}
+		
+		function show_border_if_needed($game, $date)
+		{
+			$this -> count++;
+			if ($this -> count == 2)
+			{
+				$this -> write_border('<br>Пересечения');
+			}
+		} 
+	}
 	
 	function write_widget_table ($date, $id, $game)
 	{
-		echo "<table class=\"widget_table\"><tr>";
-		echo '<td><div id="vk_like"></div><script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script></td>';
-		 if (!$date -> is_passed())
+	
+		echo '<div class=menu_box>';
+		echo '<span id="vk_like"></span><script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script>';
+		echo '<div class=menu_strip>';
+		  $allrpg_info_id = $game['allrpg_info_id'];
+  if ($allrpg_info_id)
+  {
+    $subobj_str = ($date -> is_passed()) ? 'past' : 'future';
+    active_button("http://inf.allrpg.info/events/$allrpg_info_id/", 'Профиль allrpg.info');
+    real_button("http://calendar.allrpg.info/portfolio/subobj=$subobj_str&act=add&game=$allrpg_info_id", "Добавить в портфолио");
+  }
+  		 if (!$date -> is_passed())
 		 {
 			$machine_date = $date -> get_machine_date();
 			$details = "http://kogda-igra.ru/game/$id";
-			echo "<td><a 	href=\"http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&sprop=website:kogda-igra.ru&details=$details\">";
-			echo 'Напомнить в Google Calendar</a></td>';
+			real_button("http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&sprop=website:kogda-igra.ru&details=$details", "Добавить в Google Calendar");
 		}
+		echo '</div>';
+		echo '</div>';
 		
-		echo "</tr></table>";
 	}
 
 
@@ -44,39 +115,8 @@
 	{
     return_to_main();
 	}
-
-	write_header('Kogda-igra.Ru : '. $game['name']);
-	$players_count = $game['players_count'] > 0 ? $game['players_count'] : 'Неизвестно';
-  $game_type_name = $game['game_type_name'];
-  $polygon_name = $game['polygon_name'];
-  $game_name = $game['name'];
-  if ($game['uri'])
-      {
-        $uri = "<a href=\"{$game['uri']}\" rel=\"nofollow\">{$game['uri']}</a>";
-      }
-      else
-      {
-        $uri = 'нет';
-      }
-
-   	if (!$game['email'])
-	{
-    $email = '';
-	}
-	else
-	{
-    $email = $game['email'];
-    $email = "<a href=\"mailto:$email\">$email</a>";
-	 if ($game['hide_email'])
-    {
-      $email =  check_username() ? "<em>Скрытый:</em>$email" : '';
-    }
-	}
 	
-	$topmenu = new TopMenu();
-	$topmenu -> pagename = $game['name'] . (check_edit_priv() ? " (<a href=\"/edit/game/index.php?id=$id\">изменить</a>)" : '');
-	$topmenu -> show_new_adv = FALSE;
-	$topmenu -> show_add_adv = FALSE;
+	$topmenu = new GameProfileMenu($game);
 	$topmenu -> show();
   
 	$deleted_flag = $game['deleted_flag'];
@@ -98,53 +138,28 @@
 		write_footer();
 		die();
 	}
+	  
+	  
+    
   $date = new GameDate($game);
   $year = $date->year();
+  
+
+  echo '<div style="float:left">';
+  echo "<h1>{$game['name']}</h1>";
+  
   $comment = trim($game['comment']);
   if ($comment)
   {
 		echo "<p class='game_comment_header'>({$game['comment']})</p>";
 	}
+	echo '</div>';
+	write_widget_table ($date, $id, $game);
 
+	
+	       $calendar = new GameProfileCalendar($game);
 
-
-	echo '<p>';
-	echo "<b>Статус</b>: {$game['status_name']}<br>";
-	echo '<b>Дата</b>: ' .  ($date -> show_date_string(true)) . "<br>";
-	echo "<b>Тип игры</b>: $game_type_name<br>";
-  echo "<b>Регион</b>: {$game['sub_region_name']}<br>";
-  echo "<b>Полигон</b>: $polygon_name ";
-  if (intval($game['meta_polygon']) == 0)
-  {
-    $poly_uri = urlencode($polygon_name);
-    echo "(<a href=\"/find/$poly_uri\">искать</a>)";
-  }
-  echo "<br>";
-  echo "<b>Сайт</b>: $uri<br>";
-  
-  echo "<b>Кол-во игроков</b>: $players_count";
-  echo "<br><b>Мастерская группа</b>: ";
-  echo make_search_string($game['mg']);
-  echo "\n<br>";
-
- 
-  if ($email)
-  {
-		 echo "<b>Email</b>: $email";
-    echo " (<a href=\"/find/{$game['email']}\">искать</a>)";
-  }
-  
-  $allrpg_info_id = $game['allrpg_info_id'];
-  if ($allrpg_info_id)
-  {
-    $subobj_str = ($date -> is_passed()) ? 'past' : 'future';
-    echo "<br><b>allrpg.info</b>:
-    <a href=\"http://inf.allrpg.info/events/$allrpg_info_id/\">Профиль</a> :: 
-    <a href=\"http://calendar.allrpg.info/portfolio/subobj=$subobj_str&act=add&game=$allrpg_info_id\">Добавить в портфолио</a>";
-  }
-  
-    write_widget_table ($date, $id, $game);
-  
+      $calendar -> write_calendar();
 $old_dates = get_game_dates($id);
 
   if (count($old_dates) > 1)
@@ -170,7 +185,7 @@ $old_dates = get_game_dates($id);
 
 		if (is_array($photos))
 		{
-			echo "<h3>Фотоотчеты об игре «{$game['name']}»</h3>";
+			echo "<h3>Фотоотчеты</h3>";
 		}
 		if (is_array($photos))
 		{
@@ -190,7 +205,7 @@ $old_dates = get_game_dates($id);
   {
     echo "<br><a href=\"/edit/photo/?game_id=$id\">Добавить фотоотчет</a>";
   }
-  show_intersections($id, $game['name']);
+
 	write_footer(TRUE);
 function show_photos_array($photo_array)
 {
