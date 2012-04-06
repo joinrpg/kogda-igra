@@ -79,7 +79,7 @@
 <h3>Благодарности</h3>
 
 <p>Хостинг предоставлен МТГ «<a href="http://bastilia.ru">Бастилия</a>» и <a href="http://www.diphost.ru" title="Хороший хостинг"><img src="http://www.diphost.ru/b/na88x31_gray.gif" width="88" height="31" style="border: 0px solid" alt="Хороший хостинг" title="Хороший хостинг" /></a></p>
-<p>Иконки предоставлены <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam.com</a></p>
+<p>Иконки предоставлены <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam.com</a> и <a href="http://thenounproject.com">The Noun Project</a></p>
 </div>
 <?php
   write_footer(TRUE);
