@@ -38,6 +38,11 @@
 		function __construct ($game)
 		{
 						$intersections = get_intersections($game['game_id']);
+						
+			if (!is_array ($intersections))
+			{
+				$intersections = array();
+			}
 			
 			parent::__construct(array_merge(array($game), $intersections));
 			$this -> show_reviews = FALSE;
@@ -88,6 +93,10 @@
 			$machine_date = $date -> get_machine_date();
 			$details = "http://kogda-igra.ru/game/$id";
 			real_button("http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&sprop=website:kogda-igra.ru&details=$details", "Добавить в Google Calendar");
+		}
+		if (check_my_priv(PHOTO_PRIV) || check_my_priv(PHOTO_SELF_PRIV))
+		{
+			real_button ("/edit/photo/?game_id=$id", "Добавить фотоотчет");
 		}
 		echo '</div>';
 		echo '</div>';
@@ -201,10 +210,7 @@ $old_dates = get_game_dates($id);
 			}
       show_photos_array ($photos['all']);
 		}
-	if (check_my_priv(PHOTO_PRIV) || check_my_priv(PHOTO_SELF_PRIV))
-  {
-    echo "<br><a href=\"/edit/photo/?game_id=$id\">Добавить фотоотчет</a>";
-  }
+
 
 	write_footer(TRUE);
 function show_photos_array($photo_array)
@@ -224,17 +230,19 @@ function show_photo ($photo)
     $photo_id = $photo['photo_id'];
     $photo_author = get_photo_author($photo);
     $photo_comment = htmlspecialchars($photo['photo_comment']);
-    echo "<td><a href=\"{$photo['photo_uri']}\"><img style=\"border:none\" src=\"/photo/preview/$photo_id\"></a> <br> <b>Автор</b>: $photo_author";
+    $photo_good = $photo['photo_good_flag'] ? '<b>Лучший</b> ' : '';
+    echo "<td><a href=\"{$photo['photo_uri']}\"><img style=\"border:none\" src=\"/photo/preview/$photo_id\"></a>";
  
+		echo "<br>$photo_good<a href=\"{$photo['photo_uri']}\">Фотоотчет</a> от $photo_author";
         if (check_my_priv(PHOTO_PRIV) && $photo['author_id'] == 0)
         {
           echo " (<a href=\"/edit/problems/update-author/?author=$photo_author\">Исправить</a>)";
         }
+
         if ($photo_comment)
         {
           echo "<br> <i>$photo_comment</i>";
         }
-        echo "<br> <a href=\"{$photo['photo_uri']}\">[Ссылка на фото]</a>";
         if (check_my_priv(PHOTO_PRIV) || (check_my_priv(PHOTO_SELF_PRIV) && $photo['author_id'] == get_user_id()))
         {
           echo "<br><a href=\"/edit/photo/?id=$photo_id&game_id=$id\">Изменить</a>";
