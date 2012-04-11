@@ -10,50 +10,69 @@ function set_email_field()
 
 }
 
-function update_emails()
+function clear_email_dropdown()
 {
-if (XMLHttpRequest && document.getElementById('email').value.length == 0)
+	var dropdown = document.getElementById('allrpg_emails');
+	while (dropdown.options.length> 0)
+	{
+		dropdown.removeChild(dropdown.lastChild);
+	}
+	dropdown.style.visibility = "hidden";
+}
+
+function update_email_dropdown (masters)
+{
+	clear_email_dropdown();
+	var dropdown = document.getElementById('allrpg_emails');
+
+	if (masters.length > 0 && document.getElementById('email').value.length == 0)
+	{
+			var opt0 = document.createElement('option');
+			opt0.setAttribute('value', 0);
+			opt0.innerHTML = 'Выберите ...';
+			dropdown.appendChild(opt0);
+		for (var i = 0; i < masters.length; i++)
+		{
+			var opt = document.createElement('option');
+			opt.setAttribute('value', masters[i].email);
+			var duty = masters[i].duty.join(',');
+			opt.innerHTML = masters[i].email + ' ' + masters[i].name;
+			dropdown.appendChild(opt);
+		}
+		dropdown.style.visibility = "visible";
+	}
+}
+
+function update_text_field(fieldname, val)
+{
+	var textbox = document.getElementById(fieldname);
+	
+	if (textbox.value.length == 0)
+	{
+		textbox.value = val;
+	}
+}
+
+function update_allrpg_fields()
+{
+if (XMLHttpRequest)
 {
 		var req = new XMLHttpRequest();
-		var dropdown = document.getElementById('allrpg_emails');
 		var uri = 'http://inf.allrpg.info/kogdaigra.php?game_id=' + current_allrpg_value();
 		req.open ('GET', uri, true);
 		req.onreadystatechange = function (aEvt) {
 			if (req.readyState == 4)
 			{
-				while (dropdown.options.length> 0)
-				{
-					dropdown.removeChild(dropdown.lastChild);
-				}
+				clear_email_dropdown();
 				if (req.status == 200)
 				{
-          
           var str = req.responseText;
 					var result = JSON.parse(str);
-					if (result.length > 0)
-					{
-              var opt0 = document.createElement('option');
-              opt0.setAttribute('value', 0);
-              opt0.innerHTML = 'Выберите ...';
-              dropdown.appendChild(opt0);
-            for (var i = 0; i < result.length; i++)
-            {
-              var opt = document.createElement('option');
-              opt.setAttribute('value', result[i].email);
-              var duty = result[i].duty.join(',');
-              opt.innerHTML = result[i].email + ' ' + result[i].name;
-              dropdown.appendChild(opt);
-            }
-            dropdown.style.visibility = "visible";
-					}
-					else
-					{
-					dropdown.style.visibility = "hidden";
-					}
-				}
-				else
-				{
-					dropdown.style.visibility = "hidden";
+					update_email_dropdown (result.masters);
+					update_text_field ('mg', result.info.mg);
+					update_text_field ('players_count', result.info.playernum);
+					update_text_field ('uri', result.info.site);
+					update_text_field ('name', result.info.name);
 				}
 			}
 		}
@@ -132,7 +151,7 @@ function updateAllrpgInfoLink()
    var allrpgInfoLink = document.getElementById('allrpg_info_link');
    allrpgInfoLink.href = "http://inf.allrpg.info/events/" + current_allrpg_value().toString()  + "/";
    allrpgInfoLink.style.visibility = "visible";
-   update_emails();
+   update_allrpg_fields();
 }
 
 function current_allrpg_value()
