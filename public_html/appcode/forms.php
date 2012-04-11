@@ -14,7 +14,7 @@ function show_tb ($label, $name, $length, $value, $tb_type = 'text', $required =
 	{
 		$list = " list=\"$list\" autocomplete=off";
 	}
-	echo "<td><input type=\"$tb_type\" name=\"$name\" maxlength=\"$maxlength\" size=\"$length\" value=\"$value\" $required$list></td></tr>\n";
+	echo "<td><input type=\"$tb_type\" name=\"$name\" id =\"$name\" maxlength=\"$maxlength\" size=\"$length\" value=\"$value\" $required$list></td></tr>\n";
 }
 
 function show_required_tb ($label, $name, $length, $value, $tb_type = 'text')
