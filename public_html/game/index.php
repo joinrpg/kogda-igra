@@ -37,8 +37,7 @@
 	{
 		function __construct ($game)
 		{
-						$intersections = get_intersections($game['game_id']);
-						
+						$intersections = get_intersections($game['id']);
 			if (!is_array ($intersections))
 			{
 				$intersections = array();
