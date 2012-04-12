@@ -43,7 +43,7 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
 		ks.status_name, ks.status_style, ks.show_date_flag, ks.cancelled_status,
 		
 		krev.*, ks.show_review_flag, kp.meta_polygon,
-		kgd.`begin`, kgd.`time`, kgd.`order`
+		kgd.`begin`, kgd.`time`, kgd.`order`, kia.allrpg_zayvka_id, kia.opened AS allrpg_opened
 		FROM `ki_games` kg
 		INNER JOIN ki_polygons kp ON kg.polygon = kp.polygon_id
 		INNER JOIN ki_sub_regions ksr ON kg.sub_region_id = ksr.sub_region_id
@@ -53,6 +53,7 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
 		LEFT JOIN `ki_game_date` kgd ON kgd.game_id = kg.id AND kgd.hidden_flag = 0
 		LEFT JOIN (SELECT MIN(review_id) as review_id, game_id FROM `ki_review` GROUP BY game_id) A ON A.game_id = kg.id
 		LEFT JOIN `ki_review` krev ON krev.review_id = A.review_id
+		LEFT JOIN `ki_zayavka_allrpg` kia ON kg.id = kia.game_id
 		$add_join
 		WHERE
 			$where

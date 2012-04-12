@@ -110,4 +110,9 @@ function get_add_uri_list()
 	return $sql -> Query ('SELECT * FROM ki_add_uri WHERE resolved = 0');
 }
 
+function get_future_games()
+{
+	return _get_games("kg.deleted_flag =0 AND begin > NOW() AND ks.cancelled_status = 0 AND kgd.`order` = 0", "", "name ASC");
+}
+
 ?>
