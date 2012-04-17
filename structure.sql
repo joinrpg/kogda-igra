@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `ki_games` (
   `allrpg_info_id` int(11) DEFAULT NULL,
   `photo_count` int(11) NOT NULL DEFAULT '0',
   `redirect_id` int(11) DEFAULT NULL,
+  `vk_likes` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `polygon` (`polygon`),

@@ -1,0 +1,22 @@
+<input type=text id="count">
+<script type="text/javascript">
+function update_likes(id) 
+{
+	var req = new XMLHttpRequest();
+	var uri = 'http://kogda-igra.ru/api/game/update-likes.php?id=' + id;
+	req.open ('GET', uri, true);
+	req.send();
+};
+
+function update_like (i)
+{
+	if (i > 2000)
+		return;
+	document.getElementById('count').value = i;
+	update_likes (i);
+	i++;
+	setTimeout("update_like(" + i + ")", 500);
+}
+
+update_like (1);
+</script>

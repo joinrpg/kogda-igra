@@ -78,7 +78,18 @@
 	{
 	
 		echo '<div class=menu_box>';
-		echo '<span id="vk_like"></span><script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button"});</script>';
+		echo "<span id=\"vk_like\"></span><script type=\"text/javascript\">
+			VK.Widgets.Like('vk_like', {type: \"button\"});
+			var update_likes = 
+			function() {
+				var req = new XMLHttpRequest();
+				var uri = 'http://kogda-igra.ru/api/game/update-likes.php?id=$id';
+				req.open ('GET', uri, true);
+				req.send();
+};
+			VK.Observer.subscribe('widgets.like.liked', update_likes);
+			VK.Observer.subscribe('widgets.like.unliked', update_likes);
+			</script>";
 		echo '<div class=menu_strip>';
 
 		  $allrpg_info_id = $game['allrpg_info_id'];
@@ -177,14 +188,6 @@
 $old_dates = get_game_dates($id);
 
 		$allrpg_zayvka_id = $game['allrpg_zayvka_id'];
-		if ($allrpg_zayvka_id && !$date -> is_passed && $game['allrpg_opened'])
-		{
-			
-			echo '<div style="text-align:center">';
-			echo '<h3>Список ролей</h3>';
-			echo "<iframe width=80% height=400  src=\"http://www.allrpg.info/gameorders.php?game=$allrpg_zayvka_id\">";
-			echo '</div>';
-		}
 
   if (count($old_dates) > 1)
   {
