@@ -56,11 +56,7 @@
 				parent :: write_game_name ($game);
 				return;
 			}
-			$uri = trim($game['uri']);
-			if ($uri)
-			{
-				echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
-			}
+			$this -> write_game_icons ($game);
 			echo Calendar::format_game_name ($game['name'], "");
 		}
 		

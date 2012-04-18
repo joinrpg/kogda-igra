@@ -161,16 +161,31 @@ class Calendar
     return $uri ? "<a href=\"$uri\" rel=\"nofollow\">$name</a>" : $name;
   }
   
+  function write_game_icons ($game)
+  {
+		$uri = trim($game['uri']);
+		if ($uri)
+		{
+			echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
+		}
+		$vk_club = trim ($game['vk_club']);
+		if ($vk_club)
+		{
+			echo Calendar::get_link_icon("http://vk.com/$vk_club", "http://vk.com/$vk_club", '[VK]', 'vk.png') . '&nbsp;';
+		}
+		$lj_comm = trim ($game['lj_comm']);
+		if ($lj_comm)
+		{
+			echo Calendar::get_link_icon("http://$lj_comm.lj.ru/profile", "http://$lj_comm.lj.ru/profile", '[LJ]', 'livejournal.png') . '&nbsp;';
+		}
+  }
+  
   function write_game_name ($game)
   {
 		
 		if (!$this -> export_mode)
 		{
-			$uri = trim($game['uri']);
-			if ($uri)
-			{
-				echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
-			}
+			$this -> write_game_icons ($game);
 			echo Calendar::format_game_name ($game['name'], "/game/{$game['id']}");
 		}
 		else

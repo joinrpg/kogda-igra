@@ -273,7 +273,13 @@ function get_year_list_full()
 			");
 }
 
-function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_flags, $status, $comment, $sub_region, $hide_email = 0, $players_count = 0, $send_email = TRUE, $allrpg_info_id = 0, $user_add = 0)
+function cleanup_string_field ($sql, $field)
+{
+	$field = trim($field);
+	return strlen($field) ? $sql -> QuoteAndClean ($field) : 'NULL';
+}
+
+function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_flags, $status, $comment, $sub_region, $hide_email = 0, $players_count = 0, $send_email = TRUE, $allrpg_info_id = 0, $user_add = 0, $vk_club = '', $lj_comm = '')
 {
 	$sql = connect();
 	
@@ -292,6 +298,8 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 	$players_count = intval ($players_count);
 	$allrpg_info_id = intval($allrpg_info_id) > 0 ?intval ($allrpg_info_id) : 'NULL' ;
 	$user_add = intval ($user_add);
+	$vk_club = cleanup_string_field ($sql, $vk_club);
+	$lj_comm = cleanup_string_field ($sql, $lj_comm);
 	
 	if ($players_count == 0)
 	{
@@ -324,7 +332,9 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		`deleted_flag` = $deleted_flag,
 		`hide_email` = $hide_email,
 		`players_count` = $players_count,
-		`allrpg_info_id` = $allrpg_info_id
+		`allrpg_info_id` = $allrpg_info_id,
+		`vk_club` = $vk_club,
+		`lj_comm` = $lj_comm
 		";
 	
 	$sql -> Run ('START TRANSACTION');
@@ -355,7 +365,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		if (($name != $prev_data['name']) || ($uri != $prev_data['uri']) || ($type != $prev_data['type'])
 		|| ($polygon != $prev_data['polygon']) || ($mg != $prev_data['mg']) || ($email != $prev_data['email']) || ($show_flags != $prev_data['show_flags'])
 		|| ($comment != $prev_data['comment']) || ($sub_region != $prev_data['sub_region_id']) || ($hide_email != $prev_data['hide_email'])
-		|| $players_count != $prev_data['players_count'])
+		|| $players_count != $prev_data['players_count'] || ($vk_club != $prev_data['vk_club']) || ($lj_comm != $prev_data['lj_comm']))
 		{
 			internal_log_game (2, $id);
 		}
