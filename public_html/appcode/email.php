@@ -167,6 +167,8 @@ class GameUpdatedEmail extends Email
     $polygon_name = html_entity_decode($game['polygon_name'], ENT_COMPAT, "utf-8");
     $game_name = $this -> game_data['name'];
     $int_text = $this -> get_int_table();
+    $vk_text  = ($game['vk_club']) ? "\nВКонтакте: http://vk.com/{$game['vk_club']}/" : '';
+    $lj_text = ($game['lj_comm']) ? "\nЖЖ: http://{$game['lj_comm']}.lj.ru/profile/" : '';
     
     return "Профиль игры: http://kogda-igra.ru/game/{$game['id']}/
 
@@ -177,7 +179,7 @@ class GameUpdatedEmail extends Email
 Полигон: $polygon_name
 Кол-во игроков: $players_count
 Мастерская группа: {$game['mg']}
-Email: {$game['email']}$hide_email
+Email: {$game['email']}$hide_email$vk_text$lj_text
 
 $int_text";
   }
