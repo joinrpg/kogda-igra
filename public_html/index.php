@@ -34,6 +34,16 @@
   <div class="adblock">[<a href="/about/#adv" title="Реклама">?</a>] СПб, 3 сентября: в числе первых дойди до «<a href="http://worlds-end-pub.livejournal.com">Края Света</a>»!</div>
   <?php
   }
+	
+	$best_game = get_best_vk_game();
+  
+	if (true) {
+  ?>
+  <br />
+  <div class="adblock">[<a href="/about/#vk_like" title="Популярная игра">?</a>] Самая популярная игра: <a href="/game/<?php echo $best_game['id'];?>"><?php echo $best_game['name'];?></a>	</div>
+  <?php
+  }
+  
 	$calendar = new Calendar(get_main_calendar($year, $region, FALSE));
 	$calendar -> check_border = TRUE;
 	$calendar -> show_reviews = TRUE;

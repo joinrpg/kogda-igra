@@ -99,6 +99,12 @@ function get_new_games_for_week()
     "INNER JOIN `ki_updates` ki ON kg.id = ki.game_id", 'update_date DESC', 'LIMIT 5');
 }
 
+function get_best_vk_game()
+{
+	$result = _get_games("kg.deleted_flag =0 AND begin > NOW() AND ks.cancelled_status = 0 AND kgd.`order` = 0", "", "vk_likes DESC", "LIMIT 1");
+	return $result[0];
+}
+
 function get_games_for_moderate()
 {
 	return _get_games ('kg.deleted_flag = -1');
