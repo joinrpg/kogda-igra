@@ -1,3 +1,5 @@
+window.onload = update_allrpg_fields;
+
 function set_email_field()
 {
   	var dropdown = document.getElementById('allrpg_emails');
