@@ -3,8 +3,8 @@
 	require_once 'funcs.php';
 	require_once 'top_menu.php';
 	
-	$uri = get_post_field('uri');
-	$automated = get_post_field ('automated');
+	$uri = get_request_field('uri');
+	$automated = get_request_field ('automated');
 	if ($uri)
 	{
 		$id = add_uri ($uri);
