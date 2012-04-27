@@ -224,7 +224,7 @@ function show_select ($name, $selected, $select_id = FALSE)
 	
 	function get_request_field ($name)
 	{
-		return array_key_exists ($name, $_POST) ? $_POST[$name] : FALSE;
+		return array_key_exists ($name, $_REQUEST) ? $_REQUEST[$name] : FALSE;
 	}
 
 	function get_post_date_field ($name)
