@@ -68,6 +68,11 @@
 				$this -> write_border('<br>Пересечения');
 			}
 		} 
+		
+	function get_date_string ($date)
+  {
+		return $date -> show_date_string($this -> count == 1);
+  }
 	}
 	
 	function write_widget_table ($date, $id, $game)

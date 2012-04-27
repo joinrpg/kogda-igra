@@ -202,6 +202,11 @@ class Calendar
     }
   }
   
+  function get_date_string ($date)
+  {
+		return $date -> show_date_string(!$this -> check_border);
+  }
+  
   function _write_calendar_entry ($game)
   {
       $masked = $game['show_flags'] && 1;
@@ -246,7 +251,7 @@ class Calendar
       $this -> show_border_if_needed ($game, $date);
 
 
-      $show_date = $date -> show_date_string(!$this -> check_border);
+      
 
       $style = '';
       if ($masked)
@@ -264,6 +269,7 @@ class Calendar
       $this -> write_game_name ($game);
       echo "</td>";
       echo "<td title=\"$sub_region_name\" class=\"game_region\">$sub_region_disp_name</td>";
+      $show_date = $this -> get_date_string($date);
       echo "<td title=\"{$date->dow}\" class=\"game_date\">$show_date</td>";
       echo "<td class=\"game_type\">$type</td>";
       echo "<td class=\"game_polygon\">$polygon</td>";
