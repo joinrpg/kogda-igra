@@ -159,6 +159,8 @@
 	{
 		$deleted = intval($data['deleted_flag']) == 1;
 		$moderate_mode = intval($data['deleted_flag']) == -1;
+		
+		echo '<div class="editblock">';
 		echo '<form action="/edit/game/" method="post" id="edit">';
 		write_mg_datalist();
 		echo '<table class="edit_table">';
@@ -252,6 +254,8 @@
 			submit ('Не добавлять', 'resolve_no_add', $add_uri_id, '', FALSE, 2);
 			echo '</table></form>';
 		}
+		
+		echo '</div>';
 		$subregion = intval($data['sub_region_id']);
 		echo "<script type=\"text/javascript\">update_subregion($subregion);</script>";
 		if ($data['id'] > 0)
@@ -267,11 +271,13 @@
     {
 			if (!$moderate_mode)
 			{
+				show_history ($data['id']);
+				echo '<br style="clear:both">';
 				show_dates ($data['id'], $data);
 				show_review_list($data['id']);
 				show_photos($data['id']);
+				
 			}
-			show_history ($data['id']);
     }
 		write_footer();
 	}
@@ -392,25 +398,25 @@
          echo '</tr></table></form>';
     if ($id > 0)
     {
-      ?>
-      <br>
-      <h3>История дат</h3>
-      <table>
-      <tr>
-        <th>Порядок</th><th>Дата начала</th><th colspan="3">Действия</th>
-      </tr>
-      <?php
-      $dates = get_game_dates($id);
+			$dates = get_game_dates($id);
+			if (count($dates) > 1)
+			{
+				?>
+				<h3>История дат</h3>
+				<table>
+				<tr>
+					<th>Порядок</th><th>Дата начала</th><th colspan="3">Действия</th>
+				</tr>
+				<?php
+				
 
-
-      foreach ($dates as $date)
-      {
-        show_date_row($date, $id, count($dates));
+				foreach ($dates as $date)
+				{
+					show_date_row($date, $id, count($dates));
+				}
+				echo '</table>';
       }
-
-      $date_obj = new GameDate($dates[0]);
-      echo '</table>';
-
+			$date_obj = new GameDate($dates[0]);
       echo '<script type="text/javascript">';
       echo 'update_allrpg_info ( ';
       echo $date_obj -> get_js_string_begin();
@@ -479,15 +485,17 @@
 
 	function show_history($id)
 	{
-
+		echo "<div class=\"history\">";
     $calendar = get_updates_for_game($id);
-    echo "<h3>История изменений</h3><table>";
-
+    //echo "<h3>История изменений</h3>"
+    echo '<table>';
+		echo "<tr><th>История изменений</th></tr>";
     foreach ($calendar as $game)
     {
       write_update_line($game, 1);
     }
     echo '</table>';
+    echo '</div>';
 	}
 
 	function show_review_list($id)

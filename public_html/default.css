@@ -249,7 +249,6 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 .edit_table
 {
 	clear:left;
-	margin-top: 1em;
 }
 
 
@@ -292,4 +291,17 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 h1 
 {
 	margin: 0;
+}
+
+.history 
+{
+	float:left;
+	margin-top:1em;
+}
+
+.editblock
+{
+	float:left;
+	margin-right:1em;
+	margin-top:1em;
 }
