@@ -7,7 +7,6 @@
 	require_once 'uifuncs.php';
 	require_once 'forms.php';
 	require_once 'logic/edit.php';
-	require_once 'logic/photo.php';
 	require_once 'show_updates.php';
 	require_once 'email.php';
 	require_once 'logic/review.php';
@@ -275,7 +274,6 @@
 				echo '<br style="clear:both">';
 				show_dates ($data['id'], $data);
 				show_review_list($data['id']);
-				show_photos($data['id']);
 				
 			}
     }
@@ -439,55 +437,10 @@
       </td></tr>\n";
 	}
 
-	function show_photos($id)
-	{
-	return;
-    $photos = get_photo_by_game_id($id);
-		echo "<h3>Фотоотчеты</h3>";
-		echo "<table>";
-		if (is_array($photos))
-		{
-      $count = count($photos);
-      echo "<tr colspan=\"$count\"><td><a href=\"/photo/$id\">Все фотки</a></td></tr>";
-      echo "<tr>";
-      foreach ($photos as $photo)
-      {
-        $photo_id = $photo['photo_id'];
-        $photo_author = get_photo_author ($photo);
-                $photo_comment = htmlspecialchars($photo['photo_comment']);
-        echo "<td>
-          <a href=\"{$photo['photo_uri']}\"><img src=\"/photo/preview/$photo_id\" style=\"border:none\"></a>
-          <br> $photo_author";
-        if (check_my_priv(PHOTO_PRIV) && $photo['author_id'] == 0)
-        {
-          echo " (<a href=\"/edit/problems/update-author/?author=$photo_author\">Исправить</a>)";
-        }
-        if ($photo_comment)
-        {
-          echo "<br> <i>$photo_comment</i>";
-        }
-        if (check_my_priv(PHOTO_PRIV) || (check_my_priv(PHOTO_SELF_PRIV) && $photo['author_id'] == get_user_id()))
-        {
-          echo "<br><a href=\"/edit/photo/?id=$photo_id&game_id=$id\">Изменить</a>";
-        }
-        echo "</td>";
-      }
-      echo "</tr>";
-
-		}
-		else
-		{
-      $count = 1;
-    }
-    echo "<tr colspan=\"$count\"><td><a href=\"/edit/photo/?game_id=$id\">Добавить новый</a></td></tr>";
-		echo "</table>";
-	}
-
 	function show_history($id)
 	{
 		echo "<div class=\"history\">";
     $calendar = get_updates_for_game($id);
-    //echo "<h3>История изменений</h3>"
     echo '<table>';
 		echo "<tr><th>История изменений</th></tr>";
     foreach ($calendar as $game)
