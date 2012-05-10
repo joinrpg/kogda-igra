@@ -113,7 +113,7 @@
 		}
 		if (check_my_priv(PHOTO_PRIV) || check_my_priv(PHOTO_SELF_PRIV))
 		{
-			real_button ("/edit/photo/?game_id=$id", "Добавить фотоотчет");
+			real_button ("/edit/game/$id/photo/", "Добавить фотоотчет");
 		}
 		echo '</div>';
 		echo '</div>';

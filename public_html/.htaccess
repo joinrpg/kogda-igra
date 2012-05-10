@@ -54,6 +54,4 @@ RewriteRule ^api/game/([1234567890]+)/?$ /api/game/get-by-id.php?id=$1 [L]
 RewriteRule ^api/allrpg-info/([1234567890]+)/?$ /api/allrpg-info/find-by-id.php?id=$1 [L]
 RewriteRule ^game/thanks/?$ /service/message.php
 RewriteRule ^edit/already/?$ /service/message.php
-order allow,deny
-deny from 46.17.96.220
-allow from all
+RewriteRule ^edit/game/([1234567890]*)/photo/?$ /edit/photo/?game_id=$1 [L]
