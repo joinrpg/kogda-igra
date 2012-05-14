@@ -70,11 +70,24 @@ if (XMLHttpRequest)
 				{
           var str = req.responseText;
 					var result = JSON.parse(str);
+					window.varResult = result;
 					update_email_dropdown (result.masters);
 					update_text_field ('mg', result.info.mg);
 					update_text_field ('players_count', result.info.playernum);
 					update_text_field ('uri', result.info.site);
 					update_text_field ('name', result.info.name);
+					var date = new Date(result.info.datestart);
+					var end_date = new Date(result.info.datefinish);
+					if (window.kogda_igra_default_value)
+					{
+						window.kogda_igra_default_value = false;
+						document.getElementById('begin_day').value =  date.getDate();
+						document.getElementById('begin_month').value =  date.getMonth() + 1;
+						document.getElementById('begin_year').value =  date.getFullYear();
+						document.getElementById('time').value =  ((end_date.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)) +1 ;
+						
+						update_time_placeholder('begin', 'time');
+					}
 				}
 			}
 		}
@@ -204,9 +217,7 @@ function update_time_placeholder (time_prefix, time2_prefix)
 	
 	if (length.length > 0 && !window.kogda_igra_default_value)
 	{
-		var end_date = date;
-		end_date.setDate(date.getDate() + parseInt(length) - 1);
-		
+		var end_date = get_end_date (date, length);
 	}
 	else
 	{
@@ -225,6 +236,13 @@ function update_time_placeholder (time_prefix, time2_prefix)
   
   update_allrpg_info (date, end_date);
 
+}
+
+function get_end_date (date, length)
+{
+	var end_date = date;
+	end_date.setDate(date.getDate() + parseInt(length) - 1);
+	return end_date;
 }
 
 function update_region_name(sender)
