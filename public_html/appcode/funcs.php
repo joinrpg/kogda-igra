@@ -37,6 +37,10 @@ function write_header ($title, $edit = FALSE)
   VK.init({apiId: 2118784, onlyWidgets: true});
 </script>
     <?php
+  if (get_user_id())
+  {
+		echo '<script type="text/javascript">window.loggedIn = true;</script>';
+  }
   if ($edit)
   {
     echo '<script src="/js/edit.js" type="text/javascript"></script>';

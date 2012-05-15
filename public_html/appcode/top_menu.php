@@ -121,7 +121,7 @@ require_once 'uifuncs.php';
 			{
 				
 
-					passive_button(show_user_link($username) . ' <form action="/logout/" method=post id=logout_form style="display:inline"><input type=submit value="Выйти"></form>');
+					passive_button(show_user_link($username) . ' <input type=button id="logout_button" value="Выйти">');
 
 
 			}
