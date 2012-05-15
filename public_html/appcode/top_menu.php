@@ -125,6 +125,10 @@ require_once 'uifuncs.php';
 
 
 			}
+			else
+			{
+				echo '<div class=active><input type=button onclick="try_login()" value="Войти"></div>';
+			}
 			real_button ('/edit/game/', 'Добавить&nbsp;игру...');
 			if (check_edit_priv())
 			{

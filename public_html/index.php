@@ -49,7 +49,7 @@
 	$calendar -> show_reviews = TRUE;
 	$calendar -> write_calendar();
 
-	show_login_box();
+
 	write_footer(TRUE);
 
 	?>

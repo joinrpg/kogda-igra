@@ -55,6 +55,7 @@ function write_header ($title, $edit = FALSE)
 
 function write_footer($show_analytics = FALSE, $uri = '')
 {
+	//	show_login_box();
   if ($show_analytics)
   {
   ?>
