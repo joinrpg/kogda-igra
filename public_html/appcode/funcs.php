@@ -32,7 +32,7 @@ function write_header ($title, $edit = FALSE)
 
     <script src="/js/default.js" type="text/javascript"></script>
     <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?20"></script>
-<script src="https://browserid.org/include.js" type="text/javascript"></script>
+<script src="https://login.persona.org/include.js" type="text/javascript"></script>
 <script type="text/javascript">
   VK.init({apiId: 2118784, onlyWidgets: true});
 </script>
