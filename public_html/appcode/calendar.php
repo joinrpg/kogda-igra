@@ -364,15 +364,42 @@ class Calendar
 
   }
   
-  function write_border ($border_text)
+  function write_border ($month_num, $break)
   {
-		echo "<tr class=\"month_header\"><td colspan=\"{$this -> colspan}\">$border_text</td></tr>";
+		$id = $this -> get_month_id ($month_num);
+		$month_name = $this -> get_russian_month_name ($month_num);
+		
+		echo "<tr class=\"month_header\" id=\"$id\"><td colspan={$this -> colspan}>$break$month_name</td></tr>";
   }
   
-  function check_date_border($date)
-{
-
-	static $month_names2 = array (
+  function get_month_id ($month_num)
+  {
+  	static $month_ids = array ('', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
+		return $month_ids[$month_num];
+  }
+  
+  function get_russian_short_month_name ($month_num)
+  {
+				static $month_names = array (
+		  1 => 'Янв',
+		  2 => 'Фев',
+		  3 => 'Мар',
+		  4 => 'Апр',
+		  5 => 'Май',
+		  6 => 'Июнь',
+		  7 => 'Июль',
+		  8 => 'Авг',
+		  9 => 'Сен',
+		  10 => 'Окт',
+		  11 => 'Ноя',
+		  12 => 'Дек');
+		
+		return $month_names[$month_num];
+  }
+  
+  function get_russian_month_name ($month_num)
+  {
+		static $month_names2 = array (
 		  1 => 'Январь',
 		  2 => 'Февраль',
 		  3 => 'Март',
@@ -385,22 +412,28 @@ class Calendar
 		  10 => 'Октябрь',
 		  11 => 'Ноябрь',
 		  12 => 'Декабрь');
-
+		
+		return $month_names2[$month_num];
+  }
+  
+  function check_date_border($date)
+{
   $month =  $date['mon'];
-  $month_name = $month_names2[$month];
-
+  
 	$colspan = $this -> colspan;
 	if (!$this -> prev_date)
 	{
-    if ($this -> show_only_future AND $month < $this-> current_month)
-    {
-      $month_name = "Игры с рецензиями";
-    }
-		$this -> write_border ($month_name);
+		for ($i = 1; $i <= 12; $i++)
+		{
+			$month_id = $this -> get_month_id ($i);
+			$month_name = $this -> get_russian_short_month_name ($i);
+			$month_menu[] = "<a href=\"#$month_id\">$month_name</a>";
+		}
+		$this -> write_border ($month, implode (" :: ", $month_menu) . '<br>');
 	}
 	elseif ($this -> prev_date['mon'] != $date['mon'] AND ($month >= $this-> current_month OR !$this->show_only_future))
 	{
-		$this -> write_border ("<br>$month_name");
+		$this -> write_border ($month, '<br>');
 	}
 	$this -> prev_date = $date;
 }
