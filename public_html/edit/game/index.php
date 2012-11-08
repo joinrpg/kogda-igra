@@ -263,9 +263,10 @@
 
     if ($data['id'] > 0)
     {
+			show_history ($data['id']);
 			if (!$moderate_mode)
 			{
-				show_history ($data['id']);
+				
 				echo '<br style="clear:both">';
 				show_dates ($data['id'], $data);
 				show_review_list($data['id']);
