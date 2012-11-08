@@ -65,7 +65,7 @@
 			$this -> count++;
 			if ($this -> count == 2)
 			{
-				$this -> write_border('<br>Пересечения');
+				echo "<tr class=\"month_header\" id=\"$id\"><td colspan={$this -> colspan}><br>Пересечения</td></tr>";
 			}
 		} 
 		
