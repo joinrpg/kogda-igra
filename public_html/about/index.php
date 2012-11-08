@@ -16,14 +16,15 @@
 <h3>Команда сайта</h3>
 <ul>
   
-  <li><strong>Митяй</strong> <?php echo show_user_link('mtr'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>, общие вопросы</li>
+  <li><strong>Лео</strong> <?php echo show_user_link('leotsarev'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>, общие вопросы</li>
   <li><strong>Фидель</strong> <?php echo show_user_link('akbars'); ?>, МГ «<a href="http://romulrem.com/">Ромул и Рем</a>», редактор по Москве</li>
   <li><strong>Медик</strong> <?php echo show_user_link('steamboy'); ?>, редактор по Москве</li>
+  <li><strong>Крайк</strong> <?php echo show_user_link('krayk'); ?>, редактор по Москве</li>
   <li><strong>Анатоль</strong> <?php echo show_user_link('anatolle'); ?>, редактор по Уралу</li>
   <li><strong>Ксю</strong> <?php echo show_user_link('ksurrr'); ?>, фотомодератор</li>
   <li><strong>Йолаф</strong> <?php echo show_user_link('jolaf'); ?>, консультант</li>
 </ul>
-<p>В создании сайта в 2007—2012 годах принимал участие <strong>Лео</strong> <?php echo show_user_link('leotsarev'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>.</p>
+<p>В создании сайта в 2007—2012 годах принимал участие <strong>Митяй</strong> <?php echo show_user_link('mtr'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>.</p>
 <h3>По какому принципу мы добавляем игры?</h3>
 <p>Мы добавляем игры по просьбе мастеров, а также ищем игры сами.
 Если Вашу игру добавили в календарь, то на почту мастеров придет соответствующее письмо.
@@ -78,7 +79,7 @@
 <p>
 <a href="https://bitbucket.org/leotsarev/kogda-igra.ru">Исходный код нашего сайта</a> — Open Source, согласно <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">лицензии Apache</a>. Если вы не знаете, что это значит, не парьтесь.<br>
 Если вдруг знаете, и хотите внести свой вклад, будем вам благодарны — присылайте свои pull request.<br>
-Если вам чего-то непонятно, пишите <?php echo show_user_link('mtr'); ?>.</p>
+Если вам чего-то непонятно, пишите <?php echo show_user_link('leotsarev'); ?>.</p>
 <h3>Благодарности</h3>
 
 <p>Хостинг предоставлен МТГ «<a href="http://bastilia.ru">Бастилия</a>» и <a href="http://www.diphost.ru" title="Хороший хостинг"><img src="http://www.diphost.ru/b/na88x31_gray.gif" width="88" height="31" style="border: 0px solid" alt="Хороший хостинг" title="Хороший хостинг" /></a></p>
