@@ -11,6 +11,7 @@
 	require_once 'email.php';
 	require_once 'logic/review.php';
 	require_once 'logic/datalist.php';
+	require_once 'logic/dictionary.php';
 	require_once 'top_menu.php';
 
 
@@ -80,12 +81,6 @@
 		}
 		echo "</select>";
 		echo "</td>";
-	}
-
-	function write_option($value, $is_selected, $option_name)
-	{
-    $selected = $is_selected ? ' selected="selected"' : '';
-		echo "<option value=\"$value\"$selected>$option_name</option>";
 	}
 
 	function show_date_control_internals ($name, $date_value, $len)
@@ -578,11 +573,7 @@
 		$sql = connect ();
 		if (!$dict_tables_loaded)
 		{
-			$region_table = $sql -> Query ('
-				SELECT ksr.*, kr.region_name
-				FROM ki_sub_regions ksr
-				INNER JOIN ki_regions kr ON kr.region_id = ksr.region_id
-				ORDER BY ksr.sub_region_name');
+			$region_table = get_region_dict ();
 			$polygons_table = $sql -> Query ('
 				SELECT kp.*
 				FROM ki_polygons kp

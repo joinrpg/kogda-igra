@@ -37,6 +37,12 @@ function show_hidden($name, $value)
   echo "<input type=\"hidden\" name=\"$name\" value=\"$value\" />";
 }
 
+
+	function write_option($value, $is_selected, $option_name)
+	{
+    $selected = $is_selected ? ' selected="selected"' : '';
+		echo "<option value=\"$value\"$selected>$option_name</option>";
+	}
   
   	function show_dd ($label, $name, $value)
 	{

@@ -2,6 +2,8 @@
 	require_once 'funcs.php';
 	require_once 'user_funcs.php';
 	require_once 'logic.php';
+	require_once 'logic/dictionary.php';
+	require_once 'forms.php';
 	
 	if (!check_my_priv(EDIT_POLYGONS_PRIV))
 		return_to_main();
@@ -28,6 +30,16 @@
 		
 		do_edit('Полигон добавлен');
 	}
+	
+		function show_regions_dd ($region_table, $value)
+	{
+		echo "<select name=\"sub_region_id\" size=\"1\">";
+		foreach ($region_table as $row)
+		{
+			write_option ($row['sub_region_id'], $row['sub_region_id'] == $value, $row['sub_region_name']);
+		}
+		echo "</select>";
+	}
 
 	function do_edit ($msg = FALSE)
 	{
@@ -47,7 +59,9 @@
 		WHERE kp.meta_polygon = 0
 		GROUP BY kp.polygon_id
 		ORDER BY kr.region_name, ksr.sub_region_name,  kp.polygon_name');
-		$regions = $sql -> GetAll ('ki_regions');
+	
+	$region_table = get_region_dict ();
+	
 		echo '<table>';
 		echo '<tr><td colspan="2">';
 			echo '<form action="" method="post" id="add"> ';
@@ -55,7 +69,7 @@
 			echo "<input type=\"hidden\" name=\"id\" value=\"0\"/>";
 			echo "<input type=\"hidden\" name=\"action\" value=\"save\"/>";
 			echo "<input type=\"text\" name=\"polygon_name\" maxlength=\"50\" size=\"50\" value=\"\" />&nbsp;&nbsp;";
-			show_select('sub_region', 1);
+			show_regions_dd ($region_table, 1);
 			echo "&nbsp;&nbsp;<input type=\"submit\" name=\"save\" value=\"Добавить\"/>";
 			echo '</form>';
 			echo '</td></tr>';
@@ -82,7 +96,7 @@
 			echo "<input type=\"hidden\" name=\"id\" value=\"$id\"/>";
 			echo "<input type=\"hidden\" name=\"action\" value=\"save\"/>";
 			echo "<input type=\"text\" name=\"polygon_name\" maxlength=\"50\" size=\"50\" value=\"$name\" />&nbsp;&nbsp;";
-			show_select('sub_region', $sub_region_id);
+			show_regions_dd ($region_table, $sub_region_id);
 			echo "&nbsp;&nbsp;<input type=\"submit\" name=\"save\" value=\"Сохранить\"/>";
 			if (!$game_present)
 			{
