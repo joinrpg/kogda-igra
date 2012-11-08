@@ -37,7 +37,13 @@
 	{
 		function __construct ($game)
 		{
-						$intersections = get_intersections($game['id']);
+			$date = new GameDate($game);
+			
+			if (!$date -> is_passed())
+			{
+				$intersections = get_intersections($game['id']);
+			}
+			
 			if (!is_array ($intersections))
 			{
 				$intersections = array();
