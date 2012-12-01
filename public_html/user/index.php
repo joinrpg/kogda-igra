@@ -49,7 +49,7 @@
 
 	if ($email)
 	{
-    echo "<b>Email</b>: {$email} <br>";
+    echo "<b>Email</b>: <a href=\"mailto:{$email}\">{$email}</a> <br>";
   }
 	$update_count = $editor_stat['update_count'];
   $new_count = $editor_stat['new_count'];
