@@ -59,6 +59,15 @@ function get_updates_for_game($game_id)
 	return _get_updates("kg.id = $game_id");
 }
 
+function get_updates_for_ip($ip)
+{
+	if(!filter_var($ip, FILTER_VALIDATE_IP))
+	{
+		return null;
+	}
+	return _get_updates("ku.ip_address = '$ip'");
+}
+
 function get_last_update_date_for_game($game_id)
 {
 		$sql = connect();

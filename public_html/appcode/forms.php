@@ -1,11 +1,11 @@
 <?php
-function show_tb ($label, $name, $length, $value, $tb_type = 'text', $required = false, $list = '')
+function show_tb ($label, $name, $length, $value, $tb_type = 'text', $required = false, $list = '', $preinput_text = '', $postinput_text = '')
 {
 	$required = $required ? ' required="required" ' : '';
 	$value = htmlspecialchars ($value);
 	if ($value && $tb_type == 'uri')
 	{
-		$label = "<a href=\"$value\">$label</a>";
+		$label = "<a href=\"$preinput_text$value$postinput_text\">$label</a>";
 	}
 	echo "<tr><td><label><strong>$label</strong></label></td>";
 	$maxlength = $length;
@@ -14,7 +14,7 @@ function show_tb ($label, $name, $length, $value, $tb_type = 'text', $required =
 	{
 		$list = " list=\"$list\" autocomplete=off";
 	}
-	echo "<td><input type=\"$tb_type\" name=\"$name\" id =\"$name\" maxlength=\"$maxlength\" size=\"$length\" value=\"$value\" $required$list></td></tr>\n";
+	echo "<td>$preinput_text<input type=\"$tb_type\" name=\"$name\" id =\"$name\" maxlength=\"$maxlength\" size=\"$length\" value=\"$value\" $required$list>$postinput_text</td></tr>\n";
 }
 
 function show_required_tb ($label, $name, $length, $value, $tb_type = 'text')
