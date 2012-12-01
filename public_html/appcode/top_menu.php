@@ -3,6 +3,7 @@ require_once 'logic/updates.php';
 require_once 'logic/gamelist.php';
 require_once 'review.php';
 require_once 'uifuncs.php';
+require_once 'funcs.php';
 
 	class TopMenu
 	{
@@ -73,13 +74,9 @@ require_once 'uifuncs.php';
 			$this -> show_region_link ('Петербург', 2);
 			$this -> show_region_link ('Москва', 3);
 			$this -> show_region_link ('Урал', 5);
-			
-			if (check_edit_priv())
-			{
-				$this -> show_region_link ('Сибирь', 6, true);
-				$this -> show_region_link ('Юг', 7, true);
-			}
-			
+			$this -> show_region_link ('Сибирь', 6, true);
+			$this -> show_region_link ('Юг', 7, true);
+			$this -> show_region_link ('Дальний Восток', 8, true);			
 		}
 		
 		function show () 
