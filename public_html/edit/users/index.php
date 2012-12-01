@@ -59,8 +59,6 @@
 			
       echo "<input type=\"hidden\" name=\"$action_name\" value=\"$id\" />";
       
-      
-			echo "<input type=\"hidden\" name=\"user\" value=\"$username\" />";
 			echo "<input type=\"submit\" value=\"$button_name\">";
 			echo '</form> </td>';
 			if (!$present)
