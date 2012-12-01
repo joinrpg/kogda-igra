@@ -1,6 +1,7 @@
 <?php
 require_once 'funcs.php';
 require_once 'user_funcs.php';
+
 if ($_GET && $_SESSION['csrf_token'])
 {
 	if ($_GET['csrf_token'] == $_SESSION['csrf_token'])
@@ -10,7 +11,7 @@ if ($_GET && $_SESSION['csrf_token'])
 		if ($c)
 		{
 			curl_setopt($c, CURLOPT_POST, true);
-			curl_setopt($c,CURLOPT_POSTFIELDS, "assertion=$assert&audience=http://kogda-igra.ru");
+			curl_setopt($c,CURLOPT_POSTFIELDS, "assertion=$assert&audience=" . $_SERVER['SERVER_NAME'] );
 			curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 			$result_str = curl_exec($c);
 			if ($result_str)
