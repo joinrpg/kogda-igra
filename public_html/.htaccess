@@ -51,7 +51,10 @@ RewriteRule ^20(.*)/?$ /?year=20$1
 RewriteRule ^find/(.+)/?$ /search/?search=$1 [L]
 RewriteRule ^reviews/([1234567890]+)/?$ /game/$1/ [R=permanent]
 RewriteRule ^game/([1234567890]*)/?$ /game/index.php?id=$1 [L]
+
 RewriteRule ^lenta/user/([1234567890]*)/?$ /lenta/user/index.php?id=$1 [L]
+RewriteRule ^lenta/ip/([1234567890\.]*)/?$ /lenta/ip/index.php?ip=$1 [L]
+
 RewriteRule ^photo/([1234567890]*)/?$ /photo/index.php?id=$1 [L]
 RewriteCond %{REQUEST_URI} !index.php
 RewriteRule ^user/(.*)/?$ user/index.php?id=$1 [last]

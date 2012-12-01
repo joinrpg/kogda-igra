@@ -1,6 +1,7 @@
 <?php
 require_once 'review.php';
 require_once 'uifuncs.php';
+require_once 'prepostfixes.php';
   function append_zero($text)
   {
   		return (strlen($text) == 1) ? "0$text" : $text;
@@ -169,14 +170,19 @@ class Calendar
 			echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
 		}
 		$vk_club = trim ($game['vk_club']);
+
+		global $prefixes, $postfixes;
+		
 		if ($vk_club)
 		{
-			echo Calendar::get_link_icon("http://vk.com/$vk_club", "http://vk.com/$vk_club", '[VK]', 'vk.png') . '&nbsp;';
+		    $link = $prefixes['http'].$prefixes['vk'].$vk_club;
+			echo Calendar::get_link_icon($link, $link, '[VK]', 'vk.png') . '&nbsp;';
 		}
 		$lj_comm = trim ($game['lj_comm']);
 		if ($lj_comm)
 		{
-			echo Calendar::get_link_icon("http://$lj_comm.lj.ru/profile", "http://$lj_comm.lj.ru/profile", '[LJ]', 'livejournal.png') . '&nbsp;';
+		    $link = $prefixes['http'].$lj_comm.$postfixes['lj']."/profile";
+			echo Calendar::get_link_icon($link, $link, '[LJ]', 'livejournal.png') . '&nbsp;';
 		}
   }
   

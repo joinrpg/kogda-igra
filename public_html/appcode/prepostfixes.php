@@ -1,0 +1,1 @@
+<?php $prestfixes = array();  $prestfixes['http_'] = 'http://'; $prestfixes['vk_'] = 'vk.com/'; $prestfixes['vk2_'] = 'vkontakte.ru/'; $prestfixes['_lj'] = '.livejournal.com'; $prestfixes['_lj2'] = '.lj.ru'; $prestfixes['slash'] = '/';?>

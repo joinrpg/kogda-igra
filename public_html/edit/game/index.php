@@ -13,6 +13,7 @@
 	require_once 'logic/datalist.php';
 	require_once 'logic/dictionary.php';
 	require_once 'top_menu.php';
+	require_once 'prepostfixes.php';
 
 
 	function show_email ($value, $hide_email)
@@ -179,17 +180,18 @@
 		{
       $date_obj = new GameDate($data);
       $date_str = $date_obj -> show_date_string(true);
-      echo "<tr><td><label><strong>Дата игры</strong></label></td><td>$date_str";
+      echo "<tr><td><label><strong>Дата игры</strong></label></td><td>$date_str";	  
       echo "</td>
       </tr>";
 		}
+		global $prestfixes;
 		show_dd ('Тип', 'type', $data['type']);
 		show_polygons_dd ($data['polygon']);
 		show_tb_with_list ('Мастерская группа', 'mg', 100, $data['mg'], 'mgnames');
 		show_email ($data['email'], $data['hide_email']);
 		show_tb ('Кол-во игроков', 'players_count', 20, $data['players_count']);
-		show_tb ('Группа вконтакте', 'vk_club', 40, $data['vk_club']);
-		show_tb ('Сообщество ЖЖ', 'lj_comm', 40, $data['lj_comm']);
+		show_tb ('Группа вконтакте', 'vk_club', 40, $data['vk_club'], 'uri', false, '', $prestfixes['http_'].$prestfixes['vk_']);
+		show_tb ('Сообщество ЖЖ', 'lj_comm', 40, $data['lj_comm'], 'uri', false, '', $prestfixes['http_'], $prestfixes['_lj']);
 		if (check_edit_priv())
 		{
 			show_allrpg_info_id ( $data['allrpg_info_id']);
