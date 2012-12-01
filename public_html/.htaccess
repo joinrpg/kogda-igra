@@ -21,6 +21,7 @@ RewriteRule (.*)$ http://kogda-igra.ru/spb/$1 [R=permanent]
 RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.msk\.ru$ [NC]
 RewriteRule (.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
 RewriteRule ^appcode(.*) http://kogda-igra.ru/
+
 RewriteRule ^ural/19(.*)/?$ /?region=5&year=19$1
 RewriteRule ^ural/20(.*)/?$ /?region=5&year=20$1
 RewriteRule ^ural/?$ /?region=5
@@ -39,6 +40,12 @@ RewriteRule ^msk/?$ /?region=3
 RewriteRule ^spb/19(.*)/?$ /?region=2&year=19$1
 RewriteRule ^spb/20(.*)/?$ /?region=2&year=20$1
 RewriteRule ^spb/?$ /?region=2
+
+RewriteRule ^dv/19(.*)/?$ /?region=8&year=19$1
+RewriteRule ^dv/20(.*)/?$ /?region=8&year=20$1
+RewriteRule ^dv/?$ /?region=8
+
+
 RewriteRule ^19(.*)/?$ /?year=19$1
 RewriteRule ^20(.*)/?$ /?year=20$1
 RewriteRule ^find/(.+)/?$ /search/?search=$1 [L]

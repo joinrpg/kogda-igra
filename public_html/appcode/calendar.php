@@ -364,12 +364,10 @@ class Calendar
 
   }
   
-  function write_border ($month_num, $break)
+  function write_border ($month_name)
   {
-		$id = $this -> get_month_id ($month_num);
-		$month_name = $this -> get_russian_month_name ($month_num);
 		
-		echo "<tr class=\"month_header\" id=\"$id\"><td colspan={$this -> colspan}>$break$month_name</td></tr>";
+		echo "<tr class=\"month_header\" id=\"$id\"><td colspan={$this -> colspan}>$month_name</td></tr>";
   }
   
   function get_month_id ($month_num)
@@ -421,19 +419,29 @@ class Calendar
   $month =  $date['mon'];
   
 	$colspan = $this -> colspan;
+	
+	if ($this -> prev_date && ($this -> prev_date['mon'] == $month))
+	{
+    return;
+	}
 	if (!$this -> prev_date)
 	{
 		for ($i = 1; $i <= 12; $i++)
 		{
 			$month_id = $this -> get_month_id ($i);
-			$month_name = $this -> get_russian_short_month_name ($i);
-			$month_menu[] = "<a href=\"#$month_id\">$month_name</a>";
+			$month_name = $this -> get_russian_month_name ($i);
+			$month_menu[] = ($i == $month)
+        ? "<b>$month_name</b>" 
+        : "<a href=\"#$month_id\">$month_name</a>";
 		}
-		$this -> write_border ($month, implode (" :: ", $month_menu) . '<br>');
+		$this -> write_border ('<br>' . implode (" ", $month_menu));
 	}
-	elseif ($this -> prev_date['mon'] != $date['mon'] AND ($month >= $this-> current_month OR !$this->show_only_future))
+	else 
 	{
-		$this -> write_border ($month, '<br>');
+    $id = $this -> get_month_id ($month);
+		$month_name = $this -> get_russian_month_name ($month);
+		
+		$this -> write_border ("<b id=\"$id\"> <br>$month_name</b> <a href=\"#top\">↑</a>");
 	}
 	$this -> prev_date = $date;
 }
