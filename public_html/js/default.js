@@ -12,10 +12,12 @@ weekday[4]="Четверг";
 weekday[5]="Пятница";
 weekday[6]="Суббота";
 
+var hostname=document.location.hostname;
+
 function install_search_plugin() {
  if (window.external && ("AddSearchProvider" in window.external)) {
    // Firefox 2 and IE 7, OpenSearch
-   window.external.AddSearchProvider("http://kogda-igra.ru/opensearch.xml");
+   window.external.AddSearchProvider("http://"+hostname+"/opensearch.xml");
  } else {
    // No search engine support (IE 6, Opera, etc).
    alert("Поисковые плагины не поддерживаются вашим браузером.");
@@ -42,7 +44,7 @@ function show_cancelled_games()
 						if (XMLHttpRequest) {
 							var req = new XMLHttpRequest();
 							var csrf = document.getElementById('csrf_token').value;
-							var uri = 'http://kogda-igra.ru/login/browserid/?csrf_token=' + csrf + '&assert='+assertion;
+							var uri = 'http://'+hostname+'/login/browserid/?csrf_token=' + csrf + '&assert='+assertion;
 							req.open ('GET', uri, true);
 							req.onreadystatechange = function (aEvt) {
 								if (req.readyState == 4)
@@ -72,7 +74,7 @@ function logout_handler(event)
 	var req = new XMLHttpRequest();
 	window.navigator.id.logout();
 	var csrf = document.getElementById('csrf_token').value;
-	var uri = 'http://kogda-igra.ru/logout/?csrf_token=' + csrf;
+	var uri = 'http://'+hostname+'/logout/?csrf_token=' + csrf;
 	req.open ('GET', uri, true);
 	req.onreadystatechange = function (aEvt) {
 		if (req.readyState == 4)
@@ -113,7 +115,7 @@ function init()
   var search_link = document.getElementById("add_search_form");
   if (search_link && window.external && ("AddSearchProvider" in window.external))
   {
-    if (("IsSearchProviderInstalled" in window.external) && window.external.IsSearchProviderInstalled("http://kogda-igra.ru/"))
+    if (("IsSearchProviderInstalled" in window.external) && window.external.IsSearchProviderInstalled("http://"+hostname+"/"))
     {
 
       return;
