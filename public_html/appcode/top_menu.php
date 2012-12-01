@@ -90,6 +90,12 @@ require_once 'funcs.php';
 			}
 			
 			write_header ($this -> get_page_title(), $this -> edit);
+			if ($_SERVER['SERVER_NAME'] != 'kogda-igra.ru')
+			{
+        echo '<div style="text-align:center;margin:1em">';
+        passive_button('<span style="font-weight:bold">Это сайт только для теста. Вернуться на <a href="http://kogda-igra.ru">kogda-igra.ru</a></span>');
+        echo '</div><br style="clear:both">';
+			}
 			echo '<div class=logo>';
 			echo '<a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
 			echo " <span class=logo_text>" . $this -> get_page_header() . '</span>';
@@ -98,6 +104,7 @@ require_once 'funcs.php';
 
 			echo '<div class=menu_box>';
 			echo '<div class=menu_strip>';
+			
 			$this -> show_region_strip();
 			echo '</div> ';
 
