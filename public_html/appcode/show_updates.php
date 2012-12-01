@@ -1,7 +1,13 @@
 <?php
 require_once 'funcs.php';
 require_once 'review.php';
+
 function write_update_line($game, $colspan)
+{
+	return write_update_line_with_ip($game, $colspan, 1); 
+}
+
+function write_update_line_with_ip($game, $colspan, $show_ip)
 {
     echo "<tr><td colspan=\"$colspan\">";
 		$update_text = htmlspecialchars ($game['ki_update_type_name']);
@@ -15,13 +21,14 @@ function write_update_line($game, $colspan)
 		{
 			$user = 'Аноним';
 		}
-		if ($game['ip_address'])
+		if ($game['ip_address'] and $show_ip)
 		{
-			$ip = " ({$game['ip_address']})";
+			$ip = "{$game['ip_address']}";
+			$ip_info = " ({$ip}<a href=\"/lenta/ip/{$ip}\">?</a>)";
 		}
 		else
 		{
-			$ip = '';
+			$ip_info = '';
 		}
 		if ($game['update_type_polygon_flag'] > 0)
 		{
@@ -53,7 +60,7 @@ function write_update_line($game, $colspan)
 		{
 			$update_text .= " <a href=\"$uri \">$uri </a>";
 		}
-		echo "$date $user$ip: $update_text {$game['msg']}";
+		echo "$date $user$ip_info: $update_text {$game['msg']}";
 		echo "</td></tr>";
 }
 
