@@ -39,7 +39,11 @@
 	{
     echo "<b>На сайте</b>: $privs<br>";
   }
-	echo "<b>ЖЖ</b>: " . show_lj_user($username) . " <br>";
+  
+  if (strpos($username, '@') === FALSE)
+  {
+    echo "<b>ЖЖ</b>: " . show_lj_user($username) . " <br>";
+  }
 
 	echo "<b>Был в последний раз</b>: $date <br>";
 
