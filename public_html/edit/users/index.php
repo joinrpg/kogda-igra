@@ -7,15 +7,21 @@
 			return_to_main();
 		}
 
-	write_header('Управление пользователями');
+	
 
-	show_greeting();
+	
 
 	$uid = array_key_exists ('id', $_POST) ? $_POST['id'] : (array_key_exists ('id', $_GET) ? $_GET['id'] : get_user_id());
 	$revoke = array_key_exists ('revoke', $_POST) ? $_POST['revoke'] : 0;
 	$grant = array_key_exists ('grant', $_POST) ? $_POST['grant'] : 0;
    $userdata = get_user_by_id($uid);
    $username = $userdata['username'];
+   
+   write_header('Пользователь — ' . $username);
+   
+   $topmenu = new TopMenu();
+	$topmenu -> pagename = 'Пользователь — ' . $username;
+	$topmenu -> show();
 
 		if ($revoke)
 		{
