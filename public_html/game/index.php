@@ -250,15 +250,47 @@ function show_photos_array($photo_array)
     echo '</tr></table>';
 	}
 }
+
+function show_youtube_video($uri)
+{
+	$prefix = "youtube.com/";
+	$position = strpos(strtolower($uri), $prefix) + strlen($prefix);
+	$id = substr($uri, $position);
+//	echo "<iframe src=\"http://player.vimeo.com/video/VIDEO_ID{$id}\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>";
+}
+
+function show_vimeo_video($uri)
+{
+	$prefix = "vimeo.com/";
+	$position = strpos(strtolower($uri), $prefix) + strlen($prefix);
+	$id = substr($uri, $position);
+	echo "<iframe src=\"http://player.vimeo.com/video/{$id}\"  width=\"500\" height=\"281\" frameborder=\"0\" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>";
+}
+
 function show_photo ($photo)
 {
     $photo_id = $photo['photo_id'];
     $photo_author = get_photo_author($photo);
     $photo_comment = htmlspecialchars($photo['photo_comment']);
     $photo_good = $photo['photo_good_flag'] ? '<b>Лучший</b> ' : '';
-    echo "<td><a href=\"{$photo['photo_uri']}\"><img style=\"border:none\" src=\"/photo/preview/$photo_id\"></a>";
- 
-		echo "<br>$photo_good<a href=\"{$photo['photo_uri']}\">Фотоотчет</a> от $photo_author";
+    $photo_uri = $photo['photo_uri'];
+    echo "<td>";
+/*
+    if (strpos(strtolower($photo_uri), "youtube.com/") !== FALSE)
+    {
+        show_youtube_video($photo_uri)
+    }
+    else
+    if(strpos(strtolower($photo_uri), "vimeo.com/") !== FALSE)
+    {
+        show_vimeo_video($photo_uri);
+	 }    
+    else
+*/
+    {
+        echo "<a href=\"{$photo_uri}\"><img style=\"border:none\" src=\"/photo/preview/$photo_id\"></a>";
+	 }
+    echo "<br>$photo_good<a href=\"{$photo['photo_uri']}\">Фотоотчет</a> от $photo_author";
         if (check_my_priv(PHOTO_PRIV) && $photo['author_id'] == 0)
         {
           echo " (<a href=\"/edit/problems/update-author/?author=$photo_author\">Исправить</a>)";
