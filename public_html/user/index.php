@@ -39,13 +39,17 @@
 	{
     echo "<b>На сайте</b>: $privs<br>";
   }
-	echo "<b>ЖЖ</b>: " . show_lj_user($username) . " <br>";
+  
+  if (strpos($username, '@') === FALSE)
+  {
+    echo "<b>ЖЖ</b>: " . show_lj_user($username) . " <br>";
+  }
 
 	echo "<b>Был в последний раз</b>: $date <br>";
 
 	if ($email)
 	{
-    echo "<b>Email</b>: {$email} <br>";
+    echo "<b>Email</b>: <a href=\"mailto:{$email}\">{$email}</a> <br>";
   }
 	$update_count = $editor_stat['update_count'];
   $new_count = $editor_stat['new_count'];

@@ -8,6 +8,6 @@
 			return_to_main();
 		}
 
-	$id = get_user_id_from_name ($username, false);
+	$id = try_login_user_by_email ($username, false);
 	header("Location: /edit/users/$id");
 ?>

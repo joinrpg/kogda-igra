@@ -205,7 +205,9 @@ function show_select ($name, $selected, $select_id = FALSE)
 			case 6:
 				return '/sibir/';
 			case 7:
-				return '/south';
+				return '/south/';
+			case 8:
+        return '/dv/';
 			default:
 				return '/';
 		}
