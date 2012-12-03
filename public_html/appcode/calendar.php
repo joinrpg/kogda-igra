@@ -25,16 +25,42 @@ class GameDate
   {
   	return $s['year'] . append_zero($s['mon']) . append_zero($s['mday']) . 'T000000';
   }
+  
+    
+  public static function get_russian_month_name ($month_num)
+  {
+		static $month_names2 = array (
+		  1 => 'Январь',
+		  2 => 'Февраль',
+		  3 => 'Март',
+		  4 => 'Апрель',
+		  5 => 'Май',
+		  6 => 'Июнь',
+		  7 => 'Июль',
+		  8 => 'Август',
+		  9 => 'Сентябрь',
+		  10 => 'Октябрь',
+		  11 => 'Ноябрь',
+		  12 => 'Декабрь');
+		
+		return $month_names2[$month_num];
+  }
+  
+  public static function get_month_id ($month)
+  {
+		static $month_ids = array ('', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
+		return $month_ids[$month];
+  }
 
-function get_machine_date_begin()
-{
-		return GameDate :: format_machine_date($this -> begin_date);
-}
+	function get_machine_date_begin()
+	{
+			return GameDate :: format_machine_date($this -> begin_date);
+	}
 
-function get_machine_date_end()
-{
-		return GameDate :: format_machine_date($this -> end_date);
-}
+	function get_machine_date_end()
+	{
+			return GameDate :: format_machine_date($this -> end_date);
+	}
 
   function get_machine_date()
   {
@@ -46,6 +72,11 @@ function get_machine_date_end()
   function year()
   {
     return $this->begin_date['year'];
+  }
+  
+  function month ()
+  {
+		return $this -> begin_date['mon'];
   }
 
   function show_date_string($show_year)
@@ -200,11 +231,11 @@ class Calendar
 		}
   }
   
-  function show_border_if_needed($game, $date)
+  function show_border_if_needed($date)
   {
 		if ($this -> check_border)
     {
-      $this -> check_date_border ($date -> begin_date, $this -> colspan);
+      $this -> check_date_border ($date);
     }
   }
   
@@ -254,7 +285,7 @@ class Calendar
 
       $players_count = $game['players_count'] > 0 ? $game['players_count'] : '&nbsp;';
 
-      $this -> show_border_if_needed ($game, $date);
+      $this -> show_border_if_needed ($date);
 
 
       
@@ -376,11 +407,7 @@ class Calendar
 		echo "<tr class=\"month_header\" id=\"$id\"><td colspan={$this -> colspan}>$month_name</td></tr>";
   }
   
-  function get_month_id ($month_num)
-  {
-  	static $month_ids = array ('', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
-		return $month_ids[$month_num];
-  }
+
   
   function get_russian_short_month_name ($month_num)
   {
@@ -400,52 +427,53 @@ class Calendar
 		
 		return $month_names[$month_num];
   }
+
   
-  function get_russian_month_name ($month_num)
+  function get_month_with_games()
   {
-		static $month_names2 = array (
-		  1 => 'Январь',
-		  2 => 'Февраль',
-		  3 => 'Март',
-		  4 => 'Апрель',
-		  5 => 'Май',
-		  6 => 'Июнь',
-		  7 => 'Июль',
-		  8 => 'Август',
-		  9 => 'Сентябрь',
-		  10 => 'Октябрь',
-		  11 => 'Ноябрь',
-		  12 => 'Декабрь');
+		foreach ($this -> games_array as $game)
+		{
+			$date = new GameDate ($game);
+			
+			$tmp[$date -> month()] = TRUE;
+		}
 		
-		return $month_names2[$month_num];
+		$result = array();
+		for ($i = 0; $i <= 12; $i++)
+		{
+			if (array_key_exists ($i, $tmp))
+			{
+				$result[] = $i;
+			}
+		}
+		return $result;
   }
   
   function check_date_border($date)
 {
-  $month =  $date['mon'];
-  
 	$colspan = $this -> colspan;
 	
-	if ($this -> prev_date && ($this -> prev_date['mon'] == $month))
+	if ($this -> prev_date && ($this -> prev_date -> month()  == $date -> month()))
 	{
     return;
 	}
 	if (!$this -> prev_date)
 	{
-		for ($i = 1; $i <= 12; $i++)
+		foreach ($this -> get_month_with_games() as $i)
 		{
-			$month_id = $this -> get_month_id ($i);
-			$month_name = $this -> get_russian_month_name ($i);
-			$month_menu[] = ($i == $month)
+			$id = GameDate :: get_month_id ($i);
+			$month_name = GameDate :: get_russian_month_name ($i);
+			
+			$month_menu[] = ($i == $date -> month())
         ? "<b>$month_name</b>" 
-        : "<a href=\"#$month_id\">$month_name</a>";
+        : "<a href=\"#$id\">$month_name</a>";
 		}
 		$this -> write_border ('<br>' . implode (" ", $month_menu));
 	}
 	else 
 	{
-    $id = $this -> get_month_id ($month);
-		$month_name = $this -> get_russian_month_name ($month);
+		$id = GameDate :: get_month_id ($date -> month());
+		$month_name = GameDate :: get_russian_month_name ($date -> month());
 		
 		$this -> write_border ("<b id=\"$id\"> <br>$month_name</b> <a href=\"#top\">↑</a>");
 	}

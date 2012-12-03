@@ -66,7 +66,7 @@
 			echo Calendar::format_game_name ($game['name'], "");
 		}
 		
-		function show_border_if_needed($game, $date)
+		function show_border_if_needed ($date)
 		{
 			$this -> count++;
 			if ($this -> count == 2)
