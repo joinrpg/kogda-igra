@@ -37,12 +37,17 @@ function action_edit($id)
   write_header("Фотоотчет к игре «{$game_name}»");
   echo "<p style=\"color:red\">$msg</p>";
   echo "<h1>Фотоотчет к игре «<a href=\"/game/$game_id\">$game_name</a>»</h1>";
+
   if ($id)
   {
     $img = "<img src=\"/photo/preview/$id\">";
   }
   else
   {
+    echo '<p>Поддерживается также заливка видеотчетов со следующих хостингов:</p>
+		<ul>
+			<li>Vimeo (ссылка должна выглядеть как vimeo.com/54374267)</li>
+		</ul>';
     $img = '';
   }
   echo '<form action="/edit/photo/" method="post" id="edit" enctype="multipart/form-data"> <table>';
