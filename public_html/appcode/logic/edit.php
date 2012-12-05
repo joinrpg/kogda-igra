@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once 'funcs.php';
 require_once 'email.php';
 require_once 'review.php';

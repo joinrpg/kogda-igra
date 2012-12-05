@@ -205,7 +205,7 @@
 		echo '<tr><td colspan=4>';
 		?>
       <form action="/edit/users/by-email/" method="post" id="edituser">
-        <label>Email</label>
+        <label>Имя пользователя</label>
         <input type="text" name="username" width="20">
         <input type="submit" value="Редактировать профиль">
       </form>

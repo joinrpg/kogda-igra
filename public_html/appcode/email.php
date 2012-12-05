@@ -1,6 +1,5 @@
 <?php
 require_once 'logic.php';
-require_once 'prepostfixes.php';
 
 abstract class Email
 {
@@ -168,10 +167,8 @@ class GameUpdatedEmail extends Email
     $polygon_name = html_entity_decode($game['polygon_name'], ENT_COMPAT, "utf-8");
     $game_name = $this -> game_data['name'];
     $int_text = $this -> get_int_table();
-
-	global $prestfixes;
-    $vk_text  = ($game['vk_club']) ? "\nВКонтакте: ".$prestfixes['http_'].$prestfixes['vk_'].$game['vk_club']."/" : '';
-    $lj_text = ($game['lj_comm']) ? "\nЖЖ: ".$prestfixes['http_'].$game['lj_comm'].$prestfixes['_lj']."/profile/" : '';
+    $vk_text  = ($game['vk_club']) ? "\nВКонтакте: http://vk.com/{$game['vk_club']}/" : '';
+    $lj_text = ($game['lj_comm']) ? "\nЖЖ: http://{$game['lj_comm']}.lj.ru/profile/" : '';
     
     return "Профиль игры: http://kogda-igra.ru/game/{$game['id']}/
 
