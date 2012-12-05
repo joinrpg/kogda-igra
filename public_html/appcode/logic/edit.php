@@ -2,7 +2,6 @@
 require_once 'funcs.php';
 require_once 'email.php';
 require_once 'review.php';
-require_once 'prepostfixes.php';
 
 function mark_as_passed($id)
 {
@@ -299,12 +298,9 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 	$players_count = intval ($players_count);
 	$allrpg_info_id = intval($allrpg_info_id) > 0 ?intval ($allrpg_info_id) : 'NULL' ;
 	$user_add = intval ($user_add);
-	global $prestfixes;    
 
-	$vk_club = cleanup_string_field ($sql, $vk_club);
-	$vk_club = str_replace ($prestfixes, '', $vk_club);
-	$lj_comm = cleanup_string_field ($sql, $lj_comm);
-	$lj_comm = str_replace ($prestfixes, '', $lj_comm);
+	$vk_club = normalize_link(cleanup_string_field ($sql, $vk_club));
+	$lj_comm = normalize_link(cleanup_string_field ($sql, $lj_comm));
 	
 	if ($players_count == 0)
 	{

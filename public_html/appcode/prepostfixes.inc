@@ -1,1 +1,0 @@
-<?php $prefixes = array(); $postfixes = array();  $prefixes['http'] = 'http://'; $prefixes['vk'] = 'vk.com/'; $postfixes['lj'] = '.livejournal.com';?>
