@@ -4,7 +4,7 @@ require_once 'user_funcs.php';
 require_once 'sqlbase.php';
 require_once 'top_menu.php';
 
-define ('CURRENT_YEAR', 2012);
+define ('CURRENT_YEAR', 2013);
 
 date_default_timezone_set ("Europe/Moscow");
 
