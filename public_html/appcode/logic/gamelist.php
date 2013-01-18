@@ -1,7 +1,6 @@
 <?php
 require_once 'funcs.php';
 require_once 'logic/gamebase.php';
-define ('DEFAULT_YEAR', 2012);
 
 function get_year_list ($region)
 {

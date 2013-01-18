@@ -14,7 +14,7 @@
 
 	if (!$year)
 	{
-		$year = DEFAULT_YEAR;
+		$year = CURRENT_YEAR;
 	}
 	
 	if ($year !=0 && !validate_year($year))
