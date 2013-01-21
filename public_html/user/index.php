@@ -4,6 +4,7 @@
 	require_once 'logic/stat.php';
 	require_once 'review.php';
 	require_once 'logic/photo.php';
+	require_once 'media.php';
 
 	$username = array_key_exists ('id', $_GET) ? $_GET['id'] : 0;
 	if (!$username)
@@ -67,23 +68,7 @@
   $review = new ReviewForUser ($id);
   $review -> show();
 
-  $photos = get_photo_by_user($id);
-
-
-		if (is_array($photos))
-		{
-			echo "<h3>Фотоотчеты пользователя</h3>";
-
-      foreach ($photos as $photo)
-      {
-        $photo_id = $photo['photo_id'];
-        echo "<p><a href=\"{$photo['photo_uri']}\"><img style=\"border:none\" src=\"/photo/preview/$photo_id\"></a>
-          <br> <b>Игра</b>: <a href=\"/game/{$photo['game_id']}\">{$photo['gamename']}</a>";
-        echo "<br> <a href=\"{$photo['photo_uri']}\">[Ссылка на фото]</a>";
-
-        echo "</p>";
-      }
-		}
+  show_media (get_photo_by_user($id));
 
   if (check_my_priv(USERS_CONTROL_PRIV))
   {

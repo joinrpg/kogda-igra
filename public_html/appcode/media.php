@@ -1,4 +1,44 @@
 <?php
+function show_media($media)
+{
+  	if (is_array($media))
+		{
+			echo "<h3>Фото/видео</h3>";
+		}
+		if (is_array($media))
+		{
+			$good_present = is_array($media['good']);
+			if ($good_present)
+			{
+        echo '<p><strong>Выбор модератора</strong></p>';
+			}
+			show_photos_array($media['good']);
+			if ($good_present && is_array($media['all']))
+			{
+        echo '<p><strong>Остальные</strong></p>';
+			}
+      show_photos_array ($media['all']);
+		}
+}
+
+function show_photos_array($photo_array)
+{
+  foreach ($photo_array as $auth_photo)
+	{
+    echo '<table class="photo_table"><tr>';
+    foreach ($auth_photo as $photo)
+    {
+			echo "<td>";
+
+			$media = Media :: create ($photo);
+			$media -> write_code();
+
+			echo "</td>";
+    }
+    echo '</tr></table>';
+	}
+}
+
 abstract class Media {
 
 	public $uri = NULL;

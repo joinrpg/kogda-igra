@@ -216,44 +216,9 @@ $old_dates = get_game_dates($id);
   $review = new Review ($id);
   $review -> show();
 
-  $photos = get_photo_by_game_id($id);
-
-		if (is_array($photos))
-		{
-			echo "<h3>Фото/видео</h3>";
-		}
-		if (is_array($photos))
-		{
-			$good_present = is_array($photos['good']);
-			if ($good_present)
-			{
-        echo '<p><strong>Выбор модератора</strong></p>';
-			}
-			show_photos_array($photos['good']);
-			if ($good_present && is_array($photos['all']))
-			{
-        echo '<p><strong>Остальные</strong></p>';
-			}
-      show_photos_array ($photos['all']);
-		}
+	show_media(get_photo_by_game_id($id));
 
 
 	write_footer(TRUE);
-function show_photos_array($photo_array)
-{
-  foreach ($photo_array as $auth_photo)
-	{
-    echo '<table class="photo_table"><tr>';
-    foreach ($auth_photo as $photo)
-    {
-			echo "<td>";
 
-			$media = Media :: create ($photo);
-			$media -> write_code();
-
-			echo "</td>";
-    }
-    echo '</tr></table>';
-	}
-}
 ?>

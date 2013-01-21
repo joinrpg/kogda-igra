@@ -132,11 +132,8 @@ function delete_photo($id)
   $sql -> commit();
 }
 
-function get_photo_by_game_id($game_id)
+function _normalize_photo_array ($photos)
 {
-  $sql = connect();
-  $game_id = intval($game_id);
-  $photos = _get_photo("kp.`game_id` = $game_id");
   if (!is_array($photos))
   {
 		return NULL;
@@ -156,10 +153,18 @@ function get_photo_by_game_id($game_id)
   return $result;
 }
 
+function get_photo_by_game_id($game_id)
+{
+  $sql = connect();
+  $game_id = intval($game_id);
+  return _normalize_photo_array(_get_photo("kp.`game_id` = $game_id"));
+  
+}
+
 function get_photo_by_user($author_id)
 {
   $sql = connect();
   $author_id = intval($author_id);
-  return _get_photo("kp.author_id = $author_id");
+  return _normalize_photo_array(_get_photo("kp.author_id = $author_id"));
 }
 ?>
