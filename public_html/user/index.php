@@ -5,6 +5,7 @@
 	require_once 'review.php';
 	require_once 'logic/photo.php';
 	require_once 'media.php';
+	require_once 'uifuncs.php';
 
 	$username = array_key_exists ('id', $_GET) ? $_GET['id'] : 0;
 	if (!$username)
@@ -27,10 +28,9 @@
 	$topmenu -> pagename = $username;
 	$topmenu -> show();
 	
-	$gravatar_email = $email ? $email : 'nobody@kogda-igra.ru';
-	$gravatar_email = md5( strtolower( trim( $gravatar_email ) ) );
-	
-	echo "<img src=\"http://www.gravatar.com/avatar/$gravatar_email.jpg?d=mm\">";
+	echo '<div style="float:left">';
+
+	show_avatar ($email);
 
   $date = $userdata['lastvisit'] ? formate_single_date ($userdata['lastvisit']) : 'Никогда';
   $editor_stat = get_editor_stat_by_id ($id);
@@ -38,7 +38,7 @@
 	$privs = get_privs_desc_for_user($id);
 	if ($privs)
 	{
-    echo "<b>На сайте</b>: $privs<br>";
+    echo "$privs<br>";
   }
   
   if (strpos($username, '@') === FALSE)
@@ -64,6 +64,10 @@
     echo "<br>";
     echo "<b>Новых игр в базе за 3 месяца:</b> $new_count <br>";
   }
+  
+  echo '</div>';
+  
+  	write_user_menu();
 
   $review = new ReviewForUser ($id);
   $review -> show();
@@ -72,13 +76,22 @@
 	$media-> show_game = TRUE;
 	$media -> show();
 
-  if (check_my_priv(USERS_CONTROL_PRIV))
-  {
-    echo "<a href=\"/edit/users/$id\">Редактировать права пользователя</a>";
-  }
 
 	write_footer();
 
+function write_user_menu()
+{
+	echo '<div class=menu_box>';
+	echo '<div class=menu_strip>';
+
+	if (check_my_priv(USERS_CONTROL_PRIV))
+	{
+		real_button ("/edit/users/$id", "Редактировать права пользователя");
+	}
+
+	echo '</div>';
+	echo '</div>';
+}
 
 
 ?>

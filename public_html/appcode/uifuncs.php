@@ -40,4 +40,12 @@
     $author = $photodata['photo_author'];
     return $username ? show_user_link ($username, $user_id) : $author;
 	}
+	
+	function show_avatar($email)
+	{
+  $gravatar_email = $email ? $email : 'nobody@kogda-igra.ru';
+  $gravatar_email = md5( strtolower( trim( $gravatar_email ) ) );
+
+  echo "<img src=\"http://www.gravatar.com/avatar/$gravatar_email.jpg?d=mm\">";
+	}
 ?>
