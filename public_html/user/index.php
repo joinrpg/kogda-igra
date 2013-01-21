@@ -67,8 +67,10 @@
 
   $review = new ReviewForUser ($id);
   $review -> show();
-
-  show_media (get_photo_by_user($id));
+  
+	$media = new MediaBlock (get_photo_by_user($id));
+	$media-> show_game = TRUE;
+	$media -> show();
 
   if (check_my_priv(USERS_CONTROL_PRIV))
   {

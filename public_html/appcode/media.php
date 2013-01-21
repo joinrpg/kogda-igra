@@ -1,43 +1,62 @@
 <?php
-function show_media($media)
+
+class MediaBlock
 {
-  	if (is_array($media))
+  function __construct ($media)
+  {
+    $this -> media = $media;
+  }
+  
+  function show_photos_array($photo_array)
+  {
+    foreach ($photo_array as $auth_photo)
+    {
+      echo '<div class="photo_table">';
+      foreach ($auth_photo as $photo)
+      {
+        echo "<div class=\"photo_cell\">";
+
+        $media = Media :: create ($photo);
+        $media -> show_author = $this -> show_author;
+        $media -> show_game = $this -> show_game;
+        $media -> write_code();
+
+        echo "</div>";
+      }
+      echo '</div>';
+    }
+  }
+  
+  function show()
+  {
+		if (is_array($this -> media))
 		{
 			echo "<h3>Фото/видео</h3>";
 		}
-		if (is_array($media))
+		if (is_array($this -> media))
 		{
-			$good_present = is_array($media['good']);
+			$good_present = is_array($this ->media['good']);
 			if ($good_present)
 			{
         echo '<p><strong>Выбор модератора</strong></p>';
 			}
-			show_photos_array($media['good']);
-			if ($good_present && is_array($media['all']))
+			$this -> show_photos_array($this ->media['good']);
+			if ($good_present && is_array($this ->media['all']))
 			{
         echo '<p><strong>Остальные</strong></p>';
 			}
-      show_photos_array ($media['all']);
+      $this -> show_photos_array ($this ->media['all']);
 		}
+  }
 }
-
-function show_photos_array($photo_array)
+function show_media($media)
 {
-  foreach ($photo_array as $auth_photo)
-	{
-    echo '<div class="photo_table">';
-    foreach ($auth_photo as $photo)
-    {
-			echo "<div class=\"photo_cell\">";
-
-			$media = Media :: create ($photo);
-			$media -> write_code();
-
-			echo "</div>";
-    }
-    echo '</div>';
-	}
+	$obj = new MediaBlock ($media);
+	$obj-> show_author = TRUE;
+	$obj -> show();
 }
+
+
 
 abstract class Media {
 
@@ -56,7 +75,19 @@ abstract class Media {
 		
 		echo $this -> get_embed_code() .
 		"<br>" .
-		$photo_good . "<a href=\"{$this -> uri}\">$media_name</a> от {$this -> photo_author}" . $this -> get_fix_link() . $photo_comment;
+		$photo_good . "<a href=\"{$this -> uri}\">$media_name</a> ";
+		
+		if ($this -> show_author)
+		{
+			echo "от {$this -> photo_author}";
+		}
+		
+		if ($this -> show_game)
+		{
+			echo "(игра <a href=\"/game/{$this -> game_id}/\">{$this -> gamename}</a>)";
+		}
+		
+		echo $this -> get_fix_link() . $photo_comment;
 
 		if (check_my_priv(PHOTO_PRIV) || (check_my_priv(PHOTO_SELF_PRIV) && $this -> photo_author_id == get_user_id()))
 		{
@@ -87,6 +118,9 @@ abstract class Media {
 			$child -> photo_author_id = $photo ['author_id'];
 			$child -> photo_good_flag = $photo['photo_good_flag'];
 			$child -> photo_comment = htmlspecialchars($photo['photo_comment']);
+			
+			$child -> gamename = $photo['gamename'];
+			$child -> game_id = $photo['game_id'];
 			
 			if ($child -> is_correct())
 			{
