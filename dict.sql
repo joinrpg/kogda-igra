@@ -28,7 +28,7 @@ INSERT INTO `ki_status` (`status_id`, `status_name`, `status_style`, `problem_st
 (1, 'Прошла', 'status-finish', 0, 0, 0, 1, 1, 1),
 (2, '???', 'status-unknown', 1, 0, 0, 0, 1, 0),
 (3, 'Отложена', 'status-postponedd', 0, 0, 1, 0, 1, 0),
-(4, 'Дата?', 'status-date', 1, 1, 0, 0, 0, 0),
+(4, 'Дата?', 'status-date', 1, 0, 0, 0, 0, 0),
 (5, 'Отменена', 'status-canceled', 0, 0, 1, 0, 1, 0);
 
 --
