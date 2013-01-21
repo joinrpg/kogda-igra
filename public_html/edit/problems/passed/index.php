@@ -23,17 +23,15 @@ if ($action == 'mark' && is_array($mark))
     die();
   }
   
-	write_header('Проблемные игры');
-	echo '<h1>Проблемные игры :: Прошедшие игры</h1>';
-	show_greeting();
-	$calendar = get_passed_games();
+	write_header('Kogda-igra.Ru :: Проблемные игры :: Прошедшие?');
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Kogda-igra.Ru :: Проблемные игры :: Прошедшие?';
+	$topmenu -> show();
+	
 	echo '<form action="" method="post" id="mark">';
-	$colspan = write_calendar_header(TRUE);
-
-	foreach ($calendar as $game)
-	{
-		write_calendar_entry ($game, $colspan, FALSE, TRUE);
-	}
+	$calendar = new Calendar(get_passed_games());
+	$calendar -> use_checkbox = TRUE;
+	$calendar -> write_calendar();
 	echo '</table><br />';
 	echo '<input type="hidden" name="action" value="mark" />';
 	echo '<div style="text-align:right"><input type="submit" value="Отметить как прошедшие" /></div>';
