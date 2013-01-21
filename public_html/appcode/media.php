@@ -63,7 +63,7 @@ abstract class Media {
 abstract class Video extends Media {
 		function get_media_name()
 	{
-		return 'Видеоотчет';
+		return 'Видео';
 	}
 }
 
@@ -114,7 +114,7 @@ class Internal_Photo extends Media {
 	
 	function get_media_name()
 	{
-		return 'Фотоотчет';
+		return 'Фото';
 	}
 }
 ?>

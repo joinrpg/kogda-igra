@@ -220,7 +220,7 @@ $old_dates = get_game_dates($id);
 
 		if (is_array($photos))
 		{
-			echo "<h3>Фото/видеоотчеты</h3>";
+			echo "<h3>Фото/видео</h3>";
 		}
 		if (is_array($photos))
 		{

@@ -6,9 +6,9 @@
 
 // MAIN
 
-  write_header('Игры с фототчетами');
+  write_header('Игры с фото/видео');
 	$topmenu = new TopMenu();
-	$topmenu -> pagename = 'Фотоотчеты';
+	$topmenu -> pagename = 'Фото/видео';
 	$topmenu -> show();
 	$calendar = new Calendar(get_photo_games());
 	$calendar -> write_calendar();
