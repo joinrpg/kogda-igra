@@ -19,7 +19,8 @@ function _get_photo($where)
     FROM `ki_photo` kp 
     LEFT JOIN `users` u ON u.`user_id` = kp.author_id
     LEFT JOIN `ki_games` kg ON kg.id = kp.game_id
-    WHERE $where");
+    WHERE $where
+    ORDER BY kp.photo_id");
 }
 
 function save_photo ($photo_id, $uri, $author, $game_id, $author_lj, $photo_comment, $photo_good_flag)
