@@ -29,6 +29,7 @@ if ($action == 'mark' && is_array($mark))
 	$topmenu -> show();
 	
 	echo '<form action="" method="post" id="mark">';
+	echo '<div style="text-align:right"><input type="submit" value="Отметить как прошедшие" /></div>';
 	$calendar = new Calendar(get_passed_games());
 	$calendar -> use_checkbox = TRUE;
 	$calendar -> write_calendar();
