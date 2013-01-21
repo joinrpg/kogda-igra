@@ -25,17 +25,17 @@ function show_photos_array($photo_array)
 {
   foreach ($photo_array as $auth_photo)
 	{
-    echo '<table class="photo_table"><tr>';
+    echo '<div class="photo_table">';
     foreach ($auth_photo as $photo)
     {
-			echo "<td>";
+			echo "<div class=\"photo_cell\">";
 
 			$media = Media :: create ($photo);
 			$media -> write_code();
 
-			echo "</td>";
+			echo "</div>";
     }
-    echo '</tr></table>';
+    echo '</div>';
 	}
 }
 

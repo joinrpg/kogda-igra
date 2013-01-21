@@ -38,11 +38,18 @@ table, td, th
   border-collapse: collapse;
 }
 
-table.photo_table
+.photo_table
 {
-	border: 1px solid;
+/*	border: 1px solid;*/
+	clear:both;
 }
-table.widget_table td, table.widget_table th, table.photo_table td, table.photo_table th
+
+.photo_cell
+{
+  float:left;
+  margin: 1em
+}
+table.widget_table td, table.widget_table th
 {
 	border: none;
 	vertical-align:top;
