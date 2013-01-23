@@ -229,6 +229,7 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 {
 	float:left;
 	margin-right: 4px;
+	border: 0;
 }
 
 .logo
