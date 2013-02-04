@@ -171,7 +171,7 @@ class Internal_YouTubeVideo extends Video {
 		$position = strpos(strtolower($this -> uri), $prefix) + strlen($prefix);
 		$id = substr($this -> uri, $position);
 		
-		return "<iframe width=\"536\" height=\"302\" src=\"http://www.youtube.com/embed/pBWjNza7SVQ\" frameborder=\"0\" allowfullscreen></iframe>";
+		return "<iframe width=\"536\" height=\"302\" src=\"http://www.youtube.com/embed/{$id}\" frameborder=\"0\" allowfullscreen></iframe>";
 	}
 }
 
