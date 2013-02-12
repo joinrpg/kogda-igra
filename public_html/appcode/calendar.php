@@ -298,7 +298,8 @@ class Calendar
       echo "<tr$cancelled$style>";
       if ($this -> show_status)
       {
-        echo "<td class=\"$status_style\" id=\"$id\">$status_name</td>";
+        $id_str = $game['order'] > 0 ? '' :  "id=\"$id\"";
+        echo "<td class=\"$status_style\" $id_str>$status_name</td>";
       }
 
       echo "<td class=\"game_name\">";
