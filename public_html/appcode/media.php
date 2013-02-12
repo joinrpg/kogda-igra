@@ -32,19 +32,7 @@ class MediaBlock
 		if (is_array($this -> media))
 		{
 			echo "<h3>Фото/видео</h3>";
-		}
-		if (is_array($this -> media))
-		{
-			$good_present = is_array($this ->media['good']);
-			if ($good_present)
-			{
-        echo '<p><strong>Выбор модератора</strong></p>';
-			}
 			$this -> show_photos_array($this ->media['good']);
-			if ($good_present && is_array($this ->media['all']))
-			{
-        echo '<p><strong>Остальные</strong></p>';
-			}
       $this -> show_photos_array ($this ->media['all']);
 		}
   }
@@ -69,13 +57,12 @@ abstract class Media {
 	
 	function write_code()
 	{
-		$photo_good = $this -> photo_good_flag ? '<b>Лучший</b> ' : '';
+		$photo_good = $this -> photo_good_flag ? ' (<b>Выбор модератора</b>) ' : '';
 		$media_name = $this -> get_media_name();
 		$photo_comment = $this -> photo_comment ? "<br> <i>{$this -> photo_comment}</i>" : '';
 		
 		echo $this -> get_embed_code() .
-		"<br>" .
-		$photo_good . "<a href=\"{$this -> uri}\">$media_name</a> ";
+		"<br><a href=\"{$this -> uri}\">$media_name</a> " ;
 		
 		if ($this -> show_author)
 		{
@@ -84,10 +71,10 @@ abstract class Media {
 		
 		if ($this -> show_game)
 		{
-			echo "(игра <a href=\"/game/{$this -> game_id}/\">{$this -> gamename}</a>)";
+			echo "к игре <a href=\"/game/{$this -> game_id}/\">{$this -> gamename}</a>";
 		}
 		
-		echo $this -> get_fix_link() . $photo_comment;
+		echo $this -> get_fix_link() . $photo_good .$photo_comment;
 
 		if (check_my_priv(PHOTO_PRIV) || (check_my_priv(PHOTO_SELF_PRIV) && $this -> photo_author_id == get_user_id()))
 		{
