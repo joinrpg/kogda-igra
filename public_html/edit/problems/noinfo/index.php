@@ -8,17 +8,13 @@
 		return_to_main();
 	}
 
-	write_header('Проблемные игры');
-	echo '<h1>Проблемные игры :: Неясный статус</h1>';
-	show_greeting();
-	$calendar = get_problem_games();
-	$colspan = write_calendar_header(TRUE);
-
-	foreach ($calendar as $game)
-	{
-		write_calendar_entry ($game, $colspan, FALSE);
-	}
-	echo '</table>';
+	$hdr = 'Проблемные игры :: Неясный статус';
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = $hdr;
+	$topmenu -> show();
+	
+	$calendar = new Calendar(get_problem_games());
+	$calendar -> write_calendar();
 	
 	write_footer();
 

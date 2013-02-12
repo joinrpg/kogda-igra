@@ -124,7 +124,7 @@ class Calendar
     $this -> current_month = $date['mon'];
   }
 
-  function _write_calendar_header ()
+  function write_header ()
   {
     $colspan = 7;
     if ($this -> show_status)
@@ -175,11 +175,11 @@ class Calendar
 
   function write_calendar()
   {
-    $this -> _write_calendar_header();
+    $this -> write_header();
 
     foreach ($this -> games_array as $game)
     {
-      $this ->_write_calendar_entry ($game);
+      $this -> write_entry ($game);
     }
     echo '</table>';
   }
@@ -243,7 +243,7 @@ class Calendar
 		return $date -> show_date_string(!$this -> check_border);
   }
   
-  function _write_calendar_entry ($game)
+  function write_entry ($game)
   {
       $masked = $game['show_flags'] && 1;
 
@@ -489,16 +489,6 @@ class Calendar
 }
 //*** END of calendar class
 
-function write_calendar_header ($editor)
-{
-  $calendar = new Calendar (NULL);
-  $calendar -> editor = check_edit_priv();
-	$calendar -> _write_calendar_header ();
-	return $calendar -> colspan;
-}
-
-
-
 function get_email_link($game)
 {
   	if (!$game['email'])
@@ -531,16 +521,6 @@ function get_email_link_for_export($game)
 
 	return $game['email'];
 
-}
-
-function write_calendar_entry ($game, $colspan, $check_border = TRUE, $use_checkbox = FALSE)
-{
-  $calendar = new Calendar (NULL);
-  $calendar -> check_border = $check_border;
-  $calendar -> use_checkbox = $use_checkbox;
-  $calendar -> colspan = $colspan;
-  $calendar -> editor = check_edit_priv();
-	$calendar -> _write_calendar_entry ($game);
 }
 
 function get_region_param ()

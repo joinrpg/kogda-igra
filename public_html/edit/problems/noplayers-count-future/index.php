@@ -8,18 +8,13 @@
 		return_to_main();
 	}
 
-	write_header('Проблемные игры :: Нет кол-ва игроков');
-	echo '<h1>Проблемные игры :: Нет кол-ва игроков</h1>';
-	show_greeting();
-	$calendar = get_noplayers_count_games(TRUE);
-	$colspan = write_calendar_header(TRUE);
-
-	foreach ($calendar as $game)
-	{
-		write_calendar_entry ($game, $colspan, FALSE);
-	}
-	echo '</table>';
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Проблемные игры :: Нет кол-ва игроков';
+	$topmenu -> show();
 	
-	write_footer();
+	$calendar = new Calendar(get_noplayers_count_games(TRUE));
+	$calendar -> write_calendar();
+	
+	write_footer(); 
 
 	?>

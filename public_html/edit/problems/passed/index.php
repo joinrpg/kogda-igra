@@ -23,9 +23,8 @@ if ($action == 'mark' && is_array($mark))
     die();
   }
   
-	write_header('Kogda-igra.Ru :: Проблемные игры :: Прошедшие?');
 	$topmenu = new TopMenu();
-	$topmenu -> pagename = 'Kogda-igra.Ru :: Проблемные игры :: Прошедшие?';
+	$topmenu -> pagename = 'Проблемные игры :: Прошедшие?';
 	$topmenu -> show();
 	
 	echo '<form action="" method="post" id="mark">';

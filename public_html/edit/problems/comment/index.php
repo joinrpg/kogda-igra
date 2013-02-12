@@ -23,12 +23,13 @@ if ($action == 'mark' && is_array($mark))
     die();
   }
 
-	write_header('Проблемные игры :: Есть комментарий');
-	echo '<h1>Проблемные игры :: Есть комментарий</h1>';
-	show_greeting();
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Проблемные игры :: Есть комментарий';
+	$topmenu -> show();
+	
 	echo '<form action="" method="post" id="mark">';
-	$list = get_games_with_comment();
-	$calendar = new Calendar($list);
+	
+	$calendar = new Calendar(get_games_with_comment());
 	$calendar -> use_checkbox = TRUE;
 	$calendar -> write_calendar();
 	

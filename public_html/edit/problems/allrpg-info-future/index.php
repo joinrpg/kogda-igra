@@ -8,11 +8,11 @@
 		return_to_main();
 	}
 
-	write_header('Проблемные игры :: Нет ссылки на allrpg.info');
-	echo '<h1>Проблемные игры :: Нет ссылки на allrpg.info</h1>';
-	show_greeting();
-	$list = get_noallrpg_info_games(TRUE);
-	$calendar = new Calendar($list);
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = 'Проблемные игры :: Нет ссылки на allrpg.info';
+	$topmenu -> show();
+	
+	$calendar = new Calendar(get_noallrpg_info_games(TRUE));
 	$calendar -> write_calendar();
 	
 	write_footer();
