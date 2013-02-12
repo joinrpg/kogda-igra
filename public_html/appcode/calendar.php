@@ -629,49 +629,4 @@ function get_region_param ()
   $result ['name'] = $region == 0 ? 'Россия' : $region_arr[$region];
   return $result;
 }
-
-  function make_search_string($string)
-  {
-    return $string;
-    static $always_search_words = array('Ёж', 'Nova', 'S&M', 'ЗТУ', 'JNM', 'Лу');
-    static $never_search_words = array('МТГ', 'МГ', 'ТГ', 'ТК', 'ОИИМ', 'МОО', 'клуб', 'театр-студия', 'Клуб', 'Театр-студия', 'Группа', 'Ко', 'фехтования', 'друзья');
-    $string = str_replace ("«", '"', $string);
-    $string = str_replace ("»", '"', $string);
-    $keywords = preg_split( "/[\s,]*\\\"([^\\\"]+)\\\"[\s,]*|[\s,]+/", $string, 0, PREG_SPLIT_DELIM_CAPTURE );
-    foreach ($keywords as $word)
-    {
-       $word = trim($word);
-       $word_uri = urlencode(str_replace('&nbsp;', ' ', $word));
-
-       $use_for_search = strlen($word) > 4;
-
-       if (in_array($word, $always_search_words))
-       {
-          $use_for_search = true;
-       }
-       if (in_array($word, $never_search_words))
-       {
-          $use_for_search = false;
-       }
-
-       if (strpos($word, ' ') !== FALSE)
-       {
-          $word = '«' . $word .'»';
-          $use_for_search = true;
-       }
-
-       if ($use_for_search)
-       {
-          $result_word = "<a href=\"/find/$word_uri\">$word</a>";
-       }
-       else
-       {
-          $result_word = $word;
-       }
-       $result[] = $result_word;
-    }
-    $result_string = implode(' ', $result);
-    return $result_string;
-  }
-
 ?>
