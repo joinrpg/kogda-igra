@@ -187,6 +187,37 @@ class Calendar
   public static function format_game_date ()
   {
   }
+  
+  function get_email_link($game)
+  {
+		$email = trim ($game['email']);
+		
+		if (!$email)
+		{
+			return '';
+		}
+	
+		if ($game['hide_email'])
+		{
+			if (!check_username())
+			{
+				return  '';
+			}
+			
+			if ($this-> export_mode)
+			{
+				return $email;
+			}
+      return '<em>Скрытый:</em>' . Calendar::get_email_pic($email);
+		}
+
+    return $this -> export_mode ? $game['email'] : Calendar::get_email_pic($email);
+  }
+  
+  public static function get_email_pic($email_str)
+  {
+    return Calendar::get_link_icon('mailto:'. $email_str, $email_str, '[@]', 'email.png') . '&nbsp;';
+  }
 
   public static function format_game_name ($name, $uri)
   {
@@ -276,7 +307,7 @@ class Calendar
       }
        if ($this -> show_reviews)
        {
-       $status_name .= $this->get_review_cell_text2($game);
+       $status_name .= $this->get_review_cell_text($game);
        $status_name .= $this->get_photo_text($game);
        }
 
@@ -313,13 +344,13 @@ class Calendar
       echo "<td class=\"game_players_count\">$players_count</td>";
       if ($this -> export_mode)
       {
-        $email = get_email_link_for_export($game);
+        $email = $this -> get_email_link ($game);
         echo "<td class=\"game_email\">$email</td>";
         echo "<td class=\"game_mg\">" . $game['mg'] . '</td>';
       }
       else
       {
-        $mg = get_email_link($game) . htmlspecialchars($game['mg']);
+        $mg = $this-> get_email_link($game) . htmlspecialchars($game['mg']);
         echo "<td class=\"game_mg\">$mg</td>";
       }
       $this->write_editor_box ($game['id']);
@@ -332,12 +363,6 @@ class Calendar
     $link = htmlspecialchars($link);
     $title = htmlspecialchars($title);
     return "<a href=\"$link\"><img src=\"/img/$icon\" width=\"16\" height=\"16\" title=\"$title\" alt=\"$link\" class=\"link_icon\"/></a>";
-  }
-
-  public static function get_email_pic($email_str)
-  {
-    $email_str = trim($email_str);
-    return Calendar::get_link_icon('mailto:'. $email_str, $email_str, '[@]', 'email.png') . '&nbsp;';
   }
 
   function write_editor_box($id)
@@ -390,7 +415,7 @@ class Calendar
     }
   }
 
-  function get_review_cell_text2 ($game)
+  function get_review_cell_text ($game)
   {
     if (!array_key_exists('show_review_flag', $game) && intval($game['show_review_flag']) > 0)
     {
@@ -488,40 +513,6 @@ class Calendar
 
 }
 //*** END of calendar class
-
-function get_email_link($game)
-{
-  	if (!$game['email'])
-	{
-    return '';
-	}
-
-  if ($game['hide_email'])
-	{
-
-      return check_username() ? ('<em>Скрытый:</em>' . Calendar::get_email_pic($game['email'])) : '';
-	}
-
-	return Calendar::get_email_pic($game['email']);
-
-}
-
-function get_email_link_for_export($game)
-{
-  	if (!$game['email'])
-	{
-    return '';
-	}
-
-  if ($game['hide_email'] && !check_username())
-	{
-
-      return  '';
-	}
-
-	return $game['email'];
-
-}
 
 function get_region_param ()
 {
