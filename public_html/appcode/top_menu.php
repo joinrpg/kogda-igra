@@ -184,7 +184,7 @@ require_once 'funcs.php';
 			
 			$update_text = str_replace('%game%', '«<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>»', $update_text);
 			$update_text = str_replace('%review_link%', '<a href="' . ReviewBase :: get_review_uri($game) .'">Рецензия</a>', $update_text);
-			$update_text = str_replace('%photo%',  'Фотоотчет', $update_text);
+			$update_text = str_replace('%photo%',  'Фото/видео', $update_text);
 			$update_text = str_replace('%updated_user%', show_user_link ($game['updated_user_name']), $update_text);
 			if ($game['msg'])
 			{
