@@ -139,7 +139,7 @@ class Calendar
     {
 			$colspan++;
     }
-    echo '<table id="calendar" cellpadding="2" cellspacing="0"><tr>';
+    echo '<table id="calendar"><tr>';
 
     if ($this -> show_status)
     {
