@@ -225,7 +225,7 @@ require_once 'funcs.php';
 			
 			if ($max_early > 0)
 			{
-				echo $this -> year_link ($max_early, '<<');
+				echo $this -> year_link ($max_early, '&lt;&lt;');
 			}
 			
 			foreach ($years as $year)
@@ -235,7 +235,7 @@ require_once 'funcs.php';
 			
 			if ($min_later < 99999)
 			{
-				echo $this -> year_link ($min_later, '>>');
+				echo $this -> year_link ($min_later, '&gt;&gt;');
 			}
 		}
 		
