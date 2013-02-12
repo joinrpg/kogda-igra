@@ -315,11 +315,11 @@ class Calendar
       {
         $email = get_email_link_for_export($game);
         echo "<td class=\"game_email\">$email</td>";
-        echo "<td class=\"game_mg\">{$game['mg']}</td>";
+        echo "<td class=\"game_mg\">" . $game['mg'] . '</td>';
       }
       else
       {
-        $mg = get_email_link($game) . $game['mg'];
+        $mg = get_email_link($game) . htmlspecialchars($game['mg']);
         echo "<td class=\"game_mg\">$mg</td>";
       }
       $this->write_editor_box ($game['id']);
