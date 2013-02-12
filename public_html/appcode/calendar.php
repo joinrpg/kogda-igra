@@ -409,7 +409,7 @@ class Calendar
   function write_border ($month_name)
   {
 		
-		echo "<tr class=\"month_header\" id=\"$id\"><td colspan={$this -> colspan}>$month_name</td></tr>";
+		echo "<tr class=\"month_header\"><td colspan={$this -> colspan}>$month_name</td></tr>";
   }
   
 
