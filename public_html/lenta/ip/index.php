@@ -1,6 +1,6 @@
 ﻿<?php
 	require_once 'funcs.php';
-	require_once 'logic.php';
+	require_once 'logic/updates.php';
 	require_once 'show_updates.php';
 
 	if (!check_edit_priv())
@@ -14,11 +14,10 @@
 		return_to_main();
 	}
 	
-   $header = "Лента изменений с адреса $ip";
-	write_header($header);
-		$topmenu = new TopMenu();
-	$topmenu -> pagename = $header;
+	$topmenu = new TopMenu();
+	$topmenu -> pagename = "Лента $ip";
 	$topmenu -> show();
+	
 	$updates = get_updates_for_ip ($ip);
 	echo '<table>';
 	foreach ($updates as $item)
