@@ -77,7 +77,7 @@
 </ol>
 <h3>Open Source</h3>
 <p>
-<a href="https://bitbucket.org/leotsarev/kogda-igra.ru">Исходный код нашего сайта</a> — Open Source, согласно <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">лицензии Apache</a>. Если вы не знаете, что это значит, не парьтесь.<br>
+<a href="https://github.com/leotsarev/kogda-igra">Исходный код нашего сайта</a> — Open Source, согласно <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">лицензии Apache</a>. Если вы не знаете, что это значит, не парьтесь.<br>
 Если вдруг знаете, и хотите внести свой вклад, будем вам благодарны — присылайте свои pull request.<br>
 Если вам чего-то непонятно, пишите <?php echo show_user_link('leotsarev'); ?>.</p>
 <h3>Благодарности</h3>
