@@ -14,6 +14,18 @@ function mark_as_passed($id)
   $sql -> Run ("COMMIT");
 }
 
+function remove_by_ip($ip)
+{
+	$sql = connect();
+	$ip = $sql -> QuoteAndClean ($ip);
+	
+	$rq = "UPDATE  ki_games kg 
+		INNER JOIN ki_updates ku ON ku.game_id = kg.id 
+		SET deleted_flag = 1
+		WHERE `ip_address` LIKE $ip AND deleted_flag = -1";
+	$sql -> Run ($rq);
+}
+
 function _add_uri ($uri)
 {
 	$sql = connect();
