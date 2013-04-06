@@ -45,4 +45,6 @@ INSERT INTO `ki_regions` (`region_id`, `region_name`, `region_code`, `region_exp
 (3, 'Москва и Центральный регион', 'msk', 0),
 (5, 'Урал', 'ural', 0),
 (6, 'Сибирь', 'sibir', 0),
-(7, 'Юг России', 'south', 0);
+(7, 'Юг России', 'south', 0),
+(8, 'Дальний восток', 'dv', 0),
+(9, 'Поволжье', 'volga', '0');
