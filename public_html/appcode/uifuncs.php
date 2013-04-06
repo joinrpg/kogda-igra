@@ -29,8 +29,21 @@
 			}
 			else
 			{
-				echo "<div class='active'><form action=\"$uri\" method=get style=\"display:inline\"><input type=submit value=\"$text\"></form></div>";
+				action_button ($uri, $text, 'get');
 			}
+		}
+		
+		function action_button ($uri, $text, $method, $par = NULL)
+		{
+			echo "<div class=active><form action=\"$uri\" method=$method style=\"display:inline\"><input type=submit value=\"$text\">";
+			if (is_array($par))
+			{
+				foreach ($par as $key => $value)
+				{
+					echo "<input type=hidden name=\"$key\" value=\"$value\">";
+				}
+			}
+			echo '</form></div>';
 		}
 		
 			function get_photo_author ($photodata)
