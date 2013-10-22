@@ -67,7 +67,16 @@
   
   echo '</div>';
   
-  	write_user_menu();
+	echo '<div class=menu_box>';
+	echo '<div class=menu_strip>';
+
+	if (check_my_priv(USERS_CONTROL_PRIV))
+	{
+		real_button ("/edit/users/$id", "Редактировать права пользователя");
+	}
+
+	echo '</div>';
+	echo '</div>';
 
   $review = new ReviewForUser ($id);
   $review -> show();
@@ -79,19 +88,6 @@
 
 	write_footer();
 
-function write_user_menu()
-{
-	echo '<div class=menu_box>';
-	echo '<div class=menu_strip>';
-
-	if (check_my_priv(USERS_CONTROL_PRIV))
-	{
-		real_button ("/edit/users/$id", "Редактировать права пользователя");
-	}
-
-	echo '</div>';
-	echo '</div>';
-}
 
 
 ?>
