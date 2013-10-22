@@ -37,8 +37,9 @@ class Sql
 
 		if (!$result)
 		{
+					echo mysql_error();
 			return FALSE;
-			echo mysql_error();
+
 			}
 
 		$array = FALSE;

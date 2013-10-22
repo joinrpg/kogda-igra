@@ -120,4 +120,10 @@ function get_future_games()
 	return _get_games("kg.deleted_flag =0 AND begin > NOW() AND ks.cancelled_status = 0 AND kgd.`order` = 0", "", "name ASC");
 }
 
+function get_games_by_timestamp($timestamp)
+{
+  $timestamp = intval ($timestamp);
+  return _get_games("`update_date` > FROM_UNIXTIME($timestamp) AND kgd.`order`=0 AND kg.deleted_flag =0", "INNER JOIN `ki_updates` ki ON kg.id = ki.game_id", "update_date DESC");
+}
+
 ?>

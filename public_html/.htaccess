@@ -63,8 +63,12 @@ RewriteCond %{REQUEST_URI} !index.php
 RewriteRule ^user/(.*)/?$ user/index.php?id=$1 [last]
 RewriteRule ^edit/users/([1234567890]*)/?$ /edit/users/index.php?id=$1 [L]
 RewriteRule ^help-needed/email/([1234567890]*)/?$ /help-needed/email/index.php?id=$1 [L]
+
 RewriteRule ^api/game/([1234567890]+)/?$ /api/game/get-by-id.php?id=$1 [L]
 RewriteRule ^api/allrpg-info/([1234567890]+)/?$ /api/allrpg-info/find-by-id.php?id=$1 [L]
+RewriteRule ^api/changed/([1234567890]+)/?$ /api/game/changed.php?timestamp=$1 [L]
+RewriteRule ^api/allrpg-info/([1234567890]+)/?$ /api/allrpg-info/find-by-id.php?id=$1 [L]
+
 RewriteRule ^game/thanks/?$ /service/message.php
 RewriteRule ^edit/already/?$ /service/message.php
 RewriteRule ^edit/game/([1234567890]*)/photo/?$ /edit/photo/?game_id=$1 [L]

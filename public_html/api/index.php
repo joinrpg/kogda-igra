@@ -23,6 +23,12 @@
   
   
   </p>
+  <p><b>Получение данных об обновлениях с определенного timestamp.</b><br>
+  <b>URI</b>: <u>/api/changed/<i>(timestamp)</i></u><br>
+  Выдает все обновленные игры с <code>timestamp</code> (UNIX timestamp).
+  
+  
+  </p>
   <p><b>Поиск игры по идентификатору в базе Allrpg.info.</b><br>
   <b>URI</b>: <u>/api/allrpg-info/<i>(allrpg-info-id)</i></u><br>
   По номеру профиля в базе сайта allrpg.info (<code>allrpg-info-id</code>) ищет соответствующую игру в базе kogda-igra. Если игра, ссылающаяся на указанный id, есть
