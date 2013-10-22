@@ -8,6 +8,7 @@
 	require_once 'top_menu.php';
 
 	$year = array_key_exists('year', $_GET) ? intval($_GET['year']) : 0;
+	$konvent = get_request_field('konvent') == 1;
 	$region_result = get_region_param();
 	$region = $region_result['id'];
 	$region_name = $region_result['name'];
@@ -43,8 +44,9 @@
   <div class="adblock">[<a href="/about/#vk_like" title="Популярная игра">?</a>] Самая популярная игра: <a href="/game/<?php echo $best_game['id'];?>"><?php echo $best_game['name'];?></a>	</div>
   <?php
   }
+  $data = $konvent ? get_main_calendar($year, $region, FALSE, $konvent) : get_main_calendar($year, $region, FALSE, $konvent );
   
-	$calendar = new Calendar(get_main_calendar($year, $region, FALSE));
+	$calendar = new Calendar($data);
 	$calendar -> check_border = TRUE;
 	$calendar -> show_reviews = TRUE;
 	$calendar -> write_calendar();

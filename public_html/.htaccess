@@ -41,6 +41,10 @@ RewriteRule ^spb/19(.*)/?$ /?region=2&year=19$1
 RewriteRule ^spb/20(.*)/?$ /?region=2&year=20$1
 RewriteRule ^spb/?$ /?region=2
 
+RewriteRule ^konvent/19(.*)/?$ /?konvent=1&year=19$1
+RewriteRule ^konvent/20(.*)/?$ /?konvent=1&year=20$1
+RewriteRule ^konvent/?$ /?konvent=1
+
 RewriteRule ^dv/19(.*)/?$ /?region=8&year=19$1
 RewriteRule ^dv/20(.*)/?$ /?region=8&year=20$1
 RewriteRule ^dv/?$ /?region=8
@@ -51,6 +55,7 @@ RewriteRule ^volga/?$ /?region=9
 
 RewriteRule ^19(.*)/?$ /?year=19$1
 RewriteRule ^20(.*)/?$ /?year=20$1
+
 RewriteRule ^find/(.+)/?$ /search/?search=$1 [L]
 RewriteRule ^reviews/([1234567890]+)/?$ /game/$1/ [R=permanent]
 RewriteRule ^game/([1234567890]*)/?$ /game/index.php?id=$1 [L]

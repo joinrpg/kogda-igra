@@ -63,7 +63,7 @@ function get_photo_games()
 			AND kgd.`order` = 0");
 }
 
-function get_main_calendar($year, $region = 0, $show_only_future = false)
+function get_main_calendar($year, $region = 0, $show_only_future = false, $show_only_konvent = false)
 {
 	$sql = connect();
 
@@ -75,12 +75,15 @@ function get_main_calendar($year, $region = 0, $show_only_future = false)
 	? ('(kr.region_experimental = 0)')
 	: ("(ksr.region_id = $region)");
 	
-	$future_query = $show_only_future ? '(MONTH(kgd.`begin`) >= MONTH(NOW()))' : '(1=1)';
+	$future_query = $show_only_future ? 'MONTH(kgd.`begin`) >= MONTH(NOW())' : '1=1';
+	
+  $konvent_query = $show_only_konvent ? 'kg.type = 5' : '1=1';
 	
 	return _get_games("YEAR(kgd.`begin`) = $year
 			AND ($region_query)
 			AND kg.deleted_flag = 0
-			AND $future_query	", '', "kgd.begin, kgd.time");
+			AND ($konvent_query)
+			AND ($future_query)	", '', "kgd.begin, kgd.time");
 }
 
 
