@@ -169,7 +169,7 @@ class GameUpdatedEmail extends Email
     $game_name = $this -> game_data['name'];
     $int_text = $this -> get_int_table();
     $vk_text  = ($game['vk_club']) ? ("\nВКонтакте: " . format_vk_link($game['vk_club'])) : '';
-    $lj_text = ($game['lj_comm']) ? ('\nЖЖ: ' . format_lj_link ($game['lj_comm']))   : '';
+    $lj_text = ($game['lj_comm']) ? ("\nЖЖ: ' . format_lj_link ($game['lj_comm']))   : '';
     
     return "Профиль игры: http://kogda-igra.ru/game/{$game['id']}/
 
