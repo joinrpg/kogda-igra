@@ -100,19 +100,21 @@
 			</script>";
 		echo '<div class=menu_strip>';
 
-		  $allrpg_info_id = $game['allrpg_info_id'];
-  if ($allrpg_info_id)
-  {
-    $subobj_str = ($date -> is_passed()) ? 'past' : 'future';
-    active_button("http://inf.allrpg.info/events/$allrpg_info_id/", 'Профиль allrpg.info');
-    $allrpg_zayvka_id = $game['allrpg_zayvka_id'];
+		$allrpg_zayvka_id = $game['allrpg_zayvka_id'];
 		if ($allrpg_zayvka_id && !$date -> is_passed && $game['allrpg_opened'])
 		{
 			real_button ("http://www.allrpg.info/order/act=add&subobj=$allrpg_zayvka_id ", 'Заявиться');
 		}
-    real_button("http://calendar.allrpg.info/portfolio/subobj=$subobj_str&act=add&game=$allrpg_info_id", "Добавить в портфолио");
-  }
-  		 if (!$date -> is_passed())
+		
+		$allrpg_info_id = $game['allrpg_info_id'];
+		if ($allrpg_info_id)
+		{
+			$subobj_str = ($date -> is_passed()) ? 'past' : 'future';
+			active_button("http://inf.allrpg.info/events/$allrpg_info_id/", 'Профиль allrpg.info');
+			real_button("http://calendar.allrpg.info/portfolio/subobj=$subobj_str&act=add&game=$allrpg_info_id", "Добавить в портфолио");
+    }
+    
+  	 if (!$date -> is_passed())
 		 {
 			$machine_date = $date -> get_machine_date();
 			$details = "http://kogda-igra.ru/game/$id";
