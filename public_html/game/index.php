@@ -72,7 +72,7 @@
 			$this -> count++;
 			if ($this -> count == 2)
 			{
-				echo "<tr class=\"month_header\" id=\"$id\"><td colspan={$this -> colspan}><br>Пересечения</td></tr>";
+				echo "<tr class=\"month_header\"><td colspan={$this -> colspan}><br>Пересечения</td></tr>";
 			}
 		} 
 		
@@ -101,7 +101,7 @@
 		echo '<div class=menu_strip>';
 
 		$allrpg_zayvka_id = $game['allrpg_zayvka_id'];
-		if ($allrpg_zayvka_id && !$date -> is_passed && $game['allrpg_opened'])
+		if ($allrpg_zayvka_id && !$date -> is_passed() && $game['allrpg_opened'])
 		{
 			real_button ("http://www.allrpg.info/order/act=add&subobj=$allrpg_zayvka_id ", 'Заявиться');
 		}
