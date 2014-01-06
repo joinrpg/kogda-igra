@@ -118,7 +118,7 @@
 		 {
 			$machine_date = $date -> get_machine_date();
 			$details = "http://kogda-igra.ru/game/$id";
-			real_button("http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&sprop=website:kogda-igra.ru&details=$details", "Добавить в Google Calendar");
+      active_button("http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&trp=true&sprop=kogda-igra.ru&details=$details", "Добавить в Google Calendar");
 		}
 		if (check_my_priv(PHOTO_PRIV) || check_my_priv(PHOTO_SELF_PRIV))
 		{
