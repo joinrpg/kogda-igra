@@ -118,6 +118,7 @@ require_once 'funcs.php';
 			show_button('/about/', 'О нас');
 			show_button('/reviews/', 'Рецензии');
 			show_button('/photo/', 'Фото');
+			show_button('http://rpg.ru/newb', 'Новичку');
 			echo '</div> ';
 			
 			$username = get_username();
