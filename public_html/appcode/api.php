@@ -25,10 +25,11 @@ function strip_game_object_before_json($result)
     $response = array();
     foreach ($result as $key => $value)
     {
-      if (array_search($key, $enabled_fields))
+      if (array_search($key, $enabled_fields) === FALSE)
       {
-        $response[$key] = $result[$key];
+        continue;
       }
+        $response[$key] = $result[$key];
     }
     return $response;
 }
