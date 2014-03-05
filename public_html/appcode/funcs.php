@@ -210,6 +210,8 @@ function show_select ($name, $selected, $select_id = FALSE)
         return '/dv/';
       case 9:
 				return '/volga/';
+			case 10:
+        return '/ua/';
 			default:
 				return '/';
 		}
