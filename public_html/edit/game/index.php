@@ -47,7 +47,7 @@
 			}
 			else
 				$selected = '';
-			echo "<option value=\"{$row['sub_region_id']}\" $selected >{$row['sub_region_name']}</option>";
+			echo "<option value=\"{$row['sub_region_id']}\" $selected >{$row['region_name']} - {$row['sub_region_name']}</option>";
 		}
 		echo "</select>";
 		echo "<div id=\"region_placeholder\"></div>";
