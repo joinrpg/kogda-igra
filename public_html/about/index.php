@@ -21,7 +21,7 @@
   <li><strong>Медик</strong> <?php echo show_user_link('steamboy'); ?>, редактор по Москве</li>
   <li><strong>Крайк</strong> <?php echo show_user_link('krayk'); ?>, редактор по Москве</li>
   <li><strong>Анатоль</strong> <?php echo show_user_link('anatolle'); ?>, редактор по Уралу, Сибири, Дальнему Востоку</li>
-  <li><strong>Ксю</strong> <?php echo show_user_link('ksurrr'); ?>, фотомодератор</li>
+  <li><strong>Меллос</strong> <?php echo show_user_link('mellos'); ?>, редактор по Украине</li>
   <li><strong>Йолаф</strong> <?php echo show_user_link('jolaf'); ?>, консультант</li>
 </ul>
 <p>В создании сайта в 2007—2012 годах принимал участие <strong>Митяй</strong> <?php echo show_user_link('mtr'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>.</p>
