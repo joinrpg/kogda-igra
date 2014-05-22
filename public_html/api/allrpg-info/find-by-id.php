@@ -1,5 +1,6 @@
 ﻿
 <?php
+	require_once 'logic/edit.php';
 	require_once 'funcs.php';
 	require_once 'logic/allrpg.php';
 
@@ -15,6 +16,12 @@
   }
   else
   {
+    $id = add_uri ("http://inf.allrpg.info/events/$id/");;
+		if ($id)
+		{
+			$email = new AddedURIEmal ($id);
+			$email -> send();
+		}
     echo "{}";
   }
 	
