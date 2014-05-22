@@ -73,10 +73,10 @@ require_once 'funcs.php';
 			$this -> show_region_link ('Все игры', 0);
 			$this -> show_region_link ('Северо-Запад', 2);
 			$this -> show_region_link ('Москва', 3);
-			$this -> show_region_link ('Поволжье', 9, true);
+			$this -> show_region_link ('Поволжье', 9);
 			$this -> show_region_link ('Урал', 5);
 			$this -> show_region_link ('Сибирь', 6);
-			$this -> show_region_link ('Юг', 7, true);
+			$this -> show_region_link ('Юг', 7);
 			$this -> show_region_link ('Дальний Восток', 8);
 			$this -> show_region_link ('Украина', 10);
 		}
