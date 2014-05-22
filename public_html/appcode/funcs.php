@@ -299,10 +299,7 @@ function show_select ($name, $selected, $select_id = FALSE)
 		}
 	}
 
-
-
-
-			function show_search_form($string = '')
+  function show_search_form($string = '')
 	{
     echo '<form action="/search.php" method="post" id="search_form">';
     echo "<input type=\"text\" size=\"40\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
@@ -319,7 +316,7 @@ function show_select ($name, $selected, $select_id = FALSE)
       echo "<tr> <td colspan=\"$colspan\">";
     }
 		echo "<input type=\"hidden\" name=\"action\" value=\"$action\" />";
-		echo "<input type=\"hidden\" name=\"id\" value=\"$id\" />";
+		echo "<input type=\"hidden\" name=\"id\" id=\"id\" value=\"$id\" />";
 		echo "<input type=\"submit\"  value=\"$name\" />";
 		if ($label != '')
 		{

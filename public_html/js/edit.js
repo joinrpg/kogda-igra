@@ -120,18 +120,27 @@ function update_allrpg_info(datestart, dateend)
           
           var str = req.responseText;
 					var result = JSON.parse(str);
-					if (result.length > 0)
+					var filtered_result = [];
+					for (var i = 0; i < result.length; i++)
+          {
+            if (!result[i].kogdaigra_id || result[i].kogdaigra_id == current_id_value())
+            {
+              filtered_result.push(result[i]);
+            }
+          }
+					if (filtered_result.length > 0)
 					{
               var opt0 = document.createElement('option');
               opt0.setAttribute('value', 0);
               opt0.innerHTML = 'Выберите ...';
               dropdown.appendChild(opt0);
-            for (var i = 0; i < result.length; i++)
+            for (var i = 0; i < filtered_result.length; i++)
             {
+              var item = filtered_result[i];
               var opt = document.createElement('option');
-              opt.setAttribute('value', result[i].allrpg_info_id);
-              opt.innerHTML = result[i].allrpg_info_name;
-              if (result[i].allrpg_info_id == current_allrpg_value())
+              opt.setAttribute('value', item.allrpg_info_id);
+              opt.innerHTML = item.allrpg_info_name;
+              if (item.allrpg_info_id == current_allrpg_value())
               {
                 opt.setAttribute('selected', 'selected');
                 updateAllrpgInfoLink();
@@ -173,6 +182,12 @@ function current_allrpg_value()
 {
    var allrpgInfo = document.getElementById('allrpg_info_id');
    return parseInt(allrpgInfo.value);
+}
+
+function current_id_value()
+{
+   var idElement = document.getElementById('id');
+   return idElement.value | 0;
 }
 
 
