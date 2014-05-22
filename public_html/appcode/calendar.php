@@ -373,15 +373,9 @@ class Calendar
         if ($this -> use_checkbox)
         {
           echo "<input type=\"checkbox\" name=\"mark[]\" value=\"$id\" />";
-          //Правильный путь
-          //echo "&nbsp;<input type=submit formaction=\"/edit/game/?id=$id\" value=\"Изменить\">";
-          //IE9 не поддерживает formaction
-          echo "&nbsp;<a href=\"/edit/game/?id=$id\">Изменить</a>";
+          echo "&nbsp;"; 
         }
-        else
-        {
-          echo "<form action=\"/edit/game/?id=$id/\" method=post id=ledit_form style=\"display:inline\"><input type=submit value=\"Изменить\"></form>";
-        }
+        echo "<a href=\"/edit/game/?id=$id\">Изменить</a>";
         echo "</td>\n";
       }
   }
