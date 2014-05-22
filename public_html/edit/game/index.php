@@ -149,7 +149,7 @@
 
 
 
-	function show_form ($data, $old_id, $add_uri_id)
+	function show_form ($data, $add_uri_id)
 	{
 		$deleted = intval($data['deleted_flag']) == 1;
 		$moderate_mode = intval($data['deleted_flag']) == -1;
@@ -222,10 +222,6 @@
 		}
 		echo "</td></tr>\n";
 		echo '</table>';
-		if ($old_id)
-		{
-			echo "<input type=\"hidden\" name=\"old_id\" value=\"$old_id\">";
-		}
 		if ($add_uri_id)
 		{
 			echo "<input type=\"hidden\" name=\"add_uri_id\" value=\"$add_uri_id\">";
@@ -528,12 +524,7 @@
 			);
 		}
 
-		$old_id = get_post_field('old_id');
 		$add_uri_id = get_post_field('add_uri_id');
-		if ($old_id > 0)
-		{
-      delete_old_game($old_id);
-		}
 		if ($add_uri_id)
 		{
 			resolve_add_uri($add_uri_id);
@@ -583,75 +574,7 @@
 			$dict_tables_loaded = TRUE;
 		}
 	}
-
-	function parse_old_game($old_id)
-	{
-      global $msg;
-      $old_data = load_old_game($old_id);
-
-      if (!isset($old_data))
-      {
-        return NULL;
-      }
-      $data['name'] = preg_replace("~\([0-9]* / [0-9]*\)~", "", $old_data['game_name']);
-      $dates = preg_split("/[ -]/", $old_data['game_date']);
-
-      $begin = $dates[0];
-      $beg_count = substr_count($begin, ".");
-
-      if ($beg_count == 0)
-      {
-        $begin = "01.01.$begin";
-      }
-      elseif ($beg_count == 1)
-      {
-        $begin = "01.$begin";
-      }
-
-      $date2 = $dates[1];
-      if ($date2[0] == '(')
-      {
-        $data['time'] = intval(str_replace("(", "", $date2));
-      }
-      elseif (count($date2) > 0)
-      {
-        $diff = strtotime($date2) - strtotime($begin);
-        $data['time'] = floor($diff/(60*60*24));
-      }
-      else
-      {
-        $data['time'] = 1;
-      }
-
-      $data['begin'] = $begin;
-      $data['uri'] = $old_data['game_uri'];
-      if ($data['uri'] == "0")
-      {
-        $data['uri'] = '';
-      }
-
-      $reg_pos = strpos($old_data['game_region'], ',');
-      if ($reg_pos > 0)
-      {
-        $region_name = substr($old_data['game_region'], $reg_pos + 1);
-      }
-      else
-      {
-        $region_name = $old_data['game_region'];
-      }
-        $sub_region = try_to_find_region ($region_name);
-        if ($sub_region)
-        {
-          $data['sub_region_id'] = $sub_region;
-        } else {
-          $msg= "<p><strong style=\"color:red\">Регион не распознан!</strong> Имя региона: «{$old_data['game_region']}»</p>";
-        }
-
-      $data['status'] = 1;
-
-      return $data;
-	}
-
+	
 	function do_edit ($id)
 	{
 		global $region_table;
@@ -661,16 +584,10 @@
 		if ($id)
 		{
 			$data = get_game_for_edit($id);
-      $old_id = NULL;
       $add_uri_id = NULL;
 		} else
 		{
-      $old_id = array_key_exists ('old_id', $_GET) ? intval($_GET['old_id']) : 0;
       $add_uri_id = array_key_exists ('add_uri_id', $_GET) ? intval($_GET['add_uri_id']) : 0;
-      if ($old_id)
-      {
-				$data = parse_old_game($old_id);
-			}
 			if ($add_uri_id)
 			{
 				$add = get_added_uri($add_uri_id);
@@ -713,7 +630,7 @@
 		
 		if (isset($data))
 		{
-			show_form ($data, $old_id, $add_uri_id);
+			show_form ($data, $add_uri_id);
 		}
 		else
 		{

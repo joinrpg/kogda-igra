@@ -37,7 +37,6 @@
 	$noallrpg_info_count = intval ($problems_row['noallrpg_info_count']);
 	$noallrpg_info_count_future = intval ($problems_row['noallrpg_info_count_future']);
 	$comment_count = intval($problems_row['comment_count']);
-	$old_games_count = intval($problems_row['old_games_count']);
 	
 	$editor_stats = get_editors_statistics();
 	$users_report = get_user_privs_report();
@@ -157,7 +156,6 @@
         show_count_link('/edit/problems/noplayers-count/', 'Не указано кол-во игроков', $noplayers_count);
         show_count_link('/edit/problems/allrpg-info/', 'Нет ссылки на allrpg.info', $noallrpg_info_count);
         show_count_link('/edit/problems/comment/', 'Комментарии', $comment_count);
-        show_count_link('/edit/old-games/', 'Импорт из rpg.ru', $old_games_count);
         ?>
         <!--<li><a href="/edit/problems/merge/">Возможные дубли</a></li>-->
             </ul>
