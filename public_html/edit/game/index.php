@@ -636,11 +636,11 @@
 		{
         if (get_request_field('from_allrpg')!==FALSE )
         {
-          echo "<table>
+           echo "<table style='max-width:800px;background-color:#FAFAD2'>
 				<tr><th>Уважаемые пользователи allrpg.info! </th></tr>
 				<tr><td>
-Теперь календари allrpg.info и КогдаИгры объединены. Предлагаем вам добавить нужную вам игру непосредственно в календарь КогдаИгры, заполнив форму ниже. 
-Если игра уже есть на КогдаИгре, но карточки профиля почему-то нет в базе allrpg.info, напишите редакторам КогдаИгры по адресу <a href=\"mailto:rpg@kogda-igra.ru\">rpg@kogda-igra.ru</a></td><tr>
+Календари allrpg.info и Когда-Игры объединены. Предлагаем вам добавить нужную вам игру непосредственно в календарь Когда-Игры, заполнив форму ниже. 
+Если игра уже есть на Когда-Игре, но карточки профиля почему-то нет в базе allrpg.info, напишите редакторам по адресу <a href=\"mailto:rpg@kogda-igra.ru\">rpg@kogda-igra.ru</a></td><tr>
 				</table><br>";
         }
 					echo "<table>
