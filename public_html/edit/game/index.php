@@ -21,7 +21,7 @@
 		$value = htmlspecialchars ($value);
 		echo "<tr><td><label><strong>E-mail</strong></label></td>";
 		echo "<td><input type=\"email\" name=\"email\" id=\"email\" list=\"emaillist\" autocomplete=off maxlength=\"100\" size=\"30\" value=\"$value\" onchange=\"this.value=this.value.trim()\"/>";
-		echo "<select id=\"allrpg_emails\" style=\"visibility:hidden\" onChange=\"set_email_field();\"></select>";
+		echo "<select id=\"allrpg_emails\" style=\"display: none\" onChange=\"set_email_field();\"></select>";
 		echo "<br/>";
 		if (check_edit_priv())
 		{
@@ -406,7 +406,11 @@
 				}
 				echo '</table>';
       }
-			$date_obj = new GameDate($dates[0]);
+      $date_obj = new GameDate($dates[0]);
+      $year = $date_obj ->year();
+      echo "<input type=hidden id=startyear value=$year>";
+
+			
       echo '<script type="text/javascript">';
       echo 'update_allrpg_info ( ';
       echo $date_obj -> get_js_string_begin();
@@ -424,9 +428,13 @@
 		echo "<tr><td><label><strong>Allrpg.info id</strong></label></td>";
 		echo "<td>
       <input type=\"text\" name=\"allrpg_info_id\" id=\"allrpg_info_id\" onChange=\"updateAllrpgInfoLink();\" maxlength=\"20\" size=\"20\" value=\"$value\" />
-      <select id=\"allrpg_games\" style=\"visibility:hidden\" onChange=\"updateAllrpgInfo();\"></select>
-      <a href=\"\" id=\"allrpg_info_link\" style=\"visibility:hidden\">Профиль</a>
-      </td></tr>\n";
+      <select id=\"allrpg_games\" style=\"display: none\" onChange=\"updateAllrpgInfo();\"></select>
+     <a href=\"\" id=\"allrpg_info_link\" style=\"display: none\">Профиль</a>";
+   if (check_edit_priv())
+   {
+    echo "<input id=\"sync_to_allrpg\" type=\"button\" onclick=\"syncToAllrpg();\" style=\"display: none\" />";
+   }
+    echo  "</td></tr>\n";
 	}
 
 	function show_history($id)

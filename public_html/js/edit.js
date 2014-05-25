@@ -1,4 +1,14 @@
-window.onload = update_allrpg_fields;
+window.onload = function() {
+  update_allrpg_fields();
+  updateSyncButton();
+  var startyearElem = document.getElementById('startyear');
+  var startYear = startyearElem ? startyearElem.value : get_time_value ('begin').getFullYear();
+  var isUpdate = current_allrpg_value() > 0
+  if (isUpdate || startYear > 2013)
+  {
+   performSync (false);
+  }
+}
 
 function set_email_field()
 {
@@ -19,7 +29,7 @@ function clear_email_dropdown()
 	{
 		dropdown.removeChild(dropdown.lastChild);
 	}
-	dropdown.style.visibility = "hidden";
+	dropdown.style.display = "none";
 }
 
 function update_email_dropdown (masters)
@@ -41,7 +51,7 @@ function update_email_dropdown (masters)
 			opt.innerHTML = masters[i].email + ' ' + masters[i].name;
 			dropdown.appendChild(opt);
 		}
-		dropdown.style.visibility = "visible";
+		dropdown.style.display = 'inline';
 	}
 }
 
@@ -74,7 +84,6 @@ if (XMLHttpRequest)
 					update_email_dropdown (result.masters);
 					update_text_field ('mg', result.info.mg);
 					update_text_field ('players_count', result.info.playernum);
-					update_text_field ('uri', result.info.site);
 					update_text_field ('name', result.info.name);
 					var date = new Date(result.info.datestart);
 					var end_date = new Date(result.info.datefinish);
@@ -147,16 +156,16 @@ function update_allrpg_info(datestart, dateend)
               }
               dropdown.appendChild(opt);
             }
-            dropdown.style.visibility = "visible";
+            dropdown.style.display = 'inline';
 					}
 					else
 					{
-					dropdown.style.visibility = "hidden";
+					dropdown.style.display = 'none';
 					}
 				}
 				else
 				{
-					dropdown.style.visibility = "hidden";
+					dropdown.style.display = 'none';
 				}
 			}
 		}
@@ -171,11 +180,17 @@ function ask_if_delete()
 
 function updateAllrpgInfoLink()
 {
-  
    var allrpgInfoLink = document.getElementById('allrpg_info_link');
    allrpgInfoLink.href = "http://inf.allrpg.info/events/" + current_allrpg_value().toString()  + "/";
-   allrpgInfoLink.style.visibility = "visible";
+   allrpgInfoLink.style.display = "inline";
    update_allrpg_fields();
+}
+
+function updateSyncButton()
+{
+   var syncButton = document.getElementById('sync_to_allrpg');
+   syncButton.style.display = current_id_value() > 0 ? 'inline' : 'none';
+   syncButton.value = current_allrpg_value() > 0 ? 'Обновить в allrpg' : 'Добавить на allrpg';
 }
 
 function current_allrpg_value()
@@ -190,6 +205,55 @@ function current_id_value()
    return idElement.value | 0;
 }
 
+function performSync(manual)
+{
+   if (XMLHttpRequest)
+    {
+      var req = new XMLHttpRequest();
+      var dropdown = document.getElementById('allrpg_games');
+      var uri = 'http://allrpg.info/kogdaigra2.php?from=' + current_id_value() +'&to=' + current_id_value() + '&automated=1';
+      req.open ('GET', uri, true);
+      req.onreadystatechange = function (aEvt) {
+        if (req.readyState == 4)
+        {
+          if (req.status == 200)
+          {
+                       var str = req.responseText;
+            var result = JSON.parse(str);
+            if (result.length == 0 && manual)
+            {
+              alert("Синхронизация не удалась");
+            }
+            else 
+            {
+              result = result[0];
+              document.getElementById('allrpg_info_id').value = result.allrpg_id;
+              if (manual)
+              {
+                alert("Синхронизация успешна " + result.allrpg_id);
+              }
+              updateAllrpgInfoLink();
+              var dropdown = document.getElementById('allrpg_games');
+              dropdown.style.display = 'none';
+              document.getElementById('allrpg_info_id').style.display = 'none';
+            }
+        }
+      }
+     }
+		req.send();
+	}
+}
+
+function syncToAllrpg()
+{
+  var startyearElem = document.getElementById('startyear');
+  var startYear = startyearElem ? startyearElem.value : get_time_value ('begin').getFullYear();
+  var isUpdate = current_allrpg_value() > 0
+  if (isUpdate || startYear > 2013 || confirm ('Перед добавлением старых игр в базу allrpg.info необходимо убедиться в том, что такой игры действительно нет! Продолжить?'))
+  {
+   performSync (true);
+  }
+}
 
 function updateAllrpgInfo()
 {
@@ -201,6 +265,7 @@ function updateAllrpgInfo()
       allrpgInfo.value = selected;
       updateAllrpgInfoLink();
     }
+    updateSyncButton();
 }
 
 function get_date_string(date)
