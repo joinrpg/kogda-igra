@@ -16,12 +16,13 @@
   }
   else
   {
-    $id = add_uri ("http://inf.allrpg.info/events/$id/");;
+   /*  DISABLE, as we get high traffic
+   $id = add_uri ("http://inf.allrpg.info/events/$id/");;
 		if ($id)
 		{
 			$email = new AddedURIEmal ($id);
 			$email -> send();
-		}
+		}*/
     echo "{}";
   }
 	
