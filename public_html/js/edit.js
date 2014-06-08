@@ -210,6 +210,7 @@ function performSync(manual)
    if (XMLHttpRequest)
     {
       var req = new XMLHttpRequest();
+      var before = current_allrpg_value();
       var dropdown = document.getElementById('allrpg_games');
       var uri = 'http://allrpg.info/kogdaigra2.php?from=' + current_id_value() +'&to=' + current_id_value() + '&automated=1';
       req.open ('GET', uri, true);
@@ -218,7 +219,7 @@ function performSync(manual)
         {
           if (req.status == 200)
           {
-                       var str = req.responseText;
+            var str = req.responseText;
             var result = JSON.parse(str);
             if (result.length == 0 && manual)
             {
@@ -227,15 +228,35 @@ function performSync(manual)
             else 
             {
               result = result[0];
+              
+              if (!result.allrpg_id)
+              {
+                if (manual)
+                {
+                  alert("Синхронизация не удалась");
+                }
+                return;
+              }
               document.getElementById('allrpg_info_id').value = result.allrpg_id;
               if (manual)
               {
                 alert("Синхронизация успешна " + result.allrpg_id);
               }
               updateAllrpgInfoLink();
+              updateSyncButton();
               var dropdown = document.getElementById('allrpg_games');
               dropdown.style.display = 'none';
               document.getElementById('allrpg_info_id').style.display = 'none';
+              if (before != result.allrpg_id)
+              {
+                req = new XMLHttpRequest();
+                uri = '/api/allrpg-info/update-allrpg.php';
+                var params = 'id=' + current_id_value() + "&allrpg=" + result.allrpg_id;
+                req.open ('POST', uri, true);
+                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                req.setRequestHeader("Content-length", params.length);
+                req.send(params);
+              }
             }
         }
       }

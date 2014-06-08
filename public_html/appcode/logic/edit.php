@@ -3,6 +3,17 @@ require_once 'funcs.php';
 require_once 'email.php';
 require_once 'review.php';
 
+function set_allrpg ($id, $allrpg)
+{
+  $sql = connect();
+  $id = intval($id);
+  $allrpg = intval($allrpg);
+  
+  $sql -> begin();
+  $sql -> Run ("UPDATE `ki_games` SET allrpg_info_id = $allrpg WHERE id = $id");
+  $sql -> commit();
+}
+
 function mark_as_passed($id)
 {
   $sql = connect();
