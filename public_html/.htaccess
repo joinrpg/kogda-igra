@@ -57,6 +57,10 @@ RewriteRule ^ua/19(.*)/?$ /?region=10&year=19$1
 RewriteRule ^ua/20(.*)/?$ /?region=10&year=20$1
 RewriteRule ^ua/?$ /?region=10
 
+RewriteRule ^bel/19(.*)/?$ /?region=11&year=19$1
+RewriteRule ^bel/20(.*)/?$ /?region=11&year=20$1
+RewriteRule ^bel/?$ /?region=11
+
 RewriteRule ^19(.*)/?$ /?year=19$1
 RewriteRule ^20(.*)/?$ /?year=20$1
 

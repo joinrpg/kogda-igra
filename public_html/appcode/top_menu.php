@@ -79,6 +79,7 @@ require_once 'funcs.php';
 			$this -> show_region_link ('Юг', 7);
 			$this -> show_region_link ('Дальний Восток', 8);
 			$this -> show_region_link ('Украина', 10);
+			$this -> show_region_link ('Белоруссия', 11);
 		}
 		
 		function show () 
