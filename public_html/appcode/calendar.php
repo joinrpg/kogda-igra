@@ -60,7 +60,8 @@ class GameDate
 
 	function get_machine_date_end()
 	{
-			return GameDate :: format_machine_date($this -> end_date);
+      $s = $this -> end_date;
+			return $s['year'] . append_zero($s['mon']) . append_zero($s['mday']) . 'T235900';
 	}
 
   function get_machine_date()
