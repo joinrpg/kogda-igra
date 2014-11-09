@@ -193,7 +193,6 @@
 		if (check_edit_priv())
 		{
 			show_allrpg_info_id ( $data['allrpg_info_id']);
-			show_dd ('Настройки', 'show_flags', $data['show_flags']);
 			show_dd ('Статус', 'status', $data['status']);
 			show_tb ('Комментарий', 'comment', 100, $data['comment']);
 		}
