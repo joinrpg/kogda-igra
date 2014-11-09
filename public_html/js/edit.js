@@ -4,10 +4,15 @@ window.onload = function() {
   var startyearElem = document.getElementById('startyear');
   var startYear = startyearElem ? startyearElem.value : get_time_value ('begin').getFullYear();
   var isUpdate = current_allrpg_value() > 0
-  if (isUpdate || startYear > 2013)
+  if (!is_new() && (isUpdate || startYear > 2013))
   {
    performSync (false);
   }
+}
+
+function is_new()
+{
+return !document.getElementById('id').value;
 }
 
 function set_email_field()
