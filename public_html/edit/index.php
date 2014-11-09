@@ -76,8 +76,15 @@
 	{
 		echo '<h2>Ссылки на анонсы</h2>
 			<table>';
+		$count = 0;
 		foreach ($uri_list as $uri)
 		{
+      $count++;
+      if ($count > 10)
+      {
+        echo '<tr><td>...</td></tr>';
+        break;
+      }
 			$link = htmlspecialchars($uri['uri']);
 			$id = $uri['add_uri_id'];
 			$allrpg_info_id = $uri['allrpg_info_id'];

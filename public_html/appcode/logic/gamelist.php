@@ -115,7 +115,7 @@ function get_games_for_moderate()
 function get_add_uri_list()
 {
 	$sql = connect();
-	return $sql -> Query ('SELECT * FROM ki_add_uri WHERE resolved = 0');
+	return $sql -> Query ('SELECT * FROM ki_add_uri WHERE resolved = 0 LIMIT 11');
 }
 
 function get_future_games()
