@@ -55,8 +55,6 @@
     }
 	}
 
-	write_header('Панель управления');
-
 	$topmenu = new TopMenu();
 	$topmenu -> pagename = 'Панель управления';
 	$topmenu -> show();
