@@ -133,7 +133,7 @@ function is_logged_in()
 
 function check_username()
 {
-	return check_my_priv (EDIT_GAMES_PRIV);
+	return check_my_priv (VIEW_SPB_GAMES_PRIV);
 }
 
 function check_edit_priv()
@@ -141,7 +141,9 @@ function check_edit_priv()
 	return check_my_priv (EDIT_GAMES_PRIV);
 }
 
+define ('BASTILIA_NEWS_PRIV', 'BASTILIA_NEWS');
 define ('USERS_CONTROL_PRIV', 'USERS_CONTROL');
+define ('VIEW_SPB_GAMES_PRIV', 'VIEW_SPB_GAMES');
 define ('EDIT_GAMES_PRIV', 'EDIT_GAMES');
 define ('EDIT_POLYGONS_PRIV', 'EDIT_POLYGONS');
 define ('PHOTO_PRIV', 'PHOTO');
