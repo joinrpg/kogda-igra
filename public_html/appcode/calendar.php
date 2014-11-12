@@ -109,14 +109,10 @@ class Calendar
   function __construct ($games_array)
   {
     $this -> games_array = $games_array;
-    $this -> colspan = 0;
-    $this -> edtitor = FALSE;
     $this -> use_checkbox = FALSE;
     $this -> show_reviews = TRUE;
     $this -> show_only_future = FALSE;
-    $this -> write_updates = FALSE;
     $this -> show_status = TRUE;
-    $this -> show_cancelled_games_checkbox = TRUE;
     $this -> editor = check_edit_priv();
     $this -> prev_date = NULL;
     $this -> export_mode = FALSE;
@@ -152,8 +148,6 @@ class Calendar
 
   function write_header ()
   {
-    $this -> colspan = count($this -> columns);
-    
     echo '<tr>';
     foreach ($this -> columns as $column)
     {
@@ -289,10 +283,6 @@ class Calendar
         return;
 
       $id = $game['id'];
-      if ($id <= 0 && $this->write_updates)
-      {
-        return;
-      }
 
       $date = new GameDate($game);
 
@@ -409,55 +399,6 @@ class Calendar
     return "<br><a href=\"/game/{$game['id']}/\">" .  Calendar::format_by_count($review_count, 'рецензия', 'рецензии', 'рецензий') . '</a>';
 
   }
-  
-  function write_border ($month_name)
-  {
-		
-		echo "<tr class=\"month_header\"><td colspan={$this -> colspan}>$month_name</td></tr>";
-  }
-  
-
-  
-  function get_russian_short_month_name ($month_num)
-  {
-				static $month_names = array (
-		  1 => 'Янв',
-		  2 => 'Фев',
-		  3 => 'Мар',
-		  4 => 'Апр',
-		  5 => 'Май',
-		  6 => 'Июнь',
-		  7 => 'Июль',
-		  8 => 'Авг',
-		  9 => 'Сен',
-		  10 => 'Окт',
-		  11 => 'Ноя',
-		  12 => 'Дек');
-		
-		return $month_names[$month_num];
-  }
-
-  
-  function get_month_with_games()
-  {
-		foreach ($this -> games_array as $game)
-		{
-			$date = new GameDate ($game);
-			
-			$tmp[$date -> month()] = TRUE;
-		}
-		
-		$result = array();
-		for ($i = 0; $i <= 12; $i++)
-		{
-			if (array_key_exists ($i, $tmp))
-			{
-				$result[] = $i;
-			}
-		}
-		return $result;
-  }
-
 }
 //*** END of calendar class
 

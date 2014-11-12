@@ -52,7 +52,6 @@
 			
 			parent::__construct(array_merge(array($game), $intersections));
 			$this -> show_reviews = FALSE;
-      $this ->show_cancelled_games_checkbox = FALSE;
       $this -> count = 0;
 		}
 		
@@ -70,9 +69,10 @@
 		function show_border_if_needed ($date)
 		{
 			$this -> count++;
+			$colspan = count($this -> columns);
 			if ($this -> count == 2)
 			{
-				echo "<tr class=\"month_header\"><td colspan={$this -> colspan}><br>Пересечения</td></tr>";
+				echo "<tr class=\"month_header\"><td colspan=$colspan><br>Пересечения</td></tr>";
 			}
 		} 
 		

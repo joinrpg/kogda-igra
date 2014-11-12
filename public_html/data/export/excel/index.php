@@ -25,7 +25,6 @@ header("Content-Disposition: attachment; filename=\"{$region_name} {$year}.xls\"
 	$calendar -> show_reviews = FALSE;
 	$calendar -> export_mode = TRUE;
 	$calendar -> editor = FALSE;
-	$calendar -> show_cancelled_games_checkbox = FALSE;
 	$calendar -> write_calendar();
 
 ?>

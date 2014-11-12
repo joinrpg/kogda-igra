@@ -111,7 +111,6 @@
 	$calendar = new Calendar($main_game);
 	$calendar -> show_only_future = FALSE;
 	$calendar -> show_reviews = FALSE;
-	$calendar -> show_cancelled_games_checkbox = FALSE;
 	$calendar -> write_calendar();
 	
 	echo "<hr>";
@@ -120,7 +119,6 @@
   $calendar = new MergeCalendar($old_games);
 	$calendar -> show_only_future = FALSE;
 	$calendar -> show_reviews = FALSE;
-	$calendar -> show_cancelled_games_checkbox = FALSE;
 	$calendar -> use_checkbox = TRUE;
 	$calendar -> write_calendar();
 	

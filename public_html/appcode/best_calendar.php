@@ -38,11 +38,7 @@ class BestCalendar extends Calendar {
         return;
 
       $id = $game['id'];
-      if ($id <= 0 && $this->write_updates)
-      {
-        return;
-      }
-
+      
       $date = new GameDate($game);
 
       $type = $game['game_type_name'];

@@ -65,7 +65,6 @@
 	{
 		echo '<h2>Модерация игр</h2>';
 		$calendar = new Calendar($list);
-		$calendar -> show_cancelled_games_checkbox = FALSE;
 		$calendar -> write_calendar();
 	}
 	
