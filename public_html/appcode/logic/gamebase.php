@@ -37,7 +37,8 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
   $sql = connect();
   $query = "SELECT
 		kg.`id`, kg.`name`, kg.`uri`, kg.`type`, kg.`polygon`, kg.`mg`, kg.`email`, kg.`show_flags`, kg.`status`, 
-		kg.`comment`, kg.`sub_region_id`, kg.`deleted_flag`,  kg.`hide_email`, kr.`region_id`,
+		kg.`comment`, kg.`sub_region_id`, kg.`deleted_flag`,  kg.`hide_email`, kg.`vk_likes`, 
+		kr.`region_id`,
 		kg.`players_count`, kg.`review_count`, kg.`allrpg_info_id`, kg.`photo_count`,  kg.`redirect_id`, kg.`vk_club`, kg.`lj_comm`, 
 		kp.polygon_name, kgt.game_type_name, ksr.sub_region_disp_name, ksr.sub_region_name, kgt.show_all_regions, 
 		ks.status_name, ks.status_style, ks.show_date_flag, ks.cancelled_status,

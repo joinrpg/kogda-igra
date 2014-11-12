@@ -64,6 +64,12 @@ RewriteRule ^bel/?$ /?region=11
 RewriteRule ^19(.*)/?$ /?year=19$1
 RewriteRule ^20(.*)/?$ /?year=20$1
 
+RewriteRule ^best/(.+)/20(.{2})/?$ /?region_name=$1&year=20$2&best=1
+RewriteRule ^best/(.+)/19(.{2})/?$ /?region_name=$1&year=19$2&best=1
+RewriteRule ^best/19(.{2})/?$ /?year=19$1&best=1 [L]
+RewriteRule ^best/20(.{2})/?$ /?year=20$1&best=1 [L]
+RewriteRule ^best/(.+)/?$ /?region_name=$1&year=2014&best=1 [L]
+
 RewriteRule ^find/(.+)/?$ /search/?search=$1 [L]
 RewriteRule ^reviews/([1234567890]+)/?$ /game/$1/ [R=permanent]
 RewriteRule ^game/([1234567890]*)/?$ /game/index.php?id=$1 [L]

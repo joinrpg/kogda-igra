@@ -112,7 +112,6 @@ class Calendar
     $this -> colspan = 0;
     $this -> edtitor = FALSE;
     $this -> use_checkbox = FALSE;
-    $this -> check_border = FALSE;
     $this -> show_reviews = TRUE;
     $this -> show_only_future = FALSE;
     $this -> write_updates = FALSE;
@@ -123,59 +122,49 @@ class Calendar
     $this -> export_mode = FALSE;
     $date = getdate();
     $this -> current_month = $date['mon'];
+    
+    $this -> columns = $this -> get_columns();
+  }
+  
+  function get_columns()
+  {
+    if ($this -> show_status)
+    {
+       $columns []= array ('name' => 'Статус', 'column-class' => 'status-column');
+    }
+    $columns []= array ('name' => 'Название', 'column-class' => 'name-column');
+    $columns []= array ('name' => 'Регион', 'column-class' => 'region-column');
+    $columns []= array ('name' => 'Сроки', 'column-class' => 'date-column');
+    $columns []= array ('name' => 'Тип игры', 'column-class' => 'type-column');
+    $columns []= array ('name' => 'Полигон', 'column-class' => 'polygon-column');
+    $columns []= array ('name' => 'Иг-ов', 'column-class' => 'players-column', 'title' => 'Количество игроков');
+    if ($this -> export_mode)
+    {
+     $columns []= array ('name' => 'Email', 'column-class' => 'email-column');
+    }
+    $columns []= array ('name' => 'Мастерская группа', 'column-class' => 'mg-column');
+    if ($this -> editor)
+    {
+      $columns []= array ('name' => '&nbsp;', 'column-class' => 'edit-column');
+    }
+    return $columns;
   }
 
   function write_header ()
   {
-    $colspan = 7;
-    if ($this -> show_status)
+    $this -> colspan = count($this -> columns);
+    
+    echo '<tr>';
+    foreach ($this -> columns as $column)
     {
-			$colspan++;
-    }
-    if ($this -> export_mode)
-    {
-			$colspan++;
-    }
-    if ($this -> editor)
-    {
-			$colspan++;
-    }
-    echo '<table id="calendar"><tr>';
-
-    if ($this -> show_status)
-    {
-      echo "<th class=\"status-column\">Статус</th>";
-    }
-   ?>
-
-          <th class="name-column">Название</th>
-        <th class="region-column">Регион</th>
-          <th class="date-column">Сроки</th>
-          <th class="type-column">Тип игры</th>
-          <th class="polygon-column">Полигон</th>
-                          <th class="players-column" title="Количество игроков">Иг-ов</th>
-  <?php
-   if ($this -> export_mode)
-   {
-      echo '<th class="email-column">Email</th>';
-   }
-  ?>
-          <th class="mg-column">Мастерская группа</th>
-
-  <?php
-
-    if ($this -> editor)
-    {
-      echo "<th class=\"edit-column\">&nbsp;</th>\n";
-      $colspan++;
+      echo "<th class=\"{$column['column-class']}\" title=\"{$column['title']}\">{$column['name']}</th>";
     }
     echo '</tr>';
-
-    $this -> colspan = $colspan;
   }
 
   function write_calendar()
   {
+    echo '<table id="calendar">';
     $this -> write_header();
 
     foreach ($this -> games_array as $game)
@@ -185,10 +174,6 @@ class Calendar
     echo '</table>';
   }
 
-  public static function format_game_date ()
-  {
-  }
-  
   function get_email_link($game)
   {
 		$email = trim ($game['email']);
@@ -264,17 +249,38 @@ class Calendar
   
   function show_border_if_needed($date)
   {
-		if ($this -> check_border)
-    {
-      $this -> check_date_border ($date);
-    }
   }
   
   function get_date_string ($date)
   {
-		return $date -> show_date_string(!$this -> check_border);
+		return $date -> show_date_string(TRUE);
   }
   
+  function status_cell_creator($game, $date)
+  {
+    $status_name= $game['status_name'];
+    $status_style= $game['status_style'];
+    if ($status_name == 'OK' && $date -> is_passed())
+    {
+      $status_name = "Прошла?";
+      $status_style="status-unknown";
+    }
+    if ($game['order'] > 0)
+    {
+       $status_name = "Перенесена!";
+       $status_style="status-unknown";
+    }
+   if ($this -> show_reviews)
+   {
+     $status_name .= $this->get_review_cell_text($game);
+     $status_name .= $this->get_photo_text($game);
+   }
+       
+    $id_str = $game['order'] > 0 ? '' :  "id=\"{$game['id']}\"";
+    return "<td class=\"$status_style\" $id_str>$status_name</td>";
+  }
+  
+  //TODO: rewrite this functions so $columns fully control which columns are written and which are not
   function write_entry ($game)
   {
       $masked = $game['show_flags'] && 1;
@@ -294,32 +300,10 @@ class Calendar
       $polygon = $game['polygon_name'];
       $sub_region_disp_name = $game['sub_region_disp_name'];
       $sub_region_name = $game['sub_region_name'];
-      $status_name= $game['status_name'];
-      $status_style= $game['status_style'];
-      if ($status_name == 'OK' && $date -> is_passed())
-      {
-        $status_name = "Прошла?";
-        $status_style="status-unknown";
-      }
-      if ($game['order'] > 0)
-      {
-         $status_name = "Перенесена!";
-         $status_style="status-unknown";
-      }
-       if ($this -> show_reviews)
-       {
-       $status_name .= $this->get_review_cell_text($game);
-       $status_name .= $this->get_photo_text($game);
-       }
-
-
 
       $players_count = $game['players_count'] > 0 ? $game['players_count'] : '&nbsp;';
 
       $this -> show_border_if_needed ($date);
-
-
-      
 
       $style = '';
       if ($masked)
@@ -330,8 +314,7 @@ class Calendar
       echo "<tr$cancelled$style>";
       if ($this -> show_status)
       {
-        $id_str = $game['order'] > 0 ? '' :  "id=\"$id\"";
-        echo "<td class=\"$status_style\" $id_str>$status_name</td>";
+        echo $this -> status_cell_creator($game, $date);
       }
 
       echo "<td class=\"game_name\">";
@@ -474,56 +457,27 @@ class Calendar
 		}
 		return $result;
   }
-  
-  function check_date_border($date)
-{
-	$colspan = $this -> colspan;
-	
-	if ($this -> prev_date && ($this -> prev_date -> month()  == $date -> month()))
-	{
-    return;
-	}
-	if (!$this -> prev_date)
-	{
-		foreach ($this -> get_month_with_games() as $i)
-		{
-			$id = GameDate :: get_month_id ($i);
-			$month_name = GameDate :: get_russian_month_name ($i);
-			
-			$month_menu[] = ($i == $date -> month())
-        ? "<b>$month_name</b>" 
-        : "<a href=\"#$id\">$month_name</a>";
-		}
-		$this -> write_border ('<br>' . implode (" ", $month_menu));
-	}
-	else 
-	{
-		$id = GameDate :: get_month_id ($date -> month());
-		$month_name = GameDate :: get_russian_month_name ($date -> month());
-		
-		$this -> write_border ("<b id=\"$id\"> <br>$month_name</b> <a href=\"#top\">↑</a>");
-	}
-	$this -> prev_date = $date;
-}
 
 }
 //*** END of calendar class
 
 function get_region_param ()
 {
-  if (array_key_exists('region', $_GET))
-    {
-      $region =  intval($_GET['region']);
-      $region_arr = get_array('region');
-      if (!array_key_exists($region, $region_arr))
-      {
-        $region = 0;
-      }
-    }
-    else
-    {
-      $region = 0;
-    }
+  $region_arr = get_array('region');
+  $region = FALSE;
+  $region_name = get_request_field('region_name');
+  if ($region_name !== FALSE)
+  {
+    $region = array_search ($region_name, get_array('region_uri'));
+  }
+  if ($region === FALSE)
+  {
+    $region = get_request_field('region');
+  }
+  if (!array_key_exists($region, $region_arr))
+  {
+    $region = 0;
+  }
 
   $result ['id'] = $region;
   $result ['name'] = $region == 0 ? 'Все игры' : $region_arr[$region];

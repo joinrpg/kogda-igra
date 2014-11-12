@@ -109,6 +109,10 @@ function show_select ($name, $selected, $select_id = FALSE)
 	{
 		$cache[$name] =  get_sql_array('ki_regions', 'region_id', 'region_name');
 	}
+	elseif ($name == 'region_uri')
+	{
+    $cache[$name] =  get_sql_array('ki_regions', 'region_id', 'region_code');
+	}
 	elseif ($name == 'region_display')
 	{
 		$cache[$name] = get_array('region');
@@ -194,31 +198,17 @@ function show_select ($name, $selected, $select_id = FALSE)
 	
 	function get_region_uri ($region)
 	{
-		switch ($region)
-		{
-			case 2:
-				return '/spb/';
-			case 3:
-				return '/msk/';
-			case 5:
-				return'/ural/';
-			case 6:
-				return '/sibir/';
-			case 7:
-				return '/south/';
-			case 8:
-        return '/dv/';
-      case 9:
-				return '/volga/';
-			case 10:
-        return '/ua/';
-      case 11:
-        return '/bel/';
-			default:
-				return '/';
-		}
+    $region_arr = get_array('region_uri');
+    $result = array_key_exists ($region, $region_arr) ? $region_arr[$region] : '';
+    if ($result)
+    {
+      return "/$result/";
+    }
+    else 
+    {
+      return '/';
+    }
 	}
-
 	
 	function show_top_menu($region = -1, $year = 0, $show_only_future = FALSE)
 	{

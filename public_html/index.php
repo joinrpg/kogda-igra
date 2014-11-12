@@ -1,10 +1,9 @@
 ﻿<?php
 	require_once 'funcs.php';
-	require_once 'mysql.php';
-	require_once 'common.php';
 	require_once 'user_funcs.php';
-	require_once 'logic.php';
 	require_once 'calendar.php';
+	require_once 'main_calendar.php';
+  require_once 'best_calendar.php';
 	require_once 'top_menu.php';
 
 	$year = array_key_exists('year', $_GET) ? intval($_GET['year']) : 0;
@@ -12,6 +11,7 @@
 	$region_result = get_region_param();
 	$region = $region_result['id'];
 	$region_name = $region_result['name'];
+	$best = get_request_field ('best') == 1;
 
 	if (!$year)
 	{
@@ -35,11 +35,8 @@
   <br />
   <div class="adblock">[<a href="/about/#vk_like" title="Популярная игра">?</a>] Самая популярная игра: <a href="/game/<?php echo $best_game['id'];?>"><?php echo $best_game['name'];?></a>	</div>
   <?php
-  $data = $konvent ? get_main_calendar($year, $region, FALSE, $konvent) : get_main_calendar($year, $region, FALSE, $konvent );
   
-	$calendar = new Calendar($data);
-	$calendar -> check_border = TRUE;
-	$calendar -> show_reviews = TRUE;
+	$calendar = $best ? new BestCalendar($year, $region) : new MainCalendar($year, $region, $konvent);
 	$calendar -> write_calendar();
 
 
