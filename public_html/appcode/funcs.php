@@ -55,7 +55,6 @@ function write_header ($title, $edit = FALSE)
 
 function write_footer($show_analytics = FALSE, $uri = '')
 {
-	//	show_login_box();
   if ($show_analytics)
   {
   ?>
@@ -185,13 +184,8 @@ function show_select ($name, $selected, $select_id = FALSE)
 			$topmenu -> show();
 		}
 	}
-
-	function show_menu()
-	{
-    show_top_menu_if_needed();
-	}
-
-	function show_greeting($region = -1, $year = 0)
+	
+	function show_greeting()
 	{
     show_top_menu_if_needed();
 	}
@@ -208,11 +202,6 @@ function show_select ($name, $selected, $select_id = FALSE)
     {
       return '/';
     }
-	}
-	
-	function show_top_menu($region = -1, $year = 0, $show_only_future = FALSE)
-	{
-		show_top_menu_if_needed();
 	}
 
 	function get_field_from_post ($sql, $name)
@@ -319,25 +308,6 @@ function show_select ($name, $selected, $select_id = FALSE)
 
 		echo "</td> </tr> ";
 		}
-	}
-
-	function show_login_box($return_to = '/')
-	{
-		if (get_username()=='')
-	{
-		$lj_username = htmlspecialchars(array_key_exists('ljuser-name', $_COOKIE) ? $_COOKIE['ljuser-name'] : '');
-		?>
-      <br />
-			<p><strong>Вход для мастеров:</strong>
-		<form action="/login/" method="get" name="openid_login">
- 			Имя в ЖЖ: <input type="text" name="lj_user" value="<?php echo $lj_username; ?>"/> <input type="submit" value="Войти" />
- 			<input type="hidden" name="return_to" value="<?php echo $return_to; ?>" />
- 		</form>
- 		или войти при помощи <a href="http://browserid.org">BrowserID</a>
- 		<a href="#" onclick="try_login()"><img src="https://browserid.org/i/sign_in_grey.png" alt="Войти"></a></p>
- 		<?php
- 	}
-
 	}
 	
 	function show_message($hdr, $message)

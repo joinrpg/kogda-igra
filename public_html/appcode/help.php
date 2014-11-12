@@ -71,7 +71,8 @@ abstract class HelpNeededForm extends Form
   {
     if (!is_logged_in())
     {
-      show_login_box($this -> get_return_to());
+      ///show_login_box($this -> get_return_to());
+      //TODO this piece of code should use top_menu for this
       echo "<p>Чтобы воспользоваться этой функцией, надо залогинится. Пожалуйста, введите название своего ЖЖ в форме выше.</p>";
       return;
     }
