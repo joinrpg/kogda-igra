@@ -40,10 +40,10 @@
 		{
 			$date = new GameDate($game);
 			
-			if (!$date -> is_passed())
+			/*if (!$date -> is_passed())
 			{
 				$intersections = get_intersections($game['id']);
-			}
+			}*/
 			
 			if (!is_array ($intersections))
 			{
@@ -217,6 +217,27 @@ $old_dates = get_game_dates($id);
 
   $review = new Review ($id);
   $review -> show();
+  
+  if ($game['vk_club'])
+  { 
+  ?>
+    
+    <div id="vk_groups" style="width:auto"></div>
+<script type="text/javascript">
+var script = document.createElement('SCRIPT');
+
+script.src = "https://api.vk.com/method/groups.getById?group_id=<?php echo $game['vk_club'];?>&callback=callbackFuncVK";
+
+document.getElementsByTagName("head")[0].appendChild(script);
+
+function callbackFuncVK(result) {
+  var gid = result.response[0].gid;
+  VK.Widgets.Group("vk_groups", {mode: 2, width: "400", height: "400"}, gid);
+} 
+
+</script>
+<?php
+  }
 
 	show_media(get_photo_by_game_id($id));
 	
