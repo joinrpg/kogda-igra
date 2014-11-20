@@ -1,4 +1,5 @@
 <?php
+require_once 'base_funcs.php';
 require_once 'logic/updates.php';
 require_once 'logic/gamelist.php';
 require_once 'review.php';
@@ -60,7 +61,7 @@ require_once 'funcs.php';
 			}
 			else
 			{
-				$year_text = ($this -> year == CURRENT_YEAR) ? '' : "{$this -> year}/";
+				$year_text = ($this -> year == get_current_year ()) ? '' : "{$this -> year}/";
 				$uri = get_region_uri($region);
 				active_button ("$uri$year_text", $text, $beta ? '<sup>бета</sup>' : '');
 			}
@@ -89,7 +90,7 @@ require_once 'funcs.php';
 			
 			if (!$this -> calendar_mode)
 			{
-				$this -> year = CURRENT_YEAR;
+				$this -> year = get_current_year ();
 			}
 			
 			write_header ($this -> get_page_title(), $this -> edit);

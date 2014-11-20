@@ -1,12 +1,7 @@
 <?php
-
 require_once 'user_funcs.php';
 require_once 'sqlbase.php';
 require_once 'top_menu.php';
-
-define ('CURRENT_YEAR', 2014);
-
-date_default_timezone_set ("Europe/Moscow");
 
 function write_header ($title, $edit = FALSE)
 {
