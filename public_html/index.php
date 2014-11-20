@@ -30,14 +30,26 @@
 	$topmenu -> region = $region;
 	$topmenu -> show ();
 	
-	$best_game = get_best_vk_game();
-  
+	if ($best)
+	{
+        $calendar = new BestCalendar($year, $region);
+	}
+	else
+	{
+        $calendar = new MainCalendar($year, $region, $konvent);
+        $best_game = get_best(get_current_year(), $region);
+        
+        if (is_array($best_game))
+        {
+            $best_link = "/best" . get_region_uri ($region) . get_current_year() . "/";
   ?>
   <br />
-  <div class="adblock">[<a href="/about/#vk_like" title="Популярная игра">?</a>] Самая популярная игра: <a href="/game/<?php echo $best_game['id'];?>"><?php echo $best_game['name'];?></a>	</div>
+  <div class="adblock">Самая популярная игра: <a href="/game/<?php echo $best_game[0]['id'];?>"><?php echo $best_game[0]['name'];?></a> (<a href="<?php echo $best_link; ?>">Другие популярные игры</a>)	</div>
   <?php
+        }
+    }
   
-	$calendar = $best ? new BestCalendar($year, $region) : new MainCalendar($year, $region, $konvent);
+	
 	$calendar -> write_calendar();
 
 

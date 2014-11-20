@@ -6,6 +6,20 @@ require_once 'review.php';
 require_once 'uifuncs.php';
 require_once 'funcs.php';
 
+	function get_region_uri ($region)
+	{
+        $region_arr = get_array('region_uri');
+        $result = array_key_exists ($region, $region_arr) ? $region_arr[$region] : '';
+        if ($result)
+        {
+          return "/$result/";
+        }
+        else 
+        {
+          return '/';
+        }
+	}
+
 	class TopMenu
 	{
 		function __construct()

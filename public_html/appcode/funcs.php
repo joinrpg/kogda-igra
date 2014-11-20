@@ -162,7 +162,6 @@ function show_select ($name, $selected, $select_id = FALSE)
 
 	}
 
-
 	function show_lj_user($username)
 	{
 		$link = get_lj_path ($username, false);
@@ -185,20 +184,6 @@ function show_select ($name, $selected, $select_id = FALSE)
     show_top_menu_if_needed();
 	}
 	
-	function get_region_uri ($region)
-	{
-    $region_arr = get_array('region_uri');
-    $result = array_key_exists ($region, $region_arr) ? $region_arr[$region] : '';
-    if ($result)
-    {
-      return "/$result/";
-    }
-    else 
-    {
-      return '/';
-    }
-	}
-
 	function get_field_from_post ($sql, $name)
 	{
 		return $sql->Quote (array_key_exists ($name, $_POST) ? $_POST[$name] : '');
