@@ -219,6 +219,14 @@ $old_dates = get_game_dates($id);
   $review -> show();
 
 	show_media(get_photo_by_game_id($id));
+	
+	if ($allrpg_zayvka_id && !$date -> is_passed() && $game['allrpg_opened'])
+		{
+			echo "<h2>Роли</h2>";
+			echo "<iframe style=\"height:5000em;width:99%; border:0\" src=\"http://www.allrpg.info/gameorders.php?game=$allrpg_zayvka_id\" seamless></iframe>";
+		}
+	
+        
 
 
 	write_footer(TRUE);
