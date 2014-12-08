@@ -151,7 +151,8 @@ class Calendar
     echo '<tr>';
     foreach ($this -> columns as $column)
     {
-      echo "<th class=\"{$column['column-class']}\" title=\"{$column['title']}\">{$column['name']}</th>";
+      $title_string = array_key_exists('title', $column) ? " title=\"{$column['title']}\"" : '';
+      echo "<th class=\"{$column['column-class']}\"$title_string>{$column['name']}</th>";
     }
     echo '</tr>';
   }
