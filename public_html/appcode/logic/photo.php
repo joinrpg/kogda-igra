@@ -23,13 +23,13 @@ function _get_photo($where)
     ORDER BY kp.photo_id");
 }
 
-function save_photo ($photo_id, $uri, $author, $game_id, $author_lj, $photo_comment, $photo_good_flag)
+function save_photo ($photo_id, $original_uri, $author, $game_id, $author_lj, $photo_comment, $photo_good_flag)
 {
   $sql = connect();
   $photo_id = intval ($photo_id);
   $game_id = intval ($game_id);
   $photo_good_flag =intval ($photo_good_flag);
-  $uri = $sql -> QuoteAndClean($uri);
+  $uri = $sql -> QuoteAndClean($original_uri);
   $photo_comment = $sql -> QuoteAndClean ($photo_comment);
   
   if ($author_lj)
@@ -58,16 +58,17 @@ function save_photo ($photo_id, $uri, $author, $game_id, $author_lj, $photo_comm
 		
 	
 	$update_flag = $photo_id > 0;
+	$update_text = $original_uri ? ($author_name .'/' . $original_uri) : $author_name;
 	if ($update_flag)
 	{
     $sql -> Run ("UPDATE ki_photo $list WHERE `photo_id` = $photo_id LIMIT 1");
-    internal_log_photo(16, $photo_id, $game_id, $author_name .'/' . $uri);
+    internal_log_photo(16, $photo_id, $game_id, $update_text);
 	}
 	else
 	{
     $sql -> Run ("INSERT INTO ki_photo $list");
 		$photo_id = $sql -> LastInsert ();
-		internal_log_photo(15, $photo_id, $game_id, $author_name .'/' . $uri);
+		internal_log_photo(15, $photo_id, $game_id, $update_text);
 		update_photo_count_for_game($game_id);
 	}
 	

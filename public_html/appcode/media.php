@@ -61,17 +61,18 @@ abstract class Media {
 		$media_name = $this -> get_media_name();
 		$photo_comment = $this -> photo_comment ? "<br> <i>{$this -> photo_comment}</i>" : '';
 		
-		echo $this -> get_embed_code() .
-		"<br><a href=\"{$this -> uri}\">$media_name</a> " ;
+		echo $this -> get_embed_code();
+		echo "<br>";
+		echo ($this->uri ? "<a href=\"{$this -> uri}\">$media_name</a>" :$media_name );
 		
 		if ($this -> show_author)
 		{
-			echo "от {$this -> photo_author}";
+			echo " от {$this -> photo_author}";
 		}
 		
 		if ($this -> show_game)
 		{
-			echo "к игре <a href=\"/game/{$this -> game_id}/\">{$this -> gamename}</a>";
+			echo " к игре <a href=\"/game/{$this -> game_id}/\">{$this -> gamename}</a>";
 		}
 		
 		echo $this -> get_fix_link() . $photo_good .$photo_comment;
@@ -170,7 +171,14 @@ class Internal_Photo extends Media {
 	
 	function get_embed_code()
 	{
-		return "<a href=\"{$this -> uri}\"><img style=\"border:none\" src=\"/photo/preview/{$this -> photo_id}\" alt=\"/photo/preview/{$this -> photo_id}\"></a>";
+    if ($this -> uri)
+    {
+      return "<a href=\"{$this -> uri}\"><img style=\"border:none\" src=\"/photo/preview/{$this -> photo_id}\" alt=\"/photo/preview/{$this -> photo_id}\"></a>";
+    }
+    else
+    {
+      return "<img style=\"border:none\" src=\"/photo/preview/{$this -> photo_id}\" alt=\"/photo/preview/{$this -> photo_id}\">";
+    }
 	}
 	
 	function get_media_name()
