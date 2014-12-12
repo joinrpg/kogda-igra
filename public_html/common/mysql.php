@@ -101,8 +101,14 @@ class Sql
       return 1;
     }
 		$res = mysql_unbuffered_query ($request, $this->handle);
+		
+		$error = mysql_error();
+		
+		if ($error)
+		{
+      echo "$request $error";
+		}
 
-		echo mysql_error();
 		return $res;
 	}
 
