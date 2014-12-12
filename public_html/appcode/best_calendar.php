@@ -29,6 +29,11 @@ class BestCalendar extends Calendar {
     return $columns;
   }
   
+  function get_date_string ($date)
+  {
+		return $date -> show_date_string(FALSE);
+  }
+  
   //TODO: This should be in Calendar
   function write_entry ($game)
   {
