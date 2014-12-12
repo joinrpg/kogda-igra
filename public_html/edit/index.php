@@ -215,6 +215,17 @@
 		echo '</td></tr>';
 	}
 	echo '</table>';
+	
+	$allrpg_games = get_one_problem_allrpg();
+	if (is_array($allrpg_games))
+	{
+	  echo '<script type="text/javascript">';
+    foreach ($allrpg_games as $one_game)
+    {
+      echo "start_allrpg_info_sync({$one_game['id']}, 0, function() {}, function () {});";
+    }
+    echo "</script>";
+	}
 	write_footer();
 
 ?>

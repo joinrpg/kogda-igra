@@ -192,4 +192,12 @@ function get_games_with_comment()
   return _get_games("comment <> '' AND kg.deleted_flag = 0 AND ks.cancelled_status = 0 AND kgd.`order` = 0");
 }
 
+function get_one_problem_allrpg()
+{
+  return _get_games ("kg.deleted_flag = 0
+			AND ks.cancelled_status = 0
+			AND kg.allrpg_info_id IS NULL
+			AND YEAR(kgd.begin) > 2013");
+}
+
 ?>
