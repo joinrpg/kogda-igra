@@ -130,6 +130,56 @@ function init()
 }
 
 
+function start_allrpg_info_sync (game_id, before, sync_correct, sync_failed)
+{
+  if (!XMLHttpRequest)
+  {
+    return;
+  }
+   var req = new XMLHttpRequest();
+  var dropdown = document.getElementById('allrpg_games');
+  var uri = 'http://allrpg.info/kogdaigra2.php?from=' + game_id +'&to=' + game_id+ '&automated=1';
+  req.open ('GET', uri, true);
+  req.onreadystatechange = function (aEvt) {
+    if (req.readyState != 4)
+    {
+      return;
+    }
+    if (req.status != 200)
+    {
+      return;
+    }
+    var str = req.responseText;
+    var result = JSON.parse(str);
+    if (result.length == 0)
+    {
+      sync_failed();
+      return;
+    }
+    else 
+    {
+      result = result[0];
+      
+      if (!result.allrpg_id)
+      {
+        sync_failed();
+        return;
+      }
+      sync_correct(result);
+      if (before != result.allrpg_id)
+      {
+        req = new XMLHttpRequest();
+        uri = '/api/allrpg-info/update-allrpg.php';
+        var params = 'id=' + game_id + "&allrpg=" + result.allrpg_id;
+        req.open ('POST', uri, true);
+        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        req.setRequestHeader("Content-length", params.length);
+        req.send(params);
+      }
+    }
+  }
+  req.send();
+}
 
 
 window.onload = init;
