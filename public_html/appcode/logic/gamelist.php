@@ -106,7 +106,7 @@ function get_best($year, $region = 0)
 	
 	return _get_games("YEAR(kgd.`begin`) = $year
 			AND ($region_query)
-			AND kg.deleted_flag = 0	AND kg.vk_likes > 0 AND kgd.order=0", '', "kg.vk_likes DESC");
+			AND kg.deleted_flag = 0	AND kg.vk_likes > 0 AND kgd.order=0", '', "kg.vk_likes DESC", "LIMIT 10");
 }
 
 
