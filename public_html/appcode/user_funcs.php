@@ -167,6 +167,10 @@ function _privs_format($user_array)
   {
     $uid = $row['uid'];
     $pid = $row['pid'];
+    if (!array_key_exists($uid, $result))
+    {
+      $result[$uid] = array();
+    }
     if (!array_key_exists('privs', $result[$uid]))
     {
 			$result[$uid]['privs'] = '';
