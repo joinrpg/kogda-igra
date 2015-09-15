@@ -43,14 +43,14 @@
 			/*if (!$date -> is_passed())
 			{
 				$intersections = get_intersections($game['id']);
-			}*/
+			}
 			
 			if (!is_array ($intersections))
 			{
 				$intersections = array();
 			}
-			
-			parent::__construct(array_merge(array($game), $intersections));
+			*/
+			parent::__construct(array_merge(array($game))); //, $intersections));
 			$this -> show_reviews = FALSE;
       $this -> count = 0;
 		}
