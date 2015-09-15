@@ -416,6 +416,7 @@ function get_region_param ()
   {
     $region = get_request_field('region');
   }
+  $region = intval($region);
   if (!array_key_exists($region, $region_arr))
   {
     $region = 0;
