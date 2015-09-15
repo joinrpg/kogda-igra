@@ -187,7 +187,7 @@ require_once 'funcs.php';
 		
 		function write_adv_box()
 	{
-	
+    return;
     $adv = get_adv_updates_for_week();
     if (!is_array($adv))
     {
