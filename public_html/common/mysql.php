@@ -32,8 +32,14 @@ class Sql
 
 	function Query ($sql)
 	{
+    $start = microtime(true);
 		$result = mysql_unbuffered_query ($sql, $this->handle);
-
+    $elapsed_secs = microtime(true) - $start;
+    
+    if ($elapsed_secs > 1)
+    {
+      trigger_error ("SLOW QUERY [$elapsed_secs sec]: $sql", E_USER_WARNING);
+    }
 
 		if (!$result)
 		{
