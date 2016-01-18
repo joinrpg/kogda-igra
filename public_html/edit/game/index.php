@@ -161,7 +161,7 @@
 		
 		$msg = check_edit_priv() 
 			? '<a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk"><b>Справка</b> для редакторов</a>'
-			: 'Или <b>заполните</b> форму ниже:';
+			: 'Или <b>заполните</b> форму ниже (игра появится в календаре после модерации):';
 		
 		echo "<tr><td colspan=2><label>$msg</label></td>";
 		
