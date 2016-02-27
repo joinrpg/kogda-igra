@@ -23,8 +23,7 @@ function write_header ($title, $edit = FALSE)
     <meta name="description" content="Календарь полевых ролевых игр">
 <meta name="verify-v1" content="kgJUNdPugrqlSlUu5/n8UOibKHmPBQKUJJQvua61RYQ=">
 <meta charset=utf-8>
-<link rel="search" type="application/opensearchdescription+xml" title="Когда-Игра!" href="http://kogda-igra.ru/opensearch.xml">
-
+<link rel="search" type="application/opensearchdescription+xml" title="<?php echo SITENAME_MAIN ?>!" href="/opensearch.xml">
     <script src="/js/default.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://vk.com/js/api/openapi.js?115"></script>
 <script src="https://login.persona.org/include.js" type="text/javascript"></script>
@@ -41,6 +40,21 @@ function write_header ($title, $edit = FALSE)
     echo '<script src="/js/edit.js" type="text/javascript"></script>';
   }
   echo '</head><body>';
+  
+  if (GA_ANALYTICS != '')
+  {
+		?>
+		<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		<?php
+		echo "ga('create', '" . GA_ANALYTICS . "', 'auto');";
+		echo "ga('send', 'pageview');";
+		echo "</script>";
+	}
+	
 	if (!array_key_exists("csrf_token", $_SESSION))
 	{
 		$_SESSION['csrf_token'] = md5(mt_rand());
@@ -50,21 +64,7 @@ function write_header ($title, $edit = FALSE)
 
 function write_footer($show_analytics = FALSE, $uri = '')
 {
-  if ($show_analytics)
-  {
-  ?>
-    	<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-1194519-2");
-pageTracker._trackPageview(<?php echo $uri; ?>);
-</script>
-<?php } ?>
-  </body>
-	</html>
-	<?php
+  echo "</body>	</html>";
 }
 
 function write_js_table ($array, $name)
@@ -143,7 +143,6 @@ function show_select ($name, $selected, $select_id = FALSE)
 	}
 		return $cache[$name];
 	}
-
 
 	function return_to_main()
 	{

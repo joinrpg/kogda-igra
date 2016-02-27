@@ -51,9 +51,9 @@
 <p>В блоке «самая популярная игра» показывается, что логично, самая популярная игра по версии посетителей нашего сайта. Популярность определяется по числу отметок «мне нравится» в профиле игры.</p>
 <h3>Баннеры</h3>
 <ol>
-<li><a href="http://kogda-igra.ru/img/banners/kogra-igra-88x31.gif">Баннер 88х31 анимированный</a></li>
-<li><a href="http://kogda-igra.ru/img/banners/kogra-igra-88x31.png">Баннер 88х31 неанимированный</a></li>
-<li><a href="http://kogda-igra.ru/img/kogda-igra.gif">Баннер 130x66</a></li>
+<li><a href="/img/banners/kogra-igra-88x31.gif">Баннер 88х31 анимированный</a></li>
+<li><a href="/img/banners/kogra-igra-88x31.png">Баннер 88х31 неанимированный</a></li>
+<li><a href="/img/kogda-igra.gif">Баннер 130x66</a></li>
 </ol>
 <h3>Open Source</h3>
 <p>

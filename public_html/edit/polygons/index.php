@@ -4,6 +4,7 @@
 	require_once 'logic.php';
 	require_once 'logic/dictionary.php';
 	require_once 'forms.php';
+	require_once 'top_menu.php';
 	
 	if (!check_my_priv(EDIT_POLYGONS_PRIV))
 		return_to_main();
@@ -19,8 +20,6 @@
 		do_polygon_delete ($id);
 		do_edit ("Полигон удален");
 	}
-
-
 
 	function do_save ($id)
 	{
@@ -44,9 +43,12 @@
 	function do_edit ($msg = FALSE)
 	{
 		global $sql;
-		write_header ('Панель управления :: Полигоны');
+		$topmenu = new TopMenu();
+		$topmenu -> pagename = 'Панель управления :: Полигоны';
+		$topmenu -> show();
+		
 		echo '<h1>Панель управления :: Полигоны</h1>';
-		show_greeting();
+		
 		if ($msg)
 		{
 			echo "<p>$msg</p>";
