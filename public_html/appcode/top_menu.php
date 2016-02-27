@@ -5,6 +5,10 @@ require_once 'logic/gamelist.php';
 require_once 'review.php';
 require_once 'uifuncs.php';
 require_once 'funcs.php';
+require_once 'config.php';
+
+  $sitename_editors_email = SITENAME_EDITORS_EMAIL;
+  $mailto_editors = "<a href=\"mailto:$sitename_editors_email\">$sitename_editors_email</a>";
 
 	function get_region_uri ($region)
 	{
@@ -43,7 +47,7 @@ require_once 'funcs.php';
 		
 		function get_site_title()
 		{
-			return 'Когда-Игра';
+			return SITENAME_MAIN;
 		}
 		
 		function get_page_header()
@@ -108,12 +112,7 @@ require_once 'funcs.php';
 			}
 			
 			write_header ($this -> get_page_title(), $this -> edit);
-			if ($_SERVER['SERVER_NAME'] != 'kogda-igra.ru')
-			{
-        echo '<div style="text-align:center;margin:1em">';
-        passive_button('<span style="font-weight:bold">Это сайт только для теста. Вернуться на <a href="http://kogda-igra.ru">kogda-igra.ru</a></span>');
-        echo '</div><br style="clear:both">';
-			}
+
 			echo '<div class=logo>';
 			echo '<a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
 			echo " <span class=logo_text>" . $this -> get_page_header() . '</span>';
@@ -142,11 +141,7 @@ require_once 'funcs.php';
 			echo '<div class=menu_strip>';
 			if ($username)
 			{
-				
-
 					passive_button(show_user_link($username) . ' <input type=button id="logout_button" value="Выйти">');
-
-
 			}
 			else
 			{
@@ -160,7 +155,6 @@ require_once 'funcs.php';
 			echo '</div>';
 			$this -> show_messages ();
 			echo '</div>';
-			
 
 			if ($this -> show_new_adv)
 			{
@@ -169,10 +163,8 @@ require_once 'funcs.php';
 			
 			if (!$username && $this -> show_add_adv)
 			{
-				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>';
+				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $mailto_editors;
 			}
-			
-			
 		}
 
 		function show_messages()

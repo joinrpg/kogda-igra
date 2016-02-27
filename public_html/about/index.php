@@ -5,9 +5,6 @@
   $topmenu = new TopMenu();
   $topmenu -> pagename = 'О нас';
   $topmenu -> show();
-  
-  $sitename_editors_email = SITENAME_EDITORS_EMAIL;
-  $mailto_editors = "<a href=\"mailto:$sitename_editors_email\">$sitename_editors_email</a>";
 ?>
 
 <div style="margin:1em">
