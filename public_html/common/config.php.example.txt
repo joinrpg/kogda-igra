@@ -4,4 +4,10 @@
 	$sql_pass = 'mysql_database_password';
 	$sql_db = 'mysql_database_name';
 	
+	define ("SITENAME_EDITORS_EMAIL", 'rpg@kogda-igra.ru');
+	define ("SITENAME_MAIN", "КогдаИгра");
+	define ("SITENAME_SIGNATURE", "Редакторы КогдаИгры");
+	define ("SITENAME_HOST", "kogda-igra.ru");
+	define ("SITENAME_SCHEME", "http");
+	
 ?>

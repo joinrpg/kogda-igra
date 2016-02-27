@@ -5,11 +5,14 @@
   $topmenu = new TopMenu();
   $topmenu -> pagename = 'О нас';
   $topmenu -> show();
+  
+  $sitename_editors_email = SITENAME_EDITORS_EMAIL;
+  $mailto_editors = "<a href=\"mailto:$sitename_editors_email\">$sitename_editors_email</a>";
 ?>
 
 <div style="margin:1em">
 <h3>Контакты</h3>
-<p>По всем вопросам пишите на почту: <a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a> <br>
+<p>По всем вопросам пишите на почту: <?php echo $mailto_editors; ?><br>
 По вопросам размещения фотоотчетов пишите фотомодераторам <a href="mailto:photo@kogda-igra.ru">photo@kogda-igra.ru</a> <br>
 Сообщество в ЖЖ: <?php echo show_lj_user('kogda-igra'); ?></p>
 <h3>Команда сайта</h3>
@@ -42,7 +45,7 @@
 <ul>
  <li><a href="http://larp.ru/texts/rpg/rasps.php">расписание игр по Сибири</a></li>
 </ul>
-Если у вас есть желание, чтобы в вашем регионе был календарь kogda-igra.ru — пишите (<a href="mailto:rpg@kogda-igra.ru">rpg@kogda-igra.ru</a>). С нас — удобный движок, посетители и поддержка других редакторов, с вас — работа по поддержанию календаря в актуальном состоянии.</p>
+Если у вас есть желание, чтобы в вашем регионе был календарь kogda-igra.ru — пишите (<?php echo $mailto_editors; ?>). С нас — удобный движок, посетители и поддержка других редакторов, с вас — работа по поддержанию календаря в актуальном состоянии.</p>
 <h3>API</h3>
 <p>На нашем сайте есть <a href="/api">API для чтения данных календаря</a> в машиночитаемом формате.</p>
 <h3 id="adv">Рекламные ссылки</h3>

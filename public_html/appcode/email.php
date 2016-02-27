@@ -33,7 +33,7 @@ abstract class Email
   
   function get_sender ()
   {
-    return "rpg@kogda-igra.ru";
+    return SITENAME_EDITORS_EMAIL;
   }
 }
 
@@ -46,15 +46,15 @@ class AddedURIEmal extends Email
   
   function get_subject()
   {
-		return "Kogda-Igra: требуется модерация ссылки";
+		return SITENAME_MAIN . ": требуется модерация ссылки";
   }
   
 	function get_message()
   {
-     return "Пользователь добавил ссылку на анонс игры.
-		http://kogda-igra.ru/edit/game?add_uri_id={$this->add_uri_id}
+     return "Пользователь добавил ссылку на анонс игры. " .
+		SITENAME_SCHEME . "://" . SITENAME_HOST . "/edit/game?add_uri_id={$this->add_uri_id}
 --
-C уважением, администрация kogda-igra.ru";
+C уважением, " . SITENAME_SIGNATURE;
   }
   
   function get_recipient()
@@ -77,7 +77,7 @@ class GameReqModerateEmail extends GameUpdatedEmail
 	
 	function get_subject()
 	{
-		return "Kogda-Igra.Ru: требуется модерация {$this -> game_data['name']}";
+		return SITENAME_MAIN . ": требуется модерация {$this -> game_data['name']}";
 	}
 	
 	  function get_message()
@@ -87,7 +87,7 @@ class GameReqModerateEmail extends GameUpdatedEmail
     return "Пользователь добавил запись об игре. Проверьте ее перед добавлением в календарь.
 $text
 --
-C уважением, администрация kogda-igra.ru";
+C уважением, " . SITENAME_SIGNATURE;
   }
 }
 
@@ -112,7 +112,12 @@ class GameUpdatedEmail extends Email
   
   function get_subject()
   {
-    return "Kogda-Igra.Ru: " . ($this -> updated ? "Обновлена" : "Добавлена") . " игра \"" . $this -> game_data['name'] .  "\"";
+    return SITENAME_MAIN . ": . ($this -> updated ? "Обновлена" : "Добавлена") . " игра \"" . $this -> game_data['name'] .  "\"";
+  }
+  
+  function get_profile_link ($id)
+  {
+		return SITENAME_SCHEME . "://" . SITENAME_HOST . "/game/$id/";
   }
   
   function get_int_table()
@@ -123,7 +128,7 @@ class GameUpdatedEmail extends Email
         $masked = $game['show_flags'] && 1;
         if (!$masked)
         {
-          $uri = " http://kogda-igra.ru/game/{$game['id']}";
+          $uri = $this -> get_profile_link(game['id']);
           $mg = $game['mg'] ? "({$game['mg']})" : '';
           $list .= "{$game['status_name']} - {$game['name']} $mg $uri \n";
         }
@@ -169,11 +174,11 @@ class GameUpdatedEmail extends Email
     $game_name = $this -> game_data['name'];
     $int_text = $this -> get_int_table();
     $vk_text  = ($game['vk_club']) ? ("\nВКонтакте: " . format_vk_link($game['vk_club'])) : '';
-    $lj_text = ($game['lj_comm']) ? ("\nЖЖ: ' . format_lj_link ($game['lj_comm']))   : '';
-    
-    return "Профиль игры: http://kogda-igra.ru/game/{$game['id']}/
+    $lj_text = ($game['lj_comm']) ? ("\nЖЖ: " . format_lj_link ($game['lj_comm']))   : '';
+    $profile_link = $this -> get_profile_link(game['id']);
+    return "Профиль: $profile_link
 
-Название игры: $game_name
+Название: $game_name
 Статус: {$game['status_name']}
 Регион: {$game['sub_region_name']}$uri$date_text
 Тип игры: $game_type_name
@@ -190,13 +195,12 @@ $int_text";
      $text = $this -> get_game_info_text();
      $update_text = $this -> updated ? "обновили" : "добавили";
 
-    return "Редакторы kogda-igra.ru $update_text запись о вашей игре в календаре. Пожалуйста, проверьте эти сведения и напишите нам на rpg@kogda-igra.ru, если они ошибочны или неполны:
+    return SITENAME_SIGNATURE . "$update_text запись о вашей игре в календаре. Пожалуйста, проверьте эти сведения и напишите нам на {$this -> get_sender()}, если они ошибочны или неполны:
 $text
-Это письмо отправлено автоматически. Если письмо попало не туда, или вы больше не хотите получать таких писем, напишите rpg@kogda-igra.ru и мы разберемся.
-Ждем ваших комментариев в блоге: http://bit.ly/kogda-igra-email
+Это письмо отправлено автоматически. Если письмо попало не туда, или вы больше не хотите получать таких писем, напишите {$this -> get_sender()} и мы разберемся.
 
 --
-C уважением, администрация kogda-igra.ru";
+C уважением, " . SITENAME_SIGNATURE;
   }
 }
 ?>
