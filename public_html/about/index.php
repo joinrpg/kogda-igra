@@ -17,11 +17,11 @@
 <ul>
   
   <li><strong>Лео</strong> <?php echo show_user_link('leotsarev'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>, общие вопросы</li>
+  <li><strong>Атана</strong> <?php echo show_user_link('aleks'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>, редактор</li>
   <li><strong>Фидель</strong> <?php echo show_user_link('akbars'); ?>, МГ «<a href="http://romulrem.com/">Ромул и Рем</a>», редактор по Москве</li>
   <li><strong>Медик</strong> <?php echo show_user_link('steamboy'); ?>, редактор по Москве</li>
   <li><strong>Крайк</strong> <?php echo show_user_link('krayk'); ?>, редактор по Москве</li>
   <li><strong>Анатоль</strong> <?php echo show_user_link('anatolle'); ?>, редактор по Уралу, Сибири, Дальнему Востоку</li>
-  <li><strong>Меллос</strong> <?php echo show_user_link('mellos'); ?>, редактор по Украине</li>
   <li><strong>Йолаф</strong> <?php echo show_user_link('jolaf'); ?>, консультант</li>
 </ul>
 <p>В создании сайта в 2007—2012 годах принимал участие <strong>Митяй</strong> <?php echo show_user_link('mtr'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>.</p>
