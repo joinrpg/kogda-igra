@@ -1,3 +1,4 @@
 logs/
 public_html/google*.html
 public_html/yandex*.html
+public_html/common/config.php

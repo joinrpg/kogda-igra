@@ -1,0 +1,7 @@
+<?php
+	$sql_server = 'mysql.example.com';
+	$sql_user = 'mysql_database_user';
+	$sql_pass = 'mysql_database_password';
+	$sql_db = 'mysql_database_name';
+	
+?>
