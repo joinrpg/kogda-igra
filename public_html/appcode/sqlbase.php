@@ -1,6 +1,7 @@
 <?php
 
 require_once 'mysql.php';
+require_once 'config.php';
 
 function get_sql_array_rq ($request, $id, $name)
 {
@@ -45,7 +46,6 @@ function get_sql_array ($table, $id, $name, $order = FALSE)
 		static $driver;
 		if (!isset($driver))
 		{
-			require 'config.php';
 			$driver = new Sql ($sql_server, $sql_user, $sql_pass, $sql_db);
 			$driver->Run ('SET NAMES utf8');
 			$driver->Run ('SET CHARACTER SET utf8');

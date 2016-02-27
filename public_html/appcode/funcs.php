@@ -164,6 +164,23 @@ function show_select ($name, $selected, $select_id = FALSE)
 
 	function show_lj_user($username)
 	{
+	
+		function get_lj_path($ljuser, $comm)
+		{
+			if (!$ljuser)
+				return '';
+			if ($comm)
+			 return "http://community.livejournal.com/$ljuser";
+			$legacy_path = (substr ($ljuser, -1) == '_') || ($ljuser[1] == '_');
+			if ($legacy_path)
+			{
+				return "http://users.livejournal.com/$ljuser";
+			} else {
+				$ljuser = str_replace ('_', '-', $ljuser);
+				return "http://$ljuser.livejournal.com";
+			}
+		}
+	
 		$link = get_lj_path ($username, false);
 		return "<span style=\"white-space: nowrap\"><img src=\"/img/userinfo.gif\" /><a href='$link/profile' onClick='javascript:urchinTracker(\"/outgoing/$link/profile\");'><b>$username</b></a></span>";
 	}

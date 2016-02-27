@@ -11,7 +11,6 @@
 	
   $result = get_search($search_string);
   
-  write_header ("Ролевые игры — поиск");
 	$topmenu = new TopMenu();
 	$topmenu -> pagename = 'Поиск';
 	$topmenu -> search = htmlspecialchars($search_string);
@@ -21,7 +20,7 @@
 	$calendar -> show_reviews = TRUE;
 	$calendar -> write_calendar();
 	
-	echo "<p><strong>Замечания, предложения по работе поиска?</strong><br> <a href=\"http://community.livejournal.com/kogda_igra/4860.html\">Оставь комментарий в ЖЖ!</a></p>";
+	echo "<p><strong>Замечания, предложения по работе поиска?</strong> Напиши $mailto_editors!";
 	write_footer(TRUE, "'/search/'");
 
 	?>

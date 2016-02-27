@@ -112,7 +112,7 @@ class GameUpdatedEmail extends Email
   
   function get_subject()
   {
-    return SITENAME_MAIN . ": . ($this -> updated ? "Обновлена" : "Добавлена") . " игра \"" . $this -> game_data['name'] .  "\"";
+    return SITENAME_MAIN . ": " . ($this -> updated ? "Обновлена" : "Добавлена") . " игра \"" . $this -> game_data['name'] .  "\"";
   }
   
   function get_profile_link ($id)
@@ -128,7 +128,7 @@ class GameUpdatedEmail extends Email
         $masked = $game['show_flags'] && 1;
         if (!$masked)
         {
-          $uri = $this -> get_profile_link(game['id']);
+          $uri = $this -> get_profile_link($game['id']);
           $mg = $game['mg'] ? "({$game['mg']})" : '';
           $list .= "{$game['status_name']} - {$game['name']} $mg $uri \n";
         }
@@ -175,7 +175,7 @@ class GameUpdatedEmail extends Email
     $int_text = $this -> get_int_table();
     $vk_text  = ($game['vk_club']) ? ("\nВКонтакте: " . format_vk_link($game['vk_club'])) : '';
     $lj_text = ($game['lj_comm']) ? ("\nЖЖ: " . format_lj_link ($game['lj_comm']))   : '';
-    $profile_link = $this -> get_profile_link(game['id']);
+    $profile_link = $this -> get_profile_link($game['id']);
     return "Профиль: $profile_link
 
 Название: $game_name
