@@ -12,9 +12,13 @@
     echo "<td>$fail_percent</td>";
   }
 
-  write_header("Статистика kogda-igra");
+	require_once 'top_menu.php';
+	
+	$topmenu = new TopMenu();
+	$topmenu -> pagename =  'Статистика';
+	$topmenu -> show();
   
-  echo "<h1>Статистика kogda-igra</h1>";
+  echo "<h1>Статистика</h1>";
     
   echo '<p>Статистика является предварительной, нечеткой и неофициальной.</p>';
   

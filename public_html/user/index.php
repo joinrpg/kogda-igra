@@ -6,6 +6,7 @@
 	require_once 'logic/photo.php';
 	require_once 'media.php';
 	require_once 'uifuncs.php';
+	require_once 'top_menu.php';
 
 	$username = array_key_exists ('id', $_GET) ? $_GET['id'] : 0;
 	if (!$username)
@@ -23,10 +24,20 @@
   $id = $userdata['user_id'];
   $email = $userdata['email'];
 
-	write_header('Kogda-igra.Ru :: Пользователи :: '. $username);
 	$topmenu = new TopMenu();
-	$topmenu -> pagename = $username;
+	$topmenu -> pagename =  'Пользователь ' . $username;
 	$topmenu -> show();
+	
+	echo '<div class=menu_box>';
+	echo '<div class=menu_strip>';
+
+	if (check_my_priv(USERS_CONTROL_PRIV))
+	{
+		real_button ("/edit/users/$id", "Редактировать права пользователя");
+	}
+
+	echo '</div>';
+	echo '</div>';
 	
 	echo '<div style="float:left">';
 
@@ -66,17 +77,8 @@
   }
   
   echo '</div>';
-  
-	echo '<div class=menu_box>';
-	echo '<div class=menu_strip>';
-
-	if (check_my_priv(USERS_CONTROL_PRIV))
-	{
-		real_button ("/edit/users/$id", "Редактировать права пользователя");
-	}
-
-	echo '</div>';
-	echo '</div>';
+	
+	echo '<br style="clear:both">';
 
   $review = new ReviewForUser ($id);
   $review -> show();
@@ -85,9 +87,5 @@
 	$media-> show_game = TRUE;
 	$media -> show();
 
-
 	write_footer();
-
-
-
 ?>

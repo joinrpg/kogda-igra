@@ -1,7 +1,12 @@
 <?php
-	require_once 'funcs.php';
   header("HTTP/1.0 404 Not Found", true, 404);
-  write_header("Когда-Игра :: 404");
+  
+	require_once 'funcs.php';
+	require_once 'top_menu.php';
+	
+	$topmenu = new TopMenu();
+  $topmenu -> pagename = '404';
+  $topmenu -> show();
 ?>
 
 <div style="margin:1em">

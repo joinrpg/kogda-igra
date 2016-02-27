@@ -616,9 +616,14 @@
 		{
       $hdr = 'Добавление новой игры';
     }
-    write_header("Kogra-igra.Ru — $hdr", true);
-    
-    global $msg;
+
+		$topmenu = new TopMenu();
+		$topmenu -> edit = TRUE;
+		$topmenu -> pagename = $hdr;
+		$topmenu -> show_add_adv = false;
+		$topmenu -> show();
+		
+		global $msg;
     if ($msg)
     {
       echo $msg;
@@ -627,13 +632,6 @@
 
 		write_js_table($region_table, 'tbl_subregions');
 		write_js_table($polygons_table, 'tbl_polygons');
-		
-		$hdr = $id ? "<a href=\"/game/$id\">$hdr</a>" : $hdr;
-
-		$topmenu = new TopMenu();
-		$topmenu -> pagename = $hdr;
-		$topmenu -> show_add_adv = false;
-		$topmenu -> show();
 		
 		if (isset($data))
 		{

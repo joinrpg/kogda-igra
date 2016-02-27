@@ -2,7 +2,6 @@
 	require_once 'funcs.php';
 	require_once 'top_menu.php';
 
-  write_header("Когда-Игра :: О нас");
   $topmenu = new TopMenu();
   $topmenu -> pagename = 'О нас';
   $topmenu -> show();

@@ -2,7 +2,6 @@
 	require_once 'funcs.php';
 	require_once 'top_menu.php';
 
-  write_header("Когда-Игра :: Собираешься впервые на игру?");
   $topmenu = new TopMenu();
   $topmenu -> pagename = 'Собираешься впервые на игру?';
   $topmenu -> show();

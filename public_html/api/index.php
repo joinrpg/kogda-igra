@@ -1,7 +1,8 @@
 <?php
 	require_once 'funcs.php';
-  write_header("API kogda-igra");
-    $topmenu = new TopMenu();
+	require_once 'top_menu.php';
+	
+  79$topmenu = new TopMenu();
   $topmenu -> pagename = 'Автоматизированные запросы';
   $topmenu -> show();
   ?>
