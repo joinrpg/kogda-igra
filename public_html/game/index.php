@@ -15,8 +15,6 @@
 	{
 		function __construct($game)
 		{
-
-			
 			parent::__construct();
 			$this -> game = $game;
 			$this -> show_new_adv = FALSE;
@@ -30,7 +28,7 @@
 		
 		function get_page_header()
 		{
-			return $this ->get_site_header() . ': профиль игры';
+			return $this ->get_site_header() . ': ' . $this -> game['name'];
 		}
 	}
 	
@@ -39,18 +37,7 @@
 		function __construct ($game)
 		{
 			$date = new GameDate($game);
-			
-			/*if (!$date -> is_passed())
-			{
-				$intersections = get_intersections($game['id']);
-			}
-			
-			if (!is_array ($intersections))
-			{
-				$intersections = array();
-			}
-			*/
-			parent::__construct(array_merge(array($game))); //, $intersections));
+			parent::__construct(array($game)); 
 			$this -> show_reviews = FALSE;
       $this -> count = 0;
 		}
@@ -65,16 +52,6 @@
 			$this -> write_game_icons ($game);
 			echo Calendar::format_game_name ($game['name'], "");
 		}
-		
-		function show_border_if_needed ($date)
-		{
-			$this -> count++;
-			$colspan = count($this -> columns);
-			if ($this -> count == 2)
-			{
-				echo "<tr class=\"month_header\"><td colspan=$colspan><br>Пересечения</td></tr>";
-			}
-		} 
 		
 	function get_date_string ($date)
   {
@@ -91,7 +68,7 @@
 			var update_likes = 
 			function() {
 				var req = new XMLHttpRequest();
-				var uri = 'http://kogda-igra.ru/api/game/update-likes.php?id=$id';
+				var uri = '/api/game/update-likes.php?id=$id';
 				req.open ('GET', uri, true);
 				req.send();
 };
@@ -117,8 +94,9 @@
   	 if (!$date -> is_passed())
 		 {
 			$machine_date = $date -> get_machine_date();
-			$details = "http://kogda-igra.ru/game/$id";
-      active_button("http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&trp=true&sprop=kogda-igra.ru&details=$details", "Добавить в Google Calendar");
+			$details = SITENAME_SCHEME . "://" . SITENAME_HOST . "/game/$id/";
+			$host = SITENAME_HOST;
+      active_button("http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&trp=true&sprop=$host&details=$details", "Добавить в Google Calendar");
 		}
 		if (check_my_priv(PHOTO_PRIV) || check_my_priv(PHOTO_SELF_PRIV))
 		{

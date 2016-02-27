@@ -56,7 +56,7 @@
 	
 	function show_avatar($email)
 	{
-  $gravatar_email = $email ? $email : 'nobody@kogda-igra.ru';
+  $gravatar_email = $email ? $email : 'nobody@example.com';
   $gravatar_email = md5( strtolower( trim( $gravatar_email ) ) );
 
   echo "<img src=\"http://www.gravatar.com/avatar/$gravatar_email.jpg?d=mm\">";

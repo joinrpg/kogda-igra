@@ -10,7 +10,6 @@
 <div style="margin:1em">
 <h3>Контакты</h3>
 <p>По всем вопросам пишите на почту: <?php echo $mailto_editors; ?><br>
-По вопросам размещения фотоотчетов пишите фотомодераторам <a href="mailto:photo@kogda-igra.ru">photo@kogda-igra.ru</a> <br>
 Сообщество в ЖЖ: <?php echo show_lj_user('kogda-igra'); ?></p>
 <h3>Команда сайта</h3>
 <ul>
