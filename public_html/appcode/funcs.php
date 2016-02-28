@@ -14,18 +14,15 @@ function write_header ($title, $edit = FALSE)
 	?>
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <title><?php echo $title; ?></title>
-
-    <link media="all" rel="stylesheet" href="/default.css" type="text/css">
-
-    <meta name="keywords" content="Календарь, ролевые игры">
-    <meta name="description" content="Календарь полевых ролевых игр">
-<meta name="verify-v1" content="kgJUNdPugrqlSlUu5/n8UOibKHmPBQKUJJQvua61RYQ=">
+<head>
 <meta charset=utf-8>
+<title><?php echo $title; ?></title>
+<link media="all" rel="stylesheet" href="/default.css" type="text/css">
+<meta name="keywords" content="Календарь, ролевые игры">
+<meta name="description" content="Календарь полевых ролевых игр">
 <link rel="search" type="application/opensearchdescription+xml" title="<?php echo SITENAME_MAIN ?>!" href="/opensearch.xml">
-    <script src="/js/default.js" type="text/javascript"></script>
-    <script type="text/javascript" src="https://vk.com/js/api/openapi.js?115"></script>
+<script src="/js/default.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://vk.com/js/api/openapi.js?115"></script>
 <script src="https://login.persona.org/include.js" type="text/javascript"></script>
 <script type="text/javascript">
   VK.init({apiId: 2118784, onlyWidgets: true});
