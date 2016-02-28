@@ -44,6 +44,7 @@ function get_sql_array ($table, $id, $name, $order = FALSE)
 	function connect()
 	{
 		static $driver;
+		global $sql_server, $sql_user, $sql_pass, $sql_db;
 		if (!isset($driver))
 		{
 			$driver = new Sql ($sql_server, $sql_user, $sql_pass, $sql_db);
