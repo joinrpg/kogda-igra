@@ -4,23 +4,11 @@ AddCharset UTF-8 .php
 AddDefaultCharset utf-8
 php_flag display_errors off
 php_flag log_errors on
-php_value include_path ".:/home/leotsar/www/site2/public_html/appcode:/home/leotsar/www/site2/public_html/common"
+php_value include_path ".:/home/www/kruzhok/public_html/appcode:/home/www/kruzhok/public_html/common"
 php_flag session.use_only_cookies on
 php_value error_reporting 32767
 ErrorDocument 404 /404/
 RewriteEngine On
-RewriteCond %{HTTP_HOST}   ^kogda-igra\.spb\.ru$ [NC]
-RewriteRule (.*)$ http://kogda-igra.ru/spb/$1 [R=permanent]
-RewriteCond %{HTTP_HOST}   ^kogda-igra\.msk\.ru$ [NC]
-RewriteRule (.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
-RewriteRule http://kogda-igra.msk.ru/?(.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
-RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.ru$ [NC]
-RewriteRule (.*)$ http://kogda-igra.ru/$1 [R=permanent]
-RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.spb\.ru$ [NC]
-RewriteRule (.*)$ http://kogda-igra.ru/spb/$1 [R=permanent]
-RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.msk\.ru$ [NC]
-RewriteRule (.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
-RewriteRule ^appcode(.*) http://kogda-igra.ru/
 
 RewriteRule ^ural/19(.*)/?$ /?region=5&year=19$1
 RewriteRule ^ural/20(.*)/?$ /?region=5&year=20$1
