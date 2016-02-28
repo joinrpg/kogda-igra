@@ -74,23 +74,6 @@ function write_js_table ($array, $name)
 	echo "</script>\n";
 }
 
-function show_select ($name, $selected, $select_id = FALSE)
-{
-	$array = get_array ($name);
-	if (!$select_id)
-		{
-			$select_id = "{$name}_id";
-		}
-		echo "<select name=\"$select_id\" size=\"1\">";
-		foreach ($array as $key => $kname)
-		{
-			if ($key == $selected)
-				echo "<option value=\"$key\" selected=\"selected\">$kname</option>";
-			else
-				echo "<option value=\"$key\">$kname</option>";
-		}
-		echo "</select>";
-}
 
 	function get_array ($name)
 	{
@@ -184,7 +167,8 @@ function show_select ($name, $selected, $select_id = FALSE)
 		return "<span style=\"white-space: nowrap\"><img src=\"/img/userinfo.gif\" /><a href='$link/profile' onClick='javascript:urchinTracker(\"/outgoing/$link/profile\");'><b>$username</b></a></span>";
 	}
 
-	function show_top_menu_if_needed()
+	//Obsolete, remove
+	function show_greeting()
 	{
 		static $shown;
 		if (!$shown)
@@ -193,16 +177,6 @@ function show_select ($name, $selected, $select_id = FALSE)
 			$topmenu = new TopMenu();
 			$topmenu -> show();
 		}
-	}
-	
-	function show_greeting()
-	{
-    show_top_menu_if_needed();
-	}
-	
-	function get_field_from_post ($sql, $name)
-	{
-		return $sql->Quote (array_key_exists ($name, $_POST) ? $_POST[$name] : '');
 	}
 
 	function get_post_field ($name)
@@ -276,16 +250,6 @@ function show_select ($name, $selected, $select_id = FALSE)
 		}
 	}
 
-  function show_search_form($string = '')
-	{
-    echo '<form action="/search.php" method="post" id="search_form">';
-    echo "<input type=\"text\" size=\"40\" maxlength=\"100\" value=\"$string\" name=\"search\"/>";
-    echo '<input type="submit" value="Искать" />';
-    echo '<span id="add_search_form"><a href="#" onclick="install_search_plugin(); return false;">Добавить поиск в браузер</a></span>';
-    echo '</form>';
-	}
-
-
 	function submit ($name, $action, $id, $label = '', $in_cell = FALSE, $colspan = 0)
 	{
     if (!$in_cell)
@@ -304,16 +268,6 @@ function show_select ($name, $selected, $select_id = FALSE)
 
 		echo "</td> </tr> ";
 		}
-	}
-	
-	function show_message($hdr, $message)
-	{
-		write_header($hdr);
-		$topmenu = new TopMenu();
-		$topmenu -> pagename = $hdr;
-		$topmenu -> show();
-		echo $message;
-		write_footer();
 	}
 
 

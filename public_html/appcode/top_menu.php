@@ -50,6 +50,12 @@ require_once 'config.php';
 			return SITENAME_MAIN;
 		}
 		
+		function get_mailto_editors()
+		{
+			$sitename_editors_email = SITENAME_EDITORS_EMAIL;
+			return "<a href=\"mailto:$sitename_editors_email\">$sitename_editors_email</a>";
+		}
+		
 		function get_page_header()
 		{
 			return  $this->get_site_header(). ': ' . $this -> get_page_name();
@@ -163,7 +169,7 @@ require_once 'config.php';
 			
 			if (!$username && $this -> show_add_adv)
 			{
-				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $mailto_editors;
+				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
 			}
 		}
 
