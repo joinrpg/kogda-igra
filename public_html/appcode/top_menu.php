@@ -239,6 +239,11 @@ require_once 'config.php';
 				echo $this -> year_link ($max_early, '&lt;&lt;');
 			}
 			
+			if (!is_array($years))
+			{
+				return;
+			}
+			
 			foreach ($years as $year)
 			{
 				echo $this -> year_link ($year, $year);
