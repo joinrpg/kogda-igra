@@ -1,10 +1,10 @@
 ﻿<?php
-    require_once 'base_funcs.php';
+	require_once 'base_funcs.php';
 	require_once 'funcs.php';
 	require_once 'user_funcs.php';
 	require_once 'calendar.php';
 	require_once 'main_calendar.php';
-    require_once 'best_calendar.php';
+	require_once 'best_calendar.php';
 	require_once 'top_menu.php';
 
 	$year = array_key_exists('year', $_GET) ? intval($_GET['year']) : 0;
@@ -27,7 +27,7 @@
 	$topmenu = new TopMenu();
 	$topmenu -> year = $year;
 	$topmenu -> region_name = $region_name;
-	$topmenu -> region = $region;
+	$topmenu -> region = $region ? $region : 1;
 	$topmenu -> show ();
 	
 	if ($best)
@@ -51,8 +51,5 @@
   
 	
 	$calendar -> write_calendar();
-
-
-	write_footer(TRUE);
-
+	write_footer();
 	?>

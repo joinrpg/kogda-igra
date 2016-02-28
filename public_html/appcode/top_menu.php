@@ -94,17 +94,11 @@ require_once 'config.php';
 		
 		function show_region_strip()
 		{
-			
-			$this -> show_region_link ('Все игры', 0);
-			$this -> show_region_link ('Северо-Запад', 2);
-			$this -> show_region_link ('Москва', 3);
-			$this -> show_region_link ('Поволжье', 9);
-			$this -> show_region_link ('Урал', 5);
-			$this -> show_region_link ('Сибирь', 6);
-			$this -> show_region_link ('Юг', 7);
-			$this -> show_region_link ('Дальний Восток', 8);
-			$this -> show_region_link ('Украина', 10);
-			$this -> show_region_link ('Белоруссия', 11);
+			$regions = get_array('region');
+			foreach (array_keys($regions) as $region_id)
+			{
+				$this -> show_region_link($regions[$region_id], $region_id);
+			}
 		}
 		
 		function show () 
