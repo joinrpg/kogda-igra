@@ -160,34 +160,34 @@
 		echo '<table class="edit_table">';
 		
 		$msg = check_edit_priv() 
-			? '<a href="https://docs.google.com/document/pub?id=10ldHSE3Ss3b8co46rd8vyHgePf-Ohw7bhkCIy76Vfrk"><b>Справка</b> для редакторов</a>'
-			: 'Или <b>заполните</b> форму ниже (игра появится в календаре после модерации):';
+			? ''
+			: 'Или <b>заполните</b> форму ниже (мероприятие появится в календаре после модерации):';
 		
 		echo "<tr><td colspan=2><label>$msg</label></td>";
 		
-		show_required_tb ('Название игры', 'name', 100, $data['name'], 'text');
+		show_required_tb ('Название мероприятия', 'name', 100, $data['name'], 'text');
 		$sub_region_id = $data['sub_region_id'];
 		$sub_region_id = 
 		show_regions_dd ($sub_region_id ? $sub_region_id  : 4 );
-		show_uri_tb ('Сайт игры', 'uri', 100, $data['uri']);
+		show_uri_tb ('Сайт мероприятия', 'uri', 100, $data['uri']);
 		if ($data['id'] == 0)
 		{
-      show_date_control ('День начала игры', 'begin', $data['begin'], 'time');
-      show_length_control ('Продолжительность игры (дней)', 'time', $data['time']);
+      show_date_control ('День начала мероприятия', 'begin', $data['begin'], 'time');
+      show_length_control ('Продолжительность мероприятия (дней)', 'time', $data['time']);
 		}
 		else
 		{
       $date_obj = new GameDate($data);
       $date_str = $date_obj -> show_date_string(true);
-      echo "<tr><td><label><strong>Дата игры</strong></label></td><td>$date_str";	  
+      echo "<tr><td><label><strong>Дата мероприятия</strong></label></td><td>$date_str";	  
       echo "</td>
       </tr>";
 		}
-		show_dd ('Тип', 'type', $data['type']);
+		show_dd ('Тип мероприятия', 'type', $data['type']);
 		show_polygons_dd ($data['polygon']);
-		show_tb_with_list ('Мастерская группа', 'mg', 100, $data['mg'], 'mgnames');
+		show_tb_with_list ('Организаторы', 'mg', 100, $data['mg'], 'mgnames');
 		show_email ($data['email'], $data['hide_email']);
-		show_tb ('Кол-во игроков', 'players_count', 20, $data['players_count']);
+		show_tb ('Кол-во участников', 'players_count', 20, $data['players_count']);
 		show_tb ('Группа вконтакте', 'vk_club', 40, $data['vk_club'], 'uri', false, '', 'http://vk.com/');
 		show_tb ('Сообщество ЖЖ', 'lj_comm', 40, $data['lj_comm'], 'uri', false, '', 'http://', '.livejournal.com/profile');
 		if (check_edit_priv())
@@ -216,7 +216,7 @@
 		submit ($button_name, 'save', $data['id'], '',  TRUE);
 		if (check_edit_priv())
 		{
-			echo "<input type=\"checkbox\" name=\"send_email\" id=\"send_email\" checked value=\"1\"/><label for=\"send_email\">Уведомить мастеров об изменениях.</label>";
+			echo "<input type=\"checkbox\" name=\"send_email\" id=\"send_email\" checked value=\"1\"/><label for=\"send_email\">Уведомить организаторов об изменениях.</label>";
 		}
 		echo "</td></tr>\n";
 		echo '</table>';
@@ -232,7 +232,7 @@
 		if (!$deleted && $data['id'] > 0)
 		{
 			echo '<form action="/edit/game/" method="post" id="delete"><table>';
-			submit ('Удалить игру', 'delete', $data['id'], '', FALSE, 2);
+			submit ('Удалить', 'delete', $data['id'], '', FALSE, 2);
 			echo '</table></form>';
 		}
 		
@@ -361,7 +361,7 @@
 	function show_dates($id, $data)
 	{
     ?>
-    <h3>Перенос игры</h3>
+    <h3>Перенос мероприятия</h3>
 
      <form action="" method="post" id="gamedate">
       <table>
@@ -597,7 +597,7 @@
 		}
 		else
 		{
-      $hdr = 'Добавление новой игры';
+      $hdr = 'Добавление нового мероприятия';
     }
 
 		$topmenu = new TopMenu();
@@ -624,7 +624,7 @@
 		{
 					echo "<table>
 				<tr><th>Добавьте ссылку</th></tr>
-				<tr><td>Вы можете просто добавить ссылку на анонс, и наши редакторы разберутся с остальным:</td><tr>
+				<tr><td>Вы можете просто добавить ссылку на анонс вашего мероприятия, и наши редакторы сами заполнят всю информацию:</td><tr>
 				<tr><td><form method=post action=\"/api/game/add.php\"><input type=uri name=uri size=100 maxlength=100 required><input type=submit value=\"Добавить\"></form></td><tr>
 				</table>";
 			$id = 0;

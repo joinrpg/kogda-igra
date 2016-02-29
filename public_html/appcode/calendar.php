@@ -128,12 +128,12 @@ class Calendar
     {
        $columns []= array ('name' => 'Статус', 'column-class' => 'status-column');
     }
-    $columns []= array ('name' => 'Название', 'column-class' => 'name-column');
+    $columns []= array ('name' => 'Название мероприятия', 'column-class' => 'name-column');
     $columns []= array ('name' => 'Регион', 'column-class' => 'region-column');
-    $columns []= array ('name' => 'Сроки', 'column-class' => 'date-column');
+    $columns []= array ('name' => 'Сроки проведения', 'column-class' => 'date-column');
     $columns []= array ('name' => 'Тип мероприятия', 'column-class' => 'type-column');
     $columns []= array ('name' => 'Место проведения', 'column-class' => 'polygon-column');
-    $columns []= array ('name' => 'Уч-ов', 'column-class' => 'players-column', 'title' => 'Количество участников');
+    $columns []= array ('name' => 'Участников', 'column-class' => 'players-column', 'title' => 'Количество участников');
     if ($this -> export_mode)
     {
      $columns []= array ('name' => 'Email', 'column-class' => 'email-column');

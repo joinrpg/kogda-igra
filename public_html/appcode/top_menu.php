@@ -131,10 +131,10 @@ require_once 'config.php';
 
 
 			echo '<div class=menu_strip>';
-			show_button('/about/', 'О нас');
-			show_button('/reviews/', 'Рецензии');
-			show_button('/photo/', 'Фото');
-			show_button('http://rpg.ru/newb', 'Новичку');
+			show_button('#', 'Текст1');
+			show_button('#', 'Текст2');
+			show_button('#', 'Текст3');
+			show_button('#', 'Текст4');
 			echo '</div> ';
 			
 			$username = get_username();
@@ -147,7 +147,7 @@ require_once 'config.php';
 			{
 				echo '<div class=active><input type=button onclick="try_login()" value="Войти"></div>';
 			}
-			real_button ('/edit/game/', 'Добавить&nbsp;кружок...');
+			real_button ('/edit/game/', 'Добавить&nbsp;мероприятие...');
 			if (check_edit_priv())
 			{
 				show_button ('/edit/', 'Панель&nbsp;управления');
@@ -163,7 +163,7 @@ require_once 'config.php';
 			
 			if (!$username && $this -> show_add_adv)
 			{
-				echo '<b>Нет нужного кружка</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
+				echo '<b>Нет нужного мероприятия</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
 			}
 		}
 
