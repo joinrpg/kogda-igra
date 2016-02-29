@@ -284,14 +284,16 @@ function get_year_list_full()
   $sql = connect();
   return $sql -> Query("
 			SELECT 
-			DISTINCT year
+			year
 			FROM `ki_years_cache` kyc
-			UNION ALL
-			SELECT MAX(year) + 1
+			UNION
+			SELECT ISNULL(MAX(year) + 1, YEAR(CURDATE()))
 			FROM `ki_years_cache` kyc
-			UNION ALL
-			SELECT MIN(year) - 1
+			UNION
+			SELECT ISNULL(MIN(year) - 1, YEAR(CURDATE()))
 			FROM `ki_years_cache` kyc
+			UNION 
+			SELECT YEAR(CURDATE())    
 			ORDER BY year DESC
 			");
 }
