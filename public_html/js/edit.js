@@ -328,9 +328,11 @@ function update_region_name(sender)
 function update_subregion(subregion_id)
 {
 	var polygonsElement = document.getElementById('polygon_select');
-
-	var selected = polygonsElement.options[polygonsElement.selectedIndex].value;
-
+	
+	if (polygonsElement.selectedIndex > 0)
+	{
+		var selected = polygonsElement.options[polygonsElement.selectedIndex].value;
+	}
 
 	while (polygonsElement.options.length> 0)
 	{
