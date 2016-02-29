@@ -287,13 +287,11 @@ function get_year_list_full()
 			year
 			FROM `ki_years_cache` kyc
 			UNION
-			SELECT ISNULL(MAX(year) + 1, YEAR(CURDATE()))
+			SELECT COALESCE(MAX(year) + 1, YEAR(CURDATE()))
 			FROM `ki_years_cache` kyc
 			UNION
-			SELECT ISNULL(MIN(year) - 1, YEAR(CURDATE()))
-			FROM `ki_years_cache` kyc
-			UNION 
-			SELECT YEAR(CURDATE())    
+			SELECT COALESCE(MIN(year) - 1, YEAR(CURDATE()))
+			FROM `ki_years_cache` kyc    
 			ORDER BY year DESC
 			");
 }
