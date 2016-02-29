@@ -131,14 +131,14 @@ class Calendar
     $columns []= array ('name' => 'Название', 'column-class' => 'name-column');
     $columns []= array ('name' => 'Регион', 'column-class' => 'region-column');
     $columns []= array ('name' => 'Сроки', 'column-class' => 'date-column');
-    $columns []= array ('name' => 'Тип игры', 'column-class' => 'type-column');
-    $columns []= array ('name' => 'Полигон', 'column-class' => 'polygon-column');
-    $columns []= array ('name' => 'Иг-ов', 'column-class' => 'players-column', 'title' => 'Количество игроков');
+    $columns []= array ('name' => 'Тип мероприятия', 'column-class' => 'type-column');
+    $columns []= array ('name' => 'Место проведения', 'column-class' => 'polygon-column');
+    $columns []= array ('name' => 'Уч-ов', 'column-class' => 'players-column', 'title' => 'Количество участников');
     if ($this -> export_mode)
     {
      $columns []= array ('name' => 'Email', 'column-class' => 'email-column');
     }
-    $columns []= array ('name' => 'Мастерская группа', 'column-class' => 'mg-column');
+    $columns []= array ('name' => 'Организаторы', 'column-class' => 'mg-column');
     if ($this -> editor)
     {
       $columns []= array ('name' => '&nbsp;', 'column-class' => 'edit-column');

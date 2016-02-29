@@ -147,7 +147,7 @@ require_once 'config.php';
 			{
 				echo '<div class=active><input type=button onclick="try_login()" value="Войти"></div>';
 			}
-			real_button ('/edit/game/', 'Добавить&nbsp;игру...');
+			real_button ('/edit/game/', 'Добавить&nbsp;кружок...');
 			if (check_edit_priv())
 			{
 				show_button ('/edit/', 'Панель&nbsp;управления');
@@ -163,7 +163,7 @@ require_once 'config.php';
 			
 			if (!$username && $this -> show_add_adv)
 			{
-				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
+				echo '<b>Нет нужного кружка</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
 			}
 		}
 
