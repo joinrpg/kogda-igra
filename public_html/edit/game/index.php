@@ -192,7 +192,6 @@
 		show_tb ('Сообщество ЖЖ', 'lj_comm', 40, $data['lj_comm'], 'uri', false, '', 'http://', '.livejournal.com/profile');
 		if (check_edit_priv())
 		{
-			show_allrpg_info_id ( $data['allrpg_info_id']);
 			show_dd ('Статус', 'status', $data['status']);
 			show_tb ('Комментарий', 'comment', 100, $data['comment']);
 		}
@@ -249,7 +248,6 @@
 		echo "<script type=\"text/javascript\">update_subregion($subregion);</script>";
 		if ($data['id'] > 0)
 		{
-      echo "<script type=\"text/javascript\">update_allrpg_info(" .$date_obj -> get_js_string_begin() . ", " .$date_obj -> get_js_string_end() . ");</script>";
 		}
 		else
 		{
@@ -421,21 +419,6 @@
 
 	}
 
-	function show_allrpg_info_id($value)
-	{
-		$value = htmlspecialchars ($value);
-		echo "<tr><td><label><strong>Allrpg.info id</strong></label></td>";
-		echo "<td>
-      <input type=\"text\" name=\"allrpg_info_id\" id=\"allrpg_info_id\" onChange=\"updateAllrpgInfoLink();\" maxlength=\"20\" size=\"20\" value=\"$value\" />
-      <select id=\"allrpg_games\" style=\"display: none\" onChange=\"updateAllrpgInfo();\"></select>
-     <a href=\"\" id=\"allrpg_info_link\" style=\"display: none\">Профиль</a>";
-   if (check_edit_priv())
-   {
-    echo "<input id=\"sync_to_allrpg\" type=\"button\" onclick=\"syncToAllrpg();\" style=\"display: none\" />";
-   }
-    echo  "</td></tr>\n";
-	}
-
 	function show_history($id)
 	{
 		echo "<div class=\"history\">";
@@ -523,8 +506,8 @@
 				get_post_field ('sub_region'),
 				get_post_field ('hide_email'),
 				get_post_field ('players_count'),
+				0,
 				get_post_field ('send_email'),
-				get_post_field ('allrpg_info_id'),
 				0,
 				get_post_field ('vk_club'),
 				get_post_field ('lj_comm')
@@ -604,7 +587,7 @@
 				}
 				$data = array();
 				$data['uri'] = $add['uri'];
-				$data['allrpg_info_id'] = $add['allrpg_info_id'];
+				$data['allrpg_info_id'] = 0;
 			}
 		}
 
@@ -639,15 +622,6 @@
 		}
 		else
 		{
-        if (get_request_field('from_allrpg')!==FALSE )
-        {
-           echo "<table style='max-width:800px;background-color:#FAFAD2'>
-				<tr><th>Уважаемые пользователи allrpg.info! </th></tr>
-				<tr><td>
-Календари allrpg.info и " . SITENAME_MAIN . " объединены. Предлагаем вам добавить нужную вам игру, заполнив форму ниже. 
-Если игра уже есть в календаре, но карточки профиля почему-то нет в базе allrpg.info, напишите редакторам по адресу $mailto_editors</td><tr>
-				</table><br>";
-        }
 					echo "<table>
 				<tr><th>Добавьте ссылку</th></tr>
 				<tr><td>Вы можете просто добавить ссылку на анонс, и наши редакторы разберутся с остальным:</td><tr>

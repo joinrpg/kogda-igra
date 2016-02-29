@@ -63,18 +63,21 @@
 	{
 	
 		echo '<div class=menu_box>';
-		echo "<span id=\"vk_like\"></span><script type=\"text/javascript\">
-			VK.Widgets.Like('vk_like', {type: \"button\"});
-			var update_likes = 
-			function() {
-				var req = new XMLHttpRequest();
-				var uri = '/api/game/update-likes.php?id=$id';
-				req.open ('GET', uri, true);
-				req.send();
-};
-			VK.Observer.subscribe('widgets.like.liked', update_likes);
-			VK.Observer.subscribe('widgets.like.unliked', update_likes);
-			</script>";
+		if (false)
+		{
+			echo "<span id=\"vk_like\"></span><script type=\"text/javascript\">
+				VK.Widgets.Like('vk_like', {type: \"button\"});
+				var update_likes = 
+				function() {
+					var req = new XMLHttpRequest();
+					var uri = '/api/game/update-likes.php?id=$id';
+					req.open ('GET', uri, true);
+					req.send();
+	};
+				VK.Observer.subscribe('widgets.like.liked', update_likes);
+				VK.Observer.subscribe('widgets.like.unliked', update_likes);
+				</script>";
+		}
 		echo '<div class=menu_strip>';
 
 		$allrpg_zayvka_id = $game['allrpg_zayvka_id'];
@@ -141,11 +144,11 @@
 		}
 		if ($deleted_flag == 1)
 		{
-			echo '<p>Данная запись об игре удалена. Такой игры никогда не было и она оказалась здесь только по ошибке редакторов. Приносим свои извинения.</p>';
+			echo '<p>Данная запись удалена. Такого кружка никогда не было и он оказался здесь только по ошибке редакторов. Приносим свои извинения.</p>';
 		}
 		elseif ($deleted_flag == -1)
 		{
-			echo '<p>Игра находится на модерации.</p>';
+			echo '<p>Кружок находится на модерации.</p>';
 		}
 			
 		write_footer();

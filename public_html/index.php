@@ -37,16 +37,6 @@
 	else
 	{
         $calendar = new MainCalendar($year, $region, $konvent);
-        $best_game = get_best(get_current_year(), $region);
-        
-        if (is_array($best_game))
-        {
-            $best_link = "/best" . get_region_uri ($region) . get_current_year() . "/";
-  ?>
-  <br />
-  <div class="adblock">Самая популярная игра: <a href="/game/<?php echo $best_game[0]['id'];?>"><?php echo $best_game[0]['name'];?></a> (<a href="<?php echo $best_link; ?>">Другие популярные игры</a>)	</div>
-  <?php
-        }
     }
   
 	
