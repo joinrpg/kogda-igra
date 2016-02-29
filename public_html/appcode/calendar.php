@@ -423,7 +423,7 @@ function get_region_param ()
   }
 
   $result ['id'] = $region;
-  $result ['name'] = $region == 0 ? 'Все игры' : $region_arr[$region];
+  $result ['name'] = $region == 0 ? $region_arr[1] : $region_arr[$region];
   return $result;
 }
 ?>
