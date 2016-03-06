@@ -51,7 +51,7 @@ class AddedURIEmal extends Email
   
 	function get_message()
   {
-     return "Пользователь добавил ссылку на анонс игры. " .
+     return "Пользователь добавил ссылку на анонс мероприятия. " .
 		SITENAME_SCHEME . "://" . SITENAME_HOST . "/edit/game?add_uri_id={$this->add_uri_id}
 --
 C уважением, " . SITENAME_SIGNATURE;
@@ -84,7 +84,7 @@ class GameReqModerateEmail extends GameUpdatedEmail
   {
      $text = $this -> get_game_info_text();
 
-    return "Пользователь добавил запись об игре. Проверьте ее перед добавлением в календарь.
+    return "Пользователь добавил запись о мероприятии. Проверьте ее перед добавлением мероприятия в календарь.
 $text
 --
 C уважением, " . SITENAME_SIGNATURE;
@@ -112,7 +112,7 @@ class GameUpdatedEmail extends Email
   
   function get_subject()
   {
-    return SITENAME_MAIN . ": " . ($this -> updated ? "Обновлена" : "Добавлена") . " игра \"" . $this -> game_data['name'] .  "\"";
+    return SITENAME_MAIN . ": " . ($this -> updated ? "Обновлено" : "Добавлено") . " мероприятие \"" . $this -> game_data['name'] .  "\"";
   }
   
   function get_profile_link ($id)
@@ -181,10 +181,10 @@ class GameUpdatedEmail extends Email
 Название: $game_name
 Статус: {$game['status_name']}
 Регион: {$game['sub_region_name']}$uri$date_text
-Тип игры: $game_type_name
-Полигон: $polygon_name
-Кол-во игроков: $players_count
-Мастерская группа: {$game['mg']}
+Тип мероприятия: $game_type_name
+Место проведения: $polygon_name
+Кол-во участников: $players_count
+Организаторы: {$game['mg']}
 Email: {$game['email']}$hide_email$vk_text$lj_text
 
 $int_text";
@@ -195,7 +195,7 @@ $int_text";
      $text = $this -> get_game_info_text();
      $update_text = $this -> updated ? "обновили" : "добавили";
 
-    return SITENAME_SIGNATURE . "$update_text запись о вашей игре в календаре. Пожалуйста, проверьте эти сведения и напишите нам на {$this -> get_sender()}, если они ошибочны или неполны:
+    return SITENAME_SIGNATURE . "$update_text запись о мероприятии. Пожалуйста, проверьте эти сведения и напишите нам на {$this -> get_sender()}, если они ошибочны или неполны:
 $text
 Это письмо отправлено автоматически. Если письмо попало не туда, или вы больше не хотите получать таких писем, напишите {$this -> get_sender()} и мы разберемся.
 
