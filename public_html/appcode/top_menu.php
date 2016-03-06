@@ -147,7 +147,7 @@ require_once 'config.php';
 			{
 				echo '<div class=active><input type=button onclick="try_login()" value="Войти"></div>';
 			}
-			real_button ('/edit/game/', 'Добавить&nbsp;игру...');
+			real_button (get_game_edit_link(NULL), 'Добавить&nbsp;игру...');
 			if (check_edit_priv())
 			{
 				show_button ('/edit/', 'Панель&nbsp;управления');
@@ -163,7 +163,7 @@ require_once 'config.php';
 			
 			if (!$username && $this -> show_add_adv)
 			{
-				echo '<b>Нет нужной игры</b>? <a href="/edit/game/">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
+				echo '<b>Нет нужной игры</b>? <a href="' . get_game_edit_link(NULL). '">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
 			}
 		}
 
@@ -193,7 +193,7 @@ require_once 'config.php';
 			$sep = ', ';
 			$update_text = htmlspecialchars ($game['update_type_user_text']);
 			
-			$update_text = str_replace('%game%', '«<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>»', $update_text);
+			$update_text = str_replace('%game%', '«<a href="'. get_game_profile_link($game['id']) . '">' . $game['name'].'</a>»', $update_text);
 			$update_text = str_replace('%review_link%', '<a href="' . ReviewBase :: get_review_uri($game) .'">Рецензия</a>', $update_text);
 			$update_text = str_replace('%photo%',  'Фото/видео', $update_text);
 			$update_text = str_replace('%updated_user%', show_user_link ($game['updated_user_name']), $update_text);

@@ -4,6 +4,7 @@
 	require_once 'forms.php';
 	require_once 'logic/photo.php';
 	require_once 'logic/gamebase.php';
+	require_once 'uifuncs.php';
 
   $photomoderator = check_my_priv(PHOTO_PRIV);
 	if (!$photomoderator && !check_my_priv(PHOTO_SELF_PRIV))
@@ -36,7 +37,8 @@ function action_edit($id)
   
   write_header("Фотоотчет к игре «{$game_name}»");
   echo "<p style=\"color:red\">$msg</p>";
-  echo "<h1>Фотоотчет к игре «<a href=\"/game/$game_id\">$game_name</a>»</h1>";
+  $game_profile_link = get_game_profile_link ($game_id);
+  echo "<h1>Фотоотчет к игре «<a href=\"$game_profile_link\">$game_name</a>»</h1>";
 
   if ($id)
   {
@@ -143,8 +145,7 @@ function action_delete($id)
     unlink("/home/leotsar/www/site2/public_html/photo/preview/$id");
     delete_photo($id);
   }
-  header("Location: /game/$game_id");
-	die();
+	redirect_to(get_game_profile_link($game_id));
 }
 
 function cancel_save($id, $new, $msg)

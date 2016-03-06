@@ -107,7 +107,7 @@ class PhotoUpdatedEmail extends Email
 	
 	function get_message ()
 	{
-		return $this -> get_subject() . "\r\n http://kogda-igra.ru/game/{$this->game_data['id']}";
+		return $this -> get_subject() . "\r\n " . get_game_profile_link ($this->game_data['id'], true);
 	}
 }
 

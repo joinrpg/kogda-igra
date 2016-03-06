@@ -61,4 +61,22 @@
 
   echo "<img src=\"http://www.gravatar.com/avatar/$gravatar_email.jpg?d=mm\">";
 	}
+	
+	function get_game_profile_link ($id, $full = false)
+	{
+		$host = $full ? SITENAME_SCHEME . "://" . SITENAME_HOST : "";
+		return "$host/game/$id/";
+	}
+	
+	function get_game_edit_link ($id, $full = false)
+	{
+		$host = $full ? SITENAME_SCHEME . "://" . SITENAME_HOST : "";
+		return "$host/edit/game?id=$id";
+	}
+	
+		function get_game_edit_photo_link ($id, $full = false)
+	{
+		$host = $full ? SITENAME_SCHEME . "://" . SITENAME_HOST : "";
+		return "$host/edit/game/$id/photo/";
+	}
 ?>

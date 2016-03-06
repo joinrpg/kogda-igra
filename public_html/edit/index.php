@@ -20,6 +20,7 @@
 	require_once 'top_menu.php';
 	require_once 'logic/updates.php';
 	require_once 'show_updates.php';
+	require_once 'uifuncs.php';
 
 	if (!check_edit_priv())
 		return_to_main();
@@ -89,7 +90,8 @@
 			{
 				$link = "http://inf.allrpg.info/events/$allrpg_info_id/";
 			}
-			echo "<tr><td><a href=\"/edit/game/?add_uri_id=$id\">$link</a></td></tr>";
+			$edit_link = get_game_edit_link (NULL) . "&add_uri_id=$id";
+			echo "<tr><td><a href=\"$edit_link\">$link</a></td></tr>";
 		}
 		echo '</table>';
 		

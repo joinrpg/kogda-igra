@@ -234,7 +234,7 @@ class Calendar
 		if (!$this -> export_mode)
 		{
 			$this -> write_game_icons ($game);
-			echo Calendar::format_game_name ($game['name'], "/game/{$game['id']}");
+			echo Calendar::format_game_name ($game['name'], get_game_profile_link($game['id']));
 		}
 		else
 		{
@@ -350,7 +350,8 @@ class Calendar
           echo "<input type=\"checkbox\" name=\"mark[]\" value=\"$id\" />";
           echo "&nbsp;"; 
         }
-        echo "<a href=\"/edit/game/?id=$id\">Изменить</a>";
+        $edit_link = get_game_edit_link($id);
+        echo "<a href=\"$edit_link\">Изменить</a>";
         echo "</td>\n";
       }
   }
@@ -362,7 +363,7 @@ class Calendar
     {
       return '';
     }
-    return "<br><a href=\"/game/{$game['id']}/\">" .  Calendar::format_by_count($photo_count, 'фотоотчет', 'фототчета', 'фотоотчетов') . '</a>';
+    return "<br>" .  Calendar::format_by_count($photo_count, 'фотоотчет', 'фототчета', 'фотоотчетов');
   }
 
   function get_field_int($game, $name)
@@ -397,7 +398,7 @@ class Calendar
       return "";
      }
 
-    return "<br><a href=\"/game/{$game['id']}/\">" .  Calendar::format_by_count($review_count, 'рецензия', 'рецензии', 'рецензий') . '</a>';
+    return "<br>" .  Calendar::format_by_count($review_count, 'рецензия', 'рецензии', 'рецензий');
 
   }
 }

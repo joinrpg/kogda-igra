@@ -72,7 +72,8 @@ abstract class Media {
 		
 		if ($this -> show_game)
 		{
-			echo " к игре <a href=\"/game/{$this -> game_id}/\">{$this -> gamename}</a>";
+			$profile_link = get_game_profile_link ($this -> game_id);
+			echo " к игре <a href=\"{$profile_link}\">{$this -> gamename}</a>";
 		}
 		
 		echo $this -> get_fix_link() . $photo_good .$photo_comment;

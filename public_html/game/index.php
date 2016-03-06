@@ -94,13 +94,13 @@
   	 if (!$date -> is_passed())
 		 {
 			$machine_date = $date -> get_machine_date();
-			$details = SITENAME_SCHEME . "://" . SITENAME_HOST . "/game/$id/";
+			$details = get_game_profile_link($id, true);
 			$host = SITENAME_HOST;
       active_button("http://www.google.com/calendar/event?action=TEMPLATE&text={$game['name']}&dates={$machine_date}&trp=true&sprop=$host&details=$details", "Добавить в Google Calendar");
 		}
 		if (check_my_priv(PHOTO_PRIV) || check_my_priv(PHOTO_SELF_PRIV))
 		{
-			real_button ("/edit/game/$id/photo/", "Добавить фотоотчет");
+			active_button (get_game_edit_photo_link($id), "Добавить фотоотчет");
 		}
 		echo '</div>';
 		echo '</div>';
@@ -119,8 +119,7 @@
 	$redirect = $game['redirect_id'];
 	if ($redirect > 0)
 	{
-    header ("Location: /game/$redirect");
-    die();
+    redirect_to ("Location: " . get_game_profile_link($redirect));
 	}
 
 
@@ -137,7 +136,7 @@
 	{
 		if (check_edit_priv())
 		{
-			redirect_to("/edit/game/index.php?id=$id");
+			redirect_to(get_game_edit_link($id));
 		}
 		if ($deleted_flag == 1)
 		{

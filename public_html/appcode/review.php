@@ -181,7 +181,7 @@ class ReviewForUser extends ReviewBase
       $this -> reviews = get_reviews_for_user ($user_id);
    }
    
-     function show ()
+	function show ()
   {
      if (!is_array($this -> reviews))
      {
@@ -189,25 +189,19 @@ class ReviewForUser extends ReviewBase
      }
     echo "<h3 id=\"review\">Рецензии</h3>";
 		echo "<table>";
+			echo "<tr><th>Игра</th><th>Ссылка</th></tr>";
 
-        echo "<tr><th>Игра</th><th>Ссылка</th></tr>";
-		
-
-        foreach ($this -> reviews as $review)
-        {
-
-          $topic_id = intval ($review['topic_id']);
-          
-          echo "<tr>";
-
-
-              
-              echo "<td><a href=\"/game/{$review['game_id']}\">{$review['name']}</a></td>";
-            
-            $review_uri = Review :: get_review_uri ($review);
-            echo "<td><a href=\"$review_uri\">$review_uri</a></td>";
-          echo "</tr>";
-        }
+			foreach ($this -> reviews as $review)
+			{
+				$topic_id = intval ($review['topic_id']);
+				echo "<tr>";
+				$profile_link = get_game_profile_link ($review['game_id']);
+				echo "<td><a href=\"$profile_link\">{$review['name']}</a></td>";
+				
+				$review_uri = Review :: get_review_uri ($review);
+				echo "<td><a href=\"$review_uri\">$review_uri</a></td>";
+				echo "</tr>";
+			}
 
 		echo "</table>";
   }

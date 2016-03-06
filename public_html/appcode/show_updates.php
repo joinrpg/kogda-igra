@@ -1,6 +1,7 @@
 <?php
 require_once 'funcs.php';
 require_once 'review.php';
+require_once 'uifuncs.php';
 
 function write_update_line($game, $colspan)
 {
@@ -36,7 +37,8 @@ function write_update_line_with_ip($game, $colspan, $show_ip)
 		}
 		if ($game['id'])
 		{
-      $update_text .= ' «<a href="/game/'. $game['id'] . '">' . $game['name'].'</a>»';
+			$profile_link = get_game_profile_link($game['id']);
+      $update_text .= " «<a href=\"$profile_link\">{$game['name']}</a>»";
 		}
 		if ($game['updated_user_name'])
 		{

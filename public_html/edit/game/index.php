@@ -155,7 +155,7 @@
 		$moderate_mode = intval($data['deleted_flag']) == -1;
 		
 		echo '<div class="editblock">';
-		echo '<form action="/edit/game/" method="post" id="edit">';
+		echo '<form method="post" id="edit">';
 		write_mg_datalist();
 		echo '<table class="edit_table">';
 		
@@ -232,7 +232,7 @@
 		echo '</form>';
 		if (!$deleted && $data['id'] > 0)
 		{
-			echo '<form action="/edit/game/" method="post" id="delete"><table>';
+			echo '<form method="post" id="delete"><table>';
 			submit ('Удалить игру', 'delete', $data['id'], '', FALSE, 2);
 			echo '</table></form>';
 		}
@@ -331,8 +331,7 @@
     $email = new GameUpdatedEmail ($id, TRUE);
     $email -> send();
 
-    header("Location: /edit/game/?id=$id");
-		die();
+		redirect_to(get_game_edit_link($id));
 	}
 
 	function action_deletedate($id)
@@ -345,8 +344,7 @@
       $email = new GameUpdatedEmail ($id, TRUE);
       $email -> send();
     }
-    header("Location: /edit/game/?id=$id");
-      die();
+    redirect_to(get_game_edit_link($id));
 	}
 
 	function action_change_date_order($id, $sign)
@@ -459,23 +457,19 @@
 	function do_addreview($id)
 	{
     do_add_game_review ($id, get_post_field ('author'), get_post_field('topic_id'), get_post_field('review_uri'), get_post_field('author_lj'));
-    header("Location: /edit/game/?id=$id");
-		die();
-
+    redirect_to(get_game_edit_link($id));
 	}
 
 	function do_deletereview($id)
 	{
     do_delete_game_review (get_post_field('review_id'));
-    header("Location: /edit/game/?id=$id");
-		die();
+    redirect_to(get_game_edit_link($id));
 	}
 	
 		function do_restorereview($id)
 	{
     do_restore_game_review (get_post_field('review_id'));
-    header("Location: /edit/game/?id=$id");
-		die();
+    redirect_to(get_game_edit_link($id));
 	}
 
 
@@ -558,8 +552,7 @@
 			return_to_main();
 		}
 
-		header("Location: /edit/game/?id=$id");
-		die();
+		redirect_to(get_game_edit_link($id));
 	}
 
 	function load_dict_tables()
@@ -693,8 +686,7 @@ function action_resolve_no_add($id)
 			}
 			else
 			{
-				header("Location: /edit/game/?id=$id");
-				die();
+				redirect_to(get_game_edit_link($id));
 			}
 			break;
 		case 'save':
