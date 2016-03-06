@@ -72,7 +72,7 @@
 
 	function show_polygons_dd ($value)
 	{
-		echo "<tr><td><label><strong>Полигон</strong></label></td>";
+		echo "<tr><td><label><strong>Место проведения</strong></label></td>";
 		global $polygons_table;
 		echo "<td><select name=\"polygon\" size=\"1\" id=\"polygon_select\">";
 		foreach ($polygons_table as $row)
