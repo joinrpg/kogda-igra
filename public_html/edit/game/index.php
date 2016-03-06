@@ -19,7 +19,7 @@
 	function show_email ($value, $hide_email)
 	{
 		$value = htmlspecialchars ($value);
-		echo "<tr><td><label><strong>E-mail</strong></label></td>";
+		echo "<tr><td><label><strong>E-mail организаторов</strong></label></td>";
 		echo "<td><input type=\"email\" name=\"email\" id=\"email\" list=\"emaillist\" autocomplete=off maxlength=\"100\" size=\"30\" value=\"$value\" onchange=\"this.value=this.value.trim()\"/>";
 		echo "<select id=\"allrpg_emails\" style=\"display: none\" onChange=\"set_email_field();\"></select>";
 		echo "<br/>";
@@ -189,7 +189,6 @@
 		show_email ($data['email'], $data['hide_email']);
 		show_tb ('Кол-во участников', 'players_count', 20, $data['players_count']);
 		show_tb ('Группа вконтакте', 'vk_club', 40, $data['vk_club'], 'uri', false, '', 'http://vk.com/');
-		show_tb ('Сообщество ЖЖ', 'lj_comm', 40, $data['lj_comm'], 'uri', false, '', 'http://', '.livejournal.com/profile');
 		if (check_edit_priv())
 		{
 			show_dd ('Статус', 'status', $data['status']);
@@ -487,7 +486,7 @@
 				0,
 				1,
 				get_post_field ('vk_club'),
-				get_post_field ('lj_comm')
+				""
 			);
     }
     else
@@ -510,7 +509,7 @@
 				get_post_field ('send_email'),
 				0,
 				get_post_field ('vk_club'),
-				get_post_field ('lj_comm')
+				""
 			);
 		}
 

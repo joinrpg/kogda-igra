@@ -18,8 +18,7 @@ function write_header ($title, $edit = FALSE)
 <meta charset=utf-8>
 <title><?php echo $title; ?></title>
 <link media="all" rel="stylesheet" href="/default.css" type="text/css">
-<meta name="keywords" content="Календарь, ролевые игры">
-<meta name="description" content="Календарь полевых ролевых игр">
+<meta name="keywords" content="Календарь, мероприятия">
 <link rel="search" type="application/opensearchdescription+xml" title="<?php echo SITENAME_MAIN ?>!" href="/opensearch.xml">
 <script src="/js/default.js" type="text/javascript"></script>
 <script type="text/javascript" src="https://vk.com/js/api/openapi.js?115"></script>
@@ -137,7 +136,7 @@ function write_js_table ($array, $name)
 
 	function show_user_link ($username)
 	{
-    return "<span style=\"white-space: nowrap\"><img src=\"/img/userinfo.gif\" /><a href='/user/$username'><b>$username</b></a></span>";
+    return "<span style=\"white-space: nowrap\"><a href='/user/$username'><b>$username</b></a></span>";
 	}
 
 	function show_lj_user($username)
