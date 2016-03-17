@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `ki_games` (
   `vk_likes` int(11) NOT NULL DEFAULT '0',
   `vk_club` varchar(40) DEFAULT NULL,
   `lj_comm` varchar(40) DEFAULT NULL,
+  `fb_comm` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `polygon` (`polygon`)

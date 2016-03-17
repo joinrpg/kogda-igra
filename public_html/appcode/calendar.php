@@ -226,6 +226,13 @@ class Calendar
 		  $link = format_lj_link ($lj_comm);
 			echo Calendar::get_link_icon($link, $link, '[LJ]', 'livejournal.png') . '&nbsp;';
 		}
+		
+		$fb_comm = trim ($game['fb_comm']);
+		if ($fb_comm)
+		{
+		  $link = format_fb_link ($fb_comm);
+			echo Calendar::get_link_icon($link, $link, '[FB]', 'facebook.png') . '&nbsp;';
+		}
   }
   
   function write_game_name ($game)

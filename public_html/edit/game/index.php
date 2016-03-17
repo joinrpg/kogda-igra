@@ -188,8 +188,9 @@
 		show_tb_with_list ('Мастерская группа', 'mg', 100, $data['mg'], 'mgnames');
 		show_email ($data['email'], $data['hide_email']);
 		show_tb ('Кол-во игроков', 'players_count', 20, $data['players_count']);
-		show_tb ('Группа вконтакте', 'vk_club', 40, $data['vk_club'], 'uri', false, '', 'http://vk.com/');
+		show_tb ('Группа вконтакте', 'vk_club', 40, $data['vk_club'], 'uri', false, '', 'https://vk.com/');
 		show_tb ('Сообщество ЖЖ', 'lj_comm', 40, $data['lj_comm'], 'uri', false, '', 'http://', '.livejournal.com/profile');
+		show_tb ('Группа Facebook', 'fb_comm', 40, $data['fb_comm'], 'uri', false, '', 'https://facebook.com/groups/');
 		if (check_edit_priv())
 		{
 			show_allrpg_info_id ( $data['allrpg_info_id']);
@@ -498,7 +499,8 @@
 				0,
 				1,
 				get_post_field ('vk_club'),
-				get_post_field ('lj_comm')
+				get_post_field ('lj_comm'),
+				get_post_field ('fb_comm')
 			);
     }
     else
@@ -521,7 +523,8 @@
 				get_post_field ('allrpg_info_id'),
 				0,
 				get_post_field ('vk_club'),
-				get_post_field ('lj_comm')
+				get_post_field ('lj_comm'),
+				get_post_field ('fb_comm')
 			);
 		}
 
