@@ -5,11 +5,17 @@ class MediaBlock
   function __construct ($media)
   {
     $this -> media = $media;
+    $this-> show_author = FALSE;
+    $this-> show_game = FALSE;
   }
   
-  function show_photos_array($photo_array)
+  function show_photos_array($name)
   {
-    foreach ($photo_array as $auth_photo)
+    if (!array_key_exists($name, $this -> media))
+    {
+      return;
+    }
+    foreach ($this -> media[$name] as $auth_photo)
     {
       echo '<div class="photo_table">';
       foreach ($auth_photo as $photo)
@@ -32,11 +38,12 @@ class MediaBlock
 		if (is_array($this -> media))
 		{
 			echo "<h3>Фото/видео</h3>";
-			$this -> show_photos_array($this ->media['good']);
-      $this -> show_photos_array ($this ->media['all']);
+      $this -> show_photos_array ('good');
+      $this -> show_photos_array ('all');
 		}
   }
 }
+
 function show_media($media)
 {
 	$obj = new MediaBlock ($media);

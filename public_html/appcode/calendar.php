@@ -161,10 +161,13 @@ class Calendar
   {
     echo '<table id="calendar">';
     $this -> write_header();
-
-    foreach ($this -> games_array as $game)
+    
+    if (is_array($this -> games_array))
     {
-      $this -> write_entry ($game);
+      foreach ($this -> games_array as $game)
+      {
+        $this -> write_entry ($game);
+      }
     }
     echo '</table>';
   }
