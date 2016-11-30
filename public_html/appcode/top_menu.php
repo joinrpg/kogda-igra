@@ -141,18 +141,16 @@ require_once 'config.php';
 			echo '<div class=menu_strip>';
 			if ($username)
 			{
-					passive_button(show_user_link($username) . ' <input type=button id="logout_button" value="Выйти">');
-			}
-			else
-			{
-				echo '<div class=active><input type=button onclick="try_login()" value="Войти"></div>';
+					passive_button(show_user_link($username) . ' <a href="#" onclick="logout_handler();">Выйти</a>');
 			}
 			real_button (get_game_edit_link(NULL), 'Добавить&nbsp;игру...');
 			if (check_edit_priv())
 			{
 				show_button ('/edit/', 'Панель&nbsp;управления');
 			}
+			passive_button( '<span class="g-signin2" data-onsuccess="onSignIn" data-height="26" data-theme="dark"></span>');
 			echo '</div>';
+
 			$this -> show_messages ();
 			echo '</div>';
 
