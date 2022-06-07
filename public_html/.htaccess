@@ -4,7 +4,7 @@ AddCharset UTF-8 .php
 AddDefaultCharset utf-8
 php_flag display_errors off
 php_flag log_errors on
-php_value include_path ".:/home/leotsar/www/site2/public_html/appcode:/home/leotsar/www/site2/public_html/common"
+php_value include_path ".:/var/www/html/appcode:/var/www/html/common"
 php_flag session.use_only_cookies on
 php_value error_reporting 32767
 ErrorDocument 404 /404/
