@@ -48,8 +48,6 @@ function get_sql_array ($table, $id, $name, $order = FALSE)
 		if (!isset($driver))
 		{
 			$driver = new Sql ($sql_server, $sql_user, $sql_pass, $sql_db);
-			$driver->Run ('SET NAMES utf8');
-			$driver->Run ('SET CHARACTER SET utf8');
 		}
 		return $driver;
 	}
