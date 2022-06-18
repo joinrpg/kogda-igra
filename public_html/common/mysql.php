@@ -4,20 +4,15 @@ class Sql
 {
 	function Sql ($host, $user, $password, $base)
 	{
-    $this -> debug = 0;
-		$this->handle = @mysql_connect($host, $user, $password);
+    	$this -> debug = 0;
+
+		echo "host=$host dbname=$base user=$user password=$password";
+		$this->handle = pg_connect("host=$host dbname=$base user=$user password=$password");
 		if ($this->handle)
 		{
-			if ($base != '')
-			{
-				if(!@mysql_select_db($base))
-				{
-					@mysql_close($this->handle);
-					return FALSE;
-				}
-			}
 			return $this->handle;
 		}
+		die(pg_last_error());
 		return FALSE;
 	}
 
@@ -25,15 +20,15 @@ class Sql
 	{
 		if ($this->handle)
 		{
-			return @mysql_close($this->handle);
+			return @pg_close($this->handle);
 		}
 		return FALSE;
 	}
 
 	function Query ($sql)
 	{
-    $start = microtime(true);
-		$result = mysql_unbuffered_query ($sql, $this->handle);
+    	$start = microtime(true);
+		$result = pg_query ( $this->handle, $sql);
     $elapsed_secs = microtime(true) - $start;
     
     if ($elapsed_secs > 1)
@@ -43,18 +38,18 @@ class Sql
 
 		if (!$result)
 		{
-					echo mysql_error();
+					echo pg_last_error();
 			return FALSE;
 
 			}
 
 		$array = FALSE;
 
-		while ($row = mysql_fetch_assoc($result))
+		while ($row = pg_fetch_array($result, null, PGSQL_ASSOC))
 		{
 			$array [] = $row;
 		}
-				echo mysql_error();
+		echo pg_last_error();
 		return $array;
 	}
 
@@ -78,7 +73,7 @@ class Sql
     }
 
     if (!is_numeric($value)) {
-        $value = "'" . mysql_real_escape_string($value) . "'";
+        $value = "'" . pg_escape_string($this-> handle, $value) . "'";
     }
 
     return $value;
@@ -93,7 +88,7 @@ class Sql
     $value = strip_tags ($value);
 
     if (!is_numeric($value)) {
-        $value = "'" . mysql_real_escape_string($value) . "'";
+        $value = "'" . pg_escape_string($this-> handle, $value) . "'";
     }
 
     return $value;
@@ -106,9 +101,9 @@ class Sql
       echo "$request<br>";
       return 1;
     }
-		$res = mysql_unbuffered_query ($request, $this->handle);
+		$res = pg_query ($this->handle, $request);
 		
-		$error = mysql_error();
+		$error = pg_last_error();
 		
 		if ($error)
 		{
@@ -120,12 +115,16 @@ class Sql
 
 	function LastInsert ()
 	{
-		return mysql_insert_id($this->handle);
+		$result =  $this -> GetRow('SELECT lastval();');
+		if (!$result)
+			return FALSE;
+
+		return $result[0];
 	}
 	
 	function GetAffectedCount()
 	{
-		return mysql_affected_rows($this -> handle);
+		return pg_affected_rows($this -> handle);
 	}
 	
 	function GetRow ($query)
@@ -159,13 +158,13 @@ class Sql
 			$id = $this->LastInsert();
 		$id = $this -> Quote ($id);
 		$sql = "SELECT * FROM $table WHERE `id` = $id LIMIT 1";
-		$result = mysql_unbuffered_query ($sql, $this->handle);
+		$result = $this -> Query ($sql);
 
 		if (!$result)
 			return FALSE;
 
 
-		return mysql_fetch_assoc($result);
+		return $result[0];
 	}
 
 	function DeleteObject ($table, $id)
@@ -175,7 +174,7 @@ class Sql
 
 		$req = "DELETE FROM $table WHERE `id` = $id LIMIT 1";
 
-		return mysql_unbuffered_query ($req, $this->handle);
+		return $this -> Run ($req);
 	}
 
 }

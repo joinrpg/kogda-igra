@@ -1,0 +1,38 @@
+version: '3'
+services:
+  kogdaigra:
+    build: .
+    ports: 
+      - 8080:80
+    environment:
+      - POSTGRES_SERVER=db
+      - POSTGRES_DATABASE=kogdaigra
+      - POSTGRES_USER=kogdauser
+      - POSTGRES_PASSWORD=kogdapass
+    volumes:
+      - type: bind
+        source: ./public_html
+        target: /var/www/html
+
+  db:
+    image: 'postgres:14.2'
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5432:5432"
+
+    environment:
+      - POSTGRES_DB=kogdaigra
+      - POSTGRES_USER=kogdauser
+      - POSTGRES_PASSWORD=kogdapass
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4:6.10
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
