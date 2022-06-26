@@ -1,0 +1,123 @@
+on:
+  workflow_call:
+    inputs:
+      deployVersion:
+        required: true
+        type: string
+      environment_url:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+env:
+  APP_NAME: kogda-igra
+
+jobs:
+  deploy:
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.environment_url }}
+    name: deploy
+    env:
+      ENVIRONMENT: ${{ inputs.environment }}
+    runs-on: ubuntu-20.04
+    permissions: read-all
+    steps:
+      - name: Check images existence and fill images related env vars
+        id: check_existence
+        run: |
+          set -euxo pipefail
+
+          APP_REPOSITORY_ID=$(echo ${{ github.repository_owner }}/${APP_NAME}  | tr '[A-Z]' '[a-z]')
+          APP_IMAGE_ID=$(echo ghcr.io/${APP_REPOSITORY_ID}| tr '[A-Z]' '[a-z]')
+
+          COMMON_IMAGE_VERSION=$(echo ${{ inputs.deployVersion }} | tr '[A-Z]' '[a-z]')
+
+          REPOSITORY_TOKEN=$(curl -u ${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }} https://ghcr.io/token\?scope\="repository:${APP_REPOSITORY_ID}:pull" | jq -r .token)
+
+          #Check app image existence and save it's digest
+          APP_IMAGE_DIGEST=$(curl --head --fail -H "Authorization: Bearer ${REPOSITORY_TOKEN}" https://ghcr.io/v2/${APP_IMAGE_ID}/manifests/${COMMON_IMAGE_VERSION} \
+          | grep -i ^docker-content-digest: | cut -d: -f2- | xargs)
+
+          echo "APP_IMAGE_ID=${APP_IMAGE_ID}" >> $GITHUB_ENV
+
+          #Having digest with version provides google/k8s-digester like experience and helps to avoid common pitfalls with "latest" tag
+          echo "APP_IMAGE_VERSION_WITH_DIGEST=${COMMON_IMAGE_VERSION}@${APP_IMAGE_DIGEST}" >> $GITHUB_ENV
+
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v2.1
+        with:
+          version: v1.24.0
+
+      - name: Set kubeconfig
+        uses: azure/k8s-set-context@v2
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Turn github secrets to .env file
+        uses: shine1594/secrets-to-env-action@v1.5.2
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          secrets_env: all
+          prefix_prod: 'KUBESECRET_'
+          prefix_dev: 'KUBESECRET_'
+          file_name_prod: './manifests/${{ inputs.environment }}/kogda-igra.secret.env'
+          file_name_dev: './manifests/${{ inputs.environment }}/kogda-igra.secret.env'
+
+      - name: Generate environment manifests
+        run: |
+            set -x
+            cat <<EOF >> ./manifests/${ENVIRONMENT}/kustomization.yaml
+
+            secretGenerator:
+            - name: kogda-igra
+              envs:
+              - kogda-igra.secret.env
+              behavior: replace
+
+            images:
+            - name: ${APP_NAME}
+              newName: ${{ env.APP_IMAGE_ID }}
+              newTag: ${{ env.APP_IMAGE_VERSION_WITH_DIGEST }}
+
+            EOF
+            #folder must present to let kustomize generate separate files
+            mkdir kustomize_output
+            kubectl kustomize ./manifests/${ENVIRONMENT}/ -o kustomize_output
+
+# Uncomment for diagnostics. Warning! Output contains base64 encoded secrets
+#      - name: Show generated environment manifests
+#        run: cat ./kustomize_output/*
+
+      - name: Deploy to k8s
+        run: |
+          set -x
+          #Prune means - delete everything with this label which is not in the directory (e.g. old generated secrets)
+          #Same list as default but without not-namespaced resources
+          #https://github.com/kubernetes/kubernetes/blob/v1.24.0/staging/src/k8s.io/kubectl/pkg/util/prune/prune.go
+
+
+          KUBECTL_PRUNE_WHITELIST="\
+          --prune-whitelist=core/v1/ConfigMap \
+          --prune-whitelist=core/v1/Endpoints \
+          --prune-whitelist=core/v1/PersistentVolumeClaim \
+          --prune-whitelist=core/v1/Pod \
+          --prune-whitelist=core/v1/ReplicationController \
+          --prune-whitelist=core/v1/Secret \
+          --prune-whitelist=core/v1/Service \
+          --prune-whitelist=batch/v1/Job \
+          --prune-whitelist=batch/v1/CronJob \
+          --prune-whitelist=networking.k8s.io/v1/Ingress \
+          --prune-whitelist=apps/v1/DaemonSet \
+          --prune-whitelist=apps/v1/Deployment \
+          --prune-whitelist=apps/v1/ReplicaSet \
+          --prune-whitelist=apps/v1/StatefulSet
+          "
+
+          kubectl apply -f ./kustomize_output --prune -l managed-by-kustomize-${ENVIRONMENT}=true --namespace ${ENVIRONMENT} $KUBECTL_PRUNE_WHITELIST
+          kubectl rollout status deployment/${APP_NAME} --namespace ${ENVIRONMENT}

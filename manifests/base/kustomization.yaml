@@ -1,0 +1,12 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - pdp.yaml
+
+namespace: override-me
+
+secretGenerator:
+  - name: kogda-igra
+    envs:
+      - kogda-igra.secret.env
