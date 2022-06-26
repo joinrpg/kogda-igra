@@ -1,0 +1,72 @@
+name: Build and publish
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+    tags:
+      - v**
+  workflow_dispatch:
+
+env:
+  APP_NAME: kogda-igra
+
+jobs:
+  build:
+    name: Build and publish
+    runs-on: ubuntu-20.04
+    permissions:
+      packages: write
+      checks: write
+      actions: write
+      statuses: write
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch the whole repo history
+
+    # TODO: Make GitHub Action from this script
+    - name: Git Version  # Fills env.CALCULATED_VERSION and env.CALCULATED_VERSION_IS_RELEASE
+      id: version
+      run:  iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/AntonSmolkov/HandyPoshScripts/v1.0.2/DevOps/SemVerCalc_GitHubFlow_Actions.ps1'))
+      shell: pwsh
+      env:
+        REF_NAME: ${{ github.ref_name }}
+        REF_TYPE: ${{ github.ref_type }}
+
+    - name: Restore docker images cache
+      uses: satackey/action-docker-layer-caching@v0.0.11
+      continue-on-error: true
+
+    #Rest of the pipeline implies write api privileges and can't be run on PRs
+
+    - name: Build kogda-igra image
+      if: github.event_name != 'pull_request'
+      run: docker build . --tag ${APP_NAME} --label "runnumber=${GITHUB_RUN_ID}"
+
+    - name: Log in to docker registry
+      if: github.event_name != 'pull_request'
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+    - name: Push portal image to docker registry
+      if: github.event_name != 'pull_request'
+      run: |
+        APP_IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${APP_NAME}
+
+        # Change all uppercase to lowercase
+        APP_IMAGE_ID=$(echo ${APP_IMAGE_ID} | tr '[A-Z]' '[a-z]')
+        VERSION=$(echo ${{ env.CALCULATED_VERSION }}  | tr '[A-Z]' '[a-z]')
+
+        docker tag ${APP_NAME} ${APP_IMAGE_ID}:${VERSION}
+        docker push ${APP_IMAGE_ID}:${VERSION}
+
+        if [[ "${{ env.CALCULATED_VERSION_IS_RELEASE }}" == "True" ]]
+        then
+          docker tag ${APP_NAME} ${APP_IMAGE_ID}:latest
+          docker push ${APP_IMAGE_ID}:latest
+        fi
