@@ -1,0 +1,53 @@
+resources:
+  - ../base
+
+namespace: dev
+
+commonLabels:
+  managed-by-kustomize-dev: "true" #Careful. Contains name of the environment, used for kubectl apply --prune
+
+patchesJson6902:
+  - target:
+      kind: Ingress
+      group: networking.k8s.io
+      version: v1
+      name: kogda-igra
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev.kogda-igra.ru
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: dev.kogda-igra.ru
+      - op: replace
+        path: /spec/tls/0/secretName
+        value: dev-kogda-igra-ru-tls
+
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: kogda-igra
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: 300m
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: 300m
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 128Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 128Mi
+
+  - target:
+      group: policy
+      version: v1
+      kind: PodDisruptionBudget
+      name: kogda-igra
+    patch: |-
+      - op: replace
+        path: /spec/minAvailable
+        value: 0
