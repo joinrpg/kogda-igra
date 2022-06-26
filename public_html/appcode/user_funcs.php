@@ -14,7 +14,7 @@ function get_username()
 function get_user_by_id ($user_id)
 {
   $sql = connect();
-  $users = $sql -> GetAll('users', '*', "`user_id` = '$user_id'");
+  $users = $sql -> GetAll('users', '*', "\"user_id\" = '$user_id'");
   if ( count ($users) != 1)
     return null;
   return $users[0];
@@ -38,7 +38,7 @@ function get_user()
 function get_user_by_name ($username)
 {
 	$sql = connect();
-	$users = $sql -> GetAll('users', '*', "`username` = '$username'");
+	$users = $sql -> GetAll('users', '*', "\"username\" = '$username'");
 	return ($users != FALSE) ? $users[0] : NULL;
 }
 
@@ -56,7 +56,7 @@ function get_user_id_from_name ($username, $lastvisit = TRUE)
 	{
 	  $lastvisit = $lastvisit ? "NOW()" : "NULL";
 	  $sql = connect();
-    	$sql -> Run ("INSERT INTO users SET `username` = '$username', `lastvisit` = $lastvisit, `create_date` = NOW()");
+    	$sql -> Run ("INSERT INTO users SET \"username\" = '$username', \"lastvisit\" = $lastvisit, \"create_date\" = NOW()");
 		return $sql -> LastInsert ();
 	}
 }
@@ -64,7 +64,7 @@ function get_user_id_from_name ($username, $lastvisit = TRUE)
 function get_user_by_email($email)
 {
 	$sql = connect();
-	$users = $sql -> GetAll('users', '*', "`email` = '$email'");
+	$users = $sql -> GetAll('users', '*', "\"email\" = '$email'");
 	return ($users != FALSE) ? $users[0] : NULL;
 }
 
@@ -82,7 +82,7 @@ function try_login_user_by_email ($email, $lastvisit = TRUE)
 	{
 	  $lastvisit = $lastvisit ? "NOW()" : "NULL";
 	  $sql = connect();
-    $sql -> Run ("INSERT INTO users SET `username` = '$email', `email` = '$email', `lastvisit` = $lastvisit, `create_date` = NOW()");
+    $sql -> Run ("INSERT INTO users SET \"username\" = '$email', \"email\" = '$email', \"lastvisit\" = $lastvisit, \"create_date\" = NOW()");
 		return $sql -> LastInsert ();
 	}
 }
@@ -101,7 +101,7 @@ function set_username($ljuser, $email = NULL)
 	if ($user_id)
 	{
 		$driver = connect();
-		$driver -> Run ("UPDATE users SET `lastvisit` = NOW() WHERE `user_id` = $user_id");
+		$driver -> Run ("UPDATE users SET \"lastvisit\" = NOW() WHERE \"user_id\" = $user_id");
 		$_SESSION['user_id'] = $user_id;
 	}
 }
@@ -113,7 +113,7 @@ function set_email($user_id, $email)
 	$user_id = intval ($user_id);
 	$email = $driver -> QuoteAndClean ($email);
 	
-	$driver -> Run ("UPDATE users SET `email` = $email WHERE `user_id` = $user_id AND (`email` IS NULL OR `email` = '')");
+	$driver -> Run ("UPDATE users SET \"email\" = $email WHERE \"user_id\" = $user_id AND (\"email\" IS NULL OR \"email\" = '')");
 }
 
 function get_user_id()
@@ -148,7 +148,7 @@ define ('PHOTO_PRIV', 'PHOTO');
 define ('PHOTO_SELF_PRIV', 'PHOTO_SELF');
 function check_priv ($user_id, $priv_name)
 {
-	$sql = "SELECT `desc` FROM `privs`, `user_privs` WHERE `privs`.`name` = '$priv_name' AND `privs`.`id` = `user_privs`.`pid` AND $user_id = `user_privs`.`uid`";
+	$sql = "SELECT \"desc\" FROM \"privs\", \"user_privs\" WHERE \"privs\".\"name\" = '$priv_name' AND \"privs\".\"id\" = \"user_privs\".\"pid\" AND $user_id = \"user_privs\".\"uid\"";
 	$driver = connect();
 	$result = $driver -> Query($sql);
 	return ($result!==FALSE);
@@ -210,32 +210,32 @@ function check_my_priv ($priv_name)
 function get_user_privs ($uid)
 {
 	$driver = connect();
-	$sql = "SELECT `id`, `desc` FROM `privs`, `user_privs` WHERE `privs`.`id` = `user_privs`.`pid` AND $uid = `user_privs`.`uid` ORDER BY `id`";
+	$sql = "SELECT \"id\", \"desc\" FROM \"privs\", \"user_privs\" WHERE \"privs\".\"id\" = \"user_privs\".\"pid\" AND $uid = \"user_privs\".\"uid\" ORDER BY \"id\"";
 	return $driver -> Query ($sql);
 }
 
 function get_all_privs ()
 {
 	$driver = connect();
-	$sql = 'SELECT `id`, `desc` FROM `privs`';
+	$sql = 'SELECT \"id\", \"desc\" FROM \"privs\"';
 	return $driver -> Query ($sql);
 }
 
 function get_users_array ()
 {
 	$driver = connect();
-	return $driver -> Query ('SELECT * FROM `users` WHERE 1 ORDER BY `username`');
+	return $driver -> Query ('SELECT * FROM \"users\" WHERE 1 ORDER BY \"username\"');
 }
 
 function revoke_priv ($uid, $pid)
 {
 	$driver = connect();
-	$driver -> Run ("DELETE FROM `user_privs` WHERE `uid` = $uid AND `pid` = $pid LIMIT 1");
+	$driver -> Run ("DELETE FROM \"user_privs\" WHERE \"uid\" = $uid AND \"pid\" = $pid LIMIT 1");
 }
 
 function grant_priv ($uid, $pid)
 {
 	$driver = connect();
-	$driver -> Run ("INSERT INTO `user_privs` SET `uid` = $uid, `pid` = $pid");
+	$driver -> Run ("INSERT INTO \"user_privs\" SET \"uid\" = $uid, \"pid\" = $pid");
 }
 ?>

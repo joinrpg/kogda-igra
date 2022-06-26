@@ -130,7 +130,7 @@
 	<input type="hidden" name="old_id" value="<?php echo get_id_list($old_ids); ?>">
 	<select name="add_id" size="1">
 	<?php
-    $all = _get_games("kgd.`order` = 0");
+    $all = _get_games("kgd.\"order\" = 0");
     foreach ($all as $game)
     {
       $gamedate = new GameDate($game);

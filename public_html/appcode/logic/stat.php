@@ -33,42 +33,42 @@ function get_full_statistics()
       SELECT 
 			DISTINCT year, 
 			(
-        SELECT COUNT(*) FROM `ki_games` kg 
-        INNER JOIN `ki_game_date` kgd ON kgd.game_id = kg.id
-        WHERE YEAR(kgd.`begin`) = kyc.year AND kg.deleted_flag = 0
+        SELECT COUNT(*) FROM \"ki_games\" kg 
+        INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
+        WHERE date_part('year',kgd.\"begin\") = kyc.year AND kg.deleted_flag = 0
 			) AS total_count,
 			(
         SELECT 
           COUNT(*) 
-          FROM `ki_games` kg 
-          INNER JOIN `ki_game_date` kgd ON kgd.game_id = kg.id
-          INNER JOIN `ki_status` ks ON ks.status_id = kg.status
-          WHERE YEAR(kgd.`begin`) = kyc.year AND ks.good_status <> 0 AND kg.deleted_flag = 0
+          FROM \"ki_games\" kg 
+          INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
+          INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+          WHERE date_part('year',kgd.\"begin\") = kyc.year AND ks.good_status <> 0 AND kg.deleted_flag = 0
 			) AS notcancelled_count,
 			(
         SELECT COUNT(*) 
-        FROM `ki_games` kg 
+        FROM \"ki_games\" kg 
         INNER JOIN ki_game_types kgt ON kg.type = kgt.game_type_id
-        INNER JOIN `ki_game_date` kgd ON kgd.game_id = kg.id
+        INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
         WHERE 
-          YEAR(kgd.`begin`) = kyc.year 
+          date_part('year',kgd.\"begin\") = kyc.year 
           AND kg.deleted_flag = 0
           AND kgt.game_type_real_game <> 0
 			) AS total_game_count,
 			(
         SELECT 
           COUNT(*) 
-          FROM `ki_games` kg 
-          INNER JOIN `ki_status` ks ON ks.status_id = kg.status
+          FROM \"ki_games\" kg 
+          INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
           INNER JOIN ki_game_types kgt ON kg.type = kgt.game_type_id
-          INNER JOIN `ki_game_date` kgd ON kgd.game_id = kg.id
+          INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
           WHERE 
-            YEAR(kgd.`begin`) = kyc.year 
+            date_part('year',kgd.\"begin\") = kyc.year 
             AND ks.good_status <> 0 
             AND kg.deleted_flag = 0
             AND kgt.game_type_real_game <> 0
 			) AS game_notcancelled_count
-			FROM `ki_years_cache` kyc
+			FROM \"ki_years_cache\" kyc
 			ORDER BY year
   ");
 }
@@ -78,11 +78,11 @@ function get_statistics()
   $sql = connect();
   return $sql -> Query("
     SELECT 
-      COUNT(name) AS game_count, YEAR(kgd.`begin`) AS year
-    FROM `ki_games` kg
-    INNER JOIN `ki_game_date` kgd ON kgd.game_id = kg.id
-    GROUP BY YEAR(kgd.`begin`)
-    ORDER BY YEAR(kgd.`begin`) DESC
+      COUNT(name) AS game_count, date_part('year',kgd.\"begin\") AS year
+    FROM \"ki_games\" kg
+    INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
+    GROUP BY date_part('year',kgd.\"begin\")
+    ORDER BY date_part('year',kgd.\"begin\") DESC
   ");
 }
 

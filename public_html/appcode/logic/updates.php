@@ -40,11 +40,11 @@ function _get_updates($where, $limit = 0)
 		LEFT JOIN ki_polygons kp ON kg.polygon = kp.polygon_id OR ku.polygon_id = kp.polygon_id
 		LEFT JOIN ki_sub_regions ksr ON kg.sub_region_id = ksr.sub_region_id
 		LEFT JOIN ki_game_types kgt ON kg.type = kgt.game_type_id
-		LEFT JOIN `ki_regions` kr ON ksr.region_id = kr.region_id
-		LEFT JOIN `ki_status` ks ON ks.status_id = kg.status
-		LEFT JOIN `ki_review` krev ON krev.review_id = ku.review_id
+		LEFT JOIN \"ki_regions\" kr ON ksr.region_id = kr.region_id
+		LEFT JOIN \"ki_status\" ks ON ks.status_id = kg.status
+		LEFT JOIN \"ki_review\" krev ON krev.review_id = ku.review_id
 		LEFT JOIN ki_add_uri kau ON kau.add_uri_id = ku.add_uri_id
-		LEFT JOIN `users` updated_user ON updated_user.user_id = ku.updated_user_id OR updated_user.user_id = krev.author_id
+		LEFT JOIN \"users\" updated_user ON updated_user.user_id = ku.updated_user_id OR updated_user.user_id = krev.author_id
 		LEFT JOIN users ON users.user_id = ku.user_id
 		
 		WHERE $where
@@ -70,11 +70,11 @@ function get_updates_for_game($game_id)
 		INNER JOIN ki_polygons kp ON kg.polygon = kp.polygon_id
 		LEFT JOIN ki_sub_regions ksr ON kg.sub_region_id = ksr.sub_region_id
 		LEFT JOIN ki_game_types kgt ON kg.type = kgt.game_type_id
-		LEFT JOIN `ki_regions` kr ON ksr.region_id = kr.region_id
-		LEFT JOIN `ki_status` ks ON ks.status_id = kg.status
-		LEFT JOIN `ki_review` krev ON krev.review_id = ku.review_id
+		LEFT JOIN \"ki_regions\" kr ON ksr.region_id = kr.region_id
+		LEFT JOIN \"ki_status\" ks ON ks.status_id = kg.status
+		LEFT JOIN \"ki_review\" krev ON krev.review_id = ku.review_id
 		LEFT JOIN ki_add_uri kau ON kau.add_uri_id = ku.add_uri_id
-		LEFT JOIN `users` updated_user ON updated_user.user_id = ku.updated_user_id OR updated_user.user_id = krev.author_id
+		LEFT JOIN \"users\" updated_user ON updated_user.user_id = ku.updated_user_id OR updated_user.user_id = krev.author_id
 		LEFT JOIN users ON users.user_id = ku.user_id
 		WHERE kg.id = $game_id
 		ORDER BY update_date DESC 

@@ -13,7 +13,7 @@ function get_year_list ($region)
 		return $sql -> Query ("
 			SELECT 
 			DISTINCT year
-			FROM `ki_years_cache` kyc
+			FROM \"ki_years_cache\" kyc
 			WHERE kyc.region_id = $region
 			ORDER BY year");
 	}
@@ -23,7 +23,7 @@ function get_year_list ($region)
 		return $sql -> Query("
 			SELECT 
 			DISTINCT year
-			FROM `ki_years_cache` kyc
+			FROM \"ki_years_cache\" kyc
 			ORDER BY year");
 	}
 }
@@ -31,18 +31,18 @@ function get_year_list ($region)
 function get_new_reviews()
 {
   $sql = connect();
-  return $sql->Query("SELECT kg.*, krev.*, `users`.`username` 
-  FROM `ki_games` kg 
+  return $sql->Query("SELECT kg.*, krev.*, \"users\".\"username\" 
+  FROM \"ki_games\" kg 
    
-  INNER JOIN `ki_review` krev ON krev.game_id = kg.id 
-   LEFT JOIN `users` ON krev.author_id = `users`.`user_id`
+  INNER JOIN \"ki_review\" krev ON krev.game_id = kg.id 
+   LEFT JOIN \"users\" ON krev.author_id = \"users\".\"user_id\"
   ORDER BY krev.review_id DESC LIMIT 1");
 }
 
 function get_new_photos()
 {
   $sql = connect();
-  return $sql->Query("SELECT kg.*, kp.* FROM `ki_games` kg INNER JOIN `ki_photo` kp ON kp.game_id = kg.id ORDER BY kp.photo_id DESC LIMIT 1");
+  return $sql->Query("SELECT kg.*, kp.* FROM \"ki_games\" kg INNER JOIN \"ki_photo\" kp ON kp.game_id = kg.id ORDER BY kp.photo_id DESC LIMIT 1");
 }
 
 
@@ -52,7 +52,7 @@ function get_reviewed_games()
     return _get_games("kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
 			AND review_count > 0
-			AND kgd.`order` = 0");
+			AND kgd.\"order\" = 0");
 }
 
 function get_photo_games()
@@ -60,12 +60,12 @@ function get_photo_games()
     return _get_games("kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
 			AND photo_count > 0
-			AND kgd.`order` = 0");
+			AND kgd.\"order\" = 0");
 }
 
 function get_future_condition()
 {
-  return 'MONTH(kgd.`begin`) >= MONTH(NOW())';
+  return 'MONTH(kgd.\"begin\") >= MONTH(NOW())';
 }
 
 function get_region_condition ($region)
@@ -87,7 +87,7 @@ function get_main_calendar($year, $region = 0, $show_only_future = false, $show_
 	$future_query = $show_only_future ? get_future_condition() : '1=1';
   $konvent_query = $show_only_konvent ? 'kg.type = 5' : '1=1';
 	
-	return _get_games("YEAR(kgd.`begin`) = $year
+	return _get_games("date_part('year',kgd.\"begin\") = $year
 			AND ($region_query)
 			AND kg.deleted_flag = 0
 			AND ($konvent_query)
@@ -104,7 +104,7 @@ function get_best($year, $region = 0)
 	$region_query = get_region_condition ($region);
 	$future_query = $region == 0 ? get_future_condition() : '1=1';
 	
-	return _get_games("YEAR(kgd.`begin`) = $year
+	return _get_games("date_part('year',kgd.\"begin\") = $year
 			AND ($region_query)
 			AND kg.deleted_flag = 0	AND kg.vk_likes > 0 AND kgd.order=0", '', "kg.vk_likes DESC", "LIMIT 10");
 }
@@ -119,8 +119,8 @@ function get_new_games_for_week()
 {
   return _get_games("
     ki_update_type_id = 1
-    AND (NOW( ) - INTERVAL 7 DAY) < update_date AND (kgd.`begin` > NOW()) AND (show_flags = 0) AND (kg.deleted_flag = 0) AND (kgd.order = 0)", 
-    "INNER JOIN `ki_updates` ki ON kg.id = ki.game_id", 'update_date DESC', 'LIMIT 5');
+    AND (NOW( ) - INTERVAL 7 DAY) < update_date AND (kgd.\"begin\" > NOW()) AND (show_flags = 0) AND (kg.deleted_flag = 0) AND (kgd.order = 0)", 
+    "INNER JOIN \"ki_updates\" ki ON kg.id = ki.game_id", 'update_date DESC', 'LIMIT 5');
 }
 
 
@@ -137,13 +137,13 @@ function get_add_uri_list()
 
 function get_future_games()
 {
-	return _get_games("kg.deleted_flag =0 AND begin > NOW() AND ks.cancelled_status = 0 AND kgd.`order` = 0", "", "name ASC");
+	return _get_games("kg.deleted_flag =0 AND begin > NOW() AND ks.cancelled_status = 0 AND kgd.\"order\" = 0", "", "name ASC");
 }
 
 function get_games_by_timestamp($timestamp)
 {
   $timestamp = intval ($timestamp);
-  return _get_games("`update_date` > FROM_UNIXTIME($timestamp) AND kgd.`order`=0 AND kg.deleted_flag =0", "INNER JOIN `ki_updates` ki ON kg.id = ki.game_id", "update_date DESC");
+  return _get_games("\"update_date\" > FROM_UNIXTIME($timestamp) AND kgd.\"order\"=0 AND kg.deleted_flag =0", "INNER JOIN \"ki_updates\" ki ON kg.id = ki.game_id", "update_date DESC");
 }
 
 ?>
