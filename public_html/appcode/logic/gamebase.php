@@ -81,7 +81,7 @@ function internal_do_update_year_index ($sql)
 	$sql -> Run ("
 		INSERT INTO \"ki_years_cache\"
 			SELECT 
-			DISTINCT YEAR( \"begin\" ) AS year, \"region_id\"
+			DISTINCT date_part('year', \"begin\" ) AS year, \"region_id\"
 			FROM \"ki_games\" \"kg\"
 			INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
 			INNER JOIN \"ki_sub_regions\" \"ksr\" ON \"ksr\".\"sub_region_id\" = \"kg\".\"sub_region_id\"

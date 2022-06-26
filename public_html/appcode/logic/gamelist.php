@@ -87,7 +87,7 @@ function get_main_calendar($year, $region = 0, $show_only_future = false, $show_
 	$future_query = $show_only_future ? get_future_condition() : '1=1';
   $konvent_query = $show_only_konvent ? 'kg.type = 5' : '1=1';
 	
-	return _get_games("YEAR(kgd.\"begin\") = $year
+	return _get_games("date_part('year',kgd.\"begin\") = $year
 			AND ($region_query)
 			AND kg.deleted_flag = 0
 			AND ($konvent_query)
@@ -104,7 +104,7 @@ function get_best($year, $region = 0)
 	$region_query = get_region_condition ($region);
 	$future_query = $region == 0 ? get_future_condition() : '1=1';
 	
-	return _get_games("YEAR(kgd.\"begin\") = $year
+	return _get_games("date_part('year',kgd.\"begin\") = $year
 			AND ($region_query)
 			AND kg.deleted_flag = 0	AND kg.vk_likes > 0 AND kgd.order=0", '', "kg.vk_likes DESC", "LIMIT 10");
 }

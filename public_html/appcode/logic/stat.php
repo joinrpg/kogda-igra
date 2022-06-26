@@ -35,7 +35,7 @@ function get_full_statistics()
 			(
         SELECT COUNT(*) FROM \"ki_games\" kg 
         INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
-        WHERE YEAR(kgd.\"begin\") = kyc.year AND kg.deleted_flag = 0
+        WHERE date_part('year',kgd.\"begin\") = kyc.year AND kg.deleted_flag = 0
 			) AS total_count,
 			(
         SELECT 
@@ -43,7 +43,7 @@ function get_full_statistics()
           FROM \"ki_games\" kg 
           INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
           INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
-          WHERE YEAR(kgd.\"begin\") = kyc.year AND ks.good_status <> 0 AND kg.deleted_flag = 0
+          WHERE date_part('year',kgd.\"begin\") = kyc.year AND ks.good_status <> 0 AND kg.deleted_flag = 0
 			) AS notcancelled_count,
 			(
         SELECT COUNT(*) 
@@ -51,7 +51,7 @@ function get_full_statistics()
         INNER JOIN ki_game_types kgt ON kg.type = kgt.game_type_id
         INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
         WHERE 
-          YEAR(kgd.\"begin\") = kyc.year 
+          date_part('year',kgd.\"begin\") = kyc.year 
           AND kg.deleted_flag = 0
           AND kgt.game_type_real_game <> 0
 			) AS total_game_count,
@@ -63,7 +63,7 @@ function get_full_statistics()
           INNER JOIN ki_game_types kgt ON kg.type = kgt.game_type_id
           INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
           WHERE 
-            YEAR(kgd.\"begin\") = kyc.year 
+            date_part('year',kgd.\"begin\") = kyc.year 
             AND ks.good_status <> 0 
             AND kg.deleted_flag = 0
             AND kgt.game_type_real_game <> 0
@@ -78,11 +78,11 @@ function get_statistics()
   $sql = connect();
   return $sql -> Query("
     SELECT 
-      COUNT(name) AS game_count, YEAR(kgd.\"begin\") AS year
+      COUNT(name) AS game_count, date_part('year',kgd.\"begin\") AS year
     FROM \"ki_games\" kg
     INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
-    GROUP BY YEAR(kgd.\"begin\")
-    ORDER BY YEAR(kgd.\"begin\") DESC
+    GROUP BY date_part('year',kgd.\"begin\")
+    ORDER BY date_part('year',kgd.\"begin\") DESC
   ");
 }
 
