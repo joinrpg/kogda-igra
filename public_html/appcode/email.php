@@ -95,34 +95,6 @@ C уважением, " . SITENAME_SIGNATURE;
   }
 }
 
-class GameReqModerateEmail extends GameUpdatedEmail
-{
-	function __construct($game_id)
-	{
-		parent::__construct($game_id, 0);
-	}
-	
-	function get_recipient()
-	{
-		return NULL;
-	}
-	
-	function get_subject()
-	{
-		return SITENAME_MAIN . ": требуется модерация {$this -> game_data['name']}";
-	}
-	
-	  function get_message()
-  {
-     $text = $this -> get_game_info_text();
-
-    return "Пользователь добавил запись об игре. Проверьте ее перед добавлением в календарь.
-$text
---
-C уважением, " . SITENAME_SIGNATURE;
-  }
-}
-
 class GameUpdatedEmail extends Email
 {
   
@@ -231,4 +203,33 @@ $text
 C уважением, " . SITENAME_SIGNATURE;
   }
 }
+
+class GameReqModerateEmail extends GameUpdatedEmail
+{
+	function __construct($game_id)
+	{
+		parent::__construct($game_id, 0);
+	}
+	
+	function get_recipient()
+	{
+		return NULL;
+	}
+	
+	function get_subject()
+	{
+		return SITENAME_MAIN . ": требуется модерация {$this -> game_data['name']}";
+	}
+	
+	  function get_message()
+  {
+     $text = $this -> get_game_info_text();
+
+    return "Пользователь добавил запись об игре. Проверьте ее перед добавлением в календарь.
+$text
+--
+C уважением, " . SITENAME_SIGNATURE;
+  }
+}
+
 ?>
