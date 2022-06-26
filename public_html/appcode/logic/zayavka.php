@@ -48,8 +48,8 @@ function save_allrpg_info_appl ($row)
 	$name = $sql -> QuoteAndClean ($row['name']);
 	$opened = intval ($row['opened']);
 	$sql -> Run ("
-		INSERT INTO `ki_zayavka_allrpg` (`allrpg_zayvka_id`, `game_id`, `name`, `opened`) VALUES ($allrpg_zayvka_id, NULL, $name, $opened)
-		ON DUPLICATE KEY UPDATE `name` = VALUES (name), opened = VALUES (opened)");
+		INSERT INTO \"ki_zayavka_allrpg\" (\"allrpg_zayvka_id\", \"game_id\", \"name\", \"opened\") VALUES ($allrpg_zayvka_id, NULL, $name, $opened)
+		ON DUPLICATE KEY UPDATE \"name\" = VALUES (name), opened = VALUES (opened)");
 }
 
 function get_allrpg_info_appl()
@@ -92,7 +92,7 @@ function allrpg_bound_game ($game_id, $allrpg_zayvka_id)
 	$game_id = intval ($game_id);
 	$allrpg_zayvka_id = intval ($allrpg_zayvka_id);
 	
-	$sql -> Run ("UPDATE `ki_zayavka_allrpg` SET game_id = $game_id WHERE allrpg_zayvka_id = $allrpg_zayvka_id");
+	$sql -> Run ("UPDATE \"ki_zayavka_allrpg\" SET game_id = $game_id WHERE allrpg_zayvka_id = $allrpg_zayvka_id");
 }
 
 function allrpg_unbound_game ($allrpg_zayvka_id)
@@ -101,6 +101,6 @@ function allrpg_unbound_game ($allrpg_zayvka_id)
 	
 	$allrpg_zayvka_id = intval ($allrpg_zayvka_id);
 	
-	$sql -> Run ("UPDATE `ki_zayavka_allrpg` SET game_id = NULL WHERE allrpg_zayvka_id = $allrpg_zayvka_id");
+	$sql -> Run ("UPDATE \"ki_zayavka_allrpg\" SET game_id = NULL WHERE allrpg_zayvka_id = $allrpg_zayvka_id");
 }
 ?>

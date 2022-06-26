@@ -10,7 +10,7 @@ function set_allrpg ($id, $allrpg)
   $allrpg = intval($allrpg);
   
   $sql -> begin();
-  $sql -> Run ("UPDATE `ki_games` SET allrpg_info_id = $allrpg WHERE id = $id");
+  $sql -> Run ("UPDATE \"ki_games\" SET allrpg_info_id = $allrpg WHERE id = $id");
   $sql -> commit();
 }
 
@@ -20,7 +20,7 @@ function mark_as_passed($id)
   $id = intval($id);
  
   $sql -> Run ("START TRANSACTION");
-  $sql -> Run ("UPDATE `ki_games` SET status = 1 where id = $id");
+  $sql -> Run ("UPDATE \"ki_games\" SET status = 1 where id = $id");
   internal_log_game (8, $id);
   $sql -> Run ("COMMIT");
 }
@@ -33,7 +33,7 @@ function remove_by_ip($ip)
 	$rq = "UPDATE  ki_games kg 
 		INNER JOIN ki_updates ku ON ku.game_id = kg.id 
 		SET deleted_flag = 1
-		WHERE `ip_address` LIKE $ip AND deleted_flag = -1";
+		WHERE \"ip_address\" LIKE $ip AND deleted_flag = -1";
 	$sql -> Run ($rq);
 }
 
@@ -108,7 +108,7 @@ function clear_comment($id)
   $sql = connect();
   $id = intval($id);
  
-  $sql -> Run ("UPDATE `ki_games` SET comment = NULL where id = $id");
+  $sql -> Run ("UPDATE \"ki_games\" SET comment = NULL where id = $id");
 }
 
 function load_old_game($old_id)
@@ -149,7 +149,7 @@ function do_updatedate($id, $new_date, $days)
 		return FALSE;
 
 	$sql -> Run ('START TRANSACTION');
-	$sql -> Run ("UPDATE `ki_game_date` SET begin = $new_date, time = $days WHERE game_id = $id AND `order` = 0");
+	$sql -> Run ("UPDATE \"ki_game_date\" SET begin = $new_date, time = $days WHERE game_id = $id AND \"order\" = 0");
 	internal_do_update_year_index ($sql);
 	$sql -> Run ('COMMIT');
 	return TRUE;
@@ -166,18 +166,18 @@ function do_game_merge ($id, $old_id)
   $sql -> Run ('START TRANSACTION');
   
   $old_dates = get_game_dates ($old_id);
-  $sql -> Run ("UPDATE `ki_review` SET game_id = $id WHERE game_id = $old_id");
-  $sql -> Run ("UPDATE `ki_photo` SET game_id = $id WHERE game_id = $old_id");
-  $sql -> Run ("UPDATE `ki_games` SET deleted_flag = 1, redirect_id = $id WHERE id = $old_id");
+  $sql -> Run ("UPDATE \"ki_review\" SET game_id = $id WHERE game_id = $old_id");
+  $sql -> Run ("UPDATE \"ki_photo\" SET game_id = $id WHERE game_id = $old_id");
+  $sql -> Run ("UPDATE \"ki_games\" SET deleted_flag = 1, redirect_id = $id WHERE id = $old_id");
   foreach ($old_dates as $old_date)
   {
     
     $order_result = 
-    $sql -> GetRow ("SELECT MAX(order) + 1 AS max_order FROM `ki_game_date` WHERE game_id = $id AND begin > {$old_date['begin']}");
+    $sql -> GetRow ("SELECT MAX(order) + 1 AS max_order FROM \"ki_game_date\" WHERE game_id = $id AND begin > {$old_date['begin']}");
     $order = intval($order_result['max_order']) - 1;
     $order = 1;
-    $sql -> Run ("UPDATE `ki_game_date` SET `order` = $order + 1 WHERE game_id = $id AND `order` >= $order");
-    $sql -> Run ("UPDATE `ki_game_date` SET game_id = $id, `order` = $order WHERE game_id = $old_id AND `order` = {$old_date['order']}");
+    $sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = $order + 1 WHERE game_id = $id AND \"order\" >= $order");
+    $sql -> Run ("UPDATE \"ki_game_date\" SET game_id = $id, \"order\" = $order WHERE game_id = $old_id AND \"order\" = {$old_date['order']}");
   }
   $sql -> Run ('COMMIT');
   $sql -> debug = FALSE;
@@ -195,8 +195,8 @@ function do_deletedate ($game_id, $order)
 
   $sql -> Run ('START TRANSACTION');
   
-  $sql -> Run ("DELETE FROM `ki_game_date` WHERE $game_id = game_id AND `order` = $order");
-  $sql -> Run ("UPDATE `ki_game_date` SET `order` = `order` -1 WHERE $game_id = game_id AND `order` > $order");
+  $sql -> Run ("DELETE FROM \"ki_game_date\" WHERE $game_id = game_id AND \"order\" = $order");
+  $sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = \"order\" -1 WHERE $game_id = game_id AND \"order\" > $order");
   
   internal_do_update_year_index ($sql);
   $sql -> Run ('COMMIT');
@@ -217,10 +217,10 @@ function do_change_date_order ($game_id, $order, $sign)
 
   $sql -> Run ('START TRANSACTION');
   
-  $sql -> Run ("UPDATE `ki_game_date` SET `order` =  -1 WHERE $game_id = game_id AND `order` = $order");
+  $sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" =  -1 WHERE $game_id = game_id AND \"order\" = $order");
   
-  $sql -> Run ("UPDATE `ki_game_date` SET `order` = $order WHERE $game_id = game_id AND `order` = $new_order");
-  $sql -> Run ("UPDATE `ki_game_date` SET `order` = $new_order WHERE $game_id = game_id AND `order` = -1");
+  $sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = $order WHERE $game_id = game_id AND \"order\" = $new_order");
+  $sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = $new_order WHERE $game_id = game_id AND \"order\" = -1");
   
   internal_do_update_year_index ($sql);
   $sql -> Run ('COMMIT');
@@ -238,8 +238,8 @@ function do_movedate($id, $new_date, $days)
 		return FALSE;
 
 	$sql -> Run ('START TRANSACTION');
-	$sql -> Run ("UPDATE `ki_game_date` SET `order` = `order` + 1 WHERE game_id = $id ");
-	$sql -> Run ("INSERT INTO `ki_game_date` (game_id, `order`, `begin`, `time`) VALUES ($id, 0, $new_date, $days)");
+	$sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = \"order\" + 1 WHERE game_id = $id ");
+	$sql -> Run ("INSERT INTO \"ki_game_date\" (game_id, \"order\", \"begin\", \"time\") VALUES ($id, 0, $new_date, $days)");
 	internal_do_update_year_index ($sql);
 	$sql -> Run ('COMMIT');
 	return TRUE;
@@ -272,7 +272,7 @@ function do_game_delete ($game_id)
 
 	internal_log_game(3, $game_id);
 
-	$sql -> Run ("UPDATE ki_games SET deleted_flag = 1 WHERE `id` = $game_id LIMIT 1");
+	$sql -> Run ("UPDATE ki_games SET deleted_flag = 1 WHERE \"id\" = $game_id LIMIT 1");
 	
 	internal_do_update_year_index ($sql);
 	$sql -> Run ('COMMIT');
@@ -285,13 +285,13 @@ function get_year_list_full()
   return $sql -> Query("
 			SELECT 
 			DISTINCT year
-			FROM `ki_years_cache` kyc
+			FROM \"ki_years_cache\" kyc
 			UNION ALL
 			SELECT MAX(year) + 1
-			FROM `ki_years_cache` kyc
+			FROM \"ki_years_cache\" kyc
 			UNION ALL
 			SELECT MIN(year) - 1
-			FROM `ki_years_cache` kyc
+			FROM \"ki_years_cache\" kyc
 			ORDER BY year DESC
 			");
 }
@@ -344,23 +344,23 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 	$deleted_flag = $user_add ? -1 : 0;
 	
 	$list = "SET 
-		`name` = $_name, 
-		`uri` = $_uri, 
-		`type` = $type, 
-		`polygon` = $polygon,
-		`mg` = $_mg, 
-		`email` = $_email, 
-		`show_flags` = $show_flags, 
-		`status` = $status, 
-		`comment` = $_comment, 
-		`sub_region_id` = $sub_region, 
-		`deleted_flag` = $deleted_flag,
-		`hide_email` = $hide_email,
-		`players_count` = $players_count,
-		`allrpg_info_id` = $allrpg_info_id,
-		`vk_club` = $vk_club,
-		`lj_comm` = $lj_comm,
-		`fb_comm` = $fb_comm
+		\"name\" = $_name, 
+		\"uri\" = $_uri, 
+		\"type\" = $type, 
+		\"polygon\" = $polygon,
+		\"mg\" = $_mg, 
+		\"email\" = $_email, 
+		\"show_flags\" = $show_flags, 
+		\"status\" = $status, 
+		\"comment\" = $_comment, 
+		\"sub_region_id\" = $sub_region, 
+		\"deleted_flag\" = $deleted_flag,
+		\"hide_email\" = $hide_email,
+		\"players_count\" = $players_count,
+		\"allrpg_info_id\" = $allrpg_info_id,
+		\"vk_club\" = $vk_club,
+		\"lj_comm\" = $lj_comm,
+		\"fb_comm\" = $fb_comm
 		";
 	
 	$sql -> Run ('START TRANSACTION');
@@ -396,8 +396,8 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 			internal_log_game (2, $id);
 		}
 
-		$sql -> Run ("UPDATE ki_games $list WHERE `id` = $id LIMIT 1");
-		$sql -> Run ("DELETE FROM ki_add_uri WHERE `allrpg_info_id` = $allrpg_info_id");
+		$sql -> Run ("UPDATE ki_games $list WHERE \"id\" = $id LIMIT 1");
+		$sql -> Run ("DELETE FROM ki_add_uri WHERE \"allrpg_info_id\" = $allrpg_info_id");
 	}
 	else
 	{	
@@ -405,7 +405,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		$sql -> Run ("INSERT INTO ki_games $list");
 		$id = $sql -> LastInsert ();
 		internal_log_game ($user_add ? 19 : 1, $id);
-		$sql -> Run ("DELETE FROM ki_add_uri WHERE `allrpg_info_id` = $allrpg_info_id");
+		$sql -> Run ("DELETE FROM ki_add_uri WHERE \"allrpg_info_id\" = $allrpg_info_id");
 	}
 
 	internal_do_update_year_index ($sql);

@@ -7,7 +7,7 @@ function get_photo_by_id($photo_id)
 {
   $sql = connect();
   $photo_id = intval($photo_id);
-  $result = _get_photo("kp.`photo_id` = $photo_id");
+  $result = _get_photo("kp.\"photo_id\" = $photo_id");
   return is_array($result) ? $result[0] : FALSE;
 }
 
@@ -16,9 +16,9 @@ function _get_photo($where)
   $sql = connect();
   return $sql -> Query("
     SELECT kp.*, u.user_id, u.username, kg.name AS gamename
-    FROM `ki_photo` kp 
-    LEFT JOIN `users` u ON u.`user_id` = kp.author_id
-    LEFT JOIN `ki_games` kg ON kg.id = kp.game_id
+    FROM \"ki_photo\" kp 
+    LEFT JOIN \"users\" u ON u.\"user_id\" = kp.author_id
+    LEFT JOIN \"ki_games\" kg ON kg.id = kp.game_id
     WHERE $where
     ORDER BY kp.photo_id");
 }
@@ -46,12 +46,12 @@ function save_photo ($photo_id, $original_uri, $author, $game_id, $author_lj, $p
   }
   
   $list = "SET 
-		`photo_author` = $author, 
-		`author_id` = $author_lj,
-		`photo_uri` = $uri,
-		`game_id` = $game_id,
-		`photo_comment` = $photo_comment,
-		`photo_good_flag` = $photo_good_flag
+		\"photo_author\" = $author, 
+		\"author_id\" = $author_lj,
+		\"photo_uri\" = $uri,
+		\"game_id\" = $game_id,
+		\"photo_comment\" = $photo_comment,
+		\"photo_good_flag\" = $photo_good_flag
 		";
 		
 	$sql -> begin();
@@ -61,7 +61,7 @@ function save_photo ($photo_id, $original_uri, $author, $game_id, $author_lj, $p
 	$update_text = $original_uri ? ($author_name .'/' . $original_uri) : $author_name;
 	if ($update_flag)
 	{
-    $sql -> Run ("UPDATE ki_photo $list WHERE `photo_id` = $photo_id LIMIT 1");
+    $sql -> Run ("UPDATE ki_photo $list WHERE \"photo_id\" = $photo_id LIMIT 1");
     internal_log_photo(16, $photo_id, $game_id, $update_text);
 	}
 	else
@@ -115,8 +115,8 @@ function update_photo_count_for_game($game_id)
 {
   $sql = connect();
   return $sql -> Run(
-       "UPDATE `ki_games`
-        SET photo_count = (SELECT COUNT(*) AS photo_count FROM `ki_photo` WHERE game_id = $game_id)
+       "UPDATE \"ki_games\"
+        SET photo_count = (SELECT COUNT(*) AS photo_count FROM \"ki_photo\" WHERE game_id = $game_id)
         WHERE id = $game_id");
 
 }
@@ -128,7 +128,7 @@ function delete_photo($id)
   
   $id = intval($id);
   $photo = get_photo_by_id($id);
-  $sql -> Run ("DELETE ki_photo FROM ki_photo WHERE `photo_id` = $id");
+  $sql -> Run ("DELETE ki_photo FROM ki_photo WHERE \"photo_id\" = $id");
   update_photo_count_for_game($photo['game_id']);
   internal_log_photo(15, $id, $photo['game_id'], $photo['photo_author'] .'/' . $photo['photo_uri']);
   $sql -> commit();
@@ -159,7 +159,7 @@ function get_photo_by_game_id($game_id)
 {
   $sql = connect();
   $game_id = intval($game_id);
-  return _normalize_photo_array(_get_photo("kp.`game_id` = $game_id"));
+  return _normalize_photo_array(_get_photo("kp.\"game_id\" = $game_id"));
   
 }
 

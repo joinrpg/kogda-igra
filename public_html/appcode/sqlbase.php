@@ -22,7 +22,7 @@ function get_sql_array ($table, $id, $name, $order = FALSE)
 	{
 		$order = $id;
 	}
-   $arr = $sql -> Query ("SELECT `$id`, `$name` FROM `$table` ORDER BY $order");
+   $arr = $sql -> Query ("SELECT \"$id\", \"$name\" FROM \"$table\" ORDER BY $order");
    foreach ($arr as $row)
    {
        $result[$row[$id]] = $row[$name];

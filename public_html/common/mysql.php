@@ -157,7 +157,7 @@ class Sql
 		if ($id == FALSE)
 			$id = $this->LastInsert();
 		$id = $this -> Quote ($id);
-		$sql = "SELECT * FROM $table WHERE `id` = $id LIMIT 1";
+		$sql = "SELECT * FROM $table WHERE \"id\" = $id LIMIT 1";
 		$result = $this -> Query ($sql);
 
 		if (!$result)
@@ -172,7 +172,7 @@ class Sql
 
 		$id = $this -> Quote ($id);
 
-		$req = "DELETE FROM $table WHERE `id` = $id LIMIT 1";
+		$req = "DELETE FROM $table WHERE \"id\" = $id LIMIT 1";
 
 		return $this -> Run ($req);
 	}
