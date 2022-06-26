@@ -6,7 +6,6 @@ class Sql
 	{
     	$this -> debug = 0;
 
-		echo "host=$host dbname=$base user=$user password=$password";
 		$this->handle = pg_connect("host=$host dbname=$base user=$user password=$password  options='--client_encoding=UTF8'");
 		if ($this->handle)
 		{
