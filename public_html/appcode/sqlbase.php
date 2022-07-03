@@ -44,10 +44,10 @@ function get_sql_array ($table, $id, $name, $order = FALSE)
 	function connect()
 	{
 		static $driver;
-		global $sql_server, $sql_user, $sql_pass, $sql_db;
+		global $sql_server, $sql_user, $sql_pass, $sql_db, $sql_port;
 		if (!isset($driver))
 		{
-			$driver = new Sql ($sql_server, $sql_user, $sql_pass, $sql_db);
+			$driver = new Sql ($sql_server, $sql_user, $sql_pass, $sql_db, $sql_port);
 		}
 		return $driver;
 	}

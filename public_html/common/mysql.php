@@ -2,11 +2,11 @@
 
 class Sql
 {
-	function Sql ($host, $user, $password, $base)
+	function Sql ($host, $user, $password, $base, $port)
 	{
     	$this -> debug = 0;
 
-		$this->handle = pg_connect("host=$host dbname=$base user=$user password=$password  options='--client_encoding=UTF8'");
+		$this->handle = pg_connect("host=$host dbname=$base user=$user password=$password  options='--client_encoding=UTF8' port=$port");
 		if ($this->handle)
 		{
 			return $this->handle;
