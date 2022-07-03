@@ -13,6 +13,6 @@ jobs:
     uses: ./.github/workflows/deploy_reusable_workflow.yml
     with:
       deployVersion: ${{ github.event.inputs.deployVersion }}
-      environment: dev
+      environment: kogda-dev
       environment_url: https://dev.kogra-igra.ru
     secrets: inherit

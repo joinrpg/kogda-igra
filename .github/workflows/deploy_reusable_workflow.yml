@@ -119,5 +119,5 @@ jobs:
           --prune-whitelist=apps/v1/StatefulSet
           "
 
-          kubectl apply -f ./kustomize_output --prune -l managed-by-kustomize-${ENVIRONMENT}=true --namespace ${ENVIRONMENT} $KUBECTL_PRUNE_WHITELIST
+          kubectl apply -f ./kustomize_output --prune -l managed-by-${APP_NAME}-${ENVIRONMENT}=true --namespace ${ENVIRONMENT} $KUBECTL_PRUNE_WHITELIST
           kubectl rollout status deployment/${APP_NAME} --namespace ${ENVIRONMENT}
