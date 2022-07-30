@@ -91,8 +91,8 @@ jobs:
             kubectl kustomize ./manifests/${ENVIRONMENT}/ -o kustomize_output
 
 # Uncomment for diagnostics. Warning! Output contains base64 encoded secrets
-#      - name: Show generated environment manifests
-#        run: cat ./kustomize_output/*
+      - name: Show generated environment manifests
+        run: cat ./kustomize_output/*
 
       - name: Deploy to k8s
         run: |
