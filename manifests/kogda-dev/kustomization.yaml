@@ -4,7 +4,7 @@ resources:
 namespace: kogda-dev
 
 commonLabels:
-  managed-by-kogda-igra-dev: "true" 
+  managed-by-kogda-igra-kogda-dev: "true" 
   #Careful. Contains name of the environment, used for kubectl apply --prune
   #On deploy everything with this label will be considered managed by this manifests and will be replaced by prune
   #Everything without this label will not be changed.
