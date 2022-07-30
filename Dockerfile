@@ -12,4 +12,4 @@ COPY ./etc/php7/php.ini /etc/php7/php.ini
 
 RUN chmod +x /opt/entrypoint.sh
 
-EXPOSE 80
+EXPOSE 8080

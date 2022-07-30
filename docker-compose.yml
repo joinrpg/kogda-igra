@@ -3,7 +3,7 @@ services:
   kogdaigra:
     build: .
     ports: 
-      - 8080:80
+      - 8080:8080
     environment:
       - POSTGRES_SERVER=db
       - POSTGRES_DATABASE=kogdaigra
