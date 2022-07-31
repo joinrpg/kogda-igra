@@ -8,19 +8,19 @@ abstract class Email
   {
   }
   
-  function mg_send($to, $subject, $message) {
+  function mg_send($to, $from, $subject, $message) {
 
   $ch = curl_init();
 
   curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-  curl_setopt($ch, CURLOPT_USERPWD, 'api:'.MAILGUN_API);
+  curl_setopt($ch, CURLOPT_USERPWD, 'api:'.MAILGUN_KEY);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
   $plain = strip_tags(br2nl($message));
 
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-  curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v3/'.DOMAIN.'/messages');
-  curl_setopt($ch, CURLOPT_POSTFIELDS, array('from' => 'support@'.DOMAIN,
+  curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v3/'.SITENAME_HOST.'/messages');
+  curl_setopt($ch, CURLOPT_POSTFIELDS, array('from' => $from,
         'to' => $to,
         'subject' => $subject,
         'html' => $message,
@@ -55,11 +55,7 @@ abstract class Email
     }
     if ($recipient)
     {
-      mail
-        ($recipient,
-         ' =?UTF-8?B?'. base64_encode($this -> get_subject()) ."?=",
-         $this -> get_message(),
-         "{$bcc}From: $sender\r\nReply-To: $sender\r\nContent-Type: text/plain; charset=utf-8");
+      mg_send($recipient, $sender, $this -> get_subject(), $this -> get_message());
     }
   }
   

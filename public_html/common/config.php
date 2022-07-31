@@ -5,6 +5,7 @@
 	$sql_db =  		$_ENV['POSTGRES_DATABASE'];
 	$sql_port =		$_ENV['POSTGRES_PORT'];
 	
+	define ("MAILGUN_KEY", array_key_exists("MAILGUN_KEY", $_ENV) ? $_ENV["MAILGUN_KEY"] : "");
 	define ("SITENAME_EDITORS_EMAIL", 'rpg@kogda-igra.ru');
 	define ("SITENAME_MAIN", "КогдаИгра");
 	define ("SITENAME_SIGNATURE", "Редакторы КогдаИгры");
