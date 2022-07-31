@@ -24,8 +24,6 @@ function do_polygon_update ($id, $polygon_name, $sub_region_id)
 	$sub_region_id = intval ($sub_region_id);
 	$meta = intval ($meta);
 	
-	$list = "SET \"polygon_name\" = $polygon_name, \"sub_region_id\" = $sub_region_id, deleted_flag = 0";
-	
 	$sql -> Run ('START TRANSACTION');
 	if ($id > 0)
 	{
@@ -38,12 +36,12 @@ function do_polygon_update ($id, $polygon_name, $sub_region_id)
 		}
 		
 		internal_log_polygon (11, $id);
-		$sql -> Run ("UPDATE ki_polygons $list WHERE \"polygon_id\" = $id LIMIT 1");
+		$sql -> Run ("UPDATE ki_polygons "SET \"polygon_name\" = $polygon_name, \"sub_region_id\" = $sub_region_id, deleted_flag = 0 WHERE \"polygon_id\" = $id LIMIT 1");
 	}
 	else
 	{
 		
-		$sql -> Run ("INSERT INTO ki_polygons $list");
+		$sql -> Run ("INSERT INTO ki_polygons (polygon_name, sub_region_id, deleted_flag) VALUES ($polygon_name, $sub_region_id, 0");
 		$id = $sql ->LastInsert();
 		internal_log_polygon (10, $id);
 	}
