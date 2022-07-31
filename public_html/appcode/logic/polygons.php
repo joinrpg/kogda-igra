@@ -36,7 +36,7 @@ function do_polygon_update ($id, $polygon_name, $sub_region_id)
 		}
 		
 		internal_log_polygon (11, $id);
-		$sql -> Run ("UPDATE ki_polygons "SET \"polygon_name\" = $polygon_name, \"sub_region_id\" = $sub_region_id, deleted_flag = 0 WHERE \"polygon_id\" = $id LIMIT 1");
+		$sql -> Run ("UPDATE ki_polygons SET \"polygon_name\" = $polygon_name, \"sub_region_id\" = $sub_region_id, deleted_flag = 0 WHERE \"polygon_id\" = $id LIMIT 1");
 	}
 	else
 	{
