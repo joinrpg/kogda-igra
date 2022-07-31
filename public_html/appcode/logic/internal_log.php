@@ -27,7 +27,7 @@ function internal_log_game ($update_type, $game_id, $msg = FALSE)
 				SET update_date = NOW()
 				WHERE ki_update_id = $last_id
 			"); 
-			return; //Ñîâìåñòèì äâå çàïèñè äëÿ óìåíüøåíèÿ ìèðîâîé ýíòðîïèè.
+			return; //Ð¡Ð¾Ð²Ð¼ÐµÑÑ‚Ð¸Ð¼ Ð´Ð²Ðµ Ð·Ð°Ð¿Ð¸ÑÐ¸ Ð´Ð»Ñ ÑƒÐ¼ÐµÐ½ÑŒÑˆÐµÐ½Ð¸Ñ Ð¼Ð¸Ñ€Ð¾Ð²Ð¾Ð¹ ÑÐ½Ñ‚Ñ€Ð¾Ð¿Ð¸Ð¸.
 		}
 	}
 	$msg = $sql -> QuoteAndClean($msg);
@@ -115,7 +115,7 @@ function internal_log_polygon ($update_type, $polygon_id)
 				SET update_date = NOW()
 				WHERE ki_update_id = $last_id
 			"); 
-			return; //Ñîâìåñòèì äâå çàïèñè äëÿ óìåíüøåíèÿ ìèðîâîé ýíòðîïèè.
+			return; //Ð¡Ð¾Ð²Ð¼ÐµÑÑ‚Ð¸Ð¼ Ð´Ð²Ðµ Ð·Ð°Ð¿Ð¸ÑÐ¸ Ð´Ð»Ñ ÑƒÐ¼ÐµÐ½ÑŒÑˆÐµÐ½Ð¸Ñ Ð¼Ð¸Ñ€Ð¾Ð²Ð¾Ð¹ ÑÐ½Ñ‚Ñ€Ð¾Ð¿Ð¸Ð¸.
 		}
 	}
 	$sql -> Run ("
