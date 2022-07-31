@@ -239,7 +239,10 @@ function do_movedate($id, $new_date, $days)
 
 	$sql -> Run ('START TRANSACTION');
 	$sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = \"order\" + 1 WHERE game_id = $id ");
-	$sql -> Run ("INSERT INTO \"ki_game_date\" (game_id, \"order\", \"begin\", \"time\") VALUES ($id, 0, $new_date, $days)");
+	$sql -> Run ("INSERT INTO \"ki_game_date\" 
+		(game_id, \"order\", \"begin\", \"time\") 
+		VALUES ($id, 0, $new_date, $days)
+		");
 	internal_do_update_year_index ($sql);
 	$sql -> Run ('COMMIT');
 	return TRUE;
@@ -384,7 +387,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		
 		if ($old_status != $status)
 		{
-      $status_names = get_array('status');
+     		$status_names = get_array('status');
 			internal_log_game (8, $id, "{$status_names[$old_status]} -> {$status_names[$status]}");
 		}
 		
@@ -401,8 +404,18 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 	}
 	else
 	{	
+		$sql -> Run ("INSERT INTO ki_games
+		(\"name\", \"uri\", \"type\", \"polygon\", mg, email, \"show_flags\", \"status\",  \"comment\", 
+		\"sub_region_id\", \"deleted_flag\", \"hide_email\", \"players_count\", \"allrpg_info_id\",
+		\"vk_club\", \"lj_comm\", \"fb_comm\")
+
+		VALUES
+
+		($_name, $_uri, $type, $polygon, $_mg, $_email, $show_flags, $status, $_comment,  
+		 $sub_region, $deleted_flag, $hide_email, $players_count, $allrpg_info_id,
+		 $vk_club, $lj_comm, $fb_comm)
 		
-		$sql -> Run ("INSERT INTO ki_games $list");
+		");
 		$id = $sql -> LastInsert ();
 		internal_log_game ($user_add ? 19 : 1, $id);
 		$sql -> Run ("DELETE FROM ki_add_uri WHERE \"allrpg_info_id\" = $allrpg_info_id");

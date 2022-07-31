@@ -44,15 +44,6 @@ function save_photo ($photo_id, $original_uri, $author, $game_id, $author_lj, $p
     $author_name = $author;
     $author = $sql -> QuoteAndClean ($author);
   }
-  
-  $list = "SET 
-		\"photo_author\" = $author, 
-		\"author_id\" = $author_lj,
-		\"photo_uri\" = $uri,
-		\"game_id\" = $game_id,
-		\"photo_comment\" = $photo_comment,
-		\"photo_good_flag\" = $photo_good_flag
-		";
 		
 	$sql -> begin();
 		
@@ -61,12 +52,24 @@ function save_photo ($photo_id, $original_uri, $author, $game_id, $author_lj, $p
 	$update_text = $original_uri ? ($author_name .'/' . $original_uri) : $author_name;
 	if ($update_flag)
 	{
+    $list = "SET 
+		\"photo_author\" = $author, 
+		\"author_id\" = $author_lj,
+		\"photo_uri\" = $uri,
+		\"game_id\" = $game_id,
+		\"photo_comment\" = $photo_comment,
+		\"photo_good_flag\" = $photo_good_flag
+		";
+
     $sql -> Run ("UPDATE ki_photo $list WHERE \"photo_id\" = $photo_id LIMIT 1");
     internal_log_photo(16, $photo_id, $game_id, $update_text);
 	}
 	else
 	{
-    $sql -> Run ("INSERT INTO ki_photo $list");
+    $sql -> Run ("INSERT INTO ki_photo
+(photo_author, author_id, photo_uri, game_id, photo_comment, photo_good_flag)
+VALUES ($author, $author_lj, $uri, $game_id, $photo_comment, $photo_good_flag)"
+);
 		$photo_id = $sql -> LastInsert ();
 		internal_log_photo(15, $photo_id, $game_id, $update_text);
 		update_photo_count_for_game($game_id);

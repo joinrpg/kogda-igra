@@ -33,12 +33,11 @@ function internal_log_game ($update_type, $game_id, $msg = FALSE)
 	$msg = $sql -> QuoteAndClean($msg);
 	$sql -> Run ("
 		INSERT INTO ki_updates 
-		SET ki_update_type_id = $update_type,
-		user_id = $user_id,
-		update_date = NOW(), 
-		msg = $msg,
-		ip_address = $ip,
-		game_id = $game_id");
+		(ki_update_type_id, user_id, update_date, msg, ip_address, game_id)
+		
+		VALUES	
+		($update_type, $user_id, NOW(), $msg, $ip, $game_id)
+		");
 }
 
 function internal_log_review ($update_type, $review_id, $game_id, $msg = FALSE)
@@ -51,12 +50,10 @@ function internal_log_review ($update_type, $review_id, $game_id, $msg = FALSE)
 	$msg = $sql -> QuoteAndClean($msg);
 	$sql -> Run ("
 		INSERT INTO ki_updates 
-		SET ki_update_type_id = $update_type,
-		user_id = $user_id,
-		update_date = NOW(), 
-		msg = $msg,
-		review_id = $review_id,
-		game_id = $game_id");
+		(ki_update_type_id, user_id, update_date, msg, review_id, game_id)
+		VALUES
+		($update_type, $user_id, NOW(), $msg, $review_id, $game_id)
+		");
 }
 
 function internal_log_add_uri ($add_uri_id)
@@ -69,11 +66,10 @@ function internal_log_add_uri ($add_uri_id)
 	$update_type = 19;
 	$sql -> Run ("
 		INSERT INTO ki_updates 
-		SET ki_update_type_id = $update_type,
-		user_id = $user_id,
-		update_date = NOW(), 
-		ip_address = $ip,
-		add_uri_id = $add_uri_id");
+		(ki_update_type_id, user_id, update_date, ip_address, add_uri_id)
+		VALUES 
+		($update_type, $user_id, NOW(), $ip, $add_uri_id)
+		");
 }
 
 function internal_log_photo ($update_type, $photo_id, $game_id, $msg = FALSE)
@@ -86,12 +82,10 @@ function internal_log_photo ($update_type, $photo_id, $game_id, $msg = FALSE)
 	$msg = $sql -> QuoteAndClean($msg);
 	$sql -> Run ("
 		INSERT INTO ki_updates 
-		SET ki_update_type_id = $update_type,
-		user_id = $user_id,
-		update_date = NOW(), 
-		msg = $msg,
-		photo_id = $photo_id,
-		game_id = $game_id");
+		(ki_update_type_id, user_id, update_date, msg, photo_id, game_id)
+		VALUES
+		($update_type, $user_id, NOW(), $msg, $photo_id, $game_id)
+		");
 }
 
 function internal_log_polygon ($update_type, $polygon_id)
@@ -120,10 +114,10 @@ function internal_log_polygon ($update_type, $polygon_id)
 	}
 	$sql -> Run ("
 		INSERT INTO ki_updates 
-		SET ki_update_type_id = $update_type,
-		user_id = $user_id,
-		update_date = NOW(), 
-		polygon_id = $polygon_id");
+		(ki_update_type_id, user_id, update_date, polygon_id)
+		VALUES
+		($update_type, $user_id, NOW(), $polygon_id)
+		");
 }
 
 function internal_log_user ($update_type, $updated_user_id, $msg)
@@ -136,11 +130,9 @@ function internal_log_user ($update_type, $updated_user_id, $msg)
 
 	$sql -> Run ("
 		INSERT INTO ki_updates 
-		SET ki_update_type_id = $update_type,
-		user_id = $user_id,
-		update_date = NOW(), 
-		msg = $msg,
-		updated_user_id = $updated_user_id
+		(ki_update_type_id, user_id, update_date, msg, updated_user_id)
+		VALUES
+		($update_type, $user_id, NOW(), $msg,  $updated_user_id)
     ");
 }
 ?>

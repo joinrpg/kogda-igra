@@ -56,7 +56,13 @@ function get_user_id_from_name ($username, $lastvisit = TRUE)
 	{
 	  $lastvisit = $lastvisit ? "NOW()" : "NULL";
 	  $sql = connect();
-    	$sql -> Run ("INSERT INTO users SET \"username\" = '$username', \"lastvisit\" = $lastvisit, \"create_date\" = NOW()");
+
+	  $sql -> Run ("INSERT INTO users 
+	  (\"username\", \"email\", \"lastvisit\", \"create_date\")
+	  VALUES
+	  ( '$username',  NULL, $lastvisit,  NOW())
+	  ");
+
 		return $sql -> LastInsert ();
 	}
 }
@@ -82,7 +88,11 @@ function try_login_user_by_email ($email, $lastvisit = TRUE)
 	{
 	  $lastvisit = $lastvisit ? "NOW()" : "NULL";
 	  $sql = connect();
-    $sql -> Run ("INSERT INTO users SET \"username\" = '$email', \"email\" = '$email', \"lastvisit\" = $lastvisit, \"create_date\" = NOW()");
+    $sql -> Run ("INSERT INTO users 
+	(\"username\", \"email\", \"lastvisit\", \"create_date\")
+	VALUES
+	( '$email',  '$email', $lastvisit,  NOW())
+	");
 		return $sql -> LastInsert ();
 	}
 }
@@ -236,6 +246,6 @@ function revoke_priv ($uid, $pid)
 function grant_priv ($uid, $pid)
 {
 	$driver = connect();
-	$driver -> Run ("INSERT INTO \"user_privs\" SET \"uid\" = $uid, \"pid\" = $pid");
+	$driver -> Run ("INSERT INTO \"user_privs\" (\"uid\", \"pid\") VALUES ($uid, $pid) ");
 }
 ?>
