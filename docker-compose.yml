@@ -15,7 +15,7 @@ services:
         target: /var/www/html
 
   db:
-    image: 'postgres:14.2'
+    image: 'postgres:13.2'
     container_name: db
     restart: unless-stopped
     tty: true
