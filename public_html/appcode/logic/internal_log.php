@@ -12,7 +12,7 @@ function internal_log_game ($update_type, $game_id, $msg = FALSE)
 	$last = $sql -> Query("
 		SELECT * FROM ki_updates
 		WHERE game_id = $game_id 
-		AND (NOW() - INTERVAL 15 MINUTE) < update_date ORDER BY update_date DESC LIMIT 1 ");
+		AND (NOW() - INTERVAL '15 minutes') < update_date ORDER BY update_date DESC LIMIT 1 ");
 		
 	if (is_array($last) && !$msg)
 	{
@@ -95,7 +95,7 @@ function internal_log_polygon ($update_type, $polygon_id)
 	$last = $sql -> Query("
 		SELECT * FROM ki_updates
 		WHERE polygon_id = $polygon_id
-		AND (NOW() - INTERVAL 15 MINUTE) < update_date ORDER BY update_date DESC LIMIT 1");
+		AND (NOW() - INTERVAL '15 minutes') < update_date ORDER BY update_date DESC LIMIT 1");
 	if (is_array($last))
 	{
 		$last = $last[0];

@@ -11,7 +11,8 @@ function migrate([String]$source_conn_string, [String]$dest_conn_string)
         $cast_command = @"
         alter schema 'db_kogda_1' rename to 'public'
         
-        CAST type tinyint to smallint drop typemod
+        CAST type tinyint to smallint drop typemod,
+            column ki_game_date.time to smallint drop typemod
 "@;
     }
     else {
