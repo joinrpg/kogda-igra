@@ -2,7 +2,7 @@
 
 class Sql
 {
-	function Sql ($host, $user, $password, $base, $port)
+	function __construct ($host, $user, $password, $base, $port)
 	{
     	$this -> debug = 0;
 
