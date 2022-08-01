@@ -23,8 +23,7 @@ function write_header ($title, $edit = FALSE)
     <meta name="verify-v1" content="kgJUNdPugrqlSlUu5/n8UOibKHmPBQKUJJQvua61RYQ=">
     
     <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="422789528511-ova7a1omkeak7ul1f134t6a392nv8k15.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <link rel="search" type="application/opensearchdescription+xml" title="<?php echo SITENAME_MAIN ?>!" href="/opensearch.xml">
     <script src="/js/default.js" type="text/javascript"></script>

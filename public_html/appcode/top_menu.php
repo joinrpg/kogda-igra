@@ -141,14 +141,34 @@ require_once 'config.php';
 			echo '<div class=menu_strip>';
 			if ($username)
 			{
-					passive_button(show_user_link($username) . ' <a href="#" onclick="logout_handler();">Выйти</a>');
+					passive_button(show_user_link($username) . ' <a href="/logout/" class="g_id_signout">Выйти</a>');
 			}
 			real_button (get_game_edit_link(NULL), 'Добавить&nbsp;игру...');
 			if (check_edit_priv())
 			{
 				show_button ('/edit/', 'Панель&nbsp;управления');
 			}
-			passive_button( '<span class="g-signin2" data-onsuccess="onSignIn" data-height="26" data-theme="dark"></span>');
+
+			if (!$username) {
+			passive_button( '
+			<div id="g_id_onload"
+			data-client_id="422789528511-ova7a1omkeak7ul1f134t6a392nv8k15.apps.googleusercontent.com"
+			data-context="signin"
+			data-ux_mode="popup"
+			data-callback="onSignIn"
+			data-auto_prompt="false">
+	   </div>
+	   
+	   <div class="g_id_signin"
+			data-type="standard"
+			data-shape="rectangular"
+			data-theme="filled_blue"
+			data-text="$ {button.text}"
+			data-size="medium"
+			data-logo_alignment="left">
+	   </div>
+	   ');
+			}
 			echo '</div>';
 
 			$this -> show_messages ();
