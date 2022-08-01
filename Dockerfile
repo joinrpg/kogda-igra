@@ -1,6 +1,6 @@
 FROM alfg/php-apache
 
-RUN apk --update add php7-session php7-pgsql && rm -f /var/cache/apk/*
+RUN apk --update add php7-session php7-pgsql php7-curl && rm -f /var/cache/apk/*
 
 COPY ./public_html /var/www/html
 
