@@ -8,7 +8,7 @@ function get_editors_statistics()
   SUM(CASE WHEN ki_update_type_id = 1 THEN 1 ELSE 0 END) AS new_count
   FROM ki_updates 
   INNER JOIN users ON users.user_id = ki_updates.user_id
-  WHERE (update_date + INTERVAL 3 MONTH) > NOW()
+  WHERE (update_date + INTERVAL \'3 months\') > NOW()
   GROUP BY username, users.user_id
   ORDER BY COUNT(ki_update_id)  DESC
   ');
@@ -22,7 +22,7 @@ function get_editor_stat_by_id($user_id)
   SELECT COUNT(ki_update_id) AS update_count, 
   SUM(CASE WHEN ki_update_type_id = 1 THEN 1 ELSE 0 END) AS new_count
   FROM ki_updates 
-  WHERE (update_date + INTERVAL 3 MONTH) > NOW() AND ki_updates.user_id = $user_id
+  WHERE (update_date + INTERVAL '3 months') > NOW() AND ki_updates.user_id = $user_id
   ");
 }
 

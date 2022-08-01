@@ -234,7 +234,7 @@ function get_all_privs ()
 function get_users_array ()
 {
 	$driver = connect();
-	return $driver -> Query ('SELECT * FROM \"users\" WHERE 1 ORDER BY \"username\"');
+	return $driver -> Query ('SELECT * FROM "users" ORDER BY "username"');
 }
 
 function revoke_priv ($uid, $pid)

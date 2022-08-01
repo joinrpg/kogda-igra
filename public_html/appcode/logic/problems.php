@@ -63,42 +63,42 @@ function get_problems_summary()
   
   $query = 'SELECT (
     SELECT COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
-		INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id AND kgd.\"order\" = 0
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
+		INNER JOIN "ki_game_date" kgd ON kgd.game_id = kg.id AND kgd."order" = 0
 		WHERE
 			ks.future_only_status = 1
-			AND ADDDATE(kgd.begin,kgd.time) < NOW()
+			AND (kgd.begin  + kgd.time) < NOW()
 			AND kg.deleted_flag = 0
     ) as passed_count, (
     SELECT COUNT(*)
-    FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+    FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
 		WHERE
 			ks.problem_status = 1
 			AND kg.deleted_flag = 0
     ) as noinfo_count, (
     SELECT COUNT(*)
-    FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+    FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
 		WHERE
 			LENGTH(email) = 0 
 			AND kg.deleted_flag = 0
     ) as noemail_count, (
     SELECT COUNT(*)
-    FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
-				INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id AND kgd.\"order\" = 0
+    FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
+				INNER JOIN "ki_game_date" kgd ON kgd.game_id = kg.id AND kgd."order" = 0
 		WHERE
 			LENGTH(email) = 0 
 			AND kg.deleted_flag = 0
-			AND kgd.\"begin\" > NOW()
+			AND kgd."begin" > NOW()
     ) as noemail_count_future, (
     SELECT
 		COUNT(*)
-		FROM \"ki_games\" kg
+		FROM "ki_games" kg
 		INNER JOIN ki_polygons kp ON kg.polygon = kp.polygon_id
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
 		WHERE
 			kp.meta_polygon = 1
 			AND kg.deleted_flag = 0
@@ -106,8 +106,8 @@ function get_problems_summary()
 		) as nopolygon_count, (
 		SELECT
       COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
 		WHERE
 			kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
@@ -115,8 +115,8 @@ function get_problems_summary()
 		) AS reviewed_count, (
 		SELECT
       COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
 		WHERE
 			kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
@@ -124,8 +124,8 @@ function get_problems_summary()
 		) AS photed_count, (
 		SELECT
       COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
 		WHERE
 			kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
@@ -133,20 +133,20 @@ function get_problems_summary()
 		) AS noplayers_count, (
 		SELECT
       COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
-		INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id AND kgd.\"order\" = 0
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
+		INNER JOIN "ki_game_date" kgd ON kgd.game_id = kg.id AND kgd."order" = 0
 		WHERE
 			kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
 			AND kg.players_count IS NULL
-			AND kgd.\"begin\" > NOW()
+			AND kgd."begin" > NOW()
 		) AS noplayers_count_future, (
 		SELECT
       COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
-		INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id AND kgd.\"order\" = 0
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
+		INNER JOIN "ki_game_date" kgd ON kgd.game_id = kg.id AND kgd."order" = 0
 		WHERE
 			kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
@@ -154,8 +154,8 @@ function get_problems_summary()
 		) AS comment_count, (
 		SELECT
       COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
 		WHERE
 			kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
@@ -163,18 +163,18 @@ function get_problems_summary()
 		) AS noallrpg_info_count, (
 		SELECT
       COUNT(*)
-		FROM \"old_games\" 
+		FROM "old_games" 
 		) AS old_games_count, (
 		SELECT
       COUNT(*)
-		FROM \"ki_games\" kg
-		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
-		INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id AND kgd.\"order\" = 0
+		FROM "ki_games" kg
+		INNER JOIN "ki_status" ks ON ks.status_id = kg.status
+		INNER JOIN "ki_game_date" kgd ON kgd.game_id = kg.id AND kgd."order" = 0
 		WHERE
 			kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
 			AND kg.allrpg_info_id IS NULL
-			AND kgd.\"begin\" > NOW()
+			AND kgd."begin" > NOW()
 		) AS noallrpg_info_count_future';
     
    return $sql -> GetRow ($query);
