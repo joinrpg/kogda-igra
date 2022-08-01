@@ -3,7 +3,7 @@
 	$sql_user = 	$_ENV['POSTGRES_USER'];
 	$sql_pass =  	$_ENV['POSTGRES_PASSWORD'];
 	$sql_db =  		$_ENV['POSTGRES_DATABASE'];
-	$sql_port =		$_ENV['POSTGRES_PORT'];
+	$sql_port =		@$_ENV['POSTGRES_PORT'];
 	
 	define ("MAILGUN_KEY", array_key_exists("MAILGUN_KEY", $_ENV) ? $_ENV["MAILGUN_KEY"] : "");
 	define ("SITENAME_EDITORS_EMAIL", 'rpg@kogda-igra.ru');
