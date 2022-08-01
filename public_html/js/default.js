@@ -35,14 +35,3 @@ function logout_handler()
       	document.location.href = 'http://'+ hostname + "/logout/";
     });
 }
-
-function init()
-{
-	if(typeof String.prototype.trim !== 'function') {
-    String.prototype.trim = function() {
-      return this.replace(/^\s+|\s+$/g, ''); 
-    }
-  }
-}
-
-window.onload = init;
