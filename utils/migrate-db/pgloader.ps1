@@ -6,6 +6,18 @@ Migrates DB from SOURCE to DEST
 function migrate([String]$source_conn_string, [String]$dest_conn_string)
 {
 
+    if ($source_conn_string.StartsWith("mysql"))
+    {
+        $cast_command = @"
+        alter schema 'db_kogda_1' rename to 'public'
+        
+        CAST type tinyint to smallint drop typemod
+"@;
+    }
+    else {
+        $cast_command = "";
+    }
+
 @"
 load database
     from $source_conn_string
@@ -13,12 +25,12 @@ load database
 
     WITH include drop, create tables, no truncate, create indexes, reset sequences, foreign keys
 
-    CAST type tinyint to smallint drop typemod;
+    $cast_command;
 
 "@ >migrate.load
     
-    pgloader --no-ssl-cert-verification --dry-run --on-error-stop --verbose /tmp/cmd/migrate.load
-    #Remove-Item .\migrate.load
+    pgloader --no-ssl-cert-verification --on-error-stop --verbose /tmp/cmd/migrate.load
+    Remove-Item .\migrate.load
 }
 
 function pgloader {
