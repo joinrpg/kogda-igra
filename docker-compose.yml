@@ -26,6 +26,7 @@ services:
       - POSTGRES_DB=kogdaigra
       - POSTGRES_USER=kogdauser
       - POSTGRES_PASSWORD=kogdapass
+      - POSTGRES_HOST_AUTH_METHOD=md5
 
   pgadmin:
     container_name: pgadmin4_container
