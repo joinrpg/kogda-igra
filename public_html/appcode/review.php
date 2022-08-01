@@ -176,7 +176,7 @@ class Review extends ReviewTable
 
 class ReviewForUser extends ReviewBase
 {
-   function ReviewForUser ($user_id)
+   function __construct ($user_id)
    {
       $this -> reviews = get_reviews_for_user ($user_id);
    }
