@@ -10,13 +10,19 @@ abstract class Email
   
   function mg_send($to, $from, $subject, $message) {
 
+
+    if (!MAILGUN_KEY)
+    {
+      return;
+    }
+
   $ch = curl_init();
 
   curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
   curl_setopt($ch, CURLOPT_USERPWD, 'api:'.MAILGUN_KEY);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-  $plain = strip_tags(br2nl($message));
+  $plain = strip_tags(str_replace("<br />", "\n", $message));
 
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
   curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v3/'.SITENAME_HOST.'/messages');
@@ -32,7 +38,8 @@ abstract class Email
 
   if($info['http_code'] != 200)
         {
-					error("Send failed");
+          var_dump($info);
+					die("Send failed");
         }
 
   curl_close($ch);
