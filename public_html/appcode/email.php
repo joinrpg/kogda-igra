@@ -50,12 +50,12 @@ abstract class Email
     }
     else
     {
-			$bcc = '';
+			$bcc = '';  
 			$recipient = $sender;
     }
     if ($recipient)
     {
-      mg_send($recipient, $sender, $this -> get_subject(), $this -> get_message());
+      $this -> mg_send($recipient, $sender, $this -> get_subject(), $this -> get_message());
     }
   }
   
