@@ -117,8 +117,7 @@ class Sql
 		$result =  $this -> GetRow('SELECT lastval();');
 		if (!$result)
 			return FALSE;
-
-		return $result[0];
+		return intval($result['lastval']);
 	}
 	
 	function GetAffectedCount()
