@@ -227,7 +227,7 @@ function get_user_privs ($uid)
 function get_all_privs ()
 {
 	$driver = connect();
-	$sql = 'SELECT \"id\", \"desc\" FROM \"privs\"';
+	$sql = 'SELECT id, "desc" FROM "privs"';
 	return $driver -> Query ($sql);
 }
 
@@ -240,7 +240,7 @@ function get_users_array ()
 function revoke_priv ($uid, $pid)
 {
 	$driver = connect();
-	$driver -> Run ("DELETE FROM \"user_privs\" WHERE \"uid\" = $uid AND \"pid\" = $pid LIMIT 1");
+	$driver -> Run ("DELETE FROM \"user_privs\" WHERE \"uid\" = $uid AND \"pid\" = $pid");
 }
 
 function grant_priv ($uid, $pid)
