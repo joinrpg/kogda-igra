@@ -275,7 +275,7 @@ function do_game_delete ($game_id)
 
 	internal_log_game(3, $game_id);
 
-	$sql -> Run ("UPDATE ki_games SET deleted_flag = 1 WHERE \"id\" = $game_id LIMIT 1");
+	$sql -> Run ("UPDATE ki_games SET deleted_flag = 1 WHERE \"id\" = $game_id");
 	
 	internal_do_update_year_index ($sql);
 	$sql -> Run ('COMMIT');
@@ -399,7 +399,7 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 			internal_log_game (2, $id);
 		}
 
-		$sql -> Run ("UPDATE ki_games $list WHERE \"id\" = $id LIMIT 1");
+		$sql -> Run ("UPDATE ki_games $list WHERE \"id\" = $id");
 		$sql -> Run ("DELETE FROM ki_add_uri WHERE \"allrpg_info_id\" = $allrpg_info_id");
 	}
 	else

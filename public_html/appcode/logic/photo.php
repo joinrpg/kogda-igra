@@ -61,7 +61,7 @@ function save_photo ($photo_id, $original_uri, $author, $game_id, $author_lj, $p
 		\"photo_good_flag\" = $photo_good_flag
 		";
 
-    $sql -> Run ("UPDATE ki_photo $list WHERE \"photo_id\" = $photo_id LIMIT 1");
+    $sql -> Run ("UPDATE ki_photo $list WHERE \"photo_id\" = $photo_id");
     internal_log_photo(16, $photo_id, $game_id, $update_text);
 	}
 	else

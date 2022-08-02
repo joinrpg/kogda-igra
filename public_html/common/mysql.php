@@ -170,7 +170,7 @@ class Sql
 
 		$id = $this -> Quote ($id);
 
-		$req = "DELETE FROM $table WHERE \"id\" = $id LIMIT 1";
+		$req = "DELETE FROM $table WHERE \"id\" = $id";
 
 		return $this -> Run ($req);
 	}
