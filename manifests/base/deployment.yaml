@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/name: kogda-igra
   name: kogda-igra
 spec:
-  replicas: 2
+  replicas: 1 #Before fix it need to invent way to share sessions
   selector:
     matchLabels:
       app.kubernetes.io/name: kogda-igra
