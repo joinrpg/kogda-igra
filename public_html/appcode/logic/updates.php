@@ -26,7 +26,7 @@ function get_adv_updates_for_week()
 function _get_updates($where, $limit = 0)
 {
   $sql = connect();
-  $sql -> Run("SET SQL_BIG_SELECTS=1");
+  //$sql -> Run("SET SQL_BIG_SELECTS=1");
   $limit = ($limit) ? "LIMIT $limit" : "";
   return $sql -> Query("
 		SELECT ku.*, kut.ki_update_type_name, kut.update_type_polygon_flag, kut.update_type_game_flag, kut.update_type_photo_flag, kut.update_type_review_flag, kut.update_type_user_text,
@@ -57,7 +57,7 @@ function get_updates_for_game($game_id)
 {
   $game_id = intval ($game_id);
   $sql = connect();
-  $sql -> Run("SET SQL_BIG_SELECTS=1");
+  //$sql -> Run("SET SQL_BIG_SELECTS=1");
   return $sql -> Query("
 		SELECT ku.*, kut.ki_update_type_name, kut.update_type_polygon_flag, kut.update_type_game_flag, kut.update_type_photo_flag, kut.update_type_review_flag, kut.update_type_user_text,
 		kg.*, kp.polygon_name, kgt.game_type_name, ksr.sub_region_disp_name, ksr.sub_region_name, kgt.show_all_regions, users.username, ks.status_name, ks.status_style, updated_user.username AS updated_user_name, krev.review_uri, krev.topic_id, krev.show_review_flag, kau.uri, kau.allrpg_info_id
