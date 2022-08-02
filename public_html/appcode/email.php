@@ -25,7 +25,7 @@ abstract class Email
   $plain = strip_tags(str_replace("<br />", "\n", $message));
 
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-  curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v3/'.SITENAME_HOST.'/messages');
+  curl_setopt($ch, CURLOPT_URL, 'https://api.eu.mailgun.net/v3/'.SITENAME_HOST.'/messages');
   curl_setopt($ch, CURLOPT_POSTFIELDS, array('from' => $from,
         'to' => $to,
         'subject' => $subject,
