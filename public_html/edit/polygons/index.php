@@ -1,7 +1,7 @@
 <?php
 	require_once 'funcs.php';
 	require_once 'user_funcs.php';
-	require_once 'logic.php';
+	require_once 'logic/polygons.php';
 	require_once 'logic/dictionary.php';
 	require_once 'forms.php';
 	require_once 'top_menu.php';
@@ -59,7 +59,7 @@
 		INNER JOIN ki_regions kr ON kr.region_id = ksr.region_id
 		LEFT JOIN ki_games kg ON kp.polygon_id = kg.polygon
 		WHERE kp.meta_polygon = 0
-		GROUP BY kp.polygon_id
+		GROUP BY kp.polygon_id, kp.polygon_name, kp.sub_region_id, ksr.sub_region_name, kp.meta_polygon, kr.region_name
 		ORDER BY kr.region_name, ksr.sub_region_name,  kp.polygon_name');
 	
 	$region_table = get_region_dict ();

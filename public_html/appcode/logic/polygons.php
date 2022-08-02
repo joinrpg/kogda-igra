@@ -41,7 +41,7 @@ function do_polygon_update ($id, $polygon_name, $sub_region_id)
 	else
 	{
 		
-		$sql -> Run ("INSERT INTO ki_polygons (polygon_name, sub_region_id, deleted_flag) VALUES ($polygon_name, $sub_region_id, 0");
+		$sql -> Run ("INSERT INTO ki_polygons (polygon_name, sub_region_id, deleted_flag) VALUES ($polygon_name, $sub_region_id, 0)");
 		$id = $sql ->LastInsert();
 		internal_log_polygon (10, $id);
 	}
