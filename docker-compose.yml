@@ -10,6 +10,7 @@ services:
       - POSTGRES_USER=kogdauser
       - POSTGRES_PASSWORD=kogdapass
       - SITENAME_HOST=dev.kogda-igra.ru
+    env_file: .env
     volumes:
       - type: bind
         source: ./public_html
