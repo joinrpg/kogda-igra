@@ -149,7 +149,7 @@ function do_updatedate($id, $new_date, $days)
 		return FALSE;
 
 	$sql -> Run ('START TRANSACTION');
-	$sql -> Run ("UPDATE \"ki_game_date\" SET begin = $new_date, time = $days WHERE game_id = $id AND \"order\" = 0");
+	$sql -> Run ("UPDATE \"ki_game_date\" SET begin = $new_date, time = $days, hidden_flag = 0 WHERE game_id = $id AND \"order\" = 0");
 	internal_do_update_year_index ($sql);
 	$sql -> Run ('COMMIT');
 	return TRUE;
@@ -240,8 +240,8 @@ function do_movedate($id, $new_date, $days)
 	$sql -> Run ('START TRANSACTION');
 	$sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = \"order\" + 1 WHERE game_id = $id ");
 	$sql -> Run ("INSERT INTO \"ki_game_date\" 
-		(game_id, \"order\", \"begin\", \"time\") 
-		VALUES ($id, 0, $new_date, $days)
+		(game_id, \"order\", \"begin\", \"time\", hidden_flag) 
+		VALUES ($id, 0, $new_date, $days, 0)
 		");
 	internal_do_update_year_index ($sql);
 	$sql -> Run ('COMMIT');

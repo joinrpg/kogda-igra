@@ -12,7 +12,8 @@ function migrate([String]$source_conn_string, [String]$dest_conn_string)
         alter schema 'db_kogda_1' rename to 'public'
         
         CAST type tinyint to smallint drop typemod,
-            column ki_game_date.time to smallint drop typemod
+            column ki_game_date.time to smallint drop typemod,
+            column ki_game_date.hidden_flag to smallint drop typemod set not null
 "@;
     }
     else {
