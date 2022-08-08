@@ -22,14 +22,14 @@ abstract class Email
   curl_setopt($ch, CURLOPT_USERPWD, 'api:'.MAILGUN_KEY);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-  $plain = strip_tags(str_replace("<br />", "\n", $message));
+  $plain = $message; //strip_tags(str_replace("<br />", "\n", $message));
 
   curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
   curl_setopt($ch, CURLOPT_URL, 'https://api.eu.mailgun.net/v3/'.SITENAME_HOST.'/messages');
   curl_setopt($ch, CURLOPT_POSTFIELDS, array('from' => $from,
         'to' => $to,
         'subject' => $subject,
-        'html' => $message,
+   //     'html' => $message, We are not sending html email (yet)
         'text' => $plain));
 
   $j = json_decode(curl_exec($ch));
