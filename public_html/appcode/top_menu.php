@@ -97,6 +97,12 @@ require_once 'config.php';
 			$regions = get_array('region');
 			foreach (array_keys($regions) as $region_id)
 			{
+				if ($region_id == 10) 
+				{
+					//Remove Ukraine from top_menu
+					//TODO: Add flag "show in top_menu" into region settings
+					continue;
+				}
 				$this -> show_region_link($regions[$region_id], $region_id);
 			}
 		}
