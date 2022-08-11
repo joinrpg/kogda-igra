@@ -116,7 +116,7 @@ function internal_log_polygon ($update_type, $polygon_id)
 		INSERT INTO ki_updates 
 		(ki_update_type_id, user_id, update_date, polygon_id, msg)
 		VALUES
-		($update_type, $user_id, NOW(), $polygon_id, \"\")
+		($update_type, $user_id, NOW(), $polygon_id, '')
 		");
 }
 
