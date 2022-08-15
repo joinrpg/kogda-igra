@@ -27,7 +27,7 @@ function do_polygon_update ($id, $polygon_name, $sub_region_id)
 	$sql -> Run ('START TRANSACTION');
 	if ($id > 0)
 	{
-		$prev_data = $sql -> GetObject('ki_polygons', $id);
+		$prev_data = $sql -> GetRow('SELECT * FROM ki_polygons WHERE polygon_id = ' . $id);
 		
 		$old_deleted = intval($prev_data['deleted_flag']);
 		if ($old_deleted != 0)
