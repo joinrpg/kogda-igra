@@ -1,8 +1,7 @@
 ﻿<?php
 	require_once 'funcs.php';
-	require_once 'logic.php';
-  require_once 'calendar.php';
-  require_once 'logic/edit.php';
+	require_once 'calendar.php';
+  	require_once 'logic/edit.php';
 
 	if (!check_edit_priv())
 	{

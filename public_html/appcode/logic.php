@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //DO NOT USE. INCLUDE SPECIFIC FILES.
 require_once 'funcs.php';
 require_once 'logic/internal_log.php';
