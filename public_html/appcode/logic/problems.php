@@ -5,14 +5,14 @@ require_once 'logic/gamebase.php';
 function get_passed_games()
 {
   return _get_games("ks.future_only_status = 1
-			AND ADDDATE(kgd.begin, kgd.time) < NOW()
+			AND (kgd.begin + kgd.time) < NOW()
 			AND kg.deleted_flag = 0 AND kgd.\"order\" = 0");
 }
 
 function get_problem_games($in_past = TRUE, $in_future = TRUE)
 {  
-  $future_string = $in_future ? 'kgd.\"begin\" > NOW()' : '0 = 1';
-  $past_string = $in_past ? 'kgd.\"begin\" < NOW()' : '0 = 1';
+  $future_string = $in_future ? 'kgd."begin" > NOW()' : '0 = 1';
+  $past_string = $in_past ? 'kgd."begin" < NOW()' : '0 = 1';
 
   return _get_games("ks.problem_status = 1
 			AND kg.deleted_flag = 0  AND kgd.\"order\" = 0
@@ -21,7 +21,7 @@ function get_problem_games($in_past = TRUE, $in_future = TRUE)
 
 function _get_future_string($future)
 {
-  return ($future ? 'AND kgd.\"begin\" > NOW()' : '') . 'AND kgd.\"order\" = 0';
+  return ($future ? 'AND kgd."begin" > NOW()' : '') . 'AND kgd."order" = 0';
 }
 
 function get_noemail_games($future = FALSE)
