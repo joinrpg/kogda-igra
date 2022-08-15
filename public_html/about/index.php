@@ -17,6 +17,8 @@
   <li><strong>Лео</strong> <?php echo show_user_link('leotsarev'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>, общие вопросы</li>
   <li><strong>Атана</strong> <?php echo show_user_link('aleks'); ?>, #<a href="http://bastilia.ru/">Бастилия</a>, редактор</li>
   <li><strong>Фидель</strong> <?php echo show_user_link('akbars'); ?>, МГ «<a href="http://romulrem.com/">Ромул и Рем</a>», редактор по Москве</li>
+  <li><strong>Айка</strong> <?php echo show_user_link('dtrubster@gmail.com'); ?>, редактор по Москве</li>
+  <li><strong>Аннавен</strong> <?php echo show_user_link('annavenannaven@gmail.com'); ?>, редактор по Беларуси</li>
   <li><strong>Медик</strong> <?php echo show_user_link('steamboy'); ?>, редактор по Москве</li>
   <li><strong>Крайк</strong> <?php echo show_user_link('krayk'); ?>, редактор по Москве</li>
   <li><strong>Анатоль</strong> <?php echo show_user_link('anatolle'); ?>, редактор по Уралу, Сибири, Дальнему Востоку</li>
@@ -28,6 +30,7 @@
 Если Вашу игру добавили в календарь, то на почту мастеров придет соответствующее письмо.
 Если в течение недели никаких возражений нет, то мы считаем, что игра заявлена. Такие игры из календаря не удаляются.
 Впрочем, если произошло какое-то недоразумение, то пишите — будем разбираться.</p>
+
 <h3 id="regions">Когда-игра в регионах</h3>
 <p>
 Мы считаем для себя основными следующими регионы:
@@ -35,6 +38,7 @@
  <li>Москва, Тверь и соседние области</li>
  <li>Санкт-Петербург и другие области Северо-Запада</li>
  <li>Урал</li>
+ <li>Беларусь</li>
  </ul>
  Это не значит, что мы не хотим работать с другими регионами — просто у нас нет необходимых ресурсов, чтобы поддерживать расписание актуальным.
 <br>Если вы ищете игры в регионе, который у нас не представлен, рекомендуем вам следующие календари:
@@ -42,6 +46,12 @@
  <li><a href="http://larp.ru/texts/rpg/rasps.php">расписание игр по Сибири</a></li>
 </ul>
 Если у вас есть желание, чтобы в вашем регионе был календарь kogda-igra.ru — пишите (<?php echo $mailto_editors; ?>). С нас — удобный движок, посетители и поддержка других редакторов, с вас — работа по поддержанию календаря в актуальном состоянии.</p>
+
+<h3>Принадлежность регионов</h3>
+Начиная с 2014 года, некоторые регионы, где работает КогдаИгра, являются спорными между РФ и Украиной. Любой выбор представляет собой политическое высказывание, 
+которое мы всеми силами хотели бы избежать. Поэтому мы с 2014 года применяем следующую политику: те области, про которые есть официальное решение о присоединении 
+к РФ и будет фактический контроль области РФ, записываются в раздел «Юг России». Остальные области записываются в раздел «Украина».
+
 <h3>API</h3>
 <p>На нашем сайте есть <a href="/api">API для чтения данных календаря</a> в машиночитаемом формате.</p>
 <h3 id="adv">Рекламные ссылки</h3>
@@ -57,12 +67,12 @@
 </ol>
 <h3>Open Source</h3>
 <p>
-<a href="https://github.com/leotsarev/kogda-igra">Исходный код нашего сайта</a> — Open Source, согласно <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">лицензии Apache</a>. Если вы не знаете, что это значит, не парьтесь.<br>
+<a href="https://github.com/joinrpg/kogda-igra">Исходный код нашего сайта</a> — Open Source, согласно <a href="http://www.apache.org/licenses/LICENSE-2.0.txt">лицензии Apache</a>. Если вы не знаете, что это значит, не парьтесь.<br>
 Если вдруг знаете, и хотите внести свой вклад, будем вам благодарны — присылайте свои pull request.<br>
 Если вам чего-то непонятно, пишите <?php echo show_user_link('leotsarev'); ?>.</p>
 <h3>Благодарности</h3>
 
-<p>Хостинг предоставлен #<a href="http://bastilia.ru">Бастилией</a> и <a href="http://www.diphost.ru" title="Хороший хостинг"><img src="http://www.diphost.ru/b/na88x31_gray.gif" width="88" height="31" style="border: 0px solid" alt="Хороший хостинг" title="Хороший хостинг" /></a></p>
+<p>Хостинг предоставлен #<a href="http://bastilia.ru">Бастилией</a> и <a href="http://www.diphost.ru" title="Хороший хостинг"><img src="http://www.diphost.ru/b/na88x31_gray.gif" width="88" height="31" style="border: 0px solid" alt="Хороший хостинг" title="Хороший хостинг" /></a></p>
 <p>Иконки предоставлены <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam.com</a> и <a href="http://thenounproject.com">The Noun Project</a></p>
 </div>
 <?php
