@@ -66,9 +66,9 @@ function internal_log_add_uri ($add_uri_id)
 	$update_type = 19;
 	$sql -> Run ("
 		INSERT INTO ki_updates 
-		(ki_update_type_id, user_id, update_date, ip_address, add_uri_id)
+		(ki_update_type_id, user_id, update_date, msg, ip_address, add_uri_id)
 		VALUES 
-		($update_type, $user_id, NOW(), $ip, $add_uri_id)
+		($update_type, $user_id, NOW(), '', $ip, $add_uri_id)
 		");
 }
 
