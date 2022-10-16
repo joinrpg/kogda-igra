@@ -18,16 +18,16 @@ patchesJson6902:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: prod.kogda-igra.ru
+        value: kogda-igra.ru
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: prod.kogda-igra.ru
+        value: kogda-igra.ru
       - op: add
         path: /spec/tls/0/hosts/1
         value: www.kogda-igra.ru
       - op: add
         path: /spec/tls/0/hosts/2
-        value: kogda-igra.ru
+        value: prod.kogda-igra.ru
       - op: replace
         path: /spec/tls/0/secretName
         value: kogda-igra-ru-tls
