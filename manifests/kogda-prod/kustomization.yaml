@@ -26,11 +26,11 @@ patchesJson6902:
         path: /spec/tls/0/hosts/1
         value: www.kogda-igra.ru
       - op: add
-        path: /spec/tls/0/hosts/1
+        path: /spec/tls/0/hosts/2
         value: kogda-igra.ru
       - op: replace
         path: /spec/tls/0/secretName
-        value: dev-kogda-igra-ru-tls
+        value: kogda-igra-ru-tls
 
   - target:
       group: apps
@@ -38,6 +38,8 @@ patchesJson6902:
       kind: Deployment
       name: kogda-igra
     patch: |-
+      - op: remove
+        path: /spec/template/spec/containers/0/resources/limits/cpu
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu
         value: 300m
