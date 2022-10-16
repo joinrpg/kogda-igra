@@ -129,11 +129,11 @@ require_once 'config.php';
 			echo '<div class=menu_strip>';
 			
 			$this -> show_region_strip();
-			echo '</div> ';
+			echo '</div>';
 
 			echo '<div class=menu_strip>';
 			$this -> write_years_list ();
-			echo '</div> ';
+			echo '</div>';
 
 
 			echo '<div class=menu_strip>';
@@ -141,6 +141,7 @@ require_once 'config.php';
 			show_button('/reviews/', 'Рецензии');
 			show_button('/photo/', 'Фото');
 			show_button('http://rpg.ru/newb', 'Новичку');
+			joinrpg_box();
 			echo '</div> ';
 			
 			$username = get_username();

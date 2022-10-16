@@ -3,6 +3,16 @@
 	{
 		echo "<div class='active'><a href=\"$uri\">$text</a>$add</div>";
 	}
+
+	function joinrpg_box ()
+	{
+		echo "<div class='active'>
+			<a href=\"https://joinrpg.ru\">JoinRpg</a>
+			<a href=\"https://t.me/joinrpg\"><img src='/img/telegram.png' /></a>
+			<a href=\"https://vk.com/joinrpg\"><img src='/img/vk.png' /></a>
+			</div>";
+	}
+	
 	
 	function passive_button ($text)
 	{
