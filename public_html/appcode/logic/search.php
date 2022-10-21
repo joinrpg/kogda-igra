@@ -8,7 +8,7 @@ function get_search($search_string)
   $search_string = $sql -> QuoteAndClean("%$search_string%");
   
    return _get_games ("kg.deleted_flag = 0 AND kgd.\"order\" = 0
-			AND (kg.name LIKE $search_string OR kg.mg LIKE $search_string OR kg.email LIKE $search_string OR kp.polygon_name LIKE $search_string)");
+			AND (kg.name ILIKE $search_string OR kg.mg ILIKE $search_string OR kg.email ILIKE $search_string OR kp.polygon_name ILIKE $search_string)");
 }
 
 function get_search_by_name($search_string)
@@ -17,7 +17,7 @@ function get_search_by_name($search_string)
   $search_string = $sql -> QuoteAndClean("$search_string");
   
    return _get_games ("kg.deleted_flag = 0 AND kgd.\"order\" = 0
-			AND (kg.name LIKE $search_string)");
+			AND (kg.name ILIKE $search_string)");
 }
 
 
@@ -32,7 +32,7 @@ function get_suggestions($search_string)
 		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
 		WHERE
 			kg.deleted_flag = 0
-			AND (kg.name LIKE $search_string)
+			AND (kg.name ILIKE $search_string)
 		GROUP BY name
 		UNION
 		SELECT DISTINCT
@@ -41,13 +41,13 @@ function get_suggestions($search_string)
 		INNER JOIN \"ki_status\" ks ON ks.status_id = kg.status
 		WHERE
 			kg.deleted_flag = 0
-			AND (kg.mg LIKE $search_string)
+			AND (kg.mg ILIKE $search_string)
 		GROUP BY mg
 		UNION
 		SELECT  DISTINCT kp.polygon_name
 		FROM \"ki_polygons\" kp
 		WHERE
-       (kp.polygon_name LIKE $search_string)
+       (kp.polygon_name ILIKE $search_string)
     GROUP BY polygon_name
 		ORDER BY name";
 

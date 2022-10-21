@@ -132,7 +132,7 @@ function try_to_find_region ($region_name)
 {
   $sql = connect();
   $region_name = $sql -> QuoteAndClean (trim($region_name));
-  $q = "SELECT sub_region_id FROM ki_sub_regions WHERE sub_region_name LIKE $region_name";
+  $q = "SELECT sub_region_id FROM ki_sub_regions WHERE sub_region_name ILIKE $region_name";
   $result = $sql -> Query ($q);
   return is_array($result) ? $result[0]['sub_region_id'] : NULL; 
 }
