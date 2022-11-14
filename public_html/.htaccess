@@ -65,6 +65,10 @@ RewriteRule ^kz/19(.*)/?$ /?region=12&year=19$1
 RewriteRule ^kz/20(.*)/?$ /?region=12&year=20$1
 RewriteRule ^kz/?$ /?region=12
 
+RewriteRule ^foreign/19(.*)/?$ /?region=12&year=19$1
+RewriteRule ^foreign/20(.*)/?$ /?region=12&year=20$1
+RewriteRule ^foreign/?$ /?region=12
+
 RewriteRule ^19(.*)/?$ /?year=19$1
 RewriteRule ^20(.*)/?$ /?year=20$1
 
