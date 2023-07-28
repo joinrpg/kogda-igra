@@ -37,8 +37,6 @@ load database
 
 function pgloader {
     $cur_dir = (Get-Item .).FullName
-    docker run --rm --name pgloader `
-        --mount type=bind,source=$cur_dir,target=/tmp/cmd `
-        dimitri/pgloader:latest `
-        pgloader $args
+    Write-Output $mount_arg
+    docker run --rm --name pgloader --mount "type=bind,source=$cur_dir,target=/tmp/cmd" dimitri/pgloader:latest pgloader $args
 }
