@@ -46,7 +46,7 @@ jobs:
           echo "APP_IMAGE_VERSION_WITH_DIGEST=${COMMON_IMAGE_VERSION}@${APP_IMAGE_DIGEST}" >> $GITHUB_ENV
 
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v3.2
