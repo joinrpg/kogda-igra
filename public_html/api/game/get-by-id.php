@@ -4,6 +4,8 @@
 	require_once 'logic/gamebase.php';
 	require_once 'api.php';
 
+  send_json_header();
+  
 	$id = array_key_exists('id', $_GET) ? intval($_GET['id']) : '';
   $result = get_game_by_id($id);
   if (is_array($result))

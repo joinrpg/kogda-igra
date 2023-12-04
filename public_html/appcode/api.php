@@ -33,4 +33,9 @@ function strip_game_object_before_json($result)
     }
     return $response;
 }
+
+function send_json_header()
+{
+  header('Content-Type: application/json; charset=utf-8');
+}
 ?>
