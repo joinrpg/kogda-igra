@@ -143,7 +143,18 @@ function get_future_games()
 function get_games_by_timestamp($timestamp)
 {
   $timestamp = intval ($timestamp);
-  return _get_games("\"update_date\" > to_timestamp($timestamp) AND kgd.\"order\"=0 AND kg.deleted_flag =0", "INNER JOIN \"ki_updates\" ki ON kg.id = ki.game_id", "update_date DESC");
+  $sql = connect();
+  $query = "SELECT
+  	 kg.id, kg.redirect_id, 
+	 MAX(update_date) AS update_date
+	 FROM ki_games kg 
+	 INNER JOIN ki_updates ki ON kg.id = ki.game_id
+	 WHERE update_date > to_timestamp($timestamp) 
+	 GROUP BY kg.id
+	 ORDER BY update_date DESC
+
+	";
+  return $sql -> Query ($query);
 }
 
 ?>
