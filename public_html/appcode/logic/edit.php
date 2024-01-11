@@ -234,6 +234,11 @@ function do_movedate($id, $new_date, $days)
 	$new_date = $sql -> QuoteAndClean ($new_date);
 	$days = intval ($days);
 
+	if ($days < 1)
+	{
+		$days = 1;
+	}
+
 	if (0 >= $id )
 		return FALSE;
 
