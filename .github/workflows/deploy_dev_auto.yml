@@ -1,4 +1,4 @@
-name: Deploy to dev
+name: Deploy to dev (auto)
 on:
   workflow_run:
     workflows: [Build and publish]
