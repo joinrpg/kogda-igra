@@ -689,6 +689,14 @@ function action_resolve_no_add($id)
 			}
 			else
 			{
+				if (array_key_exists('HTTP_REFERER', $_SERVER))
+				{
+					$parsed= parse_url($_SERVER['HTTP_REFERER']);
+					if ($parsed['path'] == '/edit/')
+					{
+						redirect_to('/edit/');
+					}
+				}
 				redirect_to(get_game_edit_link($id));
 			}
 			break;

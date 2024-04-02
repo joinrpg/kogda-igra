@@ -82,6 +82,7 @@
 	{
 		echo '<h2>Модерация игр</h2>';
 		$calendar = new Calendar($list);
+    $calendar -> show_delete_link = TRUE;
 		$calendar -> write_calendar();
 	}
 	

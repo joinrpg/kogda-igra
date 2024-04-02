@@ -110,6 +110,7 @@ class Calendar
   {
     $this -> games_array = $games_array;
     $this -> use_checkbox = FALSE;
+    $this -> show_delete_link = FALSE;
     $this -> show_reviews = TRUE;
     $this -> show_only_future = FALSE;
     $this -> show_status = TRUE;
@@ -359,6 +360,13 @@ class Calendar
         {
           echo "<input type=\"checkbox\" name=\"mark[]\" value=\"$id\" />";
           echo "&nbsp;"; 
+        } else if ($this -> show_delete_link)
+        {
+          echo "<form action=\"/edit/game/?id=$id\" method=post style=\"display:inline\">";
+
+          submit("Удалить", 'delete', $id, '', TRUE);
+          echo "</form> &nbsp;";
+
         }
         $edit_link = get_game_edit_link($id);
         echo "<a href=\"$edit_link\">Изменить</a>";
