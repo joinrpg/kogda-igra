@@ -39,15 +39,31 @@
 	$noallrpg_info_count_future = intval ($problems_row['noallrpg_info_count_future']);
 	$comment_count = intval($problems_row['comment_count']);
 	
-	$editor_stats = get_editors_statistics();
-	$users_report = get_user_privs_report();
-	
 	$user_data = array();
+
+  $editor_stats_year = get_editors_statistics_month(12);
+  foreach ($editor_stats_year as $editor_row)
+	{
+    $username = $editor_row['username'];
+		$user_data[$username][$username] = $editor_row['username'];
+    $user_data[$username]['user_id'] = $editor_row['user_id'];
+    $user_data[$username]['lastvisit'] = $editor_row['lastvisit'];
+    $user_data[$username]['update_count_12'] = $editor_row['update_count'];
+    $user_data[$username]['new_count_12'] = $editor_row['new_count'];
+	}
+
+  $editor_stats = get_editors_statistics_month(3);
 	foreach ($editor_stats as $editor_row)
 	{
-		$user_data[$editor_row['username']] = $editor_row;
+    $username = $editor_row['username'];
+		$user_data[$username][$username] = $editor_row['username'];
+    $user_data[$username]['user_id'] = $editor_row['user_id'];
+    $user_data[$username]['lastvisit'] = $editor_row['lastvisit'];
+		$user_data[$username]['update_count_3'] = $editor_row['update_count'];
+    $user_data[$username]['new_count_3'] = $editor_row['new_count'];
 	}
-	
+
+  $users_report = get_user_privs_report();
 	foreach ($users_report as $user_row)
 	{
 		if (array_key_exists('privs', $user_row))
@@ -182,27 +198,47 @@
   <br />
   	<table>
   	<tr><th colspan=4>Пользователи</th></tr>
-  	<tr><th>Имя</th><th>Правки за 3 месяца</th><th>Новые игры за 3 месяца</th><th>Права</th></tr>
+  	<tr><th>Имя</th><th>Был в последний раз</th><th>Правки за 3/12 месяцев</th><th>Новые игры за 3/12 месяцев</th><th>Права</th></tr>
   	<?php 
   	
+    function write_count_cell($keyname, $editor_data, $lenta = false)
+    {
+      $keyname3 = $keyname . "_3";
+      $keyname12 = $keyname . "_12";
+
+      $count_3 = array_key_exists($keyname3, $editor_data) ? $editor_data[$keyname3] : 0;
+      $count_12 = array_key_exists($keyname12, $editor_data) ? $editor_data[$keyname12] : 0;
+
+      if ($count_3 > 0  || $count_12 > 0)
+      {
+        $user_id = $editor_data['user_id'];
+        echo "<td>";
+        if ($lenta)
+        {
+          echo "[<a href=\"/lenta/user/$user_id\">правки</a>] ";
+        }
+
+        echo "$count_3 / $count_12";
+        echo "</td>";
+      }
+      else
+      {
+        echo '<td>&nbsp;</td>';
+      }
+    }
   	
   	foreach ($user_data as $username => $editor_data)
   	{
-      echo "<tr>
-        <td>" . show_user_link($username) ."</td>
-        <td>";
-        if (array_key_exists('update_count', $editor_data))
-        {
-					echo "<a href=\"/lenta/user/{$editor_data['user_id']}\">{$editor_data['update_count']}</a>";
-        }
-        else
-        {
-					echo '&nbsp;';
-        }
-        echo "</td>
-        <td>". (array_key_exists('new_count', $editor_data) ? $editor_data['new_count'] : '&nbsp;') . "</td>
-        <td>". (array_key_exists('privs', $editor_data) ? $editor_data['privs'] : '&nbsp;') . "</td>
-        </tr>\n";
+      echo "<tr>";
+      echo "<td>" . show_user_link($username) ."</td>";
+      echo "<td>" . (array_key_exists('lastvisit', $editor_data) ? formate_single_date ($editor_data['lastvisit']) : 'Никогда') . "</td>";
+
+      write_count_cell('update_count', $editor_data, true);
+      write_count_cell('new_count', $editor_data);
+
+      echo "<td>". (array_key_exists('privs', $editor_data) ? $editor_data['privs'] : '&nbsp;') . "</td>";
+
+      echo "</tr>\n";
   	}
   	if (check_my_priv (USERS_CONTROL_PRIV))
 	{

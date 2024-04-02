@@ -1,17 +1,24 @@
 <?php
 require_once 'funcs.php';
-function get_editors_statistics()
+function get_editors_statistics_month($month_count)
+{
+  return get_editors_statistics("$month_count months");
+}
+
+function get_editors_statistics($interval)
 {
   $sql = connect();
-  return $sql -> Query('
+  $interval = $sql -> QuoteAndClean ($interval);
+  return $sql -> Query("
   SELECT COUNT(ki_update_id) AS update_count, username, users.user_id,
-  SUM(CASE WHEN ki_update_type_id = 1 THEN 1 ELSE 0 END) AS new_count
+  SUM(CASE WHEN ki_update_type_id = 1 THEN 1 ELSE 0 END) AS new_count,
+  lastvisit
   FROM ki_updates 
   INNER JOIN users ON users.user_id = ki_updates.user_id
-  WHERE (update_date + INTERVAL \'3 months\') > NOW()
+  WHERE (update_date + INTERVAL $interval) > NOW()
   GROUP BY username, users.user_id
   ORDER BY COUNT(ki_update_id)  DESC
-  ');
+  ");
 }
 
 function get_editor_stat_by_id($user_id)
