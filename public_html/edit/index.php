@@ -68,6 +68,9 @@
 	{
 		if (array_key_exists('privs', $user_row))
     {
+      $username = $user_row['username'];
+      $user_data[$username]['user_id'] = $user_row['user_id'];
+      $user_data[$username]['lastvisit'] = $user_row['lastvisit'];
        $user_data[$user_row['username']]['privs'] = $user_row['privs'];
     }
 	}
