@@ -55,6 +55,12 @@ require_once 'config.php';
 			$sitename_editors_email = SITENAME_EDITORS_EMAIL;
 			return "<a href=\"mailto:$sitename_editors_email\">$sitename_editors_email</a>";
 		}
+
+		function get_telegram_bot()
+		{
+			$botname = SITENAME_EDITORS_BOT;
+			return "<a href=\"https://t.me/$botname\"><img src='/img/telegram.png' style='margin-bottom: -3px;'/>$botname</a>";
+		}
 		
 		function get_page_header()
 		{
@@ -188,7 +194,7 @@ require_once 'config.php';
 			
 			if (!$username && $this -> show_add_adv)
 			{
-				echo '<b>Нет нужной игры</b>? <a href="' . get_game_edit_link(NULL). '">Добавьте</a> самостоятельно или напишите на ' . $this -> get_mailto_editors();
+				echo '<b>Нет нужной игры</b>? <a href="' . get_game_edit_link(NULL). '">Добавьте</a> самостоятельно или напишите в '. $this -> get_telegram_bot() .' или на ' . $this -> get_mailto_editors();
 			}
 		}
 

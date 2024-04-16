@@ -10,6 +10,7 @@
 	define ("SITENAME_SIGNATURE", "Редакторы КогдаИгры");
 	define ("SITENAME_HOST", array_key_exists("SITENAME_HOST", $_ENV) ? $_ENV["SITENAME_HOST"] : "kogda-igra.ru");
 	define ("SITENAME_EDITORS_EMAIL", 'rpg@' . SITENAME_HOST);
+	define ("SITENAME_EDITORS_BOT", 'kogda_igra_bot');
 	define ("SITENAME_SCHEME", "https");
 	define ("GA_ANALYTICS", "UA-1194519-2");
 	
