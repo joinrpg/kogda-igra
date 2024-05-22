@@ -8,7 +8,14 @@ function get_search($search_string)
   $search_string = $sql -> QuoteAndClean("%$search_string%");
   
    return _get_games ("kg.deleted_flag = 0 AND kgd.\"order\" = 0
-			AND (kg.name ILIKE $search_string OR kg.mg ILIKE $search_string OR kg.email ILIKE $search_string OR kp.polygon_name ILIKE $search_string)");
+			AND (kg.name ILIKE $search_string 
+				OR kg.mg ILIKE $search_string 
+				OR kg.email ILIKE $search_string 
+				OR kp.polygon_name ILIKE $search_string
+				OR kg.uri ILIKE $search_string
+				OR kg.lj_comm ILIKE $search_string
+				OR kg.fb_comm ILIKE $search_string
+				)");
 }
 
 function get_search_by_name($search_string)
