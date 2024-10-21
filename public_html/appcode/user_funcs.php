@@ -70,7 +70,7 @@ function get_user_id_from_name ($username, $lastvisit = TRUE)
 function get_user_by_email($email)
 {
 	$sql = connect();
-	$users = $sql -> GetAll('users', '*', "\"email\" = '$email'");
+	$users = $sql -> GetAll('users', '*', "\"email\" ILIKE '$email'");
 	return ($users != FALSE) ? $users[0] : NULL;
 }
 
