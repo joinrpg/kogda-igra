@@ -144,9 +144,12 @@ require_once 'config.php';
 
 			echo '<div class=menu_strip>';
 			show_button('/about/', 'О нас');
-			show_button('/reviews/', 'Рецензии');
-			show_button('/photo/', 'Фото');
-			show_button('http://rpg.ru/newb', 'Новичку');
+
+			// Мертвые разделы, переделать!
+			// show_button('/reviews/', 'Рецензии');
+			// show_button('/photo/', 'Фото');
+
+			show_button('http://rpg.ru/', 'Что такое ролевые игры? Новичку...');
 			joinrpg_box();
 			echo '</div> ';
 			
