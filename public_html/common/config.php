@@ -12,6 +12,6 @@
 	define ("SITENAME_EDITORS_EMAIL", 'rpg@' . SITENAME_HOST);
 	define ("SITENAME_EDITORS_BOT", 'kogda_igra_bot');
 	define ("SITENAME_SCHEME", "https");
-	define ("GA_ANALYTICS", "UA-1194519-2");
+	define ("YA_METRIKA_ID", 100288537);
 	
 ?>

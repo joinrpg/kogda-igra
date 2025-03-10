@@ -2,6 +2,7 @@
 require_once 'user_funcs.php';
 require_once 'sqlbase.php';
 require_once 'top_menu.php';
+require_once 'yandex-metrika.php';
 
 function write_header ($title, $edit = FALSE)
 {
@@ -40,21 +41,10 @@ function write_header ($title, $edit = FALSE)
   {
     echo '<script src="/js/edit.js" type="text/javascript"></script>';
   }
+  write_yandex_metrika (YA_METRIKA_ID);
   echo '</head><body>';
   
-  if (GA_ANALYTICS != '')
-  {
-		?>
-		<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		<?php
-		echo "ga('create', '" . GA_ANALYTICS . "', 'auto');";
-		echo "ga('send', 'pageview');";
-		echo "</script>";
-	}
+  
 	
 	if (!array_key_exists("csrf_token", $_SESSION))
 	{
