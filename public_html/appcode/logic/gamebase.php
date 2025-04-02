@@ -45,7 +45,8 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
 		ks.status_name, ks.status_style, ks.show_date_flag, ks.cancelled_status,
 		
 		krev.*, ks.show_review_flag, kp.meta_polygon,
-		kgd.\"begin\", kgd.\"time\", kgd.\"order\", kia.allrpg_zayvka_id, kia.opened AS allrpg_opened
+		kgd.\"begin\", kgd.\"time\", kgd.\"order\", kia.allrpg_zayvka_id, kia.opened AS allrpg_opened,
+		updates.update_date
 		FROM \"ki_games\" kg
 		INNER JOIN ki_polygons kp ON kg.polygon = kp.polygon_id
 		INNER JOIN ki_sub_regions ksr ON kg.sub_region_id = ksr.sub_region_id
@@ -56,11 +57,23 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
 		LEFT JOIN (SELECT MIN(review_id) as review_id, game_id FROM \"ki_review\" GROUP BY game_id) A ON A.game_id = kg.id
 		LEFT JOIN \"ki_review\" krev ON krev.review_id = A.review_id
 		LEFT JOIN \"ki_zayavka_allrpg\" kia ON kg.id = kia.game_id
+		INNER JOIN (SELECT game_id, MAX(update_date) AS update_date FROM ki_updates GROUP BY game_id) updates ON updates.game_id = kg.id
 		$add_join
 		WHERE
 			$where
 			ORDER BY $orderby $limit";
-  return $sql -> Query ($query);
+  
+  $result = $sql -> Query ($query);
+
+  $result = array_map(function ($item) {
+    	$item['id'] = (int) $item['id'];
+		$item['type'] = (int) $item['type'];
+		$item['status'] = (int) $item['status'];
+		$item['players_count'] = $item['players_count'] !== null ? (int) $item['players_count'] : null;
+		$item['allrpg_info_id'] = $item['allrpg_info_id'] !== null ? (int) $item['allrpg_info_id'] : null;
+    	return $item;
+	}, $result);
+  return $result;
 }
 
 function get_game_dates ($game_id)
