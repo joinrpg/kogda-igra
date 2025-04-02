@@ -1,14 +1,13 @@
 <?php
-function strip_game_object_before_json($result, $whitelisted_fields = null)
+function strip_game_object_before_json($result)
 {
-  if (!$whitelisted_fields)
-  {
     $whitelisted_fields = 
       array ("id", "name", "uri", "begin", "time", "type", "polygon", "mg", "email", "status", "comment", "region", "sub_region_id", "deleted_flag", 
       "players_count", "allrpg_info_id", "polygon_name", "game_type_name", "sub_region_disp_name", "sub_region_name", "status_name", 'vk_club', 'lj_comm', 'fb_comm'
-      , 'update_date'
     );
-  }
+
+    $datetime_fields = array ("update_date");
+
     if (array_key_exists('show_flags', $result) && $result['show_flags'])
     {
       return array(
@@ -31,11 +30,14 @@ function strip_game_object_before_json($result, $whitelisted_fields = null)
     $response = array();
     foreach ($result as $key => $value)
     {
-      if (array_search($key, $whitelisted_fields) === FALSE)
+      if (array_search($key, $datetime_fields) !== FALSE)
       {
-        continue;
+        $response[$key] = $result[$key] -> format(DateTime::ATOM);
       }
+      else if (array_search($key, $whitelisted_fields) !== FALSE)
+      {
         $response[$key] = $result[$key];
+      }
     }
     return $response;
 }

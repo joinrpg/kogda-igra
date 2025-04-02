@@ -71,6 +71,11 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
 		$item['status'] = (int) $item['status'];
 		$item['players_count'] = $item['players_count'] !== null ? (int) $item['players_count'] : null;
 		$item['allrpg_info_id'] = $item['allrpg_info_id'] !== null ? (int) $item['allrpg_info_id'] : null;
+
+		if (!empty($item['update_date'])) {
+			$date = new DateTime( $item['update_date']);
+			$item['update_date'] = $date;
+		}
     	return $item;
 	}, $result);
   return $result;
