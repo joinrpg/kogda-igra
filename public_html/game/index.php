@@ -55,7 +55,7 @@
 		
 	function get_date_string ($date)
   {
-		return $date -> show_date_string($this -> count == 1);
+		return $date -> show_date_string(TRUE);
   }
 	}
 	
