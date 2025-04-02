@@ -154,7 +154,17 @@ function get_games_by_timestamp($timestamp)
 	 ORDER BY update_date DESC
 
 	";
-  return $sql -> Query ($query);
+  $result = $sql -> Query ($query);
+
+  $result = array_map(function ($item) {
+	$item['id'] = (int) $item['id'];
+	if (!empty($item['update_date'])) {
+		$date = new DateTime( $item['update_date']);
+		$item['update_date'] = $date;
+	}
+	return $item;
+	}, $result);
+	return $result;
 }
 
 ?>
