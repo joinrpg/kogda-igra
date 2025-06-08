@@ -85,7 +85,7 @@ VALUES ($author, $author_lj, $uri, $game_id, $photo_comment, $photo_good_flag)"
 
 class PhotoUpdatedEmail extends Email
 {
-	function PhotoUpdatedEmail ($game_id, $updated, $author_name)
+	function __construct ($game_id, $updated, $author_name)
 	{
 		$this -> game_data = get_game_by_id ($game_id);
 		$this -> updated = $updated;
