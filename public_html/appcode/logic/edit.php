@@ -195,11 +195,17 @@ function do_deletedate ($game_id, $order)
 
   $sql -> Run ('START TRANSACTION');
   
-  $sql -> Run ("DELETE FROM \"ki_game_date\" WHERE $game_id = game_id AND \"order\" = $order");
+  $result = $sql -> Run ("DELETE FROM \"ki_game_date\" WHERE $game_id = game_id AND \"order\" = $order ");
+  if ($sql -> GetAffectedCount($result) == 0)
+  {
+	$sql -> Run ('ABORT');
+	return false;
+  }
   $sql -> Run ("UPDATE \"ki_game_date\" SET \"order\" = \"order\" -1 WHERE $game_id = game_id AND \"order\" > $order");
   
   internal_do_update_year_index ($sql);
   $sql -> Run ('COMMIT');
+  return true;
 }
 
 function do_change_date_order ($game_id, $order, $sign)
