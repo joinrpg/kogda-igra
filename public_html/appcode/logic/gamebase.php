@@ -65,6 +65,11 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
   
   $result = $sql -> Query ($query);
 
+  if (empty($result))
+  {
+	return NULL;
+  }
+
   $result = array_map(function ($item) {
     	$item['id'] = (int) $item['id'];
 		$item['type'] = (int) $item['type'];

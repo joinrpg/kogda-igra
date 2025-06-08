@@ -130,6 +130,12 @@
 	
 	$topmenu = new GameProfileMenu($game);
 	$topmenu -> show();
+
+	if ($game === NULL)
+	{
+		echo "Игра не найдена";
+		return;
+	}
   
 	$deleted_flag = $game['deleted_flag'];
 	if ($deleted_flag)
