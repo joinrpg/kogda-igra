@@ -120,9 +120,9 @@ class Sql
 		return intval($result['lastval']);
 	}
 	
-	function GetAffectedCount()
+	function GetAffectedCount($result)
 	{
-		return pg_affected_rows($this -> handle);
+		return pg_affected_rows($result);
 	}
 	
 	function GetRow ($query)
