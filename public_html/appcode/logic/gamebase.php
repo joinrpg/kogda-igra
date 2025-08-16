@@ -74,6 +74,12 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
     	$item['id'] = (int) $item['id'];
 		$item['type'] = (int) $item['type'];
 		$item['status'] = (int) $item['status'];
+		$item['polygon'] = (int) $item['polygon'];
+		$item['sub_region_id'] = (int) $item['sub_region_id'];
+		$item['deleted_flag'] = (int) $item['deleted_flag'];
+		$item['time'] = (int) $item['time'];
+
+
 		$item['players_count'] = $item['players_count'] !== null ? (int) $item['players_count'] : null;
 		$item['allrpg_info_id'] = $item['allrpg_info_id'] !== null ? (int) $item['allrpg_info_id'] : null;
 
