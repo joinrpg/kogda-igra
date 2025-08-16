@@ -80,6 +80,10 @@ class Sql
 
 	function QuoteAndClean($value)
 	{
+		if ($value === NULL)
+		{
+			return 'NULL';
+		}
     if (get_magic_quotes_gpc()) {
         $value = stripslashes($value);
     }

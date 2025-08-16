@@ -1,11 +1,56 @@
 <?php
 require_once 'funcs.php';
 
+function get_client_ip() {
+    // Список возможных заголовков, которые могут содержать IP-адрес клиента
+    $ipHeaders = [
+        'HTTP_CLIENT_IP',
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_FORWARDED',
+        'HTTP_X_CLUSTER_CLIENT_IP',
+        'HTTP_FORWARDED_FOR',
+        'HTTP_FORWARDED',
+        'REMOTE_ADDR'
+    ];
+    
+    $clientIp = null;
+    
+    // Проверяем все возможные заголовки
+    foreach ($ipHeaders as $header) {
+        if (!empty($_SERVER[$header])) {
+            $ips = explode(',', $_SERVER[$header]);
+            $ips = array_map('trim', $ips);
+            
+            // Берем первый IP из списка (если их несколько)
+            $ip = $ips[0];
+            
+            // Проверяем, что IP валидный
+            if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                $clientIp = $ip;
+                break;
+            }
+        }
+    }
+    
+    // Если ничего не нашли, используем REMOTE_ADDR
+    return $clientIp ?: $_SERVER['REMOTE_ADDR'];
+}
+
+function get_user_ip_if_anon()
+{
+	$user_id = get_user_id();
+	if ($user_id)
+	{
+		return NULL;
+	}
+	return get_client_ip();
+}
+
 function internal_log_game ($update_type, $game_id, $msg = FALSE)
 {
 	$sql = connect();
 	$user_id = get_user_id();
-	$ip = $user_id ? 'NULL' : "'{$_SERVER['REMOTE_ADDR']}'";
+	$ip =  $sql -> QuoteAndClean(get_user_ip_if_anon());
 	$update_type  = intval ($update_type);
 	$game_id = intval ($game_id);
 	
@@ -61,7 +106,7 @@ function internal_log_add_uri ($add_uri_id)
 	$sql = connect();
 	
 	$user_id = get_user_id();
-	$ip = $user_id ? 'NULL' : "'{$_SERVER['REMOTE_ADDR']}'";
+	$ip =  $sql -> QuoteAndClean(get_user_ip_if_anon());
 	$add_uri_id = intval ($add_uri_id);
 	$update_type = 19;
 	$sql -> Run ("
