@@ -195,7 +195,7 @@ require_once 'config.php';
 				$this -> write_adv_box();
 			}
 			
-			if (!$username && $this -> show_add_adv)
+			if ($this -> show_add_adv)
 			{
 				echo '<b>Нет нужной игры</b>? <a href="' . get_game_edit_link(NULL). '">Добавьте</a> самостоятельно или напишите в '. $this -> get_telegram_bot() .' или на ' . $this -> get_mailto_editors();
 			}
