@@ -1,0 +1,15 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = crlf
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.php]
+indent_style = space
+indent_size = 4
+
+[*.{yml,yaml,json,md,sql}]
+indent_style = space
+indent_size = 2

@@ -15,6 +15,18 @@ env:
   APP_NAME: kogda-igra
 
 jobs:
+  lint:
+    name: Lint PHP
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5.3'
+          tools: composer
+      - run: composer install --no-ansi --no-interaction --prefer-dist
+      - run: composer cs-check
+
   build:
     name: Build and publish
     runs-on: ubuntu-24.04
