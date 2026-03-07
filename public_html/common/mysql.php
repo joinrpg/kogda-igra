@@ -2,71 +2,71 @@
 
 class Sql
 {
-	function __construct ($host, $user, $password, $base, $port)
-	{
-    	$this -> debug = 0;
+    function __construct ($host, $user, $password, $base, $port)
+    {
+        $this -> debug = 0;
 
-		$this->handle = pg_connect("host=$host dbname=$base user=$user password=$password  options='--client_encoding=UTF8' port=$port");
-		if ($this->handle)
-		{
-			return $this->handle;
-		}
-		die(pg_last_error());
-		return FALSE;
-	}
+        $this->handle = pg_connect("host=$host dbname=$base user=$user password=$password  options='--client_encoding=UTF8' port=$port");
+        if ($this->handle)
+        {
+            return $this->handle;
+        }
+        die(pg_last_error());
+        return FALSE;
+    }
 
-	function Close ()
-	{
-		if ($this->handle)
-		{
-			return @pg_close($this->handle);
-		}
-		return FALSE;
-	}
+    function Close ()
+    {
+        if ($this->handle)
+        {
+            return @pg_close($this->handle);
+        }
+        return FALSE;
+    }
 
-	function Query ($sql)
-	{
-    	$start = microtime(true);
-		$result = pg_query ( $this->handle, $sql);
+    function Query ($sql)
+    {
+        $start = microtime(true);
+        $result = pg_query ( $this->handle, $sql);
     $elapsed_secs = microtime(true) - $start;
-    
+
     if ($elapsed_secs > 1)
     {
       trigger_error ("SLOW QUERY [$elapsed_secs sec]: $sql", E_USER_WARNING);
     }
 
-		if (!$result)
-		{
-					echo pg_last_error();
-			return FALSE;
+        if (!$result)
+        {
+                    echo pg_last_error();
+            return FALSE;
 
-			}
+            }
 
-		$array = FALSE;
+        $array = FALSE;
 
-		while ($row = pg_fetch_array($result, null, PGSQL_ASSOC))
-		{
-			$array [] = $row;
-		}
-		echo pg_last_error();
-		return $array;
-	}
+        while ($row = pg_fetch_array($result, null, PGSQL_ASSOC))
+        {
+            $array [] = $row;
+        }
+        echo pg_last_error();
+        return $array;
+    }
 
-	function GetAll ($table, $what = '*', $condition = '1', $limit = 0, $orderby = '')
-	{
-		$sql = "SELECT $what FROM $table WHERE $condition";
+    function GetAll ($table, $what = '*', $condition = '1', $limit = 0, $orderby = '')
+    {
+        $sql = "SELECT $what FROM $table WHERE $condition";
 
-		if ($orderby)
-			$sql .= " ORDER BY $orderby";
+        if ($orderby)
+            $sql .= " ORDER BY $orderby";
 
-					if ($limit)
-			$sql .= " LIMIT $limit";
+                    if ($limit)
+            $sql .= " LIMIT $limit";
 
-		return $this->Query ($sql);
-	}
+        return $this->Query ($sql);
+    }
 
-	function Quote($value)
-	{
+    function Quote($value)
+    {
     if (get_magic_quotes_gpc()) {
         $value = stripslashes($value);
     }
@@ -76,14 +76,14 @@ class Sql
     }
 
     return $value;
-	}
+    }
 
-	function QuoteAndClean($value)
-	{
-		if ($value === NULL)
-		{
-			return 'NULL';
-		}
+    function QuoteAndClean($value)
+    {
+        if ($value === NULL)
+        {
+            return 'NULL';
+        }
     if (get_magic_quotes_gpc()) {
         $value = stripslashes($value);
     }
@@ -95,89 +95,89 @@ class Sql
     }
 
     return $value;
-	}
+    }
 
-	function Run ($request)
-	{
+    function Run ($request)
+    {
     if ($this -> debug)
     {
       echo "$request<br>";
       return 1;
     }
-		$res = pg_query ($this->handle, $request);
-		
-		$error = pg_last_error();
-		
-		if ($error)
-		{
+        $res = pg_query ($this->handle, $request);
+
+        $error = pg_last_error();
+
+        if ($error)
+        {
       echo "$request $error";
-		}
+        }
 
-		return $res;
-	}
+        return $res;
+    }
 
-	function LastInsert ()
-	{
-		$result =  $this -> GetRow('SELECT lastval();');
-		if (!$result)
-			return FALSE;
-		return intval($result['lastval']);
-	}
-	
-	function GetAffectedCount($result)
-	{
-		return pg_affected_rows($result);
-	}
-	
-	function GetRow ($query)
-	{
-		$result = $this -> Query ($query);
+    function LastInsert ()
+    {
+        $result =  $this -> GetRow('SELECT lastval();');
+        if (!$result)
+            return FALSE;
+        return intval($result['lastval']);
+    }
 
-		if (!$result)
-			return FALSE;
+    function GetAffectedCount($result)
+    {
+        return pg_affected_rows($result);
+    }
 
-		return $result[0];
-	}
-	
-	function begin()
-	{
+    function GetRow ($query)
+    {
+        $result = $this -> Query ($query);
+
+        if (!$result)
+            return FALSE;
+
+        return $result[0];
+    }
+
+    function begin()
+    {
     $this -> Run ('START TRANSACTION');
-	}
-	
-	function commit()
-	{
+    }
+
+    function commit()
+    {
     $this -> Run ('COMMIT');
-	}
-	
-	function rollback()
-	{
+    }
+
+    function rollback()
+    {
     $this -> Run ('ROLLBACK');
-	}
+    }
 
-	function GetObject ($table, $id = FALSE)
-	{
-		if ($id == FALSE)
-			$id = $this->LastInsert();
-		$id = $this -> Quote ($id);
-		$sql = "SELECT * FROM $table WHERE \"id\" = $id LIMIT 1";
-		$result = $this -> Query ($sql);
+    function GetObject ($table, $id = FALSE)
+    {
+        if ($id == FALSE)
+            $id = $this->LastInsert();
+        $id = $this -> Quote ($id);
+        $sql = "SELECT * FROM $table WHERE \"id\" = $id LIMIT 1";
+        $result = $this -> Query ($sql);
 
-		if (!$result)
-			return FALSE;
+        if (!$result)
+            return FALSE;
 
 
-		return $result[0];
-	}
+        return $result[0];
+    }
 
-	function DeleteObject ($table, $id)
-	{
+    function DeleteObject ($table, $id)
+    {
 
-		$id = $this -> Quote ($id);
+        $id = $this -> Quote ($id);
 
-		$req = "DELETE FROM $table WHERE \"id\" = $id";
+        $req = "DELETE FROM $table WHERE \"id\" = $id";
 
-		return $this -> Run ($req);
-	}
+        return $this -> Run ($req);
+    }
 
 }
 

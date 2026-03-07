@@ -1,6 +1,6 @@
 <?php
-	require_once 'logic.php';
-	require_once 'funcs.php';
+    require_once 'logic.php';
+    require_once 'funcs.php';
 
   function write_stat($row, $total, $good)
   {
@@ -12,16 +12,16 @@
     echo "<td>$fail_percent</td>";
   }
 
-	require_once 'top_menu.php';
-	
-	$topmenu = new TopMenu();
-	$topmenu -> pagename =  'Статистика';
-	$topmenu -> show();
-  
+    require_once 'top_menu.php';
+
+    $topmenu = new TopMenu();
+    $topmenu -> pagename =  'Статистика';
+    $topmenu -> show();
+
   echo "<h1>Статистика</h1>";
-    
+
   echo '<p>Статистика является предварительной, нечеткой и неофициальной.</p>';
-  
+
   echo '<table cellpadding="2" cellspacing="0">';
   echo '<tr>
     <th rowspan="2">Год</th>

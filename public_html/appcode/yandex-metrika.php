@@ -19,5 +19,5 @@ function write_yandex_metrika($metrika_id) {
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/<?php echo $metrika_id; ?>" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
- <?php 
+ <?php
 }

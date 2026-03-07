@@ -7,7 +7,7 @@ abstract class Email
   function __construct()
   {
   }
-  
+
   function mg_send($to, $from, $subject, $message) {
 
 
@@ -39,33 +39,33 @@ abstract class Email
   if($info['http_code'] != 200)
         {
           var_dump($info);
-					die("Send failed");
+                    die("Send failed");
         }
 
   curl_close($ch);
 
   return $j;
-	}
-  
+    }
+
   function send ()
   {
     $recipient = $this -> get_recipient();
     $sender = $this -> get_sender();
     if ($recipient)
     {
-			$bcc = "Bcc: $sender\r\n";
+            $bcc = "Bcc: $sender\r\n";
     }
     else
     {
-			$bcc = '';  
-			$recipient = $sender;
+            $bcc = '';
+            $recipient = $sender;
     }
     if ($recipient)
     {
       $this -> mg_send($recipient, $sender, $this -> get_subject(), $this -> get_message());
     }
   }
-  
+
   function get_sender ()
   {
     return SITENAME_EDITORS_EMAIL;
@@ -74,40 +74,40 @@ abstract class Email
 
 class AddedURIEmal extends Email
 {
-	function __construct($add_uri_id)
+    function __construct($add_uri_id)
   {
-		$this -> add_uri_id = $add_uri_id;
+        $this -> add_uri_id = $add_uri_id;
   }
-  
+
   function get_subject()
   {
-		return SITENAME_MAIN . ": требуется модерация ссылки";
+        return SITENAME_MAIN . ": требуется модерация ссылки";
   }
-  
-	function get_message()
+
+    function get_message()
   {
      return "Пользователь добавил ссылку на анонс игры. " .
-		SITENAME_SCHEME . "://" . SITENAME_HOST . "/edit/game?add_uri_id={$this->add_uri_id}
+        SITENAME_SCHEME . "://" . SITENAME_HOST . "/edit/game?add_uri_id={$this->add_uri_id}
 --
 C уважением, " . SITENAME_SIGNATURE;
   }
-  
+
   function get_recipient()
   {
-		return NULL;
+        return NULL;
   }
 }
 
 class GameUpdatedEmail extends Email
 {
-  
+
   function __construct ($game_id, $updated)
   {
     $this -> game_data = get_game_by_id ($game_id);
     $this -> updated = $updated;
     $this -> intersections = get_intersections($game_id);
   }
-  
+
   function get_recipient()
   {
    if (!$this -> game_data['email'])
@@ -116,15 +116,15 @@ class GameUpdatedEmail extends Email
    }
    return '<' . $this -> game_data['email'] .'>';
   }
-  
+
   function get_subject()
   {
     return SITENAME_MAIN . ": " . ($this -> updated ? "Обновлена" : "Добавлена") . " игра \"" . $this -> game_data['name'] .  "\"";
   }
-  
+
   function get_int_table()
   {
-		$list = '';
+        $list = '';
      foreach ($this->intersections as $game)
      {
         $masked = $game['show_flags'] && 1;
@@ -137,11 +137,11 @@ class GameUpdatedEmail extends Email
      }
      return $list ? "Пересечения:\n" . $list . "\n" : '';
   }
-  
+
   function get_game_info_text()
   {
-		$game =$this -> game_data;
-		if ($game['uri'])
+        $game =$this -> game_data;
+        if ($game['uri'])
       {
         $uri = "\nСайт: {$game['uri']}";
       }
@@ -170,7 +170,7 @@ class GameUpdatedEmail extends Email
       $hide_email = '';
      }
     $players_count = $game['players_count'] > 0 ? $game['players_count'] : 'Неизвестно';
-    
+
     $game_type_name = html_entity_decode($game['game_type_name'], ENT_COMPAT, "utf-8");
     $polygon_name = html_entity_decode($game['polygon_name'], ENT_COMPAT, "utf-8");
     $game_name = $this -> game_data['name'];
@@ -192,7 +192,7 @@ Email: {$game['email']}$hide_email$vk_text$lj_text$fb_text
 
 $int_text";
   }
-  
+
   function get_message()
   {
      $text = $this -> get_game_info_text();
@@ -209,22 +209,22 @@ C уважением, " . SITENAME_SIGNATURE;
 
 class GameReqModerateEmail extends GameUpdatedEmail
 {
-	function __construct($game_id)
-	{
-		parent::__construct($game_id, 0);
-	}
-	
-	function get_recipient()
-	{
-		return NULL;
-	}
-	
-	function get_subject()
-	{
-		return SITENAME_MAIN . ": требуется модерация {$this -> game_data['name']}";
-	}
-	
-	  function get_message()
+    function __construct($game_id)
+    {
+        parent::__construct($game_id, 0);
+    }
+
+    function get_recipient()
+    {
+        return NULL;
+    }
+
+    function get_subject()
+    {
+        return SITENAME_MAIN . ": требуется модерация {$this -> game_data['name']}";
+    }
+
+      function get_message()
   {
      $text = $this -> get_game_info_text();
 

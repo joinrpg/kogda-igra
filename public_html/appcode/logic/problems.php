@@ -10,7 +10,7 @@ function get_passed_games()
 }
 
 function get_problem_games($in_past = TRUE, $in_future = TRUE)
-{  
+{
   $future_string = $in_future ? 'kgd."begin" > NOW()' : '0 = 1';
   $past_string = $in_past ? 'kgd."begin" < NOW()' : '0 = 1';
 
@@ -36,7 +36,7 @@ function get_noemail_games($future = FALSE)
 function get_noplayers_count_games($future = FALSE)
 {
     $future_string = _get_future_string($future);
-  
+
   return _get_games ("kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
 			AND kg.players_count IS NULL $future_string");
@@ -45,7 +45,7 @@ function get_noplayers_count_games($future = FALSE)
 function get_noallrpg_info_games($future = FALSE)
 {
   $future_string = _get_future_string($future);
-  
+
   return _get_games ("kg.deleted_flag = 0
 			AND ks.cancelled_status = 0
 			AND kg.allrpg_info_id IS NULL
@@ -60,7 +60,7 @@ function get_nopolygon_games()
 function get_problems_summary()
 {
   $sql = connect();
-  
+
   $query = 'SELECT (
     SELECT COUNT(*)
 		FROM "ki_games" kg
@@ -176,7 +176,7 @@ function get_problems_summary()
 			AND kg.allrpg_info_id IS NULL
 			AND kgd."begin" > NOW()
 		) AS noallrpg_info_count_future';
-    
+
    return $sql -> GetRow ($query);
 }
 

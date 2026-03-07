@@ -1,7 +1,7 @@
 <?php
-	require_once 'funcs.php';
-	require_once 'top_menu.php';
-	
+    require_once 'funcs.php';
+    require_once 'top_menu.php';
+
   $topmenu = new TopMenu();
   $topmenu -> pagename = 'Автоматизированные запросы';
   $topmenu -> show();

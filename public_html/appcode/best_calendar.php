@@ -7,7 +7,7 @@ class BestCalendar extends Calendar {
   {
     Calendar::__construct(get_best($year, $region));
   }
-  
+
    function get_columns()
   {
     if ($this -> show_status)
@@ -28,12 +28,12 @@ class BestCalendar extends Calendar {
     }
     return $columns;
   }
-  
+
   function get_date_string ($date)
   {
-		return $date -> show_date_string(FALSE);
+        return $date -> show_date_string(FALSE);
   }
-  
+
   //TODO: This should be in Calendar
   function write_entry ($game)
   {
@@ -43,7 +43,7 @@ class BestCalendar extends Calendar {
         return;
 
       $id = $game['id'];
-      
+
       $date = new GameDate($game);
 
       $type = $game['game_type_name'];

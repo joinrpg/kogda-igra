@@ -28,7 +28,7 @@ function get_game_for_edit($id)
 		INNER JOIN \"ki_game_date\" kgd ON kgd.game_id = kg.id
 		WHERE
 			kg.id = $id AND kgd.\"order\" = 0");
-			 return is_array($result) ? $result[0] : NULL;
+             return is_array($result) ? $result[0] : NULL;
 }
 
 
@@ -62,33 +62,33 @@ function _get_games($where, $add_join = '', $orderby = 'kgd.begin DESC, kgd.time
 		WHERE
 			$where
 			ORDER BY $orderby $limit";
-  
+
   $result = $sql -> Query ($query);
 
   if (empty($result))
   {
-	return NULL;
+    return NULL;
   }
 
   $result = array_map(function ($item) {
-    	$item['id'] = (int) $item['id'];
-		$item['type'] = (int) $item['type'];
-		$item['status'] = (int) $item['status'];
-		$item['polygon'] = (int) $item['polygon'];
-		$item['sub_region_id'] = (int) $item['sub_region_id'];
-		$item['deleted_flag'] = (int) $item['deleted_flag'];
-		$item['time'] = (int) $item['time'];
+        $item['id'] = (int) $item['id'];
+        $item['type'] = (int) $item['type'];
+        $item['status'] = (int) $item['status'];
+        $item['polygon'] = (int) $item['polygon'];
+        $item['sub_region_id'] = (int) $item['sub_region_id'];
+        $item['deleted_flag'] = (int) $item['deleted_flag'];
+        $item['time'] = (int) $item['time'];
 
 
-		$item['players_count'] = $item['players_count'] !== null ? (int) $item['players_count'] : null;
-		$item['allrpg_info_id'] = $item['allrpg_info_id'] !== null ? (int) $item['allrpg_info_id'] : null;
+        $item['players_count'] = $item['players_count'] !== null ? (int) $item['players_count'] : null;
+        $item['allrpg_info_id'] = $item['allrpg_info_id'] !== null ? (int) $item['allrpg_info_id'] : null;
 
-		if (!empty($item['update_date'])) {
-			$date = new DateTime( $item['update_date']);
-			$item['update_date'] = $date;
-		}
-    	return $item;
-	}, $result);
+        if (!empty($item['update_date'])) {
+            $date = new DateTime( $item['update_date']);
+            $item['update_date'] = $date;
+        }
+        return $item;
+    }, $result);
   return $result;
 }
 
@@ -96,7 +96,7 @@ function get_game_dates ($game_id)
 {
   $sql = connect();
   $game_id = intval ($game_id);
-  
+
   return $sql -> Query ("
      SELECT * FROM \"ki_game_date\"
      WHERE game_id = $game_id
@@ -106,8 +106,8 @@ function get_game_dates ($game_id)
 
 function internal_do_update_year_index ($sql)
 {
-	$sql -> Run ("DELETE FROM \"ki_years_cache\"");
-	$sql -> Run ("
+    $sql -> Run ("DELETE FROM \"ki_years_cache\"");
+    $sql -> Run ("
 		INSERT INTO \"ki_years_cache\"
 			SELECT 
 			DISTINCT date_part('year', \"begin\" ) AS year, \"region_id\"

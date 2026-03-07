@@ -3,22 +3,22 @@ require_once 'sqlbase.php';
 
 function get_updates_24hr()
 {
-	return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date");
+    return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date");
 }
 
 function get_polygon_updates_24hr()
 {
-	return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND update_type_polygon_flag = 1");
+    return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND update_type_polygon_flag = 1");
 }
 
 function get_photo_updates()
 {
-	return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND update_type_photo_flag = 1");
+    return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND update_type_photo_flag = 1");
 }
 
 function get_adv_updates_for_week()
 {
-		return _get_updates("(NOW() - INTERVAL 2 WEEK) < update_date AND advertise_update_flag = 1 AND COALESCE(kg.deleted_flag,0) = 0 AND COALESCE(krev.show_review_flag, 1) = 1 
+        return _get_updates("(NOW() - INTERVAL 2 WEEK) < update_date AND advertise_update_flag = 1 AND COALESCE(kg.deleted_flag,0) = 0 AND COALESCE(krev.show_review_flag, 1) = 1 
 			AND (ki_game_date.begin IS NULL OR ki_game_date.begin > NOW())
 				", 3);
 }
@@ -83,37 +83,37 @@ function get_updates_for_game($game_id)
 
 function get_updates_for_ip($ip)
 {
-	if(!filter_var($ip, FILTER_VALIDATE_IP))
-	{
-		return null;
-	}
-	return _get_updates("ku.ip_address = '$ip'");
+    if(!filter_var($ip, FILTER_VALIDATE_IP))
+    {
+        return null;
+    }
+    return _get_updates("ku.ip_address = '$ip'");
 }
 
 function get_last_update_date_for_game($game_id)
 {
-		$sql = connect();
-		$result = $sql -> GetRow("
+        $sql = connect();
+        $result = $sql -> GetRow("
 			SELECT MAX(update_date) AS update_date FROM ki_updates ku WHERE game_id = $game_id
 		");
-		return strtotime($result['update_date']);
+        return strtotime($result['update_date']);
 }
 
 function get_updates_by_user_id($user_id)
 {
-	$user_id = intval ($user_id);
-	return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND ku.user_id = $user_id");
+    $user_id = intval ($user_id);
+    return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND ku.user_id = $user_id");
 }
 
 function get_updates_except_user_id($user_id)
 {
-	$user_id = intval ($user_id);
-	return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND ku.user_id <> $user_id");
+    $user_id = intval ($user_id);
+    return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND ku.user_id <> $user_id");
 }
 
 function get_photo_updates_except_user_id($user_id)
 {
-	$game_id = intval ($user_id);
-	return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND ku.user_id <> $user_id  AND update_type_photo_flag = 1");
+    $game_id = intval ($user_id);
+    return _get_updates("(NOW() - INTERVAL '3 MONTHS') < update_date AND ku.user_id <> $user_id  AND update_type_photo_flag = 1");
 }
 ?>

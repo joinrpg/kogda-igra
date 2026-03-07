@@ -6,7 +6,7 @@ function get_search($search_string)
 {
   $sql = connect();
   $search_string = $sql -> QuoteAndClean("%$search_string%");
-  
+
    return _get_games ("kg.deleted_flag = 0 AND kgd.\"order\" = 0
 			AND (kg.name ILIKE $search_string 
 				OR kg.mg ILIKE $search_string 
@@ -22,7 +22,7 @@ function get_search_by_name($search_string)
 {
   $sql = connect();
   $search_string = $sql -> QuoteAndClean("$search_string");
-  
+
    return _get_games ("kg.deleted_flag = 0 AND kgd.\"order\" = 0
 			AND (kg.name ILIKE $search_string)");
 }
@@ -32,7 +32,7 @@ function get_suggestions($search_string)
 {
   $sql = connect();
   $search_string = $sql -> QuoteAndClean("%$search_string%");
-  
+
   $query = "SELECT DISTINCT
 		kg.name AS name
 		FROM \"ki_games\" kg
@@ -58,6 +58,6 @@ function get_suggestions($search_string)
     GROUP BY polygon_name
 		ORDER BY name";
 
-	return $sql -> Query($query);
+    return $sql -> Query($query);
 }
 ?>
