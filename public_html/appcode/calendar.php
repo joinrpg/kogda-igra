@@ -5,8 +5,8 @@ require_once 'uri_funcs.php';
 
   function append_zero($text)
   {
-  		return (strlen($text) == 1) ? "0$text" : $text;
-  	}
+        return (strlen($text) == 1) ? "0$text" : $text;
+    }
 
 class GameDate
 {
@@ -24,61 +24,61 @@ class GameDate
 
   public static function format_machine_date($s)
   {
-  	return $s['year'] . append_zero($s['mon']) . append_zero($s['mday']) . 'T000000';
+    return $s['year'] . append_zero($s['mon']) . append_zero($s['mday']) . 'T000000';
   }
-  
-    
+
+
   public static function get_russian_month_name ($month_num)
   {
-		static $month_names2 = array (
-		  1 => 'Январь',
-		  2 => 'Февраль',
-		  3 => 'Март',
-		  4 => 'Апрель',
-		  5 => 'Май',
-		  6 => 'Июнь',
-		  7 => 'Июль',
-		  8 => 'Август',
-		  9 => 'Сентябрь',
-		  10 => 'Октябрь',
-		  11 => 'Ноябрь',
-		  12 => 'Декабрь');
-		
-		return $month_names2[$month_num];
+        static $month_names2 = array (
+          1 => 'Январь',
+          2 => 'Февраль',
+          3 => 'Март',
+          4 => 'Апрель',
+          5 => 'Май',
+          6 => 'Июнь',
+          7 => 'Июль',
+          8 => 'Август',
+          9 => 'Сентябрь',
+          10 => 'Октябрь',
+          11 => 'Ноябрь',
+          12 => 'Декабрь');
+
+        return $month_names2[$month_num];
   }
-  
+
   public static function get_month_id ($month)
   {
-		static $month_ids = array ('', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
-		return $month_ids[$month];
+        static $month_ids = array ('', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec');
+        return $month_ids[$month];
   }
 
-	function get_machine_date_begin()
-	{
-			return GameDate :: format_machine_date($this -> begin_date);
-	}
+    function get_machine_date_begin()
+    {
+            return GameDate :: format_machine_date($this -> begin_date);
+    }
 
-	function get_machine_date_end()
-	{
+    function get_machine_date_end()
+    {
       $s = $this -> end_date;
-			return $s['year'] . append_zero($s['mon']) . append_zero($s['mday']) . 'T235900';
-	}
+            return $s['year'] . append_zero($s['mon']) . append_zero($s['mday']) . 'T235900';
+    }
 
   function get_machine_date()
   {
-  		return $this -> get_machine_date_begin()
-  			. '/'
-  			. $this -> get_machine_date_end();
+        return $this -> get_machine_date_begin()
+            . '/'
+            . $this -> get_machine_date_end();
   }
 
   function year()
   {
     return $this->begin_date['year'];
   }
-  
+
   function month ()
   {
-		return $this -> begin_date['mon'];
+        return $this -> begin_date['mon'];
   }
 
   function show_date_string($show_year)
@@ -119,10 +119,10 @@ class Calendar
     $this -> export_mode = FALSE;
     $date = getdate();
     $this -> current_month = $date['mon'];
-    
+
     $this -> columns = $this -> get_columns();
   }
-  
+
   function get_columns()
   {
     if ($this -> show_status)
@@ -162,7 +162,7 @@ class Calendar
   {
     echo '<table id="calendar">';
     $this -> write_header();
-    
+
     if (is_array($this -> games_array))
     {
       foreach ($this -> games_array as $game)
@@ -175,30 +175,30 @@ class Calendar
 
   function get_email_link($game)
   {
-		$email = trim ($game['email']);
-		
-		if (!$email)
-		{
-			return '';
-		}
-	
-		if ($game['hide_email'])
-		{
-			if (!check_username())
-			{
-				return  '';
-			}
-			
-			if ($this-> export_mode)
-			{
-				return $email;
-			}
+        $email = trim ($game['email']);
+
+        if (!$email)
+        {
+            return '';
+        }
+
+        if ($game['hide_email'])
+        {
+            if (!check_username())
+            {
+                return  '';
+            }
+
+            if ($this-> export_mode)
+            {
+                return $email;
+            }
       return '<em>Скрытый:</em>' . Calendar::get_email_pic($email);
-		}
+        }
 
     return $this -> export_mode ? $game['email'] : Calendar::get_email_pic($email);
   }
-  
+
   public static function get_email_pic($email_str)
   {
     return Calendar::get_link_icon('mailto:'. $email_str, $email_str, '[@]', 'email.png') . '&nbsp;';
@@ -209,59 +209,59 @@ class Calendar
     $name = htmlspecialchars($name);
     return $uri ? "<a href=\"$uri\" rel=\"nofollow\">$name</a>" : $name;
   }
-  
+
   function write_game_icons ($game)
   {
-		$uri = trim($game['uri']);
-		if ($uri)
-		{
-			echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
-		}
-		$vk_club = trim ($game['vk_club']);
+        $uri = trim($game['uri']);
+        if ($uri)
+        {
+            echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
+        }
+        $vk_club = trim ($game['vk_club']);
 
-		if ($vk_club)
-		{
-		  $link = format_vk_link($vk_club);
-			echo Calendar::get_link_icon($link, $link, '[VK]', 'vk.png') . '&nbsp;';
-		}
-		$lj_comm = trim ($game['lj_comm']);
-		if ($lj_comm)
-		{
-		  $link = format_lj_link ($lj_comm);
-			echo Calendar::get_link_icon($link, $link, '[LJ]', 'livejournal.png') . '&nbsp;';
-		}
-		
-		$fb_comm = trim ($game['fb_comm']);
-		if ($fb_comm)
-		{
-		  $link = format_fb_link ($fb_comm);
-			echo Calendar::get_link_icon($link, $link, '[FB]', 'facebook.png') . '&nbsp;';
-		}
+        if ($vk_club)
+        {
+          $link = format_vk_link($vk_club);
+            echo Calendar::get_link_icon($link, $link, '[VK]', 'vk.png') . '&nbsp;';
+        }
+        $lj_comm = trim ($game['lj_comm']);
+        if ($lj_comm)
+        {
+          $link = format_lj_link ($lj_comm);
+            echo Calendar::get_link_icon($link, $link, '[LJ]', 'livejournal.png') . '&nbsp;';
+        }
+
+        $fb_comm = trim ($game['fb_comm']);
+        if ($fb_comm)
+        {
+          $link = format_fb_link ($fb_comm);
+            echo Calendar::get_link_icon($link, $link, '[FB]', 'facebook.png') . '&nbsp;';
+        }
   }
-  
+
   function write_game_name ($game)
   {
-		
-		if (!$this -> export_mode)
-		{
-			$this -> write_game_icons ($game);
-			echo Calendar::format_game_name ($game['name'], get_game_profile_link($game['id']));
-		}
-		else
-		{
-			 echo Calendar::format_game_name ($game['name'], '');
-		}
+
+        if (!$this -> export_mode)
+        {
+            $this -> write_game_icons ($game);
+            echo Calendar::format_game_name ($game['name'], get_game_profile_link($game['id']));
+        }
+        else
+        {
+             echo Calendar::format_game_name ($game['name'], '');
+        }
   }
-  
+
   function show_border_if_needed($date)
   {
   }
-  
+
   function get_date_string ($date)
   {
-		return $date -> show_date_string(TRUE);
+        return $date -> show_date_string(TRUE);
   }
-  
+
   function status_cell_creator($game, $date)
   {
     $status_name= $game['status_name'];
@@ -281,11 +281,11 @@ class Calendar
      $status_name .= $this->get_review_cell_text($game);
      $status_name .= $this->get_photo_text($game);
    }
-       
+
     $id_str = $game['order'] > 0 ? '' :  "id=\"{$game['id']}\"";
     return "<td class=\"$status_style\" $id_str>$status_name</td>";
   }
-  
+
   //TODO: rewrite this functions so $columns fully control which columns are written and which are not
   function write_entry ($game)
   {
@@ -359,7 +359,7 @@ class Calendar
         if ($this -> use_checkbox)
         {
           echo "<input type=\"checkbox\" name=\"mark[]\" value=\"$id\" />";
-          echo "&nbsp;"; 
+          echo "&nbsp;";
         } else if ($this -> show_delete_link)
         {
           echo "<form action=\"/edit/game/?id=$id\" method=post style=\"display:inline\">";

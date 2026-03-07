@@ -12,8 +12,8 @@ function get_intersections($game_id)
 				(kgd.begin <= (kgd2.begin + kgd2.time) AND kgd.begin >= kgd2.begin)
        			 OR (kgd2.begin <= (kgd.begin + kgd.time) AND kgd2.begin >= kgd.begin)
 			 ",
-			 '',
-			 "kg.players_count DESC, kgd.begin ASC, kgd.time ASC");
+             '',
+             "kg.players_count DESC, kgd.begin ASC, kgd.time ASC");
 }
 
 ?>

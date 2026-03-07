@@ -1,10 +1,10 @@
 <?php
   header("HTTP/1.0 404 Not Found", true, 404);
-  
-	require_once 'funcs.php';
-	require_once 'top_menu.php';
-	
-	$topmenu = new TopMenu();
+
+    require_once 'funcs.php';
+    require_once 'top_menu.php';
+
+    $topmenu = new TopMenu();
   $topmenu -> pagename = '404';
   $topmenu -> show();
 ?>
