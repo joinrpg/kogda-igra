@@ -188,7 +188,9 @@
         show_tb_with_list ('Мастерская группа', 'mg', 100, $data['mg'], 'mgnames');
         show_email ($data['email'], $data['hide_email']);
         show_tb ('Кол-во игроков', 'players_count', 20, $data['players_count']);
+        show_tb ('Телеграм контакт', 'telegram_contact', 40, $data['telegram_contact'], 'uri', false, '', 'https://t.me/');
         show_tb ('Группа вконтакте', 'vk_club', 40, $data['vk_club'], 'uri', false, '', 'https://vk.com/');
+        show_tb ('Телеграм канал', 'telegram_channel', 40, $data['telegram_channel'], 'uri', false, '', 'https://t.me/');
         show_tb ('Сообщество ЖЖ', 'lj_comm', 40, $data['lj_comm'], 'uri', false, '', 'http://', '.livejournal.com/profile');
         show_tb ('Группа Facebook', 'fb_comm', 40, $data['fb_comm'], 'uri', false, '', 'https://facebook.com/groups/');
         if (check_edit_priv())
@@ -500,7 +502,9 @@
                 1,
                 get_post_field ('vk_club'),
                 get_post_field ('lj_comm'),
-                get_post_field ('fb_comm')
+                get_post_field ('fb_comm'),
+                get_post_field ('telegram_channel'),
+                get_post_field ('telegram_contact')
             );
     }
     else
@@ -524,7 +528,9 @@
                 0,
                 get_post_field ('vk_club'),
                 get_post_field ('lj_comm'),
-                get_post_field ('fb_comm')
+                get_post_field ('fb_comm'),
+                get_post_field ('telegram_channel'),
+                get_post_field ('telegram_contact')
             );
         }
 

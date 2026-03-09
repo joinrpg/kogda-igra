@@ -204,6 +204,14 @@ class Calendar
     return Calendar::get_link_icon('mailto:'. $email_str, $email_str, '[@]', 'email.png') . '&nbsp;';
   }
 
+  function get_telegram_contact_link($game)
+  {
+    $handle = trim($game['telegram_contact']);
+    if (!$handle) return '';
+    $link = format_telegram_link($handle);
+    return Calendar::get_link_icon($link, $handle, '[TG]', 'telegram.png') . '&nbsp;';
+  }
+
   public static function format_game_name ($name, $uri)
   {
     $name = htmlspecialchars($name);
@@ -236,6 +244,12 @@ class Calendar
         {
           $link = format_fb_link ($fb_comm);
             echo Calendar::get_link_icon($link, $link, '[FB]', 'facebook.png') . '&nbsp;';
+        }
+        $telegram_channel = trim ($game['telegram_channel']);
+        if ($telegram_channel)
+        {
+          $link = format_telegram_link($telegram_channel);
+            echo Calendar::get_link_icon($link, $link, '[TG]', 'telegram.png') . '&nbsp;';
         }
   }
 
@@ -336,7 +350,7 @@ class Calendar
       }
       else
       {
-        $mg = $this-> get_email_link($game) . htmlspecialchars($game['mg']);
+        $mg = $this-> get_email_link($game) . $this->get_telegram_contact_link($game) . htmlspecialchars($game['mg']);
         echo "<td class=\"game_mg\">$mg</td>";
       }
       $this->write_editor_box ($game['id']);

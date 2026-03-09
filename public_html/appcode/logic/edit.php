@@ -316,7 +316,7 @@ function cleanup_string_field ($sql, $field)
     return strlen($field) ? $sql -> QuoteAndClean ($field) : 'NULL';
 }
 
-function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_flags, $status, $comment, $sub_region, $hide_email, $players_count, $send_email, $allrpg_info_id, $user_add, $vk_club, $lj_comm, $fb_comm)
+function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_flags, $status, $comment, $sub_region, $hide_email, $players_count, $send_email, $allrpg_info_id, $user_add, $vk_club, $lj_comm, $fb_comm, $telegram_channel = '', $telegram_contact = '')
 {
     $sql = connect();
 
@@ -339,6 +339,8 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
     $vk_club = normalize_link(cleanup_string_field ($sql, $vk_club));
     $lj_comm = normalize_link(cleanup_string_field ($sql, $lj_comm));
     $fb_comm = normalize_link(cleanup_string_field ($sql, $fb_comm));
+    $telegram_channel = normalize_link(cleanup_string_field ($sql, $telegram_channel));
+    $telegram_contact = normalize_link(cleanup_string_field ($sql, $telegram_contact));
 
     if ($players_count == 0)
     {
@@ -374,7 +376,9 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
 		\"allrpg_info_id\" = $allrpg_info_id,
 		\"vk_club\" = $vk_club,
 		\"lj_comm\" = $lj_comm,
-		\"fb_comm\" = $fb_comm
+		\"fb_comm\" = $fb_comm,
+		\"telegram_channel\" = $telegram_channel,
+		\"telegram_contact\" = $telegram_contact
 		";
 
     $sql -> Run ('START TRANSACTION');
@@ -405,7 +409,8 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
         if (($name != $prev_data['name']) || ($uri != $prev_data['uri']) || ($type != $prev_data['type'])
         || ($polygon != $prev_data['polygon']) || ($mg != $prev_data['mg']) || ($email != $prev_data['email']) || ($show_flags != $prev_data['show_flags'])
         || ($comment != $prev_data['comment']) || ($sub_region != $prev_data['sub_region_id']) || ($hide_email != $prev_data['hide_email'])
-        || $players_count != $prev_data['players_count'] || ($vk_club != $prev_data['vk_club']) || ($lj_comm != $prev_data['lj_comm']) || ($fb_comm != $prev_data['fb_comm']))
+        || $players_count != $prev_data['players_count'] || ($vk_club != $prev_data['vk_club']) || ($lj_comm != $prev_data['lj_comm']) || ($fb_comm != $prev_data['fb_comm'])
+        || ($telegram_channel != $prev_data['telegram_channel']) || ($telegram_contact != $prev_data['telegram_contact']))
         {
             internal_log_game (2, $id);
         }
@@ -416,16 +421,16 @@ function do_game_update ($id, $name, $uri, $type, $polygon, $mg, $email, $show_f
     else
     {
         $sql -> Run ("INSERT INTO ki_games
-		(\"name\", \"uri\", \"type\", \"polygon\", mg, email, \"show_flags\", \"status\",  \"comment\", 
+		(\"name\", \"uri\", \"type\", \"polygon\", mg, email, \"show_flags\", \"status\",  \"comment\",
 		\"sub_region_id\", \"deleted_flag\", \"hide_email\", \"players_count\", \"allrpg_info_id\",
-		\"vk_club\", \"lj_comm\", \"fb_comm\")
+		\"vk_club\", \"lj_comm\", \"fb_comm\", \"telegram_channel\", \"telegram_contact\")
 
 		VALUES
 
-		($_name, $_uri, $type, $polygon, $_mg, $_email, $show_flags, $status, $_comment,  
+		($_name, $_uri, $type, $polygon, $_mg, $_email, $show_flags, $status, $_comment,
 		 $sub_region, $deleted_flag, $hide_email, $players_count, $allrpg_info_id,
-		 $vk_club, $lj_comm, $fb_comm)
-		
+		 $vk_club, $lj_comm, $fb_comm, $telegram_channel, $telegram_contact)
+
 		");
         $id = $sql -> LastInsert ();
         internal_log_game ($user_add ? 19 : 1, $id);
