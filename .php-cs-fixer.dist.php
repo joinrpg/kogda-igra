@@ -5,7 +5,7 @@ $finder = PhpCsFixer\Finder::create()
 
 return (new PhpCsFixer\Config())
     ->setIndent('    ')
-    ->setLineEnding("\r\n")
+    ->setLineEnding("\n")
     ->setRules([
         'encoding'                          => true,
         'indentation_type'                  => true,
