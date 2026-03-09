@@ -4,27 +4,35 @@ services:
     ports: 
       - 8080:8080
     environment:
-      - POSTGRES_SERVER=db
+      - POSTGRES_SERVER=kogda-db
       - POSTGRES_DATABASE=kogdaigra
       - POSTGRES_USER=kogdauser
       - POSTGRES_PASSWORD=kogdapass
       - SITENAME_HOST=dev.kogda-igra.ru
+      - POSTGRES_PORT=5432
     env_file: .env
     volumes:
       - type: bind
         source: ./public_html
         target: /var/www/html
 
-  db:
-    image: 'postgres:14'
-    container_name: db
+  kogda-db:
+    image: 'postgres:14.2'
+    container_name: kogda-db
     restart: unless-stopped
     tty: true
-    expose:
-      - "5432"
+    ports:
+      - 7432:5432
+
+    volumes:
+      - kogda-pg-data:/var/lib/postgresql/data/
 
     environment:
       - POSTGRES_DB=kogdaigra
       - POSTGRES_USER=kogdauser
       - POSTGRES_PASSWORD=kogdapass
       - POSTGRES_HOST_AUTH_METHOD=md5
+      - PGDATA='/var/lib/postgresql/data/pgdata'
+
+volumes:
+ kogda-pg-data:
