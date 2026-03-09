@@ -17,6 +17,12 @@
         return "https://www.facebook.com/groups/$fb_comm/";
     }
 
+    function format_telegram_link($handle)
+    {
+        $handle = trim($handle);
+        return "https://t.me/$handle";
+    }
+
     function normalize_link($link)
     {
         static $prestfixes = array (
@@ -24,6 +30,7 @@
         'vk.com/', 'vkontakte.ru/',
         '.livejournal.com', '.lj.ru',
         'facebook.com/groups/',
+        't.me/', '@',
         '/');
         return str_replace ($prestfixes, '', $link);
     }

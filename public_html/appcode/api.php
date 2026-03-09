@@ -3,7 +3,8 @@ function strip_game_object_before_json($result)
 {
     $whitelisted_fields =
       array ("id", "name", "uri", "begin", "time", "type", "polygon", "mg", "email", "status", "comment", "region", "sub_region_id", "deleted_flag",
-      "players_count", "allrpg_info_id", "polygon_name", "game_type_name", "sub_region_disp_name", "sub_region_name", "status_name", 'vk_club', 'lj_comm', 'fb_comm'
+      "players_count", "allrpg_info_id", "polygon_name", "game_type_name", "sub_region_disp_name", "sub_region_name", "status_name", 'vk_club', 'lj_comm', 'fb_comm',
+      'telegram_channel', 'telegram_contact'
     );
 
     $datetime_fields = array ("update_date");

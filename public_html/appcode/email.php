@@ -178,6 +178,8 @@ class GameUpdatedEmail extends Email
     $vk_text  = ($game['vk_club']) ? ("\nВКонтакте: " . format_vk_link($game['vk_club'])) : '';
     $lj_text = ($game['lj_comm']) ? ("\nЖЖ: " . format_lj_link ($game['lj_comm']))   : '';
     $fb_text = ($game['fb_comm']) ? ("\nFacebook: " . format_fb_link ($game['fb_comm']))   : '';
+    $tg_channel_text = ($game['telegram_channel']) ? ("\nТелеграм канал: " . format_telegram_link($game['telegram_channel'])) : '';
+    $tg_contact_text = ($game['telegram_contact']) ? ("\nТелеграм контакт: " . format_telegram_link($game['telegram_contact'])) : '';
     $profile_link = get_game_profile_link($game['id'], true);
     return "Профиль: $profile_link
 
@@ -188,7 +190,7 @@ class GameUpdatedEmail extends Email
 Полигон: $polygon_name
 Кол-во игроков: $players_count
 Мастерская группа: {$game['mg']}
-Email: {$game['email']}$hide_email$vk_text$lj_text$fb_text
+Email: {$game['email']}$hide_email$vk_text$lj_text$fb_text$tg_channel_text$tg_contact_text
 
 $int_text";
   }
