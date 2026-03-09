@@ -14,7 +14,8 @@ param(
 . $PSScriptRoot\pgloader.ps1
 
 $source = "pgsql://kogda-prod:$postgre_pass_source@rc1b-1omkout6a9ifyold.mdb.yandexcloud.net:6432/kogda-prod?sslmode=allow"
-$dest   = "pgsql://kogda-igra-dev:$postgre_pass_dest@rc1b-ms1mxukwh0b87hpg.mdb.yandexcloud.net:6432/kogda-igra-dev?sslmode=allow"
+$dest   = "pgsql://kogda-dev:$postgre_pass_dest@rc1b-1omkout6a9ifyold.mdb.yandexcloud.net:6432/kogda-dev?sslmode=allow"
+
 
 
 migrate $source $dest
