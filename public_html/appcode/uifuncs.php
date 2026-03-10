@@ -13,6 +13,13 @@
 			</div>";
     }
 
+    function larp_handbook_box ()
+    {
+        echo "<div class='active' title='Справочник разработчика игр живого действия'>
+			<a href=\"https://larp-handbook.ru\">larp-handbook</a>
+			</div>";
+    }
+
 
     function passive_button ($text)
     {
