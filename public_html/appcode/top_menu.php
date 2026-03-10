@@ -160,6 +160,7 @@ require_once 'config.php';
             // show_button('/photo/', 'Фото');
 
             show_button('http://rpg.ru/', 'Что такое ролевые игры? Новичку...');
+            larp_handbook_box ();
             joinrpg_box();
             echo '</div> ';
 
