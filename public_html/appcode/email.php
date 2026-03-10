@@ -74,6 +74,8 @@ abstract class Email
 
 class AddedURIEmal extends Email
 {
+    public $add_uri_id;
+
     function __construct($add_uri_id)
   {
         $this -> add_uri_id = $add_uri_id;
@@ -100,6 +102,9 @@ C уважением, " . SITENAME_SIGNATURE;
 
 class GameUpdatedEmail extends Email
 {
+  public $game_data;
+  public $updated;
+  public $intersections;
 
   function __construct ($game_id, $updated)
   {

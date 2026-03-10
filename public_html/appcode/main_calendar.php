@@ -5,7 +5,7 @@ require_once 'calendar.php';
 class MainCalendar extends Calendar {
   function __construct ($year, $region, $konvent)
   {
-    Calendar::__construct(get_main_calendar($year, $region, FALSE, $konvent));
+    parent::__construct(get_main_calendar($year, $region, FALSE, $konvent));
   }
 
   function get_date_string ($date)
@@ -21,6 +21,7 @@ class MainCalendar extends Calendar {
 
   function get_month_with_games()
   {
+        $tmp = array();
         foreach ($this -> games_array as $game)
         {
             $date = new GameDate ($game);
@@ -47,6 +48,7 @@ class MainCalendar extends Calendar {
     }
     if (!$this -> prev_date)
     {
+        $month_menu = array();
         foreach ($this -> get_month_with_games() as $i)
         {
             $id = GameDate :: get_month_id ($i);

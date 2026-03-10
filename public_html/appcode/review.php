@@ -28,6 +28,7 @@ class ReviewBase
 
 abstract class ReviewTable extends ReviewBase
 {
+    public $reviews;
 
     function get_reviews()
     {
@@ -80,6 +81,8 @@ abstract class ReviewTable extends ReviewBase
 
 class ReviewEdit extends ReviewTable
 {
+    public $game_id;
+
     function __construct ($game_id)
   {
     $this -> game_id = $game_id;
@@ -148,6 +151,8 @@ class ReviewEdit extends ReviewTable
 
 class Review extends ReviewTable
 {
+  public $game_id;
+
   function __construct ($game_id)
   {
     $this -> game_id = $game_id;
@@ -176,6 +181,8 @@ class Review extends ReviewTable
 
 class ReviewForUser extends ReviewBase
 {
+   public $reviews;
+
    function __construct ($user_id)
    {
       $this -> reviews = get_reviews_for_user ($user_id);

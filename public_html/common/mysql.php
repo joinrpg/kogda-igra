@@ -2,6 +2,9 @@
 
 class Sql
 {
+    public $debug;
+    public $handle;
+
     function __construct ($host, $user, $password, $base, $port)
     {
         $this -> debug = 0;
@@ -9,10 +12,9 @@ class Sql
         $this->handle = pg_connect("host=$host dbname=$base user=$user password=$password  options='--client_encoding=UTF8' port=$port");
         if ($this->handle)
         {
-            return $this->handle;
+            return;
         }
         die(pg_last_error());
-        return FALSE;
     }
 
     function Close ()
@@ -67,10 +69,6 @@ class Sql
 
     function Quote($value)
     {
-    if (get_magic_quotes_gpc()) {
-        $value = stripslashes($value);
-    }
-
     if (!is_numeric($value)) {
         $value = "'" . pg_escape_string($this-> handle, $value) . "'";
     }
@@ -84,9 +82,6 @@ class Sql
         {
             return 'NULL';
         }
-    if (get_magic_quotes_gpc()) {
-        $value = stripslashes($value);
-    }
 
     $value = strip_tags ($value);
 
@@ -154,10 +149,12 @@ class Sql
     $this -> Run ('ROLLBACK');
     }
 
-    function GetObject ($table, $id = FALSE)
+    function GetObject ($table, $id)
     {
-        if ($id == FALSE)
-            $id = $this->LastInsert();
+        if ($id === FALSE || $id === NULL || $id === '')
+        {
+            return FALSE;
+        }
         $id = $this -> Quote ($id);
         $sql = "SELECT * FROM $table WHERE \"id\" = $id LIMIT 1";
         $result = $this -> Query ($sql);

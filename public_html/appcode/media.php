@@ -2,6 +2,10 @@
 
 class MediaBlock
 {
+  public $media;
+  public $show_author;
+  public $show_game;
+
   function __construct ($media)
   {
     $this -> media = $media;
@@ -56,6 +60,15 @@ function show_media($media)
 abstract class Media {
 
     public $uri = NULL;
+    public $photo_id;
+    public $photo_author;
+    public $photo_author_id;
+    public $photo_good_flag;
+    public $photo_comment;
+    public $gamename;
+    public $game_id;
+    public $show_author;
+    public $show_game;
 
     abstract function is_correct();
     abstract function get_embed_code();

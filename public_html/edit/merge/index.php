@@ -12,6 +12,7 @@
       global $id, $old_ids;
 
 
+      $new_id_list = array();
       foreach ($old_ids as $oid)
       {
         if ($oid != $game_id)

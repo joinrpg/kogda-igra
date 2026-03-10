@@ -85,6 +85,10 @@ VALUES ($author, $author_lj, $uri, $game_id, $photo_comment, $photo_good_flag)"
 
 class PhotoUpdatedEmail extends Email
 {
+    public $game_data;
+    public $updated;
+    public $author_name;
+
     function __construct ($game_id, $updated, $author_name)
     {
         $this -> game_data = get_game_by_id ($game_id);
@@ -143,6 +147,7 @@ function _normalize_photo_array ($photos)
   {
         return NULL;
   }
+  $result = array();
   foreach ($photos as $photo)
   {
     $author = $photo['username'] ? $photo['username'] : $photo['photo_author'];

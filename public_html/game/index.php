@@ -13,6 +13,8 @@
 
     class GameProfileMenu extends TopMenu
     {
+        public $game;
+
         function __construct($game)
         {
             parent::__construct();
@@ -34,6 +36,8 @@
 
     class GameProfileCalendar extends Calendar
     {
+        public $count;
+
         function __construct ($game)
         {
             $date = new GameDate($game);
