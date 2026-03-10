@@ -10,6 +10,12 @@ require_once 'uri_funcs.php';
 
 class GameDate
 {
+  public $bdate;
+  public $days;
+  public $end_date;
+  public $begin_date;
+  public $dow;
+
   function __construct ($game)
   {
     $this->bdate = strtotime ($game['begin']);
@@ -106,6 +112,18 @@ class GameDate
 
 class Calendar
 {
+  public $games_array;
+  public $use_checkbox;
+  public $show_delete_link;
+  public $show_reviews;
+  public $show_only_future;
+  public $show_status;
+  public $editor;
+  public $prev_date;
+  public $export_mode;
+  public $current_month;
+  public $columns;
+
   function __construct ($games_array)
   {
     $this -> games_array = $games_array;
@@ -125,6 +143,7 @@ class Calendar
 
   function get_columns()
   {
+    $columns = array();
     if ($this -> show_status)
     {
        $columns []= array ('name' => 'Статус', 'column-class' => 'status-column');
@@ -455,6 +474,7 @@ function get_region_param ()
     $region = 0;
   }
 
+  $result = array();
   $result ['id'] = $region;
   $result ['name'] = $region == 0 ? $region_arr[1] : $region_arr[$region];
   return $result;

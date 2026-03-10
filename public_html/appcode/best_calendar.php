@@ -5,11 +5,12 @@ require_once 'calendar.php';
 class BestCalendar extends Calendar {
   function __construct ($year, $region)
   {
-    Calendar::__construct(get_best($year, $region));
+    parent::__construct(get_best($year, $region));
   }
 
    function get_columns()
   {
+    $columns = array();
     if ($this -> show_status)
     {
        $columns []= array ('name' => 'Статус', 'column-class' => 'status-column');

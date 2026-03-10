@@ -26,6 +26,16 @@ require_once 'config.php';
 
     class TopMenu
     {
+        public $pagename;
+        public $year;
+        public $region;
+        public $show_add_adv;
+        public $search;
+        public $edit;
+        public $show_new_adv;
+        public $calendar_mode;
+        public $region_name;
+
         function __construct()
         {
             $this -> pagename = '';
@@ -250,6 +260,7 @@ require_once 'config.php';
             $max_early = 0;
             $min_later = 99999;
 
+            $years = array();
             $years_list = get_year_list ($region);
             foreach ($years_list as $year_val)
             {
@@ -273,7 +284,7 @@ require_once 'config.php';
                 echo $this -> year_link ($max_early, '&lt;&lt;');
             }
 
-            if (!is_array($years))
+            if (count($years) === 0)
             {
                 return;
             }
