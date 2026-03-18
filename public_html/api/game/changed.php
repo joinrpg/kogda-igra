@@ -9,6 +9,9 @@
   $result = get_games_by_timestamp($timestamp);
   if (is_array($result))
   {
+    $result = array_filter($result, function($game) {
+      return !isset($game['deleted_flag']) || $game['deleted_flag'] != -1;
+    });
     foreach ($result as $game)
     {
       $response[] = strip_game_object_before_json($game);

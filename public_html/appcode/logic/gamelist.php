@@ -145,11 +145,11 @@ function get_games_by_timestamp($timestamp)
   $timestamp = intval ($timestamp);
   $sql = connect();
   $query = "SELECT
-  	 kg.id, kg.redirect_id, 
+  	 kg.id, kg.redirect_id, kg.deleted_flag,
 	 MAX(update_date) AS update_date
-	 FROM ki_games kg 
+	 FROM ki_games kg
 	 INNER JOIN ki_updates ki ON kg.id = ki.game_id
-	 WHERE update_date > to_timestamp($timestamp) 
+	 WHERE update_date > to_timestamp($timestamp)
 	 GROUP BY kg.id
 	 ORDER BY update_date DESC
 

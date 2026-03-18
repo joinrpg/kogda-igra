@@ -8,7 +8,7 @@
 
     $id = array_key_exists('id', $_GET) ? intval($_GET['id']) : '';
   $result = get_game_by_id($id);
-  if (is_array($result))
+  if (is_array($result) && $result['deleted_flag'] != -1)
   {
     echo json_encode(strip_game_object_before_json($result));
   }
