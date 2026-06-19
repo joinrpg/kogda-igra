@@ -19,7 +19,7 @@ jobs:
     name: Lint PHP
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.5.3'
@@ -38,7 +38,7 @@ jobs:
 
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0  # Fetch the whole repo history
 
