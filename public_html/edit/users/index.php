@@ -49,7 +49,7 @@
                 return $result;
             }
             else
-                return null;
+                return array();
         }
 
         function write_priv_row($id, $desc, $present)
