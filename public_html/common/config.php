@@ -6,12 +6,15 @@
     $sql_port =		$_ENV['POSTGRES_PORT'] ?? null;
 
     define ("MAILGUN_KEY", array_key_exists("MAILGUN_KEY", $_ENV) ? $_ENV["MAILGUN_KEY"] : "");
+    define ("JOINRPG_CLIENT_ID", array_key_exists("JOINRPG_CLIENT_ID", $_ENV) ? $_ENV["JOINRPG_CLIENT_ID"] : "");
+    define ("JOINRPG_CLIENT_SECRET", array_key_exists("JOINRPG_CLIENT_SECRET", $_ENV) ? $_ENV["JOINRPG_CLIENT_SECRET"] : "");
+    define ("JOINRPG_ID_BASE", array_key_exists("JOINRPG_ID_BASE", $_ENV) ? $_ENV["JOINRPG_ID_BASE"] : "https://id.joinrpg.ru");
     define ("SITENAME_MAIN", "КогдаИгра");
     define ("SITENAME_SIGNATURE", "Редакторы КогдаИгры");
     define ("SITENAME_HOST", array_key_exists("SITENAME_HOST", $_ENV) ? $_ENV["SITENAME_HOST"] : "kogda-igra.ru");
     define ("SITENAME_EDITORS_EMAIL", 'rpg@' . SITENAME_HOST);
     define ("SITENAME_EDITORS_BOT", 'kogda_igra_bot');
-    define ("SITENAME_SCHEME", "https");
+    define ("SITENAME_SCHEME", array_key_exists("SITENAME_SCHEME", $_ENV) ? $_ENV["SITENAME_SCHEME"] : "https");
     define ("YA_METRIKA_ID", 100288537);
 
 ?>

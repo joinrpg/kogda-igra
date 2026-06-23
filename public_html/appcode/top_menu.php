@@ -168,7 +168,7 @@ require_once 'config.php';
             echo '<div class=menu_strip>';
             if ($username)
             {
-                    passive_button(show_user_link($username) . ' <a href="/logout/" class="g_id_signout">Выйти</a>');
+                    passive_button(show_user_link($username) . ' <a href="/logout/">Выйти</a>');
             }
             real_button (get_game_edit_link(NULL), 'Добавить&nbsp;игру...');
             if (check_edit_priv())
@@ -177,24 +177,7 @@ require_once 'config.php';
             }
 
             if (!$username) {
-            passive_button( '
-			<div id="g_id_onload"
-			data-client_id="422789528511-ova7a1omkeak7ul1f134t6a392nv8k15.apps.googleusercontent.com"
-			data-context="signin"
-			data-ux_mode="popup"
-			data-callback="onSignIn"
-			data-auto_prompt="false">
-	   </div>
-	   
-	   <div class="g_id_signin"
-			data-type="standard"
-			data-shape="rectangular"
-			data-theme="filled_blue"
-			data-text="$ {button.text}"
-			data-size="medium"
-			data-logo_alignment="left">
-	   </div>
-	   ');
+            active_button('/login/joinrpg/', 'Войти через JoinRPG');
             }
             echo '</div>';
 
@@ -218,7 +201,7 @@ require_once 'config.php';
             $user = get_user();
             if ($user && !$user['email'])
             {
-                echo '<div class="urgent_message">В вашем профиле не указан адрес email. <input type="button" onclick="try_login()" value="Указать"></div>';
+                echo '<div class="urgent_message">В вашем профиле не указан адрес email. <a href="/login/joinrpg/">Указать</a></div>';
             }
         }
 
