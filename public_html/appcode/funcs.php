@@ -22,35 +22,19 @@ function write_header ($title, $edit = FALSE)
     <meta name="keywords" content="Календарь, ролевые игры">
     <meta name="description" content="Календарь полевых ролевых игр">
     <meta name="verify-v1" content="kgJUNdPugrqlSlUu5/n8UOibKHmPBQKUJJQvua61RYQ=">
-    
-    <meta name="google-signin-scope" content="profile email">
-	<script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <link rel="search" type="application/opensearchdescription+xml" title="<?php echo SITENAME_MAIN ?>!" href="/opensearch.xml">
-    <script src="/js/default.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://vk.com/js/api/openapi.js?115"></script>
 <script type="text/javascript">
   VK.init({apiId: 2118784, onlyWidgets: true});
 </script>
     <?php
-  if (get_user_id())
-  {
-        echo '<script type="text/javascript">window.loggedIn = true;</script>';
-  }
   if ($edit)
   {
     echo '<script src="/js/edit.js" type="text/javascript"></script>';
   }
   write_yandex_metrika (YA_METRIKA_ID);
   echo '</head><body>';
-
-
-
-    if (!array_key_exists("csrf_token", $_SESSION))
-    {
-        $_SESSION['csrf_token'] = md5(mt_rand());
-    }
-    echo "<form><input type=\"hidden\" name=\"csrf_token\" id=\"csrf_token\" value=\"{$_SESSION['csrf_token']}\"></form>";
 }
 
 function write_footer($show_analytics = FALSE, $uri = '')
