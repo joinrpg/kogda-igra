@@ -126,6 +126,21 @@ function set_email($user_id, $email)
     $driver -> Run ("UPDATE users SET \"email\" = $email WHERE \"user_id\" = $user_id AND (\"email\" IS NULL OR \"email\" = '')");
 }
 
+function force_set_email($user_id, $new_email)
+{
+    $driver = connect();
+    $user_id = intval($user_id);
+    $quoted = $driver->QuoteAndClean($new_email);
+    $result = $driver->Query(
+        "UPDATE \"users\" SET \"email\" = $quoted " .
+        "WHERE \"user_id\" = $user_id " .
+        "AND NOT EXISTS (" .
+        "  SELECT 1 FROM \"users\" WHERE \"email\" ILIKE $quoted AND \"user_id\" != $user_id" .
+        ") RETURNING user_id"
+    );
+    return ($result !== FALSE && count($result) > 0);
+}
+
 function get_user_id()
 {
     return array_key_exists('user_id', $_SESSION) ? $_SESSION['user_id'] : 0;

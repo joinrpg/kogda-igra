@@ -17,6 +17,16 @@
    $userdata = get_user_by_id($uid);
    $username = $userdata['username'];
 
+   $change_email_result = null;
+   if (array_key_exists('new_email', $_POST)) {
+       $new_email = trim($_POST['new_email']);
+       $ok = force_set_email($uid, $new_email);
+       $change_email_result = $ok ? 'ok' : 'error';
+       if ($ok) {
+           $userdata = get_user_by_id($uid);
+       }
+   }
+
    write_header('Пользователь — ' . $username);
 
    $topmenu = new TopMenu();
@@ -90,7 +100,20 @@
         }
         echo '</table>';
 
-
+        echo '<br>';
+        echo '<h3>Сменить email</h3>';
+        if ($change_email_result === 'error') {
+            echo '<p style="color:red"><strong>Ошибка: пользователь с таким email уже существует</strong></p>';
+        } elseif ($change_email_result === 'ok') {
+            echo '<p><strong>Email изменён</strong></p>';
+        }
+        $current_email = htmlspecialchars($userdata['email'] ?? '');
+        echo '<form action="" method="post">';
+        echo '<input type="hidden" name="id" value="' . intval($uid) . '" />';
+        echo 'Текущий email: <strong>' . $current_email . '</strong><br><br>';
+        echo 'Новый email: <input type="email" name="new_email" maxlength="100" size="40" required />';
+        echo ' <input type="submit" value="Сменить email">';
+        echo '</form>';
 
     write_footer();
 ?>
