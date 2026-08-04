@@ -156,6 +156,11 @@ function get_games_by_timestamp($timestamp)
 	";
   $result = $sql -> Query ($query);
 
+  if (!is_array($result)) {
+    // Query() returns FALSE when no rows match (e.g. timestamp in the future)
+    return array();
+  }
+
   $result = array_map(function ($item) {
     $item['id'] = (int) $item['id'];
     if (!empty($item['update_date'])) {
