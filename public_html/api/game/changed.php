@@ -9,6 +9,7 @@
   $result = get_games_by_timestamp($timestamp);
   if (is_array($result))
   {
+    $response = array();
     $result = array_filter($result, function($game) {
       return !isset($game['deleted_flag']) || $game['deleted_flag'] != -1;
     });
