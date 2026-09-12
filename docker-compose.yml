@@ -19,7 +19,7 @@ services:
         target: /var/www/html
 
   kogda-db:
-    image: 'postgres:14.2'
+    image: 'postgres:15.18'
     container_name: kogda-db
     restart: unless-stopped
     tty: true
