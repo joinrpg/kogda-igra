@@ -50,7 +50,7 @@ CI/CD: GitHub Actions собирает образ и пушит в `ghcr.io`. В
 
 ### Схема БД
 
-Основные таблицы (SQL-файлы в `mysql-db-structure/`):
+Схема и справочники — в `db/init/` (снимок dev-базы, накатывается на пустой том Postgres при `docker compose up`, см. `db/README.md`). Основные таблицы:
 - `ki_games` — игры (основная таблица)
 - `ki_game_date` — даты игры (одна игра может иметь несколько дат, `order=0` — основная)
 - `ki_game_types`, `ki_regions`, `ki_sub_regions`, `ki_polygons`, `ki_status` — справочники
@@ -61,7 +61,7 @@ CI/CD: GitHub Actions собирает образ и пушит в `ghcr.io`. В
 
 ### Миграции БД
 
-Миграции хранятся в `db-migrations/` как SQL-файлы. Выполняются вручную на базе. Именование: `add_<description>.sql`. Чеклист по добавлению новых полей в игру: `docs/adding-new-game-fields.md`.
+Миграции хранятся в `db-migrations/` как SQL-файлы. Выполняются вручную на базе. Именование: `add_<description>.sql`. То же изменение нужно внести в `db/init/01-schema.sql`. Чеклист по добавлению новых полей в игру: `docs/adding-new-game-fields.md`.
 
 ### Секреты
 

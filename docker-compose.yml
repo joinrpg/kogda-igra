@@ -28,6 +28,8 @@ services:
 
     volumes:
       - kogda-pg-data:/var/lib/postgresql/data/
+      # Схема и справочники накатываются только при первом старте, на пустой том
+      - ./db/init:/docker-entrypoint-initdb.d:ro
 
     environment:
       - POSTGRES_DB=kogdaigra
