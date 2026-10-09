@@ -6,9 +6,11 @@
 
 Создать файл `db-migrations/add_<description>.sql`:
 ```sql
-ALTER TABLE ki_games ADD COLUMN <field_name> varchar(40) DEFAULT NULL;
+ALTER TABLE ki_games ADD COLUMN IF NOT EXISTS <field_name> varchar(40) DEFAULT NULL;
 ```
 Выполнить вручную на базе.
+
+Добавить ту же колонку в `CREATE TABLE public.ki_games` в `db/init/01-schema.sql` — иначе новая пустая база (локальная, тестовая) получится без неё.
 
 ## 2. `public_html/appcode/logic/gamebase.php`
 
