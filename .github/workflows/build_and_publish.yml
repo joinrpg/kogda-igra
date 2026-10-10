@@ -1,9 +1,12 @@
+# Имя workflow используется в deploy_dev_auto.yml (workflow_run) — не переименовывать.
 name: Build and publish
 
 on:
   pull_request:
     branches:
       - master
+  # Очередь слияния проверяет PR на этом событии; без него обязательные проверки в очереди не запустятся
+  merge_group:
   push:
     branches:
       - master
@@ -13,6 +16,9 @@ on:
 
 env:
   APP_NAME: kogda-igra
+  # Образ передаётся между джобами артефактом: на PR из форков нет прав на запись в ghcr.io.
+  # Поэтому публикуется ровно тот образ, на котором прошли тесты, а не пересобранный.
+  IMAGE_ARTIFACT: kogda-igra-image
 
 jobs:
   lint:
@@ -27,22 +33,52 @@ jobs:
       - run: composer install --no-ansi --no-interaction --prefer-dist
       - run: composer cs-check
 
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: docker/setup-buildx-action@v4
+
+      - name: Build kogda-igra image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          tags: ${{ env.APP_NAME }}
+          labels: runnumber=${{ github.run_id }}
+          outputs: type=docker,dest=${{ runner.temp }}/image.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ env.IMAGE_ARTIFACT }}
+          path: ${{ runner.temp }}/image.tar
+          retention-days: 1
+
   # Compat-тесты из kogda-igra-net против образа, собранного из этого коммита.
   # Тесты читают схему БД из /db-init образа, так что изменения схемы тоже проверяются.
   compat-tests:
     name: Compat tests
+    needs: build
     runs-on: ubuntu-24.04
     permissions:
       contents: read
     env:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
-      KOGDA_IGRA_IMAGE: kogda-igra:compat-tests
+      KOGDA_IGRA_IMAGE: kogda-igra  # = APP_NAME, тег из джоба build
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: ${{ env.IMAGE_ARTIFACT }}
+          path: ${{ runner.temp }}
 
-      - name: Build kogda-igra image
-        run: docker build . --tag ${KOGDA_IGRA_IMAGE}
+      - name: Load kogda-igra image
+        run: docker load --input ${{ runner.temp }}/image.tar
 
       - name: Checkout kogda-igra-net
         uses: actions/checkout@v7
@@ -70,15 +106,15 @@ jobs:
           name: compat-test-results
           path: kogda-igra-net/TestResults
 
-  build:
-    name: Build and publish
+  publish:
+    name: Publish
     needs: compat-tests  # не публиковать (и не деплоить на dev) образ, на котором тесты упали
+    # Не на PR (нет прав на запись) и не в очереди слияния (её временные ветки публиковать незачем)
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     permissions:
+      contents: read
       packages: write
-      checks: write
-      actions: write
-      statuses: write
 
     steps:
     - name: Checkout Repo
@@ -95,22 +131,18 @@ jobs:
         REF_NAME: ${{ github.ref_name }}
         REF_TYPE: ${{ github.ref_type }}
 
-    - name: Restore docker images cache
-      uses: satackey/action-docker-layer-caching@v0.0.11
-      continue-on-error: true
+    - uses: actions/download-artifact@v8
+      with:
+        name: ${{ env.IMAGE_ARTIFACT }}
+        path: ${{ runner.temp }}
 
-    #Rest of the pipeline implies write api privileges and can't be run on PRs
-
-    - name: Build kogda-igra image
-      if: github.event_name != 'pull_request'
-      run: docker build . --tag ${APP_NAME} --label "runnumber=${GITHUB_RUN_ID}"
+    - name: Load kogda-igra image
+      run: docker load --input ${{ runner.temp }}/image.tar
 
     - name: Log in to docker registry
-      if: github.event_name != 'pull_request'
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
     - name: Push portal image to docker registry
-      if: github.event_name != 'pull_request'
       run: |
         APP_IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${APP_NAME}
 
