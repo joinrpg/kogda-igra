@@ -27,8 +27,52 @@ jobs:
       - run: composer install --no-ansi --no-interaction --prefer-dist
       - run: composer cs-check
 
+  # Compat-тесты из kogda-igra-net против образа, собранного из этого коммита.
+  # Тесты читают схему БД из /db-init образа, так что изменения схемы тоже проверяются.
+  compat-tests:
+    name: Compat tests
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      KOGDA_IGRA_IMAGE: kogda-igra:compat-tests
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build kogda-igra image
+        run: docker build . --tag ${KOGDA_IGRA_IMAGE}
+
+      - name: Checkout kogda-igra-net
+        uses: actions/checkout@v7
+        with:
+          repository: joinrpg/kogda-igra-net
+          path: kogda-igra-net
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: kogda-igra-net/global.json
+          cache: true
+          cache-dependency-path: kogda-igra-net/Directory.Packages.props
+
+      # Аргументы после "--" — для Microsoft.Testing.Platform (TUnit), см. kogda-igra-net.
+      # Если сайт не поднялся, в CI тесты падают, а не пропускаются.
+      - name: Test
+        working-directory: kogda-igra-net
+        run: dotnet test -c Release -- --results-directory ./TestResults
+
+      - name: Save test results to artifacts
+        uses: actions/upload-artifact@v7  # HTML-отчёт TUnit
+        if: success() || failure()        # и при упавших тестах тоже
+        with:
+          name: compat-test-results
+          path: kogda-igra-net/TestResults
+
   build:
     name: Build and publish
+    needs: compat-tests  # не публиковать (и не деплоить на dev) образ, на котором тесты упали
     runs-on: ubuntu-24.04
     permissions:
       packages: write

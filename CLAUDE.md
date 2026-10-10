@@ -17,7 +17,7 @@ docker compose up --build
 
 CI/CD: GitHub Actions собирает образ и пушит в `ghcr.io`. Версионирование — SemVer через PowerShell-скрипт. Деплой в Kubernetes через `kubectl apply` + kustomize. Деплой на prod — ручной (`workflow_dispatch`), на dev — автоматический при пуше в master.
 
-Нет тестов, нет линтера.
+Линтер — `composer cs-check`. Своих тестов нет: поведение сайта проверяют compat-тесты в отдельном репозитории [kogda-igra-net](https://github.com/joinrpg/kogda-igra-net). CI собирает образ из коммита и гоняет их против него (джоб `Compat tests`); упавшие тесты блокируют публикацию образа. Если изменение намеренно меняет поведение — тесты правятся в kogda-igra-net.
 
 ## Архитектура
 
