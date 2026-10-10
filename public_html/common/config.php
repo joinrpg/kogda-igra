@@ -16,5 +16,6 @@
     define ("SITENAME_EDITORS_BOT", 'kogda_igra_bot');
     define ("SITENAME_SCHEME", array_key_exists("SITENAME_SCHEME", $_ENV) ? $_ENV["SITENAME_SCHEME"] : "https");
     define ("YA_METRIKA_ID", 100288537);
+    define ("SITE_BANNER", trim ($_ENV["SITE_BANNER"] ?? ""));
 
 ?>

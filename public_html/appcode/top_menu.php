@@ -135,6 +135,8 @@ require_once 'config.php';
 
             write_header ($this -> get_page_title(), $this -> edit);
 
+            $this -> show_site_banner ();
+
             echo '<div class=logo>';
             echo '<a href="/"><img src="/img/kogda-igra.png" height=32 width=32></a>';
             echo " <span class=logo_text>" . $this -> get_page_header() . '</span>';
@@ -193,6 +195,17 @@ require_once 'config.php';
             {
                 echo '<b>Нет нужной игры</b>? <a href="' . get_game_edit_link(NULL). '">Добавьте</a> самостоятельно или напишите в '. $this -> get_telegram_bot() .' или на ' . $this -> get_mailto_editors();
             }
+        }
+
+        function show_site_banner()
+        {
+            if (!SITE_BANNER)
+            {
+                return;
+            }
+            $text = htmlspecialchars (SITE_BANNER);
+            $text = preg_replace ('~https?://[^\s<]+~u', '<a href="$0">$0</a>', $text);
+            echo "<div class=\"site_banner\">$text</div>";
         }
 
         function show_messages()

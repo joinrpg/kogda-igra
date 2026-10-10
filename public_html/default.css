@@ -248,6 +248,16 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 	margin: 0.5em;
 }
 
+.site_banner
+{
+	border: solid 1px;
+	font-weight: bold;
+	background-color: LightSalmon;
+	padding: 0.5em 1em;
+	margin: 0.5em;
+	text-align: center;
+}
+
 .adv_box
 {
 	border: none;
