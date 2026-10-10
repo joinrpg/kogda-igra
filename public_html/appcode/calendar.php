@@ -194,7 +194,7 @@ class Calendar
 
   function get_email_link($game)
   {
-        $email = trim ($game['email']);
+        $email = trim($game['email'] ?? '');
 
         if (!$email)
         {
@@ -225,7 +225,7 @@ class Calendar
 
   function get_telegram_contact_link($game)
   {
-    $handle = trim($game['telegram_contact']);
+    $handle = trim($game['telegram_contact'] ?? '');
     if (!$handle) return '';
     $link = format_telegram_link($handle);
     return Calendar::get_link_icon($link, $handle, '[TG]', 'telegram.png') . '&nbsp;';
@@ -239,32 +239,32 @@ class Calendar
 
   function write_game_icons ($game)
   {
-        $uri = trim($game['uri']);
+        $uri = trim($game['uri'] ?? '');
         if ($uri)
         {
             echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
         }
-        $vk_club = trim ($game['vk_club']);
+        $vk_club = trim($game['vk_club'] ?? '');
 
         if ($vk_club)
         {
           $link = format_vk_link($vk_club);
             echo Calendar::get_link_icon($link, $link, '[VK]', 'vk.png') . '&nbsp;';
         }
-        $lj_comm = trim ($game['lj_comm']);
+        $lj_comm = trim($game['lj_comm'] ?? '');
         if ($lj_comm)
         {
           $link = format_lj_link ($lj_comm);
             echo Calendar::get_link_icon($link, $link, '[LJ]', 'livejournal.png') . '&nbsp;';
         }
 
-        $fb_comm = trim ($game['fb_comm']);
+        $fb_comm = trim($game['fb_comm'] ?? '');
         if ($fb_comm)
         {
           $link = format_fb_link ($fb_comm);
             echo Calendar::get_link_icon($link, $link, '[FB]', 'facebook.png') . '&nbsp;';
         }
-        $telegram_channel = trim ($game['telegram_channel']);
+        $telegram_channel = trim($game['telegram_channel'] ?? '');
         if ($telegram_channel)
         {
           $link = format_telegram_link($telegram_channel);
