@@ -38,7 +38,8 @@ jobs:
         run: |
           set -euxo pipefail
 
-          APP_IMAGE_ID=$(echo cr.selcloud.ru/${{ github.repository_owner }}/${APP_NAME} | tr '[A-Z]' '[a-z]')
+          # Реестр в Selectel называется joinrpg независимо от владельца репозитория
+          APP_IMAGE_ID=cr.selcloud.ru/joinrpg/${APP_NAME}
 
           COMMON_IMAGE_VERSION=$(echo ${{ inputs.deployVersion }} | tr '[A-Z]' '[a-z]')
 
@@ -83,6 +84,11 @@ jobs:
           CR_PASSWORD: ${{ secrets.SELECTEL_CR_PULL_PASSWORD }}
         run: |
           set -euo pipefail
+          if [[ -z "${CR_USERNAME}" || -z "${CR_PASSWORD}" ]]
+          then
+            echo "::error::Не заданы секреты SELECTEL_CR_PULL_USERNAME / SELECTEL_CR_PULL_PASSWORD"
+            exit 1
+          fi
           CR_AUTH=$(printf '%s:%s' "${CR_USERNAME}" "${CR_PASSWORD}" | base64 -w0)
           echo "::add-mask::${CR_AUTH}"
           jq -n --arg auth "${CR_AUTH}" '{auths: {"cr.selcloud.ru": {auth: $auth}}}' \
