@@ -24,28 +24,21 @@ jobs:
     runs-on: ubuntu-24.04
     permissions: read-all
     steps:
-      # Кластер деплоится из Selectel Container Registry. В ghcr.io образ тоже публикуется,
-      # но только для внешних потребителей (compat-тесты kogda-igra-net).
-      - name: Log in to Selectel Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: cr.selcloud.ru
-          username: ${{ secrets.SELECTEL_CR_PULL_USERNAME }}
-          password: ${{ secrets.SELECTEL_CR_PULL_PASSWORD }}
-
       - name: Check images existence and fill images related env vars
         id: check_existence
         run: |
           set -euxo pipefail
 
-          # Реестр в Selectel называется joinrpg независимо от владельца репозитория
-          APP_IMAGE_ID=cr.selcloud.ru/joinrpg/${APP_NAME}
+          APP_REPOSITORY_ID=$(echo ${{ github.repository_owner }}/${APP_NAME}  | tr '[A-Z]' '[a-z]')
+          APP_IMAGE_ID=$(echo ghcr.io/${APP_REPOSITORY_ID}| tr '[A-Z]' '[a-z]')
 
           COMMON_IMAGE_VERSION=$(echo ${{ inputs.deployVersion }} | tr '[A-Z]' '[a-z]')
 
+          REPOSITORY_TOKEN=$(curl -u ${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }} https://ghcr.io/token\?scope\="repository:${APP_REPOSITORY_ID}:pull" | jq -r .token)
+
           #Check app image existence and save it's digest
-          docker pull --quiet ${APP_IMAGE_ID}:${COMMON_IMAGE_VERSION} > /dev/null
-          APP_IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${APP_IMAGE_ID}:${COMMON_IMAGE_VERSION} | cut -d@ -f2)
+          APP_IMAGE_DIGEST=$(curl --head --fail -H "Authorization: Bearer ${REPOSITORY_TOKEN}" https://ghcr.io/v2/${APP_IMAGE_ID}/manifests/${COMMON_IMAGE_VERSION} \
+          | grep -i ^docker-content-digest: | cut -d: -f2- | xargs)
 
           echo "APP_IMAGE_ID=${APP_IMAGE_ID}" >> $GITHUB_ENV
 
@@ -76,24 +69,6 @@ jobs:
           file_name_prod: './manifests/${{ inputs.environment }}/kogda-igra.secret.env'
           file_name_dev: './manifests/${{ inputs.environment }}/kogda-igra.secret.env'
 
-      # Секрет для pull образа из Selectel Container Registry в кластере (imagePullSecrets в deployment.yaml).
-      # Отдельный шаг без set -x: auth не должен попасть в лог.
-      - name: Create image pull secret
-        env:
-          CR_USERNAME: ${{ secrets.SELECTEL_CR_PULL_USERNAME }}
-          CR_PASSWORD: ${{ secrets.SELECTEL_CR_PULL_PASSWORD }}
-        run: |
-          set -euo pipefail
-          if [[ -z "${CR_USERNAME}" || -z "${CR_PASSWORD}" ]]
-          then
-            echo "::error::Не заданы секреты SELECTEL_CR_PULL_USERNAME / SELECTEL_CR_PULL_PASSWORD"
-            exit 1
-          fi
-          CR_AUTH=$(printf '%s:%s' "${CR_USERNAME}" "${CR_PASSWORD}" | base64 -w0)
-          echo "::add-mask::${CR_AUTH}"
-          jq -n --arg auth "${CR_AUTH}" '{auths: {"cr.selcloud.ru": {auth: $auth}}}' \
-            > ./manifests/${ENVIRONMENT}/selectel-cr-pull.dockerconfigjson
-
       - name: Generate environment manifests
         run: |
             set -x
@@ -103,11 +78,6 @@ jobs:
             - name: kogda-igra
               envs:
               - kogda-igra.secret.env
-              behavior: replace
-            - name: selectel-cr-pull
-              type: kubernetes.io/dockerconfigjson
-              files:
-              - .dockerconfigjson=selectel-cr-pull.dockerconfigjson
               behavior: replace
 
             images:
