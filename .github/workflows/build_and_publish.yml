@@ -151,8 +151,8 @@ jobs:
 
     # Образ публикуется в два реестра:
     # - ghcr.io — публичный, оттуда его анонимно тянут внешние потребители
-    #   (compat-тесты kogda-igra-net, в т.ч. на PR из форков). Не убирать.
-    # - cr.selcloud.ru — из него деплоится кластер (см. deploy_reusable_workflow.yml).
+    #   (compat-тесты kogda-igra-net, в т.ч. на PR из форков), и из него пока деплоится кластер. Не убирать.
+    # - cr.selcloud.ru — Selectel Container Registry; деплой оттуда ещё не настроен.
     - name: Push kogda-igra image to docker registries
       run: |
         VERSION=$(echo ${{ env.CALCULATED_VERSION }}  | tr '[A-Z]' '[a-z]')

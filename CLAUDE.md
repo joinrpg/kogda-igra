@@ -16,8 +16,8 @@ docker compose up --build
 `public_html/` монтируется как bind mount, поэтому изменения в PHP-файлах видны сразу без пересборки. Переменные окружения берутся из `.env` (не в репо) и жёстко заданных значений в `docker-compose.yml`.
 
 CI/CD: GitHub Actions собирает образ и пушит его в два реестра:
-- `cr.selcloud.ru/joinrpg/kogda-igra` (Selectel Container Registry) — из него деплоится кластер. Кластер тянет образ через pull-секрет `selectel-cr-pull` (`imagePullSecrets` в `manifests/base/deployment.yaml`), который при деплое собирается из GitHub Secrets `SELECTEL_CR_PULL_USERNAME`/`SELECTEL_CR_PULL_PASSWORD`. Пушит CI с `SELECTEL_CR_USERNAME`/`SELECTEL_CR_PASSWORD`.
-- `ghcr.io/joinrpg/kogda-igra` (вкл. тег `latest`) — публичный, для внешних потребителей: compat-тесты в [kogda-igra-net](https://github.com/joinrpg/kogda-igra-net) тянут его анонимно, в т.ч. на PR из форков. Не убирать.
+- `ghcr.io/joinrpg/kogda-igra` (вкл. тег `latest`) — публичный. Из него деплоится кластер (без pull-секрета), и его анонимно тянут внешние потребители: compat-тесты в [kogda-igra-net](https://github.com/joinrpg/kogda-igra-net), в т.ч. на PR из форков. Не убирать.
+- `cr.selcloud.ru/joinrpg/kogda-igra` (Selectel Container Registry) — тот же образ с теми же тегами; пушит CI с GitHub Secrets `SELECTEL_CR_USERNAME`/`SELECTEL_CR_PASSWORD`. Деплой оттуда пока не настроен.
 
 Версионирование — SemVer через PowerShell-скрипт. Деплой в Kubernetes через `kubectl apply` + kustomize. Деплой на prod — ручной (`workflow_dispatch`), на dev — автоматический при пуше в master.
 
