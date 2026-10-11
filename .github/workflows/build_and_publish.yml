@@ -139,22 +139,35 @@ jobs:
     - name: Load kogda-igra image
       run: docker load --input ${{ runner.temp }}/image.tar
 
-    - name: Log in to docker registry
+    - name: Log in to ghcr.io
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
-    - name: Push portal image to docker registry
-      run: |
-        APP_IMAGE_ID=ghcr.io/${{ github.repository_owner }}/${APP_NAME}
+    - name: Log in to Selectel Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: cr.selcloud.ru
+        username: ${{ secrets.SELECTEL_CR_USERNAME }}
+        password: ${{ secrets.SELECTEL_CR_PASSWORD }}
 
-        # Change all uppercase to lowercase
-        APP_IMAGE_ID=$(echo ${APP_IMAGE_ID} | tr '[A-Z]' '[a-z]')
+    # Образ публикуется в два реестра:
+    # - ghcr.io — публичный, оттуда его анонимно тянут внешние потребители
+    #   (compat-тесты kogda-igra-net, в т.ч. на PR из форков). Не убирать.
+    # - cr.selcloud.ru — из него деплоится кластер (см. deploy_reusable_workflow.yml).
+    - name: Push kogda-igra image to docker registries
+      run: |
         VERSION=$(echo ${{ env.CALCULATED_VERSION }}  | tr '[A-Z]' '[a-z]')
 
-        docker tag ${APP_NAME} ${APP_IMAGE_ID}:${VERSION}
-        docker push ${APP_IMAGE_ID}:${VERSION}
+        for REGISTRY in ghcr.io cr.selcloud.ru
+        do
+          # Change all uppercase to lowercase
+          APP_IMAGE_ID=$(echo ${REGISTRY}/${{ github.repository_owner }}/${APP_NAME} | tr '[A-Z]' '[a-z]')
 
-        if [[ "${{ env.CALCULATED_VERSION_IS_RELEASE }}" == "True" ]]
-        then
-          docker tag ${APP_NAME} ${APP_IMAGE_ID}:latest
-          docker push ${APP_IMAGE_ID}:latest
-        fi
+          docker tag ${APP_NAME} ${APP_IMAGE_ID}:${VERSION}
+          docker push ${APP_IMAGE_ID}:${VERSION}
+
+          if [[ "${{ env.CALCULATED_VERSION_IS_RELEASE }}" == "True" ]]
+          then
+            docker tag ${APP_NAME} ${APP_IMAGE_ID}:latest
+            docker push ${APP_IMAGE_ID}:latest
+          fi
+        done

@@ -15,7 +15,11 @@ docker compose up --build
 
 `public_html/` монтируется как bind mount, поэтому изменения в PHP-файлах видны сразу без пересборки. Переменные окружения берутся из `.env` (не в репо) и жёстко заданных значений в `docker-compose.yml`.
 
-CI/CD: GitHub Actions собирает образ и пушит в `ghcr.io`. Версионирование — SemVer через PowerShell-скрипт. Деплой в Kubernetes через `kubectl apply` + kustomize. Деплой на prod — ручной (`workflow_dispatch`), на dev — автоматический при пуше в master.
+CI/CD: GitHub Actions собирает образ и пушит его в два реестра:
+- `cr.selcloud.ru/joinrpg/kogda-igra` (Selectel Container Registry) — из него деплоится кластер. Кластер тянет образ через pull-секрет `selectel-cr-pull` (`imagePullSecrets` в `manifests/base/deployment.yaml`), который при деплое собирается из GitHub Secrets `SELECTEL_CR_PULL_USERNAME`/`SELECTEL_CR_PULL_PASSWORD`. Пушит CI с `SELECTEL_CR_USERNAME`/`SELECTEL_CR_PASSWORD`.
+- `ghcr.io/joinrpg/kogda-igra` (вкл. тег `latest`) — публичный, для внешних потребителей: compat-тесты в [kogda-igra-net](https://github.com/joinrpg/kogda-igra-net) тянут его анонимно, в т.ч. на PR из форков. Не убирать.
+
+Версионирование — SemVer через PowerShell-скрипт. Деплой в Kubernetes через `kubectl apply` + kustomize. Деплой на prod — ручной (`workflow_dispatch`), на dev — автоматический при пуше в master.
 
 Линтер — `composer cs-check`. Своих тестов нет: поведение сайта проверяют compat-тесты в отдельном репозитории [kogda-igra-net](https://github.com/joinrpg/kogda-igra-net). CI собирает образ из коммита и гоняет их против него (джоб `Compat tests`); упавшие тесты блокируют публикацию образа. Если изменение намеренно меняет поведение — тесты правятся в kogda-igra-net.
 
