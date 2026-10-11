@@ -157,11 +157,13 @@ jobs:
       run: |
         VERSION=$(echo ${{ env.CALCULATED_VERSION }}  | tr '[A-Z]' '[a-z]')
 
-        for REGISTRY in ghcr.io cr.selcloud.ru
-        do
-          # Change all uppercase to lowercase
-          APP_IMAGE_ID=$(echo ${REGISTRY}/${{ github.repository_owner }}/${APP_NAME} | tr '[A-Z]' '[a-z]')
+        # Change all uppercase to lowercase
+        GHCR_IMAGE_ID=$(echo ghcr.io/${{ github.repository_owner }}/${APP_NAME} | tr '[A-Z]' '[a-z]')
+        # Реестр в Selectel называется joinrpg независимо от владельца репозитория
+        SELECTEL_IMAGE_ID=cr.selcloud.ru/joinrpg/${APP_NAME}
 
+        for APP_IMAGE_ID in ${GHCR_IMAGE_ID} ${SELECTEL_IMAGE_ID}
+        do
           docker tag ${APP_NAME} ${APP_IMAGE_ID}:${VERSION}
           docker push ${APP_IMAGE_ID}:${VERSION}
 
