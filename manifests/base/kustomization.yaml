@@ -10,3 +10,9 @@ secretGenerator:
   - name: kogda-igra
     envs:
       - kogda-igra.secret.env
+  # Pull образа из Selectel Container Registry (imagePullSecrets в deployment.yaml).
+  # Здесь пустая заглушка, при деплое заменяется секретом из GitHub Secrets (deploy_reusable_workflow.yml).
+  - name: selectel-cr-pull
+    type: kubernetes.io/dockerconfigjson
+    files:
+      - .dockerconfigjson=selectel-cr-pull.dockerconfigjson

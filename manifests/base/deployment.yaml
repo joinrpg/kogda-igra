@@ -31,6 +31,8 @@ spec:
                   - kogda-igra
               topologyKey: kubernetes.io/hostname
             weight: 100
+      imagePullSecrets:
+      - name: selectel-cr-pull
       containers:
       - name: kogda-igra
         envFrom:
