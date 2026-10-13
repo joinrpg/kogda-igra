@@ -24,21 +24,26 @@ jobs:
     runs-on: ubuntu-24.04
     permissions: read-all
     steps:
+      - name: Log in to Selectel Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: cr.selcloud.ru
+          username: ${{ secrets.SELECTEL_CR_USERNAME }}
+          password: ${{ secrets.SELECTEL_CR_PASSWORD }}
+
       - name: Check images existence and fill images related env vars
         id: check_existence
         run: |
           set -euxo pipefail
 
-          APP_REPOSITORY_ID=$(echo ${{ github.repository_owner }}/${APP_NAME}  | tr '[A-Z]' '[a-z]')
-          APP_IMAGE_ID=$(echo ghcr.io/${APP_REPOSITORY_ID}| tr '[A-Z]' '[a-z]')
+          # Реестр в Selectel называется joinrpg независимо от владельца репозитория (как в build_and_publish.yml)
+          APP_IMAGE_ID=cr.selcloud.ru/joinrpg/${APP_NAME}
 
           COMMON_IMAGE_VERSION=$(echo ${{ inputs.deployVersion }} | tr '[A-Z]' '[a-z]')
 
-          REPOSITORY_TOKEN=$(curl -u ${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }} https://ghcr.io/token\?scope\="repository:${APP_REPOSITORY_ID}:pull" | jq -r .token)
-
           #Check app image existence and save it's digest
-          APP_IMAGE_DIGEST=$(curl --head --fail -H "Authorization: Bearer ${REPOSITORY_TOKEN}" https://ghcr.io/v2/${APP_IMAGE_ID}/manifests/${COMMON_IMAGE_VERSION} \
-          | grep -i ^docker-content-digest: | cut -d: -f2- | xargs)
+          docker pull ${APP_IMAGE_ID}:${COMMON_IMAGE_VERSION}
+          APP_IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${APP_IMAGE_ID}:${COMMON_IMAGE_VERSION} | cut -d@ -f2)
 
           echo "APP_IMAGE_ID=${APP_IMAGE_ID}" >> $GITHUB_ENV
 

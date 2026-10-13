@@ -19,6 +19,10 @@ spec:
       labels:
         app.kubernetes.io/name: kogda-igra
     spec:
+      # Секрет создаёт интеграция кластера Selectel с Container Registry во всех неймспейсах
+      # https://docs.selectel.ru/en/managed-kubernetes/clusters/use-craas-and-kubernetes/
+      imagePullSecrets:
+      - name: craas-auth
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
