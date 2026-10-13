@@ -2,6 +2,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
+  - ingress-service-domain.yaml
   - pdp.yaml
 
 namespace: override-me
