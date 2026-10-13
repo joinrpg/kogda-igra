@@ -109,22 +109,22 @@ jobs:
           #https://github.com/kubernetes/kubernetes/blob/v1.24.0/staging/src/k8s.io/kubectl/pkg/util/prune/prune.go
 
 
-          KUBECTL_PRUNE_WHITELIST="\
-          --prune-whitelist=core/v1/ConfigMap \
-          --prune-whitelist=core/v1/Endpoints \
-          --prune-whitelist=core/v1/PersistentVolumeClaim \
-          --prune-whitelist=core/v1/Pod \
-          --prune-whitelist=core/v1/ReplicationController \
-          --prune-whitelist=core/v1/Secret \
-          --prune-whitelist=core/v1/Service \
-          --prune-whitelist=batch/v1/Job \
-          --prune-whitelist=batch/v1/CronJob \
-          --prune-whitelist=networking.k8s.io/v1/Ingress \
-          --prune-whitelist=apps/v1/DaemonSet \
-          --prune-whitelist=apps/v1/Deployment \
-          --prune-whitelist=apps/v1/ReplicaSet \
-          --prune-whitelist=apps/v1/StatefulSet
+          KUBECTL_PRUNE_ALLOWLIST="\
+          --prune-allowlist=core/v1/ConfigMap \
+          --prune-allowlist=core/v1/Endpoints \
+          --prune-allowlist=core/v1/PersistentVolumeClaim \
+          --prune-allowlist=core/v1/Pod \
+          --prune-allowlist=core/v1/ReplicationController \
+          --prune-allowlist=core/v1/Secret \
+          --prune-allowlist=core/v1/Service \
+          --prune-allowlist=batch/v1/Job \
+          --prune-allowlist=batch/v1/CronJob \
+          --prune-allowlist=networking.k8s.io/v1/Ingress \
+          --prune-allowlist=apps/v1/DaemonSet \
+          --prune-allowlist=apps/v1/Deployment \
+          --prune-allowlist=apps/v1/ReplicaSet \
+          --prune-allowlist=apps/v1/StatefulSet
           "
 
-          kubectl apply -f ./kustomize_output --prune -l managed-by-${APP_NAME}-${ENVIRONMENT}=true --namespace ${ENVIRONMENT} $KUBECTL_PRUNE_WHITELIST
+          kubectl apply -f ./kustomize_output --prune -l managed-by-${APP_NAME}-${ENVIRONMENT}=true --namespace ${ENVIRONMENT} $KUBECTL_PRUNE_ALLOWLIST
           kubectl rollout status deployment/${APP_NAME} --namespace ${ENVIRONMENT}
