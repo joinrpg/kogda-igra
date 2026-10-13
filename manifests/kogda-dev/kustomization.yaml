@@ -27,6 +27,22 @@ patchesJson6902:
         value: dev-kogda-igra-ru-tls
 
   - target:
+      kind: Ingress
+      group: networking.k8s.io
+      version: v1
+      name: kogda-igra-service-domain
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev.kogda-igra.tsarevs.ru
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: dev.kogda-igra.tsarevs.ru
+      - op: replace
+        path: /spec/tls/0/secretName
+        value: dev-kogda-igra-tsarevs-ru-tls
+
+  - target:
       group: apps
       version: v1
       kind: Deployment
