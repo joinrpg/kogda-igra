@@ -53,11 +53,13 @@ jobs:
         with:
           version: v1.24.0
 
-      - name: Set kubeconfig
+      - name: Set kube context
         uses: azure/k8s-set-context@v5
         with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
+          method: service-account
+          k8s-url: ${{ vars.SELECTEL_K8S_SERVER }}
+          # YAML объекта Secret сервис-аккаунта: kubectl -n kube-system get secret <sa>-token -o yaml
+          k8s-secret: ${{ secrets.SELECTEL_DEPLOY_SA_SECRET }}
 
       - name: Turn github secrets to .env file
         uses: shine1594/secrets-to-env-action@v1.7.0
