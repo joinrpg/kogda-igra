@@ -119,7 +119,7 @@ jobs:
           --prune-allowlist=core/v1/Service \
           --prune-allowlist=batch/v1/Job \
           --prune-allowlist=batch/v1/CronJob \
-          --prune-allowlist=networking.k8s.io/v1/Ingress \
+          --prune-allowlist=gateway.networking.k8s.io/v1/HTTPRoute \
           --prune-allowlist=apps/v1/DaemonSet \
           --prune-allowlist=apps/v1/Deployment \
           --prune-allowlist=apps/v1/ReplicaSet \
