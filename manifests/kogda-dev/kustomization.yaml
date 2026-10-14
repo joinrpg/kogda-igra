@@ -4,43 +4,31 @@ resources:
 namespace: kogda-dev
 
 commonLabels:
-  managed-by-kogda-igra-kogda-dev: "true" 
+  managed-by-kogda-igra-kogda-dev: "true"
   #Careful. Contains name of the environment, used for kubectl apply --prune
   #On deploy everything with this label will be considered managed by this manifests and will be replaced by prune
   #Everything without this label will not be changed.
 
 patchesJson6902:
   - target:
-      kind: Ingress
-      group: networking.k8s.io
+      kind: HTTPRoute
+      group: gateway.networking.k8s.io
       version: v1
       name: kogda-igra
     patch: |-
       - op: replace
-        path: /spec/rules/0/host
+        path: /spec/hostnames/0
         value: dev.kogda-igra.ru
-      - op: replace
-        path: /spec/tls/0/hosts/0
-        value: dev.kogda-igra.ru
-      - op: replace
-        path: /spec/tls/0/secretName
-        value: dev-kogda-igra-ru-tls
 
   - target:
-      kind: Ingress
-      group: networking.k8s.io
+      kind: HTTPRoute
+      group: gateway.networking.k8s.io
       version: v1
       name: kogda-igra-service-domain
     patch: |-
       - op: replace
-        path: /spec/rules/0/host
+        path: /spec/hostnames/0
         value: dev.kogda-igra.tsarevs.ru
-      - op: replace
-        path: /spec/tls/0/hosts/0
-        value: dev.kogda-igra.tsarevs.ru
-      - op: replace
-        path: /spec/tls/0/secretName
-        value: dev-kogda-igra-tsarevs-ru-tls
 
   - target:
       group: apps
