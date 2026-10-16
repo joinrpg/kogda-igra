@@ -14,5 +14,5 @@ jobs:
     with:
       deployVersion: ${{ github.event.inputs.deployVersion }}
       environment: kogda-prod
-      environment_url: https://prod.kogra-igra.ru
+      environment_url: https://kogda-igra.ru
     secrets: inherit
