@@ -19,7 +19,7 @@ CI/CD: GitHub Actions собирает образ и пушит его в два
 - `ghcr.io/joinrpg/kogda-igra` (вкл. тег `latest`) — публичный. Его анонимно тянут внешние потребители: compat-тесты в [kogda-igra-net](https://github.com/joinrpg/kogda-igra-net), в т.ч. на PR из форков. Не убирать.
 - `cr.selcloud.ru/joinrpg/kogda-igra` (Selectel Container Registry) — тот же образ с теми же тегами; пушит CI с GitHub Secrets `SELECTEL_CR_USERNAME`/`SELECTEL_CR_PASSWORD`. Из него деплоится кластер: digest берётся с теми же секретами, под тянет образ через pull-секрет `craas-auth`, который создаёт интеграция кластера Selectel с Container Registry.
 
-Версионирование — SemVer через PowerShell-скрипт. Деплой в Kubernetes через `kubectl apply` + kustomize. Деплой и на prod, и на dev — ручной (`workflow_dispatch`, `deploy_prod.yml`/`deploy_dev.yml`); автодеплоя нет.
+Версионирование — SemVer через PowerShell-скрипт. Деплой в Kubernetes через `kubectl apply` + kustomize. Деплой на prod — ручной (`workflow_dispatch`, `deploy_prod.yml`), на dev — автоматический после успешного «Build and publish» в master (`deploy_dev_auto.yml`) и вручную через `deploy_dev.yml`.
 
 Линтер — `composer cs-check`. Своих тестов нет: поведение сайта проверяют compat-тесты в отдельном репозитории [kogda-igra-net](https://github.com/joinrpg/kogda-igra-net). CI собирает образ из коммита и гоняет их против него (джоб `Compat tests`); упавшие тесты блокируют публикацию образа. Если изменение намеренно меняет поведение — тесты правятся в kogda-igra-net.
 
