@@ -17,5 +17,5 @@ jobs:
     with:
       deployVersion: latest
       environment: kogda-dev
-      environment_url: https://dev.kogra-igra.ru
+      environment_url: https://dev.kogda-igra.ru
     secrets: inherit
