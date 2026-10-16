@@ -22,7 +22,9 @@ jobs:
     env:
       ENVIRONMENT: ${{ inputs.environment }}
     runs-on: ubuntu-24.04
-    permissions: read-all
+    # GITHUB_TOKEN нужен только actions/checkout; реестр и кластер — через секреты
+    permissions:
+      contents: read
     steps:
       - name: Log in to Selectel Container Registry
         uses: docker/login-action@v4

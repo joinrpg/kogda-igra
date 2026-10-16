@@ -13,7 +13,9 @@ concurrency:
 
 jobs:
   deploy:
-    permissions: read-all
+    # Не шире, чем запрашивает deploy_reusable_workflow.yml: права вызывающего джоба ограничивают вызываемый workflow
+    permissions:
+      contents: read
     uses: ./.github/workflows/deploy_reusable_workflow.yml
     with:
       deployVersion: ${{ github.event.inputs.deployVersion }}
