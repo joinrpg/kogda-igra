@@ -12,6 +12,8 @@ services:
       - SITENAME_SCHEME=http
       - JOINRPG_ID_BASE=https://devid.joinrpg.ru
       - POSTGRES_PORT=5432
+      # public_html/ смонтирован с хоста — OPcache должен видеть правки
+      - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
     env_file: .env
     volumes:
       - type: bind

@@ -8,6 +8,10 @@ RUN apt-get update \
 # PHP-расширения (json, session, curl — встроены в PHP 8.x)
 RUN docker-php-ext-install pgsql
 
+# OPcache (встроен в PHP 8.5): на проде без проверки mtime, локально переопределяется в docker-compose.yml
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
+COPY ./etc/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
 # Apache-модули: rewrite для .htaccess, negotiation для MultiViews
 RUN a2enmod rewrite negotiation
 
