@@ -203,9 +203,16 @@ require_once 'config.php';
             {
                 return;
             }
-            $text = htmlspecialchars (SITE_BANNER);
+            $level = 'warn';
+            $text = SITE_BANNER;
+            if (preg_match ('~^(INFO|WARN|DANGER):\s*~i', $text, $m))
+            {
+                $level = strtolower ($m[1]);
+                $text = substr ($text, strlen ($m[0]));
+            }
+            $text = htmlspecialchars ($text);
             $text = preg_replace ('~https?://[^\s<]+~u', '<a href="$0">$0</a>', $text);
-            echo "<div class=\"site_banner\">$text</div>";
+            echo "<div class=\"site_banner site_banner_$level\">$text</div>";
         }
 
         function show_messages()
