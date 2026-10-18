@@ -5,16 +5,27 @@ class Sql
     public $debug;
     public $handle;
 
-    function __construct ($host, $user, $password, $base, $port)
+    function __construct ($host, $user, #[\SensitiveParameter] $password, $base, $port)
     {
         $this -> debug = 0;
 
-        $this->handle = pg_connect("host=$host dbname=$base user=$user password=$password  options='--client_encoding=UTF8' port=$port");
+        $conn = '';
+        foreach (['host' => $host, 'port' => $port, 'dbname' => $base, 'user' => $user, 'password' => $password] as $key => $value)
+        {
+            $conn .= "$key='" . addcslashes((string) $value, "'\\") . "' ";
+        }
+        $conn .= "connect_timeout=5 options='--client_encoding=UTF8'";
+
+        $this->handle = @pg_connect($conn);
         if ($this->handle)
         {
             return;
         }
-        die(pg_last_error());
+        // Без соединения pg_last_error() бросает Error в PHP 8, причину берём из warning-а pg_connect
+        $error = error_get_last();
+        error_log('PostgreSQL connection failed: ' . ($error ? $error['message'] : 'unknown error'));
+        http_response_code(503);
+        die('Database unavailable');
     }
 
     function Close ()
