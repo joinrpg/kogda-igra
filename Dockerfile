@@ -21,6 +21,11 @@ RUN a2dissite 000-default && a2ensite kogda
 # Код приложения
 COPY ./public_html /var/www/html
 
+# Версия CSS для сброса кэша браузера: хэш содержимого, считается при сборке,
+# в PHP доступна как $_SERVER['CSS_VERSION'] без чтения файла на каждый запрос
+RUN echo "SetEnv CSS_VERSION $(md5sum /var/www/html/default.css | cut -c1-8)" \
+    > /etc/apache2/conf-enabled/css-version.conf
+
 # Схема БД той же версии, что и код: compat-тесты kogda-igra-net берут её прямо из образа.
 # Вне document root — Apache её не отдаёт.
 COPY ./db/init /db-init
