@@ -252,10 +252,24 @@ ul>li:before {content:'\2014\a0'; float:left; margin-left:-1.1em}
 {
 	border: solid 1px;
 	font-weight: bold;
-	background-color: LightSalmon;
 	padding: 0.5em 1em;
 	margin: 0.5em;
 	text-align: center;
+}
+
+.site_banner_info
+{
+	background-color: LightBlue;
+}
+
+.site_banner_warn
+{
+	background-color: LightSalmon;
+}
+
+.site_banner_danger
+{
+	background-color: Tomato;
 }
 
 .adv_box
