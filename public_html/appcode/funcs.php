@@ -18,7 +18,7 @@ function write_header ($title, $edit = FALSE)
   <head>
     <meta charset=utf-8>
     <title><?php echo $title; ?></title>
-    <link media="all" rel="stylesheet" href="/default.css" type="text/css">
+    <link media="all" rel="stylesheet" href="/default.css?v=<?php echo $_SERVER['CSS_VERSION'] ?? ''; ?>" type="text/css">
     <meta name="keywords" content="Календарь, ролевые игры">
     <meta name="description" content="Календарь полевых ролевых игр">
     <meta name="verify-v1" content="kgJUNdPugrqlSlUu5/n8UOibKHmPBQKUJJQvua61RYQ=">
