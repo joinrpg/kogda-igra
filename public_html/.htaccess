@@ -22,61 +22,47 @@ RewriteCond %{HTTP_HOST} ^www\.kogda-igra\.msk\.ru$ [NC]
 RewriteRule (.*)$ http://kogda-igra.ru/msk/$1 [R=permanent]
 RewriteRule ^appcode(.*) http://kogda-igra.ru/
 
-RewriteRule ^ural/19(.*)/?$ /?region=5&year=19$1
-RewriteRule ^ural/20(.*)/?$ /?region=5&year=20$1
+RewriteRule ^ural/((19|20)[0-9]{2})/?$ /?region=5&year=$1
 RewriteRule ^ural/?$ /?region=5
-RewriteRule ^south/19(.*)/?$ /?region=7&year=19$1
-RewriteRule ^south/20(.*)/?$ /?region=7&year=20$1
+RewriteRule ^south/((19|20)[0-9]{2})/?$ /?region=7&year=$1
 RewriteRule ^south/?$ /?region=7
-RewriteRule ^sibir/19(.*)/?$ /?region=6&year=19$1
-RewriteRule ^sibir/20(.*)/?$ /?region=6&year=20$1
+RewriteRule ^sibir/((19|20)[0-9]{2})/?$ /?region=6&year=$1
 RewriteRule ^sibir/?$ /?region=6
-RewriteRule ^nw/19(.*)/?$ /?region=4&year=19$1
-RewriteRule ^nw/20(.*)/?$ /?region=4&year=20$1
+RewriteRule ^nw/((19|20)[0-9]{2})/?$ /?region=4&year=$1
 RewriteRule ^nw/?$ /?region=4
-RewriteRule ^msk/19(.*)/?$ /?region=3&year=19$1
-RewriteRule ^msk/20(.*)/?$ /?region=3&year=20$1
+RewriteRule ^msk/((19|20)[0-9]{2})/?$ /?region=3&year=$1
 RewriteRule ^msk/?$ /?region=3
-RewriteRule ^spb/19(.*)/?$ /?region=2&year=19$1
-RewriteRule ^spb/20(.*)/?$ /?region=2&year=20$1
+RewriteRule ^spb/((19|20)[0-9]{2})/?$ /?region=2&year=$1
 RewriteRule ^spb/?$ /?region=2
 
-RewriteRule ^konvent/19(.*)/?$ /?konvent=1&year=19$1
-RewriteRule ^konvent/20(.*)/?$ /?konvent=1&year=20$1
+RewriteRule ^konvent/((19|20)[0-9]{2})/?$ /?konvent=1&year=$1
 RewriteRule ^konvent/?$ /?konvent=1
 
-RewriteRule ^dv/19(.*)/?$ /?region=8&year=19$1
-RewriteRule ^dv/20(.*)/?$ /?region=8&year=20$1
+RewriteRule ^dv/((19|20)[0-9]{2})/?$ /?region=8&year=$1
 RewriteRule ^dv/?$ /?region=8
 
-RewriteRule ^volga/19(.*)/?$ /?region=9&year=19$1
-RewriteRule ^volga/20(.*)/?$ /?region=9&year=20$1
+RewriteRule ^volga/((19|20)[0-9]{2})/?$ /?region=9&year=$1
 RewriteRule ^volga/?$ /?region=9
 
-RewriteRule ^ua/19(.*)/?$ /?region=10&year=19$1
-RewriteRule ^ua/20(.*)/?$ /?region=10&year=20$1
+RewriteRule ^ua/((19|20)[0-9]{2})/?$ /?region=10&year=$1
 RewriteRule ^ua/?$ /?region=10
 
-RewriteRule ^bel/19(.*)/?$ /?region=11&year=19$1
-RewriteRule ^bel/20(.*)/?$ /?region=11&year=20$1
+RewriteRule ^bel/((19|20)[0-9]{2})/?$ /?region=11&year=$1
 RewriteRule ^bel/?$ /?region=11
 
-RewriteRule ^kz/19(.*)/?$ /?region=13&year=19$1
-RewriteRule ^kz/20(.*)/?$ /?region=13&year=20$1
+RewriteRule ^kz/((19|20)[0-9]{2})/?$ /?region=13&year=$1
 RewriteRule ^kz/?$ /?region=13
 
-RewriteRule ^foreign/19(.*)/?$ /?region=13&year=19$1
-RewriteRule ^foreign/20(.*)/?$ /?region=13&year=20$1
+RewriteRule ^foreign/((19|20)[0-9]{2})/?$ /?region=13&year=$1
 RewriteRule ^foreign/?$ /?region=13
 
 
-RewriteRule ^19(.*)/?$ /?year=19$1
-RewriteRule ^20(.*)/?$ /?year=20$1
+RewriteRule ^((19|20)[0-9]{2})/?$ /?year=$1
 
-RewriteRule ^best/(.+)/20(.{2})/?$ /?region_name=$1&year=20$2&best=1
-RewriteRule ^best/(.+)/19(.{2})/?$ /?region_name=$1&year=19$2&best=1
-RewriteRule ^best/19(.{2})/?$ /?year=19$1&best=1 [L]
-RewriteRule ^best/20(.{2})/?$ /?year=20$1&best=1 [L]
+RewriteRule ^best/(.+)/20([0-9]{2})/?$ /?region_name=$1&year=20$2&best=1
+RewriteRule ^best/(.+)/19([0-9]{2})/?$ /?region_name=$1&year=19$2&best=1
+RewriteRule ^best/19([0-9]{2})/?$ /?year=19$1&best=1 [L]
+RewriteRule ^best/20([0-9]{2})/?$ /?year=20$1&best=1 [L]
 RewriteRule ^best/(.+?)/?$ /?region_name=$1&year=2014&best=1 [L]
 
 RewriteRule ^find/(.+?)/?$ /search/?search=$1 [L,B]

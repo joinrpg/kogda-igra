@@ -1,11 +1,14 @@
 <?php
+require_once 'uri_funcs.php';
+
 function show_tb ($label, $name, $length, $value, $tb_type = 'text', $required = false, $list = '', $preinput_text = '', $postinput_text = '')
 {
     $required = $required ? ' required="required" ' : '';
     $value = htmlspecialchars ($value);
     if ($value && $tb_type == 'uri')
     {
-        $label = "<a href=\"$preinput_text$value$postinput_text\">$label</a>";
+        $link = format_site_link("$preinput_text$value$postinput_text");
+        $label = "<a href=\"$link\">$label</a>";
     }
     echo "<tr><td><label><strong>$label</strong></label></td>";
     $maxlength = $length;

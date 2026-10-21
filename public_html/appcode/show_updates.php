@@ -2,6 +2,7 @@
 require_once 'funcs.php';
 require_once 'review.php';
 require_once 'uifuncs.php';
+require_once 'uri_funcs.php';
 
 function write_update_line($game, $colspan)
 {
@@ -60,7 +61,9 @@ function write_update_line_with_ip($game, $colspan, $show_ip)
         }
         if ($uri)
         {
-            $update_text .= " <a href=\"$uri \">$uri </a>";
+            $link = htmlspecialchars(format_site_link($uri));
+            $uri = htmlspecialchars($uri);
+            $update_text .= " <a href=\"$link\">$uri</a>";
         }
         echo "$date $user$ip_info: $update_text {$game['msg']}";
         echo "</td></tr>";

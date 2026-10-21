@@ -7,6 +7,12 @@
     require_once 'best_calendar.php';
     require_once 'top_menu.php';
 
+    // Мусорный хвост после года (/2011garbage) — 404, а не страница года (issue #114)
+    if (array_key_exists('year', $_GET) && !ctype_digit((string) $_GET['year']))
+    {
+        include __DIR__ . '/404/index.php';
+        exit;
+    }
     $year = array_key_exists('year', $_GET) ? intval($_GET['year']) : 0;
     $konvent = get_request_field('konvent') == 1;
     $region_result = get_region_param();
