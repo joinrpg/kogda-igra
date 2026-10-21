@@ -9,7 +9,7 @@
         echo "<div class='active'>
 			<a href=\"https://joinrpg.ru\">JoinRpg</a>
 			<a href=\"https://t.me/joinrpg\"><img src='/img/telegram.png' /></a>
-			<a href=\"https://vk.com/joinrpg\"><img src='/img/vk.png' /></a>
+			<a href=\"https://vk.ru/joinrpg\"><img src='/img/vk.png' /></a>
 			</div>";
     }
 

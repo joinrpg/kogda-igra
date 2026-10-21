@@ -2,7 +2,7 @@
     function format_vk_link ($vk_club)
     {
         $vk_club = trim ($vk_club);
-        return "https://vk.com/$vk_club";
+        return "https://vk.ru/$vk_club";
     }
 
     function format_lj_link ($lj_comm)
@@ -27,7 +27,7 @@
     {
         static $prestfixes = array (
         'http://', 'https://',
-        'vk.com/', 'vkontakte.ru/',
+        'vk.com/', 'vk.ru/', 'vkontakte.ru/',
         '.livejournal.com', '.lj.ru',
         'facebook.com/groups/',
         't.me/', '@',

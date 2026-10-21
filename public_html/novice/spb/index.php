@@ -21,7 +21,7 @@
 Обращайтесь:<br>
 Александра<br>
 <a href="mailto:atana@bastilia.ru">atana@bastilia.ru</a> <br> 
-<a href="http://vk.com/a_tsareva"><img src="/img/vk.png" width="16" height="16" title="http://vk.com/a_tsareva" alt="http://vk.com/a_tsareva" class="link_icon"/> a_tsareva</a>
+<a href="https://vk.ru/a_tsareva"><img src="/img/vk.png" width="16" height="16" title="https://vk.ru/a_tsareva" alt="https://vk.ru/a_tsareva" class="link_icon"/> a_tsareva</a>
 </p>	  
 </div>
 <?php
