@@ -67,11 +67,52 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+      pull-requests: read  # найти PR по коммиту в очереди слияния и в master
     env:
       DOTNET_NOLOGO: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       KOGDA_IGRA_IMAGE: kogda-igra  # = APP_NAME, тег из джоба build
     steps:
+      # Изменение, которое намеренно меняет поведение, ломает тесты из master kogda-igra-net,
+      # а поправленные тесты не пройдут против ещё не опубликованного образа. Поэтому тесты
+      # берутся из ветки kogda-igra-net с тем же именем, что и ветка PR, если такая есть.
+      # Ветку PR ищем на всех этапах — в PR, в очереди слияния и после слияния в master:
+      # иначе после слияния тесты снова пойдут из master kogda-igra-net и образ не опубликуется.
+      # Порядок: влить PR здесь (образ уходит в latest), затем PR в kogda-igra-net.
+      - name: Pick kogda-igra-net branch
+        id: tests-ref
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          HEAD_REF: ${{ github.head_ref }}  # из PR, может прийти из форка — только через env
+          MERGE_GROUP_REF: ${{ github.event.merge_group.head_ref }}
+          REF_NAME: ${{ github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
+        run: |
+          branch=""
+          case "$EVENT_NAME" in
+            pull_request)
+              branch="$HEAD_REF" ;;
+            merge_group)
+              # refs/heads/gh-readonly-queue/master/pr-123-<sha>
+              pr=$(sed -nE 's#.*/pr-([0-9]+)-[0-9a-f]+$#\1#p' <<< "$MERGE_GROUP_REF")
+              [ -n "$pr" ] && branch=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$pr" --jq .head.ref) ;;
+            push)
+              [ "$REF_TYPE" = branch ] && branch=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+                --jq '[.[] | select(.merged_at != null)][0].head.ref // empty') ;;
+            workflow_dispatch)
+              branch="$REF_NAME" ;;
+          esac
+
+          ref=master
+          if [ -n "$branch" ] && [ "$branch" != master ] && git check-ref-format --branch "$branch" > /dev/null 2>&1 \
+             && git ls-remote --exit-code --heads https://github.com/joinrpg/kogda-igra-net.git "refs/heads/$branch" > /dev/null; then
+            ref="$branch"
+          fi
+          echo "Тесты kogda-igra-net из ветки: $ref"
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+
+
       - uses: actions/download-artifact@v8
         with:
           name: ${{ env.IMAGE_ARTIFACT }}
@@ -84,6 +125,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           repository: joinrpg/kogda-igra-net
+          ref: ${{ steps.tests-ref.outputs.ref }}
           path: kogda-igra-net
 
       - name: Setup .NET

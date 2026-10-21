@@ -1,4 +1,3 @@
-
 <?php
     require_once 'funcs.php';
     require_once 'logic/gamebase.php';
