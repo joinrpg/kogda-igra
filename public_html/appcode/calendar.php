@@ -242,7 +242,7 @@ class Calendar
         $uri = trim($game['uri'] ?? '');
         if ($uri)
         {
-            echo Calendar::get_link_icon($uri, $uri, '[S]', 'world_link.png') . '&nbsp;';
+            echo Calendar::get_link_icon(format_site_link($uri), $uri, '[S]', 'world_link.png') . '&nbsp;';
         }
         $vk_club = trim($game['vk_club'] ?? '');
 

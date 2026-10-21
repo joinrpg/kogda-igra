@@ -23,6 +23,18 @@
         return "https://t.me/$handle";
     }
 
+    // Ссылку без схемы (www.example.ru) браузер считает относительной и приклеивает
+    // к текущему пути — так у ботов получались бесконечные URL (issue #114)
+    function format_site_link($uri)
+    {
+        $uri = trim($uri);
+        if ($uri === '' || preg_match('#^([a-z][a-z0-9+.-]*://|mailto:|/)#i', $uri))
+        {
+            return $uri;
+        }
+        return "http://$uri";
+    }
+
     function normalize_link($link)
     {
         static $prestfixes = array (

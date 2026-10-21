@@ -3,3 +3,7 @@ Disallow: /find/
 Disallow: 
 Sitemap: http://kogda-igra.ru/sitemap.txt
 Host: kogda-igra.ru
+
+User-agent: SemrushBot
+Crawl-delay: 10
+Disallow: /find/

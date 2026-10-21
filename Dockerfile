@@ -12,8 +12,14 @@ RUN docker-php-ext-install pgsql
 ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
 COPY ./etc/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
+# Лимит памяти на запрос меньше лимита контейнера: тяжёлый запрос падает сам, под живёт
+COPY ./etc/php/memory.ini /usr/local/etc/php/conf.d/memory.ini
+
 # Apache-модули: rewrite для .htaccess, negotiation для MultiViews
 RUN a2enmod rewrite negotiation
+
+# Лимиты prefork: по умолчанию до 150 процессов, а памяти у контейнера 128Mi
+COPY ./etc/apache2/mpm_prefork.conf /etc/apache2/mods-available/mpm_prefork.conf
 
 # Порт 8080 вместо стандартного 80 (совместимость с docker-compose и K8s)
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf

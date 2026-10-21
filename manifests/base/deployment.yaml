@@ -42,6 +42,8 @@ spec:
             name: kogda-igra
             optional: false
         image: kogda-igra
+        # Образ при деплое закреплён digest'ом — после рестарта (OOM) не качать заново
+        imagePullPolicy: IfNotPresent
 #        livenessProbe:
 #          failureThreshold: 5
 #          httpGet:
