@@ -77,7 +77,7 @@ RewriteRule ^best/(.+)/20(.{2})/?$ /?region_name=$1&year=20$2&best=1
 RewriteRule ^best/(.+)/19(.{2})/?$ /?region_name=$1&year=19$2&best=1
 RewriteRule ^best/19(.{2})/?$ /?year=19$1&best=1 [L]
 RewriteRule ^best/20(.{2})/?$ /?year=20$1&best=1 [L]
-RewriteRule ^best/(.+)/?$ /?region_name=$1&year=2014&best=1 [L]
+RewriteRule ^best/(.+?)/?$ /?region_name=$1&year=2014&best=1 [L]
 
 RewriteRule ^find/(.+?)/?$ /search/?search=$1 [L,B]
 RewriteRule ^reviews/([1234567890]+)/?$ /game/$1/ [R=permanent]
@@ -88,7 +88,7 @@ RewriteRule ^lenta/ip/([1234567890\.]*)/?$ /lenta/ip/index.php?ip=$1 [L]
 
 RewriteRule ^photo/([1234567890]*)/?$ /photo/index.php?id=$1 [L]
 RewriteCond %{REQUEST_URI} !index.php
-RewriteRule ^user/(.*)/?$ user/index.php?id=$1 [last]
+RewriteRule ^user/(.*?)/?$ user/index.php?id=$1 [last]
 RewriteRule ^edit/users/([1234567890]*)/?$ /edit/users/index.php?id=$1 [L]
 RewriteRule ^help-needed/email/([1234567890]*)/?$ /help-needed/email/index.php?id=$1 [L]
 
