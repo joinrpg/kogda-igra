@@ -143,7 +143,7 @@ function force_set_email($user_id, $new_email)
 
 function get_user_id()
 {
-    return array_key_exists('user_id', $_SESSION) ? $_SESSION['user_id'] : 0;
+    return $_SESSION['user_id'] ?? 0;
 }
 
 function clear_username ()
