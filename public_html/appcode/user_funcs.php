@@ -8,7 +8,7 @@ require_once 'sqlbase.php';
 function get_username()
 {
     $user = get_user();
-    return $user['username'];
+    return $user['username'] ?? null;
 }
 
 function get_user_by_id ($user_id)
