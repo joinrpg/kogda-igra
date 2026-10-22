@@ -50,19 +50,19 @@ class Sql
 
         if (!$result)
         {
-                    echo pg_last_error();
+                    echo pg_last_error($this->handle);
             return FALSE;
 
             }
 
-        $array = FALSE;
+        $array = [];
 
         while ($row = pg_fetch_array($result, null, PGSQL_ASSOC))
         {
             $array [] = $row;
         }
-        echo pg_last_error();
-        return $array;
+        // Пустая выборка — FALSE, как и раньше: вызывающие на это рассчитывают
+        return $array ?: FALSE;
     }
 
     function GetAll ($table, $what = '*', $condition = '1', $limit = 0, $orderby = '')
@@ -112,7 +112,7 @@ class Sql
     }
         $res = pg_query ($this->handle, $request);
 
-        $error = pg_last_error();
+        $error = pg_last_error($this->handle);
 
         if ($error)
         {
