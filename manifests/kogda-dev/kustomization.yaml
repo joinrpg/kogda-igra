@@ -41,7 +41,7 @@ patchesJson6902:
         value: 300m
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu
-        value: 300m
+        value: 50m
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/memory
         value: 128Mi
