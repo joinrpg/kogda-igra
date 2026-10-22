@@ -15,8 +15,9 @@ COPY ./etc/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 # Лимит памяти на запрос меньше лимита контейнера: тяжёлый запрос падает сам, под живёт
 COPY ./etc/php/memory.ini /usr/local/etc/php/conf.d/memory.ini
 
-# Apache-модули: rewrite для .htaccess, negotiation для MultiViews
-RUN a2enmod rewrite negotiation
+# Apache-модули: rewrite для .htaccess, negotiation для MultiViews,
+# remoteip — реальный IP клиента из X-Forwarded-For от traefik
+RUN a2enmod rewrite negotiation remoteip
 
 # Лимиты prefork: по умолчанию до 150 процессов, а памяти у контейнера 128Mi
 COPY ./etc/apache2/mpm_prefork.conf /etc/apache2/mods-available/mpm_prefork.conf
