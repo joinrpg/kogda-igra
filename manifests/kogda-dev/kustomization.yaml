@@ -9,6 +9,15 @@ commonLabels:
   #On deploy everything with this label will be considered managed by this manifests and will be replaced by prune
   #Everything without this label will not be changed.
 
+# Общая метка для единого prune-selector из deploy-actions.
+# Вторая метка зашита в иммутабельный spec.selector Deployment'ов, поэтому общую метку
+# добавляем только в metadata (includeSelectors: false). Снять двойную маркировку
+# получится только при пересоздании Deployment'ов.
+labels:
+  - pairs:
+      managed-by-kustomize: "true"
+    includeSelectors: false
+
 patchesJson6902:
   - target:
       kind: HTTPRoute
